@@ -1,0 +1,22 @@
+{
+    "user_id": "",
+    "grand_total": "",
+    "payment_method": "",
+    "productData": [
+      {
+        "product_id": "5",
+        "product_name": "steak",
+        "product_image": "",
+        "quantity": 1,
+        "product_price": 590,
+        "extras": [
+          { "title": "Coke", "price": 100 },
+          { "title": "mango shake", "price": 120 },
+          { "title": "mayo", "price": 50 },
+          { "title": "Extra toping", "price": 50 },
+          { "title": "Cheese", "price": 20 }
+        ]
+      }
+    ]
+  }
+  
