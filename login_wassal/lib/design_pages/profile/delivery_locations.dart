@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wassl_profile/mapScreen.dart';
+
+import 'mapScreen.dart';
 
 class DeliveryLocations extends StatefulWidget {
   const DeliveryLocations({Key key}) : super(key: key);

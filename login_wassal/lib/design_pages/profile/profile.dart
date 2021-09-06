@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wassl_profile/account_info.dart';
-import 'package:wassl_profile/delivery_details.dart';
-import 'package:wassl_profile/delivery_locations.dart';
-import 'package:wassl_profile/notifications.dart';
-import 'package:wassl_profile/payment_methods.dart';
-import 'package:wassl_profile/share.dart';
+import 'account_info.dart';
+import 'delivery_details.dart';
+import 'delivery_locations.dart';
+import 'notifications.dart';
+import 'payment_methods.dart';
+import 'share.dart';
 
 import 'favorite.dart';
 

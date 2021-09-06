@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wassl_profile/card_details.dart';
+
+import 'card_details.dart';
+
 
 class AddCards extends StatefulWidget {
   const AddCards({Key key}) : super(key: key);

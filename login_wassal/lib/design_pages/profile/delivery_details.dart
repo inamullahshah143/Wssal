@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:country_picker/country_picker.dart';
 
 class DeliveryForm extends StatefulWidget {
   const DeliveryForm({Key key}) : super(key: key);
@@ -170,17 +169,17 @@ class _DeliveryFormState extends State<DeliveryForm> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          showCountryPicker(
-                            context: context,
-                            // optional. Shows phone code before the country name.
-                            onSelect: (Country country) {
-                              setState(
-                                () {
-                                  _country = country.name;
-                                },
-                              );
-                            },
-                          );
+                          // showCountryPicker(
+                          //   context: context,
+                          //   // optional. Shows phone code before the country name.
+                          //   onSelect: (Country country) {
+                          //     setState(
+                          //       () {
+                          //         _country = country.name;
+                          //       },
+                          //     );
+                          //   },
+                          // );
                         },
                         child: Container(
                           width: double.infinity,

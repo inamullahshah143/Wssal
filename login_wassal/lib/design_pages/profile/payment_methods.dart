@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wassl_profile/credit_cards.dart';
-import 'package:wassl_profile/recahrge_wallet.dart';
+import 'credit_cards.dart';
+import 'recahrge_wallet.dart';
 
 class PaymentMethods extends StatefulWidget {
   const PaymentMethods({Key key}) : super(key: key);
