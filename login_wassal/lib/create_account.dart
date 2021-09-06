@@ -127,7 +127,6 @@ class _CreateAccountState extends State<CreateAccount> {
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
                 child: Container(
                   width: width,
-                  height: 100.0,
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(244, 245, 247, 1),
                     borderRadius: BorderRadius.circular(15),
@@ -139,7 +138,7 @@ class _CreateAccountState extends State<CreateAccount> {
                         padding: EdgeInsets.all(12.5),
                         child: Text(
                           "Phone Number",
-                          style: TextStyle(color: Colors.grey, fontSize: 20.0),
+                          style: TextStyle(color: Colors.grey, fontSize: 14.0),
                         ),
                       ),
                       TextFormField(
@@ -152,7 +151,7 @@ class _CreateAccountState extends State<CreateAccount> {
                         keyboardType: TextInputType.phone,
                         maxLength: 10,
                         style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 14.0,
                         ),
                         onChanged: (value) {
                           setState(() {
