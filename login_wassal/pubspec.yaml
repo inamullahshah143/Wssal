@@ -31,6 +31,7 @@ dependencies:
   shared_preferences:  
   animated_icon_button:  
   country_code_picker:  
+  flutter_rating_bar: ^4.0.0
   flutter_alert:  
   http:  
   carousel_slider:  
