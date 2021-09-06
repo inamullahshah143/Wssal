@@ -26,12 +26,16 @@ class _CategoryDetailState extends State<CategoryDetail> {
   bool searchClickBtn;
   bool dragButton;
   double appbarHeight;
+  bool isRecomended, isFastDelivery, isMostPopular;
   TabController _tabController;
   @override
   void initState() {
     appbarHeight = 75.0;
     dragButton = false;
     searchClickBtn = true;
+    isRecomended = false;
+    isFastDelivery = false;
+    isMostPopular = false;
     super.initState();
   }
 
@@ -280,14 +284,16 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                           child: Row(
                                                             children: [
                                                               searchCategory(),
+                                                              searchCategory(),
+                                                              searchCategory(),
+                                                              searchCategory(),
+                                                              searchCategory(),
+                                                              searchCategory(),
                                                             ],
                                                           ),
                                                         ),
-                                                        Center(
-                                                          child: Container(
-                                                            child: Text(
-                                                                "Sort By Body"),
-                                                          ),
+                                                        Container(
+                                                          child: searchSortBy(),
                                                         ),
                                                         Center(
                                                           child: Container(
@@ -369,7 +375,11 @@ class _CategoryDetailState extends State<CategoryDetail> {
               duration: const Duration(milliseconds: 500),
               curve: Curves.fastOutSlowIn,
               width: double.infinity,
+<<<<<<< Updated upstream
               height: MediaQuery.of(context).size.height - (appbarHeight - 100),
+=======
+              height: MediaQuery.of(context).size.height - (appbarHeight + 114),
+>>>>>>> Stashed changes
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: returnedData == null
@@ -410,31 +420,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
                           topSeller(),
                           nearby(),
                           freeDeilvery(),
-                          // FutureBuilder(
-                          //   future: buildProducts(context),
-                          //   builder: ((context, AsyncSnapshot<Widget> snap) {
-                          //     if (snap.hasData) {
-                          //       return snap.data;
-                          //     } else if (snap.hasError) {
-                          //       return Text("${snap.error}");
-                          //     } else {
-                          //       return Center(
-                          //         child: Padding(
-                          //           padding: EdgeInsets.all(8.0),
-                          //           child: Container(
-                          //             child: CircularProgressIndicator(
-                          //               strokeWidth: 2,
-                          //               backgroundColor: Colors.red,
-                          //               valueColor: AlwaysStoppedAnimation<Color>(
-                          //                 Colors.yellow,
-                          //               ),
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       );
-                          //     }
-                          //   }),
-                          // ),
                         ],
                       )
                     : Column(
@@ -447,6 +432,108 @@ class _CategoryDetailState extends State<CategoryDetail> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget searchSortBy() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: pagesBackground,
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 25.0, right: 25.0),
+                child: Icon(Icons.bookmark, color: Colors.grey[600]),
+              ),
+              Text(
+                'Recomended',
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+              Spacer(),
+              Checkbox(
+                activeColor: Colors.green,
+                shape: CircleBorder(),
+                value: isRecomended,
+                onChanged: (bool val) {
+                  setState(() {
+                    isRecomended = val;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: pagesBackground,
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 25.0, right: 25.0),
+                child: Icon(Icons.access_time_filled_rounded, color: Colors.grey[600]),
+              ),
+              Text(
+                'Fast Delivery',
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+              Spacer(),
+              Checkbox(
+                activeColor: Colors.green,
+                shape: CircleBorder(),
+                value: isFastDelivery,
+                onChanged: (bool val) {
+                  setState(() {
+                    isFastDelivery = val;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: pagesBackground,
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 25.0, right: 25.0),
+                child: Icon(Icons.local_fire_department_sharp,
+                    color: Colors.grey[600]),
+              ),
+              Text(
+                'Most Popular',
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+              Spacer(),
+              Checkbox(
+                activeColor: Colors.green,
+                shape: CircleBorder(),
+                value: isMostPopular,
+                onChanged: (bool val) {
+                  setState(() {
+                    isMostPopular = val;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
