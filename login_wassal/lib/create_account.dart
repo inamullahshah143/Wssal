@@ -298,11 +298,24 @@ signUp(context) async {
   print('Response body: ${response.body}');
   var data = json.decode(response.body);
   print('$data');
-  if (data['message'] == 'success') {
+  if (data['message'] == 'User registered successfully.') {
     print('Account Created');
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+    showAlert(
+      context: context,
+      title: "Account Created Successfully",
+      actions: [
+        AlertAction(
+            text: "Ok ",
+            isDestructiveAction: true,
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => LoginPage()),
+              );
+            }),
+      ],
+      cancelable: true,
     );
   } else {
     showAlert(

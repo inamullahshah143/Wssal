@@ -1154,7 +1154,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
             primary: false,
             padding: const EdgeInsets.all(8),
             crossAxisSpacing: 10,
-            childAspectRatio: 0.9,
+            childAspectRatio: 0.8,
             crossAxisCount: 2,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
