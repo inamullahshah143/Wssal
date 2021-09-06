@@ -375,7 +375,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
               duration: const Duration(milliseconds: 500),
               curve: Curves.fastOutSlowIn,
               width: double.infinity,
-              height: MediaQuery.of(context).size.height - (appbarHeight + 114),
+              height: MediaQuery.of(context).size.height - (appbarHeight + 116),
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: returnedData == null
@@ -1712,7 +1712,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
             primary: false,
             padding: const EdgeInsets.all(8),
             crossAxisSpacing: 10,
-            childAspectRatio: 0.9,
+            childAspectRatio: 0.8,
             crossAxisCount: 2,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),

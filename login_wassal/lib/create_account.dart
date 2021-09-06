@@ -71,10 +71,20 @@ class _CreateAccountState extends State<CreateAccount> {
                       'Already have an account?  ',
                       style: TextStyle(color: Color.fromRGBO(180, 186, 198, 1)),
                     ),
-                    Text(
-                      'Sign in',
-                      style: TextStyle(
-                          fontSize: 16, color: Color.fromRGBO(222, 53, 11, 1)),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => LoginPage()),
+                        );
+                      },
+                      child: Text(
+                        'Sign in',
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Color.fromRGBO(222, 53, 11, 1)),
+                      ),
                     ),
                   ],
                 ),
@@ -99,7 +109,7 @@ class _CreateAccountState extends State<CreateAccount> {
                     },
                     keyboardType: TextInputType.name,
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: 14.0,
                     ),
                     onChanged: (value) {
                       setState(() {
@@ -201,43 +211,31 @@ class _CreateAccountState extends State<CreateAccount> {
                   ),
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Checkbox(
-                    value: isChecked,
-                    onChanged: (value) {
-                      setState(() {
-                        isChecked = value;
-                        if (number != '' && name != '' && isChecked != false) {
-                          isEnabled = true;
-                        } else {
-                          isEnabled = false;
-                        }
-                      });
-                    },
-                  ),
-                  Text(
-                    'By creating an account, you agree to our',
+              ListTile(
+                leading: Checkbox(
+                  value: isChecked,
+                  onChanged: (value) {
+                    setState(() {
+                      isChecked = value;
+                      if (number != '' && name != '' && isChecked != false) {
+                        isEnabled = true;
+                      } else {
+                        isEnabled = false;
+                      }
+                    });
+                  },
+                ),
+                title: RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                    text: 'By creating an account, you agree to our',
                     style: TextStyle(color: Color.fromRGBO(180, 186, 198, 1)),
                   ),
-                  InkWell(
-                    onTap: () {},
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Container(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Term and Conditions',
-                            style: TextStyle(
-                                color: Color.fromRGBO(222, 53, 11, 1)),
-                          ),
-                        ),
-                      ),
-                    ),
+                  TextSpan(
+                    text: ' Term and Conditions',
+                    style: TextStyle(color: Color.fromRGBO(222, 53, 11, 1)),
                   ),
-                ],
+                ])),
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
@@ -259,7 +257,7 @@ class _CreateAccountState extends State<CreateAccount> {
                           child: Text(
                             "Sign Up",
                             style: TextStyle(
-                              fontSize: 18.0,
+                              fontSize: 14.0,
                               color: Colors.grey[800],
                             ),
                           ),
@@ -275,7 +273,7 @@ class _CreateAccountState extends State<CreateAccount> {
                           child: Text(
                             "Sign Up",
                             style: TextStyle(
-                              fontSize: 18.0,
+                              fontSize: 14.0,
                               color: Colors.white,
                             ),
                           ),

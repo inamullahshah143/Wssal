@@ -21,7 +21,7 @@ class _MainCategoriesState extends State<MainCategories> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(100.0),
         child: Container(
-          height: 125.0,
+          // height: 125.0,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.vertical(
