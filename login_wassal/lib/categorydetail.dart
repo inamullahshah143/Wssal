@@ -26,6 +26,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
   bool searchClickBtn;
   bool dragButton;
   double appbarHeight;
+  TabController _tabController;
   @override
   void initState() {
     appbarHeight = 75.0;
@@ -141,7 +142,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                             ],
                           ),
                         ),
-                        appbarHeight != null
+                        appbarHeight >= 175
                             ? Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -220,7 +221,11 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                           ),
                                         ),
                                         IconButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            setState(() {
+                                              appbarHeight = 500;
+                                            });
+                                          },
                                           icon: Icon(
                                             Icons.tune,
                                             size: 24.0,
@@ -229,14 +234,113 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                       ],
                                     ),
                                   ),
+                                  appbarHeight == 500
+                                      ? Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10.0, horizontal: 25),
+                                          child: Container(
+                                            child: DefaultTabController(
+                                              length: 3,
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  TabBar(
+                                                    indicatorColor:
+                                                        themeSecondaryColor,
+                                                    labelColor:
+                                                        themeSecondaryColor,
+                                                    controller: _tabController,
+                                                    unselectedLabelColor:
+                                                        Colors.grey[500],
+                                                    tabs: [
+                                                      Tab(
+                                                        text: 'Category',
+                                                      ),
+                                                      Tab(
+                                                        text: 'Sort By',
+                                                      ),
+                                                      Tab(
+                                                        text: 'Price',
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Container(
+                                                    //Add this to give height
+                                                    height: appbarHeight - 300,
+                                                    child: TabBarView(
+                                                      controller:
+                                                          _tabController,
+                                                      children: [
+                                                        SingleChildScrollView(
+                                                          scrollDirection:
+                                                              Axis.horizontal,
+                                                          physics:
+                                                              BouncingScrollPhysics(),
+                                                          child: Row(
+                                                            children: [
+                                                              searchCategory(),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Center(
+                                                          child: Container(
+                                                            child: Text(
+                                                                "Sort By Body"),
+                                                          ),
+                                                        ),
+                                                        Center(
+                                                          child: Container(
+                                                            child: Text(
+                                                                "Price Body"),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10),
+                                                    height: 50,
+                                                    width: double.infinity,
+                                                    child: ElevatedButton(
+                                                      onPressed: () {},
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        shape:
+                                                            new RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              new BorderRadius
+                                                                      .circular(
+                                                                  15.0),
+                                                        ),
+                                                        primary:
+                                                            themePrimaryColor,
+                                                      ),
+                                                      child: Text(
+                                                        "Complete",
+                                                        style: TextStyle(
+                                                          fontSize: 12.0,
+                                                          color:
+                                                              Colors.grey[800],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(),
                                   InkWell(
                                     child: Padding(
                                       padding: const EdgeInsets.all(25.0),
                                       child: Container(
-                                        height: 7.5,
+                                        height: 5,
                                         width: 50,
                                         decoration: BoxDecoration(
-                                          color: Colors.grey[500],
+                                          color: Colors.grey[400],
                                           borderRadius:
                                               BorderRadius.circular(50),
                                         ),
@@ -341,6 +445,62 @@ class _CategoryDetailState extends State<CategoryDetail> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget searchCategory() {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 105,
+              width: 90,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Color.fromRGBO(244, 245, 247, 1),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: 60,
+                        width: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Color.fromRGBO(254, 199, 45, 1),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(
+                              'https://purepng.com/public/uploads/large/purepng.com-fast-food-burgerburgerfast-foodhammeatfast-food-burgermc-donaldsburger-king-231519340212qzreu.png',
+                              fit: BoxFit.cover),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(
+                        "Product Name",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 12),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -1162,74 +1322,38 @@ class _CategoryDetailState extends State<CategoryDetail> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            height: 75,
-                            width: 75,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: 100.0,
+                        width: 75.0,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          children: [
+                            ClipRRect(
                               borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(
-                                    'https://i.pinimg.com/originals/1b/ee/08/1bee08aa56544de70e0c6bffe4a944a4.jpg'),
+                              child: Image.network(
+                                'https://i.pinimg.com/originals/1b/ee/08/1bee08aa56544de70e0c6bffe4a944a4.jpg',
+                                width: 75.0,
+                                height: 75.0,
                               ),
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Text(
-                            "Domino's",
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            height: 75,
-                            width: 75,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(
-                                    'https://w1.pngwing.com/pngs/993/806/png-transparent-burger-hamburger-burger-king-logo-hungry-jacks-bun-back-to-the-future-orange.png'),
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Text(
+                                "Domino's",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 12),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Text(
-                            "Burger King",
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
