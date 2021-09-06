@@ -375,11 +375,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
               duration: const Duration(milliseconds: 500),
               curve: Curves.fastOutSlowIn,
               width: double.infinity,
-<<<<<<< Updated upstream
-              height: MediaQuery.of(context).size.height - (appbarHeight - 100),
-=======
               height: MediaQuery.of(context).size.height - (appbarHeight + 114),
->>>>>>> Stashed changes
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: returnedData == null
@@ -479,7 +475,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 25.0, right: 25.0),
-                child: Icon(Icons.access_time_filled_rounded, color: Colors.grey[600]),
+                child: Icon(Icons.access_time_filled_rounded,
+                    color: Colors.grey[600]),
               ),
               Text(
                 'Fast Delivery',
