@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                 padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
                 child: Container(
                   width: width,
-                  height: 100.0,
+                  // height: 100.0,
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(244, 245, 247, 1),
                     borderRadius: BorderRadius.circular(15),
