@@ -53,7 +53,9 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                   child: Text(
                     'Verify phone number',
                     style: TextStyle(
-                        color: Color.fromRGBO(128, 136, 142, 1), fontSize: 22),
+                      color: Color.fromRGBO(128, 136, 142, 1),
+                      fontSize: 18,
+                    ),
                   )),
             ),
             Container(
@@ -63,7 +65,9 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                   child: Text(
                     'We have just sent a code to $phonenumber',
                     style: TextStyle(
-                        color: Color.fromRGBO(149, 159, 175, 1), fontSize: 16),
+                      color: Color.fromRGBO(149, 159, 175, 1),
+                      fontSize: 14,
+                    ),
                   )),
             ),
             Padding(
@@ -101,7 +105,8 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => MainCategories()),
+                        builder: (BuildContext context) => MainCategories(),
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -113,7 +118,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                   child: Text(
                     "Next",
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: 12.0,
                       color: Colors.grey[800],
                     ),
                   ),
@@ -143,7 +148,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                   child: Text(
                     "Send Again",
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: 12.0,
                       color: Colors.grey[700],
                     ),
                   ),

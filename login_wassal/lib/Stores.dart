@@ -10,11 +10,6 @@ class AllShops extends StatefulWidget {
 }
 
 class _AllShopsState extends State<AllShops> {
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     //
@@ -25,7 +20,6 @@ class _AllShopsState extends State<AllShops> {
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(children: [
-          
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: SingleChildScrollView(
@@ -37,7 +31,6 @@ class _AllShopsState extends State<AllShops> {
                     color: Colors.white),
                 child: SingleChildScrollView(
                   child: Column(children: [
-                  
                     FutureBuilder(
                       future: allShops(context),
                       builder: ((context, snap) {
@@ -47,12 +40,16 @@ class _AllShopsState extends State<AllShops> {
                           return Text("${snap.error}");
                         } else {
                           return Center(
-                              child: Container(
-                                  child: CircularProgressIndicator(
-                                      strokeWidth: 10,
-                                      backgroundColor: Colors.red,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                          Colors.yellow))));
+                            child: Container(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 10,
+                                backgroundColor: Colors.red,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.yellow,
+                                ),
+                              ),
+                            ),
+                          );
                         }
                       }),
                     ),
@@ -74,12 +71,12 @@ Future<Widget> allShops(BuildContext context) async {
     List<Widget> x = [];
     data.forEach((element) {
       x.add(GestureDetector(
-        onTap: (){
+        onTap: () {
           Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => StoreDetail(storeBlock: element)),
-              );
+            context,
+            MaterialPageRoute(
+                builder: (context) => StoreDetail(storeBlock: element)),
+          );
         },
         child: Container(
             child: Row(
@@ -102,7 +99,6 @@ Future<Widget> allShops(BuildContext context) async {
               ),
             ),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -113,7 +109,10 @@ Future<Widget> allShops(BuildContext context) async {
                           color: Colors.black)),
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
-                    child: Icon(Icons.verified, color: Colors.green,),
+                    child: Icon(
+                      Icons.verified,
+                      color: Colors.green,
+                    ),
                   )
                 ],
               ),
@@ -127,11 +126,9 @@ Future<Widget> allShops(BuildContext context) async {
                       maxLines: 1,
                       style: TextStyle(color: Colors.grey),
                     ),
-             
                   ],
                 ),
               ),
-           
             ])
           ],
         )),
@@ -150,27 +147,3 @@ Future<Widget> allShops(BuildContext context) async {
     return Text("No Shops Available");
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,9 +1,10 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:flutter/material.dart';
+// import 'package:carousel_pro/carousel_pro.dart';
 import 'package:http/http.dart' as http;
-import 'package:sticky_headers/sticky_headers.dart';
-import 'Cart.dart';
+// import 'package:sticky_headers/sticky_headers.dart';
+// import 'Cart.dart';
 import 'Storedetail.dart';
 import 'productDetails.dart';
 import 'subcategory.dart';
@@ -22,41 +23,37 @@ class _CategoryDetailState extends State<CategoryDetail> {
   _CategoryDetailState({@required this.categoryBlock});
   String searckKeyword;
   Widget returnedData;
+  bool searchClickBtn;
+  bool dragButton;
   double appbarHeight;
-  bool searchClickBtn, dragButton = false;
   @override
   void initState() {
-    super.initState();
-    searckKeyword = "";
     appbarHeight = 75.0;
-    returnedData = Container();
-    searchClickBtn = true;
     dragButton = false;
-    returnedData = null;
+    searchClickBtn = true;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        bottomNavigationBar: getBottomBar(context),
-        backgroundColor: pagesBackground,
-        body: SafeArea(
-          child: SingleChildScrollView(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              StickyHeader(
-                header: AnimatedContainer(
-                  width: width,
-                  height: appbarHeight,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: pagesBackground,
+      bottomNavigationBar: getBottomBar(context),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Column(
+          children: [
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 5.0),
+                child: AnimatedContainer(
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.fastOutSlowIn,
+                  width: double.infinity,
+                  height: appbarHeight,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.vertical(
@@ -64,313 +61,285 @@ class _CategoryDetailState extends State<CategoryDetail> {
                     ),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                        color: Colors.grey[400],
-                        blurRadius: 15.0,
-                        offset: Offset(0.0, 0.75),
+                        color: Colors.grey[300],
+                        blurRadius: 3.0,
+                        offset: Offset(0.0, 0.5),
                       ),
                     ],
                   ),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: (appbarHeight - 25),
-                        child: Container(
-                          color: Colors.transparent,
-                          height: appbarHeight - (appbarHeight - 25),
-                          width: width,
-                          child: Center(
-                            child: dragButton
-                                ? GestureDetector(
+                  child: SingleChildScrollView(
+                    physics: ClampingScrollPhysics(),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                icon: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: Colors.grey[800],
+                                ),
+                              ),
+                              searchClickBtn
+                                  ? IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          searchClickBtn = false;
+                                          dragButton = true;
+                                          appbarHeight = 175.0;
+                                        });
+                                      },
+                                      icon: Icon(
+                                        Icons.search,
+                                        color: Colors.grey[800],
+                                      ),
+                                    )
+                                  : Text(''),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Delivery To.',
+                                    style: TextStyle(color: textcolor),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.near_me,
+                                        color: themePrimaryColor,
+                                      ),
+                                      Text(
+                                        'Home: Mit Ghamer.',
+                                        style: TextStyle(
+                                          fontSize: 16.0,
+                                          color: Colors.grey.shade700,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(Icons.arrow_drop_down),
+                                        color: themeSecondaryColor,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.shopping_cart_outlined,
+                                  color: Colors.grey[800],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        appbarHeight != null
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 25.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Color.fromRGBO(
+                                                  244, 245, 247, 1),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: TextField(
+                                              keyboardType: TextInputType.text,
+                                              style: TextStyle(
+                                                fontSize: 14.0,
+                                              ),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  searckKeyword = value;
+                                                  returnedData = FutureBuilder(
+                                                    future:
+                                                        searchProduct(context),
+                                                    builder: ((context, snap) {
+                                                      if (snap.hasData) {
+                                                        return snap.data;
+                                                      } else if (snap
+                                                          .hasError) {
+                                                        return Text(
+                                                            "${snap.error}");
+                                                      } else {
+                                                        return Center(
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    8.0),
+                                                            child: Container(
+                                                              child:
+                                                                  CircularProgressIndicator(
+                                                                strokeWidth: 2,
+                                                                backgroundColor:
+                                                                    Colors.red,
+                                                                valueColor:
+                                                                    AlwaysStoppedAnimation<
+                                                                            Color>(
+                                                                        Colors
+                                                                            .yellow),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+                                                    }),
+                                                  );
+                                                });
+                                              },
+                                              decoration: InputDecoration(
+                                                hintText: 'Search on Wssal…',
+                                                border: InputBorder.none,
+                                                focusedBorder: InputBorder.none,
+                                                enabledBorder: InputBorder.none,
+                                                errorBorder: InputBorder.none,
+                                                disabledBorder:
+                                                    InputBorder.none,
+                                                prefixIcon: Icon(Icons.search),
+                                                contentPadding:
+                                                    EdgeInsets.only(top: 15.0),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(
+                                            Icons.tune,
+                                            size: 24.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  InkWell(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(25.0),
+                                      child: Container(
+                                        height: 7.5,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[500],
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                      ),
+                                    ),
                                     onTap: () {
                                       setState(() {
                                         searchClickBtn = true;
                                         dragButton = false;
                                         appbarHeight = 75.0;
+                                        returnedData = null;
                                       });
                                     },
-                                    child: Icon(Icons.eject),
-                                  )
-                                : Text(''),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: (appbarHeight - 250),
-                        child: Container(
-                          color: Colors.transparent,
-                          height: appbarHeight - (appbarHeight - 250),
-                          width: width,
-                          child: SingleChildScrollView(
-                            physics: BouncingScrollPhysics(),
-                            child: returnedData,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 75.0,
-                        child: Container(
-                          color: Colors.white,
-                          height: appbarHeight - (appbarHeight - 100),
-                          width: width,
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 12.5, horizontal: 25.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Color.fromRGBO(244, 245, 247, 1),
-                                    borderRadius: BorderRadius.circular(15),
                                   ),
-                                  height: 50,
-                                  width: width - 125.0,
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.text,
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                    ),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        if (returnedData != null) {
-                                          appbarHeight = 400.0;
-                                        } else {
-                                          appbarHeight = 225.0;
-                                        }
-                                      });
-                                      setState(() {
-                                        searckKeyword = value;
-                                        returnedData = FutureBuilder(
-                                          future: searchProduct(context),
-                                          builder: ((context, snap) {
-                                            if (snap.hasData) {
-                                              return snap.data;
-                                            } else if (snap.hasError) {
-                                              return Text("${snap.error}");
-                                            } else {
-                                              return Center(
-                                                child: Padding(
-                                                  padding: EdgeInsets.all(8.0),
-                                                  child: Container(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      strokeWidth: 2,
-                                                      backgroundColor:
-                                                          Colors.red,
-                                                      valueColor:
-                                                          AlwaysStoppedAnimation<
-                                                                  Color>(
-                                                              Colors.yellow),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                          }),
-                                        );
-                                      });
-                                      setState(() {
-                                        if (returnedData != null) {
-                                          appbarHeight = 400.0;
-                                        } else {
-                                          appbarHeight = 225.0;
-                                        }
-                                      });
-                                    },
-                                    decoration: InputDecoration(
-                                      hintText: 'Search on Wssal…',
-                                      border: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      disabledBorder: InputBorder.none,
-                                      prefixIcon: Icon(Icons.search),
-                                      contentPadding: EdgeInsets.all(15.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.tune,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 0.0,
-                        child: Container(
-                          height: appbarHeight - (appbarHeight - 75),
-                          width: width,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.vertical(
-                              bottom: Radius.circular(25.0),
-                            ),
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 20.0),
-                                child: Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      icon: Icon(
-                                        Icons.arrow_back_ios,
-                                        color: text1color,
-                                      ),
-                                    ),
-                                    searchClickBtn
-                                        ? IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                if (returnedData != null) {
-                                                  appbarHeight = 400.0;
-                                                } else {
-                                                  appbarHeight = 200.0;
-                                                }
-                                                searchClickBtn = false;
-                                                dragButton = true;
-                                              });
-                                            },
-                                            icon: Icon(
-                                              Icons.search,
-                                              color: text1color,
-                                            ),
-                                          )
-                                        : Text(''),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(bottom: 8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 4.0),
-                                      child: Text(
-                                        'Delivery To.',
-                                        style: TextStyle(color: textcolor),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 4.0),
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.near_me,
-                                            color: themePrimaryColor,
-                                          ),
-                                          Text(
-                                            'Home: Mit Ghamer.',
-                                            style: TextStyle(
-                                              fontSize: 20.0,
-                                              color: Colors.grey.shade700,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(20.0),
-                                child: IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => CartPage()),
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.shopping_cart,
-                                    color: text1color,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                content: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(10),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Container(
-                            height: 200.0,
-                            width: MediaQuery.of(context).size.width,
-                            child: Carousel(
-                              boxFit: BoxFit.cover,
-                              autoplay: true,
-                              animationCurve: Curves.fastOutSlowIn,
-                              animationDuration: Duration(milliseconds: 1000),
-                              dotSize: 6.0,
-                              dotIncreasedColor: Colors.white,
-                              dotBgColor: Colors.transparent,
-                              dotPosition: DotPosition.bottomCenter,
-                              dotVerticalPadding: 5.0,
-                              showIndicator: true,
-                              indicatorBgPadding: 5.0,
-                              images: [
-                                AssetImage('assets/sliderImage.png'),
-                                AssetImage('assets/sliderImage.png'),
-                                AssetImage('assets/sliderImage.png'),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      foodData(),
-                      FutureBuilder(
-                        future: buildProducts(context),
-                        builder: ((context, AsyncSnapshot<Widget> snap) {
-                          if (snap.hasData) {
-                            return snap.data;
-                          } else if (snap.hasError) {
-                            return Text("${snap.error}");
-                          } else {
-                            return Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Container(
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    backgroundColor: Colors.red,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.yellow,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                        }),
-                      ),
-                    ],
+                                ],
+                              )
+                            : Container(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ],
-          )),
+            ),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.fastOutSlowIn,
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height - (appbarHeight) - 100,
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: returnedData == null
+                    ? Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(10),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Container(
+                                height: 200.0,
+                                width: MediaQuery.of(context).size.width,
+                                child: Carousel(
+                                  boxFit: BoxFit.cover,
+                                  autoplay: true,
+                                  animationCurve: Curves.fastOutSlowIn,
+                                  animationDuration:
+                                      Duration(milliseconds: 1000),
+                                  dotSize: 6.0,
+                                  dotIncreasedColor: Colors.white,
+                                  dotBgColor: Colors.transparent,
+                                  dotPosition: DotPosition.bottomCenter,
+                                  dotVerticalPadding: 5.0,
+                                  showIndicator: true,
+                                  indicatorBgPadding: 5.0,
+                                  images: [
+                                    AssetImage('assets/sliderImage.png'),
+                                    AssetImage('assets/sliderImage.png'),
+                                    AssetImage('assets/sliderImage.png'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          foodData(),
+                          featuredProduct(),
+                          topSellingProduct(),
+                          topSeller(),
+                          nearby(),
+                          freeDeilvery(),
+                          // FutureBuilder(
+                          //   future: buildProducts(context),
+                          //   builder: ((context, AsyncSnapshot<Widget> snap) {
+                          //     if (snap.hasData) {
+                          //       return snap.data;
+                          //     } else if (snap.hasError) {
+                          //       return Text("${snap.error}");
+                          //     } else {
+                          //       return Center(
+                          //         child: Padding(
+                          //           padding: EdgeInsets.all(8.0),
+                          //           child: Container(
+                          //             child: CircularProgressIndicator(
+                          //               strokeWidth: 2,
+                          //               backgroundColor: Colors.red,
+                          //               valueColor: AlwaysStoppedAnimation<Color>(
+                          //                 Colors.yellow,
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //       );
+                          //     }
+                          //   }),
+                          // ),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          returnedData,
+                        ],
+                      ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -382,85 +351,1367 @@ class _CategoryDetailState extends State<CategoryDetail> {
       List<Widget> x = [];
       data.forEach((element) {
         x.add(
-          Column(
+          Container(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    height: 105,
+                    width: 90,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color.fromRGBO(244, 245, 247, 1),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      Subcategory(subcatBlock: element),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: 60,
+                              width: 60,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Color.fromRGBO(254, 199, 45, 1),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                      imageURL + '/' + element['thumbnail']),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Text(
+                              "${element['name']}",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600, fontSize: 12),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      });
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey[300],
+              blurRadius: 3.0,
+              offset: Offset(0.0, 0.5),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
+              child: Row(
+                children: x,
+              ),
+            ),
+            Divider(),
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  //Shop Details
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 100,
+                          height: 100,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image(
+                              image: NetworkImage(
+                                  'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Burger_King_2020.svg/1200px-Burger_King_2020.svg.png'),
+                            ),
+                          ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'Burger King',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Icon(
+                                    Icons.verified,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: backgroundColor,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                    ),
+                                    padding: EdgeInsets.all(5),
+                                    child: Text(
+                                      'Promoted',
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: RichText(
+                                overflow: TextOverflow.ellipsis,
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "Open",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          color: Colors.green),
+                                    ),
+                                    WidgetSpan(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Icon(
+                                          Icons.circle,
+                                          size: 5,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: "Burger",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          color: Colors.grey),
+                                    ),
+                                    WidgetSpan(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Icon(
+                                          Icons.circle,
+                                          size: 5,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: "Sandwitch",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          color: Colors.grey),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10),
+                                      ),
+                                    ),
+                                    padding: EdgeInsets.all(5),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          WidgetSpan(
+                                            child: Icon(
+                                              Icons.star,
+                                              size: 14,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          TextSpan(text: " "),
+                                          TextSpan(
+                                            text: "4.8",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.alarm,
+                                        color: Colors.grey[500],
+                                        size: 16.0,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 5.0),
+                                        child: Text('25-35 Min'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.delivery_dining,
+                                        color: Colors.grey[500],
+                                        size: 16.0,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 5.0),
+                                        child: Text('3.5 L.E'),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Text("No Sub-Categories Available");
+    }
+  }
+
+  Widget featuredProduct() {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 325,
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.grey[300],
+            blurRadius: 3.0,
+            offset: Offset(0.0, 0.5),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+            child: Text(
+              'Featured',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          Divider(),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: BouncingScrollPhysics(),
+            child: Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Container(
+                    height: 250.0,
+                    width: 250.0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 125,
+                          width: 250,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(25),
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(25),
+                            child: Image.network(
+                              'https://us.123rf.com/450wm/fahrwasser/fahrwasser1711/fahrwasser171100133/90943213-festive-celebration-roasted-turkey-for-thanksgiving.jpg',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 25,
+                                height: 25,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: Image.network(
+                                    'https://w7.pngwing.com/pngs/159/757/png-transparent-black-charcoal-grill-with-flame-illustration-barbecue-grill-doner-kebab-hamburger-gyro-grill-food-beef-steak.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Fire Grill',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey[500],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Text(
+                            'Grilled Chicken',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: RichText(
+                            overflow: TextOverflow.ellipsis,
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "Open",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      color: Colors.green),
+                                ),
+                                WidgetSpan(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Icon(
+                                      Icons.circle,
+                                      size: 5,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "Burger",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      color: Colors.grey),
+                                ),
+                                WidgetSpan(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Icon(
+                                      Icons.circle,
+                                      size: 5,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "Sandwitch",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                              padding: EdgeInsets.all(5),
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                      child: Icon(
+                                        Icons.star,
+                                        size: 14,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    TextSpan(text: " "),
+                                    TextSpan(
+                                      text: "4.8",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.alarm,
+                                  color: Colors.grey[500],
+                                  size: 16.0,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 5.0),
+                                  child: Text('25-35 Min'),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.delivery_dining,
+                                  color: Colors.grey[500],
+                                  size: 16.0,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 5.0),
+                                  child: Text('3.5 L.E'),
+                                )
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget topSellingProduct() {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.grey[300],
+            blurRadius: 3.0,
+            offset: Offset(0.0, 0.5),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 10),
+            child: Text(
+              'Top Selling',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          Divider(),
+          GridView.count(
+            primary: false,
+            padding: const EdgeInsets.all(8),
+            crossAxisSpacing: 10,
+            childAspectRatio: 0.9,
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  height: 105,
-                  width: 90,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Color.fromRGBO(244, 245, 247, 1),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 125,
+                        child: Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.network(
+                                'https://media-cdn.tripadvisor.com/media/photo-s/0a/c0/7c/98/best-pizza-in-lahore.jpg',
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      WidgetSpan(
+                                        child: Icon(
+                                          Icons.star,
+                                          size: 14,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      TextSpan(text: " "),
+                                      TextSpan(
+                                        text: "4.8",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: Container(
+                                height: 25,
+                                width: 25,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(35),
+                                  child: Image(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                        'https://w7.pngwing.com/pngs/159/757/png-transparent-black-charcoal-grill-with-flame-illustration-barbecue-grill-doner-kebab-hamburger-gyro-grill-food-beef-steak.png'),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8, top: 5),
+                              child: Text(
+                                "Fire Grill",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 11,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          "Food",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 16),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: RichText(
+                          overflow: TextOverflow.ellipsis,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Open",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                    color: Colors.green),
+                              ),
+                              WidgetSpan(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Icon(
+                                    Icons.circle,
+                                    size: 5,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                              TextSpan(
+                                text: "Burger",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                    color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "",
+                                  ),
+                                  WidgetSpan(
+                                    child: Icon(
+                                      Icons.alarm,
+                                      size: 12,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: " ",
+                                  ),
+                                  TextSpan(
+                                    text: "30-45 min",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 10,
+                                        color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            RichText(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "",
+                                  ),
+                                  WidgetSpan(
+                                    child: Icon(
+                                      Icons.delivery_dining,
+                                      size: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: " ",
+                                  ),
+                                  TextSpan(
+                                    text: "\$ 20",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 10,
+                                        color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget topSeller() {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 180.0,
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.grey[300],
+            blurRadius: 3.0,
+            offset: Offset(0.0, 0.5),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 8),
+            child: Text(
+              'Top Seller',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          Divider(),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                     child: Column(
                       children: [
                         GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Subcategory(subcatBlock: element)),
-                            );
-                          },
+                          onTap: () {},
                           child: Container(
-                            height: 60,
-                            width: 60,
+                            height: 75,
+                            width: 75,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
-                              color: Color.fromRGBO(254, 199, 45, 1),
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
                               child: Image(
                                 fit: BoxFit.cover,
                                 image: NetworkImage(
-                                    imageURL + '/' + element['thumbnail']),
+                                    'https://i.pinimg.com/originals/1b/ee/08/1bee08aa56544de70e0c6bffe4a944a4.jpg'),
                               ),
                             ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(5.0),
+                          padding: const EdgeInsets.all(4.0),
                           child: Text(
-                            "${element['name']}",
+                            "Domino's",
                             overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
+                            maxLines: 2,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 12),
+                            style: TextStyle(fontSize: 12),
                           ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            height: 75,
+                            width: 75,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                    'https://w1.pngwing.com/pngs/993/806/png-transparent-burger-hamburger-burger-king-logo-hungry-jacks-bun-back-to-the-future-orange.png'),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text(
+                            "Burger King",
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget nearby() {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 325,
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.grey[300],
+            blurRadius: 3.0,
+            offset: Offset(0.0, 0.5),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+            child: Text(
+              'Nearby',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          Divider(),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: BouncingScrollPhysics(),
+            child: Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Container(
+                    height: 250.0,
+                    width: 250.0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 125,
+                          width: 250,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(25),
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(25),
+                            child: Image.network(
+                              'https://us.123rf.com/450wm/fahrwasser/fahrwasser1711/fahrwasser171100133/90943213-festive-celebration-roasted-turkey-for-thanksgiving.jpg',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 25,
+                                height: 25,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: Image.network(
+                                    'https://w7.pngwing.com/pngs/159/757/png-transparent-black-charcoal-grill-with-flame-illustration-barbecue-grill-doner-kebab-hamburger-gyro-grill-food-beef-steak.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Fire Grill',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey[500],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Text(
+                            'Grilled Chicken',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: RichText(
+                            overflow: TextOverflow.ellipsis,
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "Open",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      color: Colors.green),
+                                ),
+                                WidgetSpan(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Icon(
+                                      Icons.circle,
+                                      size: 5,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "Burger",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      color: Colors.grey),
+                                ),
+                                WidgetSpan(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Icon(
+                                      Icons.circle,
+                                      size: 5,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "Sandwitch",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                              padding: EdgeInsets.all(5),
+                              child: RichText(
+                                text: TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                      child: Icon(
+                                        Icons.star,
+                                        size: 14,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    TextSpan(text: " "),
+                                    TextSpan(
+                                      text: "4.8",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.alarm,
+                                  color: Colors.grey[500],
+                                  size: 16.0,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 5.0),
+                                  child: Text('25-35 Min'),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.delivery_dining,
+                                  color: Colors.grey[500],
+                                  size: 16.0,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 5.0),
+                                  child: Text('3.5 L.E'),
+                                )
+                              ],
+                            ),
+                          ],
                         )
                       ],
                     ),
                   ),
                 ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget freeDeilvery() {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.grey[300],
+            blurRadius: 3.0,
+            offset: Offset(0.0, 0.5),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 10),
+            child: Text(
+              'Free Deilvery',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          Divider(),
+          GridView.count(
+            primary: false,
+            padding: const EdgeInsets.all(8),
+            crossAxisSpacing: 10,
+            childAspectRatio: 0.9,
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 125,
+                        child: Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.network(
+                                'https://media-cdn.tripadvisor.com/media/photo-s/0a/c0/7c/98/best-pizza-in-lahore.jpg',
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      WidgetSpan(
+                                        child: Icon(
+                                          Icons.star,
+                                          size: 14,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      TextSpan(text: " "),
+                                      TextSpan(
+                                        text: "4.8",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(25),
+                              child: Container(
+                                height: 25,
+                                width: 25,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(35),
+                                  child: Image(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                        'https://w7.pngwing.com/pngs/159/757/png-transparent-black-charcoal-grill-with-flame-illustration-barbecue-grill-doner-kebab-hamburger-gyro-grill-food-beef-steak.png'),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8, top: 5),
+                              child: Text(
+                                "Fire Grill",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 11,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(
+                          "Food",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 16),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: RichText(
+                          overflow: TextOverflow.ellipsis,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Open",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                    color: Colors.green),
+                              ),
+                              WidgetSpan(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Icon(
+                                    Icons.circle,
+                                    size: 5,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                              TextSpan(
+                                text: "Burger",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                    color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "",
+                                  ),
+                                  WidgetSpan(
+                                    child: Icon(
+                                      Icons.alarm,
+                                      size: 12,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: " ",
+                                  ),
+                                  TextSpan(
+                                    text: "30-45 min",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 10,
+                                        color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            RichText(
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "",
+                                  ),
+                                  WidgetSpan(
+                                    child: Icon(
+                                      Icons.delivery_dining,
+                                      size: 14,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: " ",
+                                  ),
+                                  TextSpan(
+                                    text: "\$ 20",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 10,
+                                        color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
-        );
-      });
-      return Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(20))),
-        padding: const EdgeInsets.only(top: 15.0, bottom: 5, left: 5, right: 5),
-        margin: EdgeInsets.all(10),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            // physics: NeverScrollableScrollPhysics(),
-            children: x,
-          ),
-        ),
-      );
-    } else {
-      return Text("No Sub-Categories Available");
-    }
+        ],
+      ),
+    );
   }
 
   Future<Widget> buildProducts(BuildContext context) async {

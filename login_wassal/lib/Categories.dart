@@ -70,7 +70,7 @@ class _MainCategoriesState extends State<MainCategories> {
                             child: Text(
                               'Home: Mit Ghamer.',
                               style: TextStyle(
-                                fontSize: 20.0,
+                                fontSize: 16.0,
                                 color: Colors.grey.shade700,
                               ),
                             ),
@@ -132,13 +132,13 @@ class _MainCategoriesState extends State<MainCategories> {
                                 Text(
                                   "Hello,",
                                   style: TextStyle(
-                                      color: Colors.grey, fontSize: 18.0),
+                                      color: Colors.grey, fontSize: 12.0),
                                 ),
                                 Text(
                                   "$storedName",
                                   style: TextStyle(
                                       color: Colors.grey.shade700,
-                                      fontSize: 28.0),
+                                      fontSize: 18.0),
                                 ),
                               ],
                             ),
@@ -240,14 +240,14 @@ Future<Widget> mainCategories(BuildContext context) async {
                         ),
                       ),
                       child: Align(
-                        alignment: Alignment.bottomCenter,
+                        alignment: Alignment.bottomLeft,
                         child: Padding(
                           padding: EdgeInsets.all(10.0),
                           child: Text(
                             element['name'].toUpperCase(),
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 22,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),

@@ -77,19 +77,18 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                         Container(
                           height: (MediaQuery.of(context).size.height) / 2.1,
                           width: width,
-                          decoration: BoxDecoration(
-                          ),
+                          decoration: BoxDecoration(),
                           child: Image.asset("assets/Illustration1.png"),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 57),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 'Diverse and fresh food.',
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 16,
                                 ),
                               ),
                               SizedBox(
@@ -99,7 +98,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                                 "With the best local ingrdients, we have create\nfresh,delicious food and drinks",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   color: Colors.grey[400],
                                 ),
                               )
@@ -116,10 +115,6 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                         Container(
                           height: (MediaQuery.of(context).size.height) / 2.1,
                           width: width,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            // color: Colors.black,
-                          ),
                           child: Image.asset("assets/Illustration3.png"),
                         ),
                         Padding(
@@ -129,7 +124,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                               Text(
                                 "+15K Restaurants",
                                 style: TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 16,
                                 ),
                               ),
                               SizedBox(
@@ -139,7 +134,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                                 "Easily find your favorite food and make deliveries in\na fat time",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   color: Colors.grey[400],
                                 ),
                               )
@@ -156,9 +151,6 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                         Container(
                           height: (MediaQuery.of(context).size.height) / 2.1,
                           width: width,
-                          decoration: BoxDecoration(color: Colors.white
-                              // color: Colors.black,
-                              ),
                           child: Image.asset("assets/Illustration2.png"),
                         ),
                         Padding(
@@ -168,7 +160,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                               Text(
                                 "Free delivery on all orders",
                                 style: TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 16,
                                 ),
                               ),
                               SizedBox(
@@ -178,7 +170,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                                 "Free shipping on the first order when using CaPay\npayment method.",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   color: Colors.grey[400],
                                 ),
                               )
@@ -305,7 +297,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                       child: Text(
                         "Get Started",
                         style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 12.0,
                           color: Colors.grey[800],
                         ),
                       ),
