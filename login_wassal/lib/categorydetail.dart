@@ -37,6 +37,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
 
   @override
   Widget build(BuildContext context) {
+    latestContext = context;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: pagesBackground,
@@ -368,7 +369,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
               duration: const Duration(milliseconds: 500),
               curve: Curves.fastOutSlowIn,
               width: double.infinity,
-              height: MediaQuery.of(context).size.height - (appbarHeight) - 100,
+              height: MediaQuery.of(context).size.height - (appbarHeight - 100),
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: returnedData == null

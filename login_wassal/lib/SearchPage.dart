@@ -16,6 +16,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget returnedData = Container();
   @override
   Widget build(BuildContext context) {
+    latestContext = context;
     //
     return Scaffold(
       bottomNavigationBar: getBottomBar(context),

@@ -5,11 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:wassal_customer/wallet/venderWoilet.dart';
 import '../const.dart';
 
-
-  var balance;
+var balance;
 
 class WithdrawRequest extends StatefulWidget {
-
   @override
   _WithdrawRequestState createState() => _WithdrawRequestState();
 }
@@ -17,71 +15,69 @@ class WithdrawRequest extends StatefulWidget {
 class _WithdrawRequestState extends State<WithdrawRequest> {
   @override
   Widget build(BuildContext context) {
+    latestContext = context;
     return Scaffold(
-            appBar: getAppbar(context, "Withdraw"),
+      appBar: getAppbar(context, "Withdraw"),
       bottomNavigationBar: getBottomBar(context),
       body: SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Container(
-        height: 200,
-        child: Column(
-          children: [
-             Container(
-                    margin: EdgeInsets.only(top: 15, left: 15, right: 15),
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(244, 245, 247, 1),
-                      borderRadius: BorderRadius.circular(15),
+        scrollDirection: Axis.vertical,
+        child: Container(
+          height: 200,
+          child: Column(
+            children: [
+              Container(
+                  margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(244, 245, 247, 1),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  padding: EdgeInsets.only(left: 10),
+                  height: 50,
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "This field is required";
+                      } else {
+                        return null;
+                      }
+                    },
+                    onChanged: (value) {
+                      balance = value;
+                    },
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      // icon: Icon(
+                      //   Icons.calendar_today_outlined,
+                      //   color: Color.fromRGBO(193, 199, 208, 1),
+                      // ),
+                      hintText: 'Enter Ammount',
+                      hintStyle: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          // color: Color.fromRGBO(195, 153, 141, 1)
+                          color: Color.fromRGBO(182, 189, 200, 1)),
                     ),
-                    padding: EdgeInsets.only(left: 10),
-                    height: 50,
-                    child: TextFormField(
-                    
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return "This field is required";
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (value) {
-                        balance = value;
-                      },
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        // icon: Icon(
-                        //   Icons.calendar_today_outlined,
-                        //   color: Color.fromRGBO(193, 199, 208, 1),
-                        // ),
-                        hintText: 'Enter Ammount',
-                        hintStyle: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            // color: Color.fromRGBO(195, 153, 141, 1)
-                            color: Color.fromRGBO(182, 189, 200, 1)),
-                      ),
-                    )),
-                         Container(
-                              margin: EdgeInsets.all(10),
-                              child: RaisedButton(
-                                color: Color.fromRGBO(215, 89, 70, 1),
-                                textColor: Colors.white,
-                                child: Text('WithDraw'),
-                                onPressed: () {
-                                buildWithdraw();
-                                },
-                              )),
-          ],
+                  )),
+              Container(
+                  margin: EdgeInsets.all(10),
+                  child: RaisedButton(
+                    color: Color.fromRGBO(215, 89, 70, 1),
+                    textColor: Colors.white,
+                    child: Text('WithDraw'),
+                    onPressed: () {
+                      buildWithdraw();
+                    },
+                  )),
+            ],
+          ),
         ),
       ),
-    ),
     );
   }
-
-
 
   buildWithdraw() async {
     try {
@@ -95,8 +91,8 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
         headers: {'Authorization': 'Bearer $loginToken'},
       );
       print({
-          "balance": "$balance",
-          "method": 'paypall',
+        "balance": "$balance",
+        "method": 'paypall',
       });
       print('Response body: ${response.body}');
       var data = json.decode(response.body);

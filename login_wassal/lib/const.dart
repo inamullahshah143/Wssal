@@ -19,6 +19,7 @@ String storedName;
 String storedNumber;
 String fcmToken;
 bool logs = false;
+BuildContext latestContext;
 
 Map<int, Color> colorMap = {
   50: Color.fromRGBO(254, 197, 0, .1),

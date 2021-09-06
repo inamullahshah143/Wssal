@@ -29,7 +29,7 @@ class SplashScreen extends StatefulWidget {
 
 class SplashScreenState extends State<SplashScreen> {
     FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  String fcmToken = "";
+  
   void initState() {
     getLogs();
         getToken();

@@ -267,7 +267,7 @@ login(context) async {
     var url = 'https://wassldev.einnovention.tech/api/login';
     var response = await http.post(Uri.parse(url), body: {
       'phone': '$countryCode$number',
-      'fcm_token':'login'
+      'fcm_token':'$fcmToken'
     }, headers: {
       'Accept': 'application/json'
     });

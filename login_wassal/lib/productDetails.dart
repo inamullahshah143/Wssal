@@ -46,6 +46,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
+    latestContext = context;
     return Scaffold(
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -297,6 +298,7 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
 
   @override
   Widget build(BuildContext context) {
+    latestContext = context;
     return Padding(
       padding: const EdgeInsets.only(top: 18.0),
       child: Row(

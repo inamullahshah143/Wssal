@@ -12,6 +12,7 @@ class LatestOrderDetail extends StatefulWidget {
 class _LatestOrderDetailState extends State<LatestOrderDetail> {
   @override
   Widget build(BuildContext context) {
+    latestContext = context;
     //
     return Scaffold(
       bottomNavigationBar: getBottomBar(context),

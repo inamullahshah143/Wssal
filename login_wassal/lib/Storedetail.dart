@@ -10,8 +10,7 @@ class StoreDetail extends StatefulWidget {
   final Map storeBlock;
   StoreDetail({@required this.storeBlock});
   @override
-  _StoreDetailState createState() =>
-      _StoreDetailState(storeBlock: storeBlock);
+  _StoreDetailState createState() => _StoreDetailState(storeBlock: storeBlock);
 }
 
 class _StoreDetailState extends State<StoreDetail> {
@@ -19,6 +18,7 @@ class _StoreDetailState extends State<StoreDetail> {
   _StoreDetailState({@required this.storeBlock});
   @override
   Widget build(BuildContext context) {
+    latestContext = context;
     return Scaffold(
       appBar: getAppbar(context, "${storeBlock['title']}"),
       bottomNavigationBar: getBottomBar(context),
@@ -29,7 +29,6 @@ class _StoreDetailState extends State<StoreDetail> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-            
                 FutureBuilder(
                   future: buildProducts(context),
                   builder: ((context, AsyncSnapshot<Widget> snap) {
@@ -56,13 +55,11 @@ class _StoreDetailState extends State<StoreDetail> {
     );
   }
 
-  
-
   Future<Widget> buildProducts(BuildContext context) async {
-    var response =
-        await http.get(Uri.parse("$apiURL/productsByShop/${storeBlock['id']}"), headers: {
-         'Authorization': 'Bearer $loginToken',
-        });
+    var response = await http
+        .get(Uri.parse("$apiURL/productsByShop/${storeBlock['id']}"), headers: {
+      'Authorization': 'Bearer $loginToken',
+    });
     print("buildProducts: ${response.body}");
     if (json.decode(response.body)['status'] == 200) {
       List data = json.decode(response.body)['products'];

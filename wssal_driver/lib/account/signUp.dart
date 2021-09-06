@@ -296,7 +296,7 @@ signUp(context) async {
   var response = await http.post(Uri.parse(url), body: {
     'name': '$name',
     'phone': '$countryCode$number',
-    'fcm_token':'signup',
+    'fcm_token':'$fcmToken',
     'role':  'driver'
   });
   print('Response body: ${response.body}');

@@ -34,6 +34,7 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
+    latestContext = context;
     //
     return Scaffold(
       bottomNavigationBar: Padding(
@@ -174,6 +175,7 @@ class _CartProductState extends State<CartProduct> {
 
   @override
   Widget build(BuildContext context) {
+    latestContext = context;
     return ListTile(
       leading: Image(
         image: NetworkImage("${cartProductBlock['product_image']}"),

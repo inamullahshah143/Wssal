@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:wassal_customer/const.dart';
 import 'package:wassal_customer/wallet/venderWoilet.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'PaypalServices.dart';
@@ -118,6 +119,7 @@ class PaypalPaymentState extends State<PaypalPayment> {
 
   @override
   Widget build(BuildContext context) {
+    latestContext = context;
     print(checkoutUrl);
 
     if (checkoutUrl != null) {
@@ -141,11 +143,11 @@ class PaypalPaymentState extends State<PaypalPayment> {
                     .executePayment(executeUrl, payerID, accessToken, context)
                     .then((id) {
                   widget.onFinish(id);
-                   Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) => DriverWoilet(),
-            ),
-          );
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => DriverWoilet(),
+                    ),
+                  );
                 });
               } else {
                 Navigator.of(context).pop();

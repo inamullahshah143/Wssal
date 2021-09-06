@@ -12,6 +12,7 @@ class AllShops extends StatefulWidget {
 class _AllShopsState extends State<AllShops> {
   @override
   Widget build(BuildContext context) {
+    latestContext = context;
     //
     return Scaffold(
       bottomNavigationBar: getBottomBar(context),

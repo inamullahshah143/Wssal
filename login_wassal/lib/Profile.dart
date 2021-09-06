@@ -17,6 +17,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    latestContext = context;
     //
     return Scaffold(
       bottomNavigationBar: getBottomBar(context),

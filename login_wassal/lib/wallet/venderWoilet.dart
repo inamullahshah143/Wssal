@@ -20,6 +20,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    latestContext = context;
     return Scaffold(
       appBar: getAppbar(context, "Wallet"),
       bottomNavigationBar: getBottomBar(context),
@@ -63,7 +64,8 @@ class _DriverWoiletState extends State<DriverWoilet> {
                         ),
                       )),
                   Container(
-                    margin: EdgeInsets.only(top:20,bottom: 20,left: 20,right: 20),
+                    margin: EdgeInsets.only(
+                        top: 20, bottom: 20, left: 20, right: 20),
                     padding: EdgeInsets.all(6),
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey, width: 0.5)),
@@ -268,20 +270,16 @@ class _DriverWoiletState extends State<DriverWoilet> {
           data.forEach((element) {
             x.add(Container(
                 margin: EdgeInsets.only(left: 20, top: 15, right: 20),
-                          padding: EdgeInsets.only(left:10,right:10,bottom: 6,top: 6),
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, bottom: 6, top: 6),
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                  
-                  )
-                ),
+                    border: Border.all(
+                  color: Colors.black,
+                )),
                 child: Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(
-                        top: 15,
-                        bottom: 15
-                      ),
+                      margin: EdgeInsets.only(top: 15, bottom: 15),
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(

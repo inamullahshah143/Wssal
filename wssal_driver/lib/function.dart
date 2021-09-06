@@ -20,6 +20,7 @@ var namee;
 var picture;
 var picBaseURL = 'https://wassldev.einnovention.tech/storage/';
 BuildContext latestContext;
+String fcmToken = "";
 
 List users = [
   {"userId": 1, "name": "Ahmad", "pic": "assets/ahmad.jpg"},
