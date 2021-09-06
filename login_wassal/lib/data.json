@@ -1,0 +1,11 @@
+{
+  "category": "pizza",
+  "sort_by": {
+    "recommended": true,
+    "free_delivery": true,
+    "popular": false
+  },
+  "price_digit": "2",
+  "delivery_fee_max": "200",
+  "delivery_fee_min": "10"
+}
