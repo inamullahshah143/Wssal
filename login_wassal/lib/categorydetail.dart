@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 // import 'package:sticky_headers/sticky_headers.dart';
 // import 'Cart.dart';
 import 'Storedetail.dart';
+import 'digit_slider.dart';
 import 'productDetails.dart';
 import 'subcategory.dart';
 import 'const.dart';
@@ -31,6 +32,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
   TabController _tabController;
   double _maxValue;
   double _minValue;
+  double _priceRange;
   @override
   void initState() {
     appbarHeight = 75.0;
@@ -39,8 +41,9 @@ class _CategoryDetailState extends State<CategoryDetail> {
     isRecomended = false;
     isFastDelivery = false;
     isMostPopular = false;
-    _maxValue = 1.0;
-    _minValue = 5.0;
+    _maxValue = 9;
+    _minValue = 2;
+    _priceRange = 2;
     super.initState();
   }
 
@@ -441,52 +444,90 @@ class _CategoryDetailState extends State<CategoryDetail> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            'Max Delivery Fee',
-            style: TextStyle(
-              fontSize: 14,
-            ),
+        Text(
+          'Max Delivery Fee',
+          style: TextStyle(
+            fontSize: 14,
           ),
         ),
-        FlutterSlider(
-          values: [2, 4],
-          rangeSlider: true,
-          max: 5,
-          min: 1,
-          tooltip: FlutterSliderTooltip(
-            leftPrefix: Text(
-              '₤',
-              style: TextStyle(
-                fontSize: 10,
-                color: Colors.grey[500],
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('${_minValue.toString()}₤'),
+            ),
+            Flexible(
+              child: FlutterSlider(
+                trackBar: FlutterSliderTrackBar(
+                    activeTrackBar: BoxDecoration(color: themeSecondaryColor)),
+                values: [_minValue, _maxValue],
+                rangeSlider: true,
+                max: 10,
+                min: 1,
+                tooltip: FlutterSliderTooltip(
+                  leftPrefix: Text(
+                    '₤',
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  rightSuffix: Text(
+                    '₤',
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                ),
+                onDragging: (handlerIndex, lowerValue, upperValue) {
+                  setState(() {
+                    _minValue = lowerValue;
+                    _maxValue = upperValue;
+                  });
+                },
               ),
             ),
-            rightSuffix: Text(
-              '₤',
-              style: TextStyle(
-                fontSize: 10,
-                color: Colors.grey[500],
-              ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('${_maxValue.toString()}₤'),
             ),
-          ),
-          onDragging: (handlerIndex, lowerValue, upperValue) {
-            setState(() {
-              _minValue = lowerValue;
-              _maxValue = upperValue;
-            });
-          },
+          ],
         ),
         Divider(),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            'Price Range',
-            style: TextStyle(
-              fontSize: 14,
-            ),
+        Text(
+          'Price Range',
+          style: TextStyle(
+            fontSize: 14,
           ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('₤'),
+            ),
+            Flexible(
+              child: DigitFlutterSlider(
+                trackBar: DigitFlutterSliderTrackBar(
+                    activeTrackBar: BoxDecoration(color: themeSecondaryColor)),
+                values: [_priceRange],
+                max: 5,
+                min: 1,
+                onDragging: (handlerIndex, lowerValue, upperValue) {
+                  setState(() {
+                    _priceRange = lowerValue;
+                  });
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('₤₤₤₤₤'),
+            ),
+          ],
         ),
       ],
     );
