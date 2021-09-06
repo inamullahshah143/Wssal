@@ -43,6 +43,7 @@ dependencies:
   sticky_headers: ^0.2.0
   firebase_messaging: ^10.0.4
   firebase_core: ^1.4.0
+  flutter_xlider: ^3.4.0
    
 
 dev_dependencies:

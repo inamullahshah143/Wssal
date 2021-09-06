@@ -9,6 +9,7 @@ import 'Storedetail.dart';
 import 'productDetails.dart';
 import 'subcategory.dart';
 import 'const.dart';
+import 'package:flutter_xlider/flutter_xlider.dart';
 
 class CategoryDetail extends StatefulWidget {
   final Map categoryBlock;
@@ -28,6 +29,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
   double appbarHeight;
   bool isRecomended, isFastDelivery, isMostPopular;
   TabController _tabController;
+  double _maxValue;
+  double _minValue;
   @override
   void initState() {
     appbarHeight = 75.0;
@@ -36,6 +39,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
     isRecomended = false;
     isFastDelivery = false;
     isMostPopular = false;
+    _maxValue = 1.0;
+    _minValue = 5.0;
     super.initState();
   }
 
@@ -297,8 +302,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                         ),
                                                         Center(
                                                           child: Container(
-                                                            child: Text(
-                                                                "Price Body"),
+                                                            child:
+                                                                searchPrice(),
                                                           ),
                                                         ),
                                                       ],
@@ -428,6 +433,62 @@ class _CategoryDetailState extends State<CategoryDetail> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget searchPrice() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text(
+            'Max Delivery Fee',
+            style: TextStyle(
+              fontSize: 14,
+            ),
+          ),
+        ),
+        FlutterSlider(
+          values: [2, 4],
+          rangeSlider: true,
+          max: 5,
+          min: 1,
+          tooltip: FlutterSliderTooltip(
+            leftPrefix: Text(
+              '₤',
+              style: TextStyle(
+                fontSize: 10,
+                color: Colors.grey[500],
+              ),
+            ),
+            rightSuffix: Text(
+              '₤',
+              style: TextStyle(
+                fontSize: 10,
+                color: Colors.grey[500],
+              ),
+            ),
+          ),
+          onDragging: (handlerIndex, lowerValue, upperValue) {
+            setState(() {
+              _minValue = lowerValue;
+              _maxValue = upperValue;
+            });
+          },
+        ),
+        Divider(),
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text(
+            'Price Range',
+            style: TextStyle(
+              fontSize: 14,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
