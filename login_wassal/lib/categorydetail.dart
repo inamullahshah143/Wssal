@@ -142,10 +142,26 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                           color: Colors.grey.shade700,
                                         ),
                                       ),
-                                      IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(Icons.arrow_drop_down),
-                                        color: themeSecondaryColor,
+                                      PopupMenuButton(
+                                        icon: Icon(
+                                          Icons.arrow_drop_down,
+                                          color: themeSecondaryColor,
+                                        ),
+                                        onSelected: (value) async {
+                                          if (value == 1) {}
+                                          if (value == 2) {}
+                                        },
+                                        itemBuilder: (context) => [
+                                          PopupMenuItem(
+                                            child: Text('Current Location'),
+                                            value: 1,
+                                          ),
+                                          PopupMenuItem(
+                                            child:
+                                                Text('Get Specific Location'),
+                                            value: 2,
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
@@ -324,7 +340,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                               selectedCategory,
                                                           "sort_by":
                                                               sortByChoice,
-                                                          "price_digit": _priceRange,
+                                                          "price_digit":
+                                                              _priceRange,
                                                           "delivery_fee_max":
                                                               _maxValue,
                                                           "delivery_fee_min":
@@ -2519,6 +2536,158 @@ class _CategoryDetailState extends State<CategoryDetail> {
           onTap: () {
             http
                 .get((Uri.parse("$apiURL/productDetail/${element['id']}")))
+                .then((value) {
+              if (value.statusCode == 200) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ProductDetails(d: json.decode(value.body)['data'])),
+                );
+              }
+            });
+          },
+          child: Container(
+              child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  height: 80,
+                  width: 80,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image(
+                      fit: BoxFit.fill,
+                      image: NetworkImage(
+                          imageURL + '/' + element['images'][0]['path']),
+                    ),
+                  ),
+                ),
+              ),
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(element['title'],
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black)),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        element['tags'],
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
+              ])
+            ],
+          )),
+        ));
+      });
+      shops.forEach((element) {
+        x.add(GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => StoreDetail(storeBlock: element)),
+            );
+          },
+          child: Container(
+              child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  height: 80,
+                  width: 80,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image(
+                      fit: BoxFit.fill,
+                      image: NetworkImage(imageURL + '/' + element['logo']),
+                    ),
+                  ),
+                ),
+              ),
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(element['title'],
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black)),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Icon(
+                        Icons.verified,
+                        color: Colors.green,
+                      ),
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        element['description'],
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
+              ])
+            ],
+          )),
+        ));
+      });
+      return Column(
+        children: x,
+      );
+    } else {
+      return Center(child: Text("No data found.Try another keyword"));
+    }
+  }
+
+  Future<Widget> searchProductByFilter(BuildContext context) async {
+    var response =
+        await http.post((Uri.parse("$apiURL/filterProducts")), body: {
+      "category": selectedCategory,
+      "sort_by": sortByChoice,
+      "price_digit": _priceRange,
+      "delivery_fee_max": _maxValue,
+      "delivery_fee_min": _minValue,
+    });
+    if (response.statusCode == 200) {
+      List products = json.decode(response.body)['products'];
+      List shops = json.decode(response.body)['shops'];
+      List<Widget> x = [];
+      products.forEach((element) {
+        x.add(GestureDetector(
+          onTap: () {
+            http
+                .get((Uri.parse("$apiURL/filterProducts/${element['id']}")))
                 .then((value) {
               if (value.statusCode == 200) {
                 Navigator.push(
