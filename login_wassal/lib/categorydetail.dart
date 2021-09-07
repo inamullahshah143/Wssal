@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:wassal_customer/setupLocation.dart';
 import 'Storedetail.dart';
@@ -38,6 +40,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
   String selectedCategory;
   Color unselectedColor = Color.fromRGBO(244, 245, 247, 1);
   Color selectedColor = Color.fromRGBO(222, 61, 48, 0.25);
+  String yourLocation;
+  Position currentPosition;
   @override
   void initState() {
     appbarHeight = 75.0;
@@ -50,6 +54,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
     _minValue = 2;
     _priceRange = 2;
     _radioValue = 'Recomended';
+    yourLocation = 'Mit Ghamer.';
     super.initState();
   }
 
@@ -124,6 +129,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                   : Text(''),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
                                     'Delivery To.',
@@ -135,11 +141,19 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                         Icons.near_me,
                                         color: themePrimaryColor,
                                       ),
-                                      Text(
-                                        'Home: Mit Ghamer.',
-                                        style: TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.grey.shade700,
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                3.75,
+                                        child: Text(
+                                          yourLocation,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.grey.shade700,
+                                          ),
                                         ),
                                       ),
                                       PopupMenuButton(
@@ -148,7 +162,9 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                           color: themeSecondaryColor,
                                         ),
                                         onSelected: (value) async {
-                                          if (value == 1) {}
+                                          if (value == 1) {
+                                            determinePosition();
+                                          }
                                           if (value == 2) {}
                                         },
                                         itemBuilder: (context) => [
@@ -335,19 +351,48 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                     width: double.infinity,
                                                     child: ElevatedButton(
                                                       onPressed: () {
-                                                        var x = {
-                                                          "category":
-                                                              selectedCategory,
-                                                          "sort_by":
-                                                              sortByChoice,
-                                                          "price_digit":
-                                                              _priceRange,
-                                                          "delivery_fee_max":
-                                                              _maxValue,
-                                                          "delivery_fee_min":
-                                                              _minValue
-                                                        };
-                                                        print(json.encode(x));
+                                                        setState(() {
+                                                          appbarHeight = 175.0;
+                                                          returnedData =
+                                                              FutureBuilder(
+                                                            future:
+                                                                searchProductByFilter(
+                                                                    context),
+                                                            builder: ((context,
+                                                                snap) {
+                                                              if (snap
+                                                                  .hasData) {
+                                                                return snap
+                                                                    .data;
+                                                              } else if (snap
+                                                                  .hasError) {
+                                                                return Text(
+                                                                    "${snap.error}");
+                                                              } else {
+                                                                return Center(
+                                                                  child:
+                                                                      Padding(
+                                                                    padding:
+                                                                        EdgeInsets.all(
+                                                                            8.0),
+                                                                    child:
+                                                                        Container(
+                                                                      child:
+                                                                          CircularProgressIndicator(
+                                                                        strokeWidth:
+                                                                            2,
+                                                                        backgroundColor:
+                                                                            Colors.red,
+                                                                        valueColor:
+                                                                            AlwaysStoppedAnimation<Color>(Colors.yellow),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              }
+                                                            }),
+                                                          );
+                                                        });
                                                       },
                                                       style: ElevatedButton
                                                           .styleFrom(
@@ -690,7 +735,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
               onTap: () {
                 setState(() {
                   _isSelectedIndex = index;
-                  selectedCategory = '${categoryBlock['children'][index]['name']}';
+                  selectedCategory =
+                      '${categoryBlock['children'][index]['id']}';
                 });
               },
               child: Column(
@@ -721,7 +767,9 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image.network(
-                                  imageURL + '/' + '${categoryBlock['children'][index]['thumbnail']}',
+                                    imageURL +
+                                        '/' +
+                                        '${categoryBlock['children'][index]['thumbnail']}',
                                     fit: BoxFit.cover),
                               ),
                             ),
@@ -2820,5 +2868,39 @@ class _CategoryDetailState extends State<CategoryDetail> {
     } else {
       return Center(child: Text("No data found.Try another keyword"));
     }
+  }
+
+  Future<Position> determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      print('Please enable Your Location Service');
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        print('Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      print(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    try {
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+      Placemark place = placemarks[0];
+      setState(() {
+        currentPosition = position;
+        yourLocation = "${place.locality}, ${place.country}";
+      });
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 }

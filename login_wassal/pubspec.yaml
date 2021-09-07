@@ -47,6 +47,8 @@ dependencies:
   google_maps_flutter_web:
   google_maps_flutter:
   dotted_border:
+  geocoding: ^2.0.1
+  geolocator: ^7.6.0
    
 
 dev_dependencies:
