@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-// import 'package:carousel_pro/carousel_pro.dart';
 import 'package:http/http.dart' as http;
-// import 'package:sticky_headers/sticky_headers.dart';
-// import 'Cart.dart';
+import 'package:wassal_customer/setupLocation.dart';
 import 'Storedetail.dart';
 import 'digit_slider.dart';
 import 'productDetails.dart';
@@ -30,9 +28,16 @@ class _CategoryDetailState extends State<CategoryDetail> {
   double appbarHeight;
   bool isRecomended, isFastDelivery, isMostPopular;
   TabController _tabController;
+
   double _maxValue;
   double _minValue;
   double _priceRange;
+  String _radioValue;
+  String sortByChoice;
+  int _isSelectedIndex = -1;
+  String selectedCategory;
+  Color unselectedColor = Color.fromRGBO(244, 245, 247, 1);
+  Color selectedColor = Color.fromRGBO(222, 61, 48, 0.25);
   @override
   void initState() {
     appbarHeight = 75.0;
@@ -44,6 +49,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
     _maxValue = 9;
     _minValue = 2;
     _priceRange = 2;
+    _radioValue = 'Recomended';
     super.initState();
   }
 
@@ -146,7 +152,15 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                 ],
                               ),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          SetupLocation(),
+                                    ),
+                                  );
+                                },
                                 icon: Icon(
                                   Icons.shopping_cart_outlined,
                                   color: Colors.grey[800],
@@ -284,22 +298,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                       controller:
                                                           _tabController,
                                                       children: [
-                                                        SingleChildScrollView(
-                                                          scrollDirection:
-                                                              Axis.horizontal,
-                                                          physics:
-                                                              BouncingScrollPhysics(),
-                                                          child: Row(
-                                                            children: [
-                                                              searchCategory(),
-                                                              searchCategory(),
-                                                              searchCategory(),
-                                                              searchCategory(),
-                                                              searchCategory(),
-                                                              searchCategory(),
-                                                            ],
-                                                          ),
-                                                        ),
+                                                        searchCategory(),
                                                         Container(
                                                           child: searchSortBy(),
                                                         ),
@@ -319,7 +318,20 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                     height: 50,
                                                     width: double.infinity,
                                                     child: ElevatedButton(
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        var x = {
+                                                          "category":
+                                                              selectedCategory,
+                                                          "sort_by":
+                                                              sortByChoice,
+                                                          "price_digit": _priceRange,
+                                                          "delivery_fee_max":
+                                                              _maxValue,
+                                                          "delivery_fee_min":
+                                                              _minValue
+                                                        };
+                                                        print(json.encode(x));
+                                                      },
                                                       style: ElevatedButton
                                                           .styleFrom(
                                                         shape:
@@ -383,7 +395,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
               duration: const Duration(milliseconds: 500),
               curve: Curves.fastOutSlowIn,
               width: double.infinity,
-              height: MediaQuery.of(context).size.height - (appbarHeight + 116),
+              height: MediaQuery.of(context).size.height - (appbarHeight + 115),
               child: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
                 child: returnedData == null
@@ -466,7 +478,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                 max: 10,
                 min: 1,
                 tooltip: FlutterSliderTooltip(
-                  leftPrefix: Text(
+                  leftSuffix: Text(
                     '₤',
                     style: TextStyle(
                       fontSize: 10,
@@ -533,6 +545,25 @@ class _CategoryDetailState extends State<CategoryDetail> {
     );
   }
 
+  void radioButtonChanges(String value) {
+    setState(() {
+      _radioValue = value;
+      switch (value) {
+        case 'Recomended':
+          sortByChoice = value;
+          break;
+        case 'Fast Delivery':
+          sortByChoice = value;
+          break;
+        case 'Most Popular':
+          sortByChoice = value;
+          break;
+        default:
+          sortByChoice = null;
+      }
+    });
+  }
+
   Widget searchSortBy() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -542,30 +573,28 @@ class _CategoryDetailState extends State<CategoryDetail> {
             borderRadius: BorderRadius.circular(15),
             color: pagesBackground,
           ),
-          child: Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 25.0, right: 25.0),
-                child: Icon(Icons.bookmark, color: Colors.grey[600]),
+          child: ListTile(
+            tileColor: pagesBackground,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            title: Text(
+              'Recomended',
+              style: TextStyle(
+                fontSize: 14,
               ),
-              Text(
-                'Recomended',
-                style: TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-              Spacer(),
-              Checkbox(
-                activeColor: Colors.green,
-                shape: CircleBorder(),
-                value: isRecomended,
-                onChanged: (bool val) {
-                  setState(() {
-                    isRecomended = val;
-                  });
-                },
-              ),
-            ],
+            ),
+            leading: Icon(Icons.bookmark, color: Colors.grey[600]),
+            trailing: Radio(
+              activeColor: themeSecondaryColor,
+              value: 'Recomended',
+              groupValue: _radioValue,
+              onChanged: (value) {
+                setState(() {
+                  radioButtonChanges(value);
+                });
+              },
+            ),
           ),
         ),
         Container(
@@ -573,31 +602,29 @@ class _CategoryDetailState extends State<CategoryDetail> {
             borderRadius: BorderRadius.circular(15),
             color: pagesBackground,
           ),
-          child: Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 25.0, right: 25.0),
-                child: Icon(Icons.access_time_filled_rounded,
-                    color: Colors.grey[600]),
+          child: ListTile(
+            tileColor: pagesBackground,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            title: Text(
+              'Fast Delivery',
+              style: TextStyle(
+                fontSize: 14,
               ),
-              Text(
-                'Fast Delivery',
-                style: TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-              Spacer(),
-              Checkbox(
-                activeColor: Colors.green,
-                shape: CircleBorder(),
-                value: isFastDelivery,
-                onChanged: (bool val) {
-                  setState(() {
-                    isFastDelivery = val;
-                  });
-                },
-              ),
-            ],
+            ),
+            leading:
+                Icon(Icons.access_time_filled_rounded, color: Colors.grey[600]),
+            trailing: Radio(
+              activeColor: themeSecondaryColor,
+              value: 'Fast Delivery',
+              groupValue: _radioValue,
+              onChanged: (value) {
+                setState(() {
+                  radioButtonChanges(value);
+                });
+              },
+            ),
           ),
         ),
         Container(
@@ -605,31 +632,29 @@ class _CategoryDetailState extends State<CategoryDetail> {
             borderRadius: BorderRadius.circular(15),
             color: pagesBackground,
           ),
-          child: Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 25.0, right: 25.0),
-                child: Icon(Icons.local_fire_department_sharp,
-                    color: Colors.grey[600]),
+          child: ListTile(
+            tileColor: pagesBackground,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            title: Text(
+              'Most Popular',
+              style: TextStyle(
+                fontSize: 14,
               ),
-              Text(
-                'Most Popular',
-                style: TextStyle(
-                  fontSize: 14,
-                ),
-              ),
-              Spacer(),
-              Checkbox(
-                activeColor: Colors.green,
-                shape: CircleBorder(),
-                value: isMostPopular,
-                onChanged: (bool val) {
-                  setState(() {
-                    isMostPopular = val;
-                  });
-                },
-              ),
-            ],
+            ),
+            leading: Icon(Icons.local_fire_department_sharp,
+                color: Colors.grey[600]),
+            trailing: Radio(
+              activeColor: themeSecondaryColor,
+              value: 'Most Popular',
+              groupValue: _radioValue,
+              onChanged: (value) {
+                setState(() {
+                  radioButtonChanges(value);
+                });
+              },
+            ),
           ),
         ),
       ],
@@ -637,59 +662,73 @@ class _CategoryDetailState extends State<CategoryDetail> {
   }
 
   Widget searchCategory() {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 105,
-              width: 90,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Color.fromRGBO(244, 245, 247, 1),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Color.fromRGBO(254, 199, 45, 1),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.network(
-                              'https://purepng.com/public/uploads/large/purepng.com-fast-food-burgerburgerfast-foodhammeatfast-food-burgermc-donaldsburger-king-231519340212qzreu.png',
-                              fit: BoxFit.cover),
+    return ListView.builder(
+        scrollDirection: Axis.horizontal,
+        physics: BouncingScrollPhysics(),
+        itemCount: 5,
+        itemBuilder: (context, index) {
+          return AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  _isSelectedIndex = index;
+                  selectedCategory = index.toString() + 'Product Name';
+                });
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 105,
+                      width: 90,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: _isSelectedIndex == index
+                            ? selectedColor
+                            : unselectedColor,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 60,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Color.fromRGBO(254, 199, 45, 1),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.network(
+                                    'https://purepng.com/public/uploads/large/purepng.com-fast-food-burgerburgerfast-foodhammeatfast-food-burgermc-donaldsburger-king-231519340212qzreu.png',
+                                    fit: BoxFit.cover),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                "Product Name",
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 12),
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Text(
-                        "Product Name",
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 12),
-                      ),
-                    )
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          );
+        });
   }
 
   Widget foodData() {
