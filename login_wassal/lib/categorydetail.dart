@@ -1,12 +1,8 @@
 import 'dart:convert';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-// import 'package:carousel_pro/carousel_pro.dart';
 import 'package:http/http.dart' as http;
 import 'package:wassal_customer/setupLocation.dart';
-// import 'package:sticky_headers/sticky_headers.dart';
-// import 'Cart.dart';
-import 'Cart.dart';
 import 'Storedetail.dart';
 import 'digit_slider.dart';
 import 'productDetails.dart';
@@ -32,13 +28,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
   double appbarHeight;
   bool isRecomended, isFastDelivery, isMostPopular;
   TabController _tabController;
+
   double _maxValue;
   double _minValue;
   double _priceRange;
   String _radioValue;
   String sortByChoice;
-
   int _isSelectedIndex = -1;
+  String selectedCategory;
   Color unselectedColor = Color.fromRGBO(244, 245, 247, 1);
   Color selectedColor = Color.fromRGBO(222, 61, 48, 0.25);
   @override
@@ -321,7 +318,20 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                     height: 50,
                                                     width: double.infinity,
                                                     child: ElevatedButton(
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        var x = {
+                                                          "category":
+                                                              selectedCategory,
+                                                          "sort_by":
+                                                              sortByChoice,
+                                                          "price_digit": _priceRange,
+                                                          "delivery_fee_max":
+                                                              _maxValue,
+                                                          "delivery_fee_min":
+                                                              _minValue
+                                                        };
+                                                        print(json.encode(x));
+                                                      },
                                                       style: ElevatedButton
                                                           .styleFrom(
                                                         shape:
@@ -663,6 +673,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
               onTap: () {
                 setState(() {
                   _isSelectedIndex = index;
+                  selectedCategory = index.toString() + 'Product Name';
                 });
               },
               child: Column(
