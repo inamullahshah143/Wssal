@@ -682,7 +682,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
     return ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: BouncingScrollPhysics(),
-        itemCount: 5,
+        itemCount: categoryBlock['children'].length,
         itemBuilder: (context, index) {
           return AnimatedContainer(
             duration: Duration(milliseconds: 300),
@@ -690,7 +690,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
               onTap: () {
                 setState(() {
                   _isSelectedIndex = index;
-                  selectedCategory = index.toString() + 'Product Name';
+                  selectedCategory = '${categoryBlock['children'][index]['name']}';
                 });
               },
               child: Column(
@@ -721,14 +721,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image.network(
-                                    'https://purepng.com/public/uploads/large/purepng.com-fast-food-burgerburgerfast-foodhammeatfast-food-burgermc-donaldsburger-king-231519340212qzreu.png',
+                                  imageURL + '/' + '${categoryBlock['children'][index]['thumbnail']}',
                                     fit: BoxFit.cover),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: Text(
-                                "Product Name",
+                                '${categoryBlock['children'][index]['name']}',
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 textAlign: TextAlign.center,
