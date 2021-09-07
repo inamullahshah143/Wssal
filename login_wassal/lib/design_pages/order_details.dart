@@ -70,6 +70,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Row(
+                            
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               RichText(
