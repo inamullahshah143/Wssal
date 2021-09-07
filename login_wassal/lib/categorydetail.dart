@@ -3,8 +3,10 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 // import 'package:carousel_pro/carousel_pro.dart';
 import 'package:http/http.dart' as http;
+import 'package:wassal_customer/setupLocation.dart';
 // import 'package:sticky_headers/sticky_headers.dart';
 // import 'Cart.dart';
+import 'Cart.dart';
 import 'Storedetail.dart';
 import 'digit_slider.dart';
 import 'productDetails.dart';
@@ -153,7 +155,15 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                 ],
                               ),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          SetupLocation(),
+                                    ),
+                                  );
+                                },
                                 icon: Icon(
                                   Icons.shopping_cart_outlined,
                                   color: Colors.grey[800],
