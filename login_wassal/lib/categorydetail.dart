@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:wassal_customer/setupLocation.dart';
+import 'Cart.dart';
 import 'Storedetail.dart';
 import 'digit_slider.dart';
 import 'productDetails.dart';
@@ -189,7 +189,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          SetupLocation(),
+                                          CartPage(),
                                     ),
                                   );
                                 },
@@ -2896,7 +2896,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
       Placemark place = placemarks[0];
       setState(() {
         currentPosition = position;
-        yourLocation = "${place.locality}, ${place.country}";
+        yourLocation =
+            "${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
       });
     } catch (e) {
       print(e);
