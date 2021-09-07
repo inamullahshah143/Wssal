@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'Cart.dart';
 import 'Storedetail.dart';
 import 'digit_slider.dart';
+import 'mapLocation.dart';
 import 'productDetails.dart';
 import 'subcategory.dart';
 import 'const.dart';
@@ -165,7 +166,9 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                           if (value == 1) {
                                             determinePosition();
                                           }
-                                          if (value == 2) {}
+                                          if (value == 2) {
+                                            openMap();
+                                          }
                                         },
                                         itemBuilder: (context) => [
                                           PopupMenuItem(
@@ -2741,5 +2744,16 @@ class _CategoryDetailState extends State<CategoryDetail> {
       print(e);
     }
     return null;
+  }
+
+  Future<Widget> openMap() {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return MapLoacation();
+      },
+    );
   }
 }
