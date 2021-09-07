@@ -47,8 +47,13 @@ dependencies:
   google_maps_flutter_web:
   google_maps_flutter:
   dotted_border:
+<<<<<<< HEAD
   font_awesome_flutter: ^9.1.0
   roundcheckbox: ^2.0.2
+=======
+  geocoding: ^2.0.1
+  geolocator: ^7.6.0
+>>>>>>> 7612b74ab6df36681a6c3dd3849020558f20993a
    
 
 dev_dependencies:

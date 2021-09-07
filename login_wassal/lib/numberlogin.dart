@@ -176,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
-                height: 60,
+                height: 50,
                 width: width,
                 child: ElevatedButton(
                   onPressed: () {
@@ -194,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text(
                     "Next",
                     style: TextStyle(
-                      fontSize: 12.0,
+                      fontSize: 14.0,
                       color: Colors.grey[800],
                     ),
                   ),
