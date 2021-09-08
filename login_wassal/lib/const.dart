@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassal_customer/SearchPage.dart';
-import 'package:wassal_customer/design_pages/order/Ongoing%20Order.dart';
-import 'package:wassal_customer/design_pages/profile/profile.dart';
+import 'package:wassal_customer/Stores.dart';
 
 import 'Cart.dart';
+import 'Categories.dart';
+import 'Profile.dart';
 import 'numberlogin.dart';
 
 Color text1color = Color.fromRGBO(50, 62, 72, 1);
@@ -81,132 +82,133 @@ getAppbar(context, text) {
 }
 
 getBottomBar(context) {
+  //  return Container(
+  //         decoration: BoxDecoration(
+  //           borderRadius: BorderRadius.only(
+  //             topRight: Radius.circular(30),
+  //             topLeft: Radius.circular(30),
+  //           ),
+  //         ),
+  //         child: ClipRRect(
+  //           borderRadius: BorderRadius.only(
+  //             topLeft: Radius.circular(30.0),
+  //             topRight: Radius.circular(30.0),
+  //           ),
+  //           child: BottomNavigationBar(
+  //             selectedItemColor: Colors.red,
+  //             unselectedItemColor: Colors.grey,
+  //             items: <BottomNavigationBarItem>[
+  //               BottomNavigationBarItem(
+  //                   icon: Icon(
+  //                     Icons.dashboard_rounded,
+  //                     color: Colors.grey,
+  //                   ),
+  //                   label: ''),
+  //               BottomNavigationBarItem(
+  //                   icon: Icon(
+  //                     Icons.explore_rounded,
+  //                     color: Colors.grey,
+  //                   ),
+  //                   label: ''),
+  //               BottomNavigationBarItem(
+  //                   icon: InkWell(
+  //                     onTap: (){
+  //                        Navigator.push(
+  //               context,
+  //               MaterialPageRoute(builder: (context) => Ongoing()),
+  //             );
+  //                     },
+  //                     child: Icon(
+  //                       Icons.receipt_rounded,
+  //                       color: Colors.grey,
+  //                     ),
+  //                   ),
+  //                   label: ''),
+  //               BottomNavigationBarItem(
+  //                   icon: Icon(
+  //                     Icons.local_offer_rounded,
+  //                     color: Colors.grey,
+  //                   ),
+  //                   label: ''),
+  //               BottomNavigationBarItem(
+  //                   icon: InkWell(
+  //                     onTap: (){
+  //                         Navigator.push(
+  //               context,
+  //               MaterialPageRoute(builder: (context) => Profile()),
+  //             );
+
+  //                     },
+  //                     child: Icon(
+  //                       Icons.person_rounded,
+  //                       color: Colors.grey,
+  //                     ),
+  //                   ),
+  //                   label: ''),
+  //             ],
+  //           ),
+  //         ),
+  //       );
   return Container(
+    padding: EdgeInsets.only(left: 25, right: 25),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainCategories()),
+              );
+            },
+            child: Icon(
+              Icons.dashboard,
+              color: Colors.grey,
+              size: 30,
+            ),
+          ),
+        ),
+        Container(
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AllShops()),
+              );
+            },
+            child: Icon(
+              Icons.store,
+              color: Colors.grey,
+              size: 30,
+            ),
+          ),
+        ),
+        Container(
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
+            },
+            child: Icon(
+              Icons.person,
+              color: Colors.grey,
+              size: 30,
+            ),
+          ),
+        ),
+      ],
+    ),
+    height: 60,
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.only(
-        topRight: Radius.circular(30),
-        topLeft: Radius.circular(30),
-      ),
-    ),
-    child: ClipRRect(
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(30.0),
-        topRight: Radius.circular(30.0),
-      ),
-      child: BottomNavigationBar(
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.grey,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.dashboard_rounded,
-                color: Colors.grey,
-              ),
-              label: ''),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.explore_rounded,
-                color: Colors.grey,
-              ),
-              label: ''),
-          BottomNavigationBarItem(
-              icon: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Ongoing()),
-                  );
-                },
-                child: Icon(
-                  Icons.receipt_rounded,
-                  color: Colors.grey,
-                ),
-              ),
-              label: ''),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.local_offer_rounded,
-                color: Colors.grey,
-              ),
-              label: ''),
-          BottomNavigationBarItem(
-              icon: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Profile()),
-                  );
-                },
-                child: Icon(
-                  Icons.person_rounded,
-                  color: Colors.grey,
-                ),
-              ),
-              label: ''),
-        ],
-      ),
-    ),
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(20),
+          topLeft: Radius.circular(20),
+        )),
   );
-  // return Container(
-  //   padding: EdgeInsets.only(left: 25, right: 25),
-  //   child: Row(
-  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //     children: [
-  //       Container(
-  //         child: InkWell(
-  // onTap: () {
-  // Navigator.push(
-  //   context,
-  //   MaterialPageRoute(builder: (context) => MainCategories()),
-  // );
-  //           },
-  //           child: Icon(
-  //             Icons.dashboard,
-  //             color: Colors.grey,
-  //             size: 30,
-  //           ),
-  //         ),
-  //       ),
-  //       Container(
-  //         child: InkWell(
-  //           onTap: () {
-  //             Navigator.push(
-  //               context,
-  //               MaterialPageRoute(builder: (context) => AllShops()),
-  //             );
-  //           },
-  //           child: Icon(
-  //             Icons.store,
-  //             color: Colors.grey,
-  //             size: 30,
-  //           ),
-  //         ),
-  //       ),
-  //       Container(
-  //         child: InkWell(
-  //           onTap: () {
-  //             Navigator.push(
-  //               context,
-  //               MaterialPageRoute(builder: (context) => ProfilePage()),
-  //             );
-  //           },
-  //           child: Icon(
-  //             Icons.person,
-  //             color: Colors.grey,
-  //             size: 30,
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   ),
-  //   height: 60,
-  //   decoration: BoxDecoration(
-  //       color: Colors.white,
-  //       borderRadius: BorderRadius.only(
-  //         topRight: Radius.circular(20),
-  //         topLeft: Radius.circular(20),
-  //       )),
-  // );
 }
 
 // For Cart

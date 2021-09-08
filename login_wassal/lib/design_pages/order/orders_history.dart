@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wassal_customer/const.dart';
 import 'package:wassal_customer/design_pages/order/Ongoing%20Order.dart';
 import 'package:wassal_customer/design_pages/order/history_list.dart';
  
@@ -203,58 +204,59 @@ class _HistoryState extends State<History> {
             ],
           ),
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30),
-              topLeft: Radius.circular(30),
-            ),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            ),
-            child: BottomNavigationBar(
-              backgroundColor: Colors.white,
-              selectedItemColor: Colors.red,
-              unselectedItemColor: Colors.grey,
-              items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.dashboard_rounded,
-                      color: Colors.grey,
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.explore_rounded,
-                      color: Colors.grey,
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.receipt_rounded,
-                      color: Colors.red,
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.local_offer_rounded,
-                      color: Colors.grey,
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.person_rounded,
-                      color: Colors.grey,
-                    ),
-                    label: ''),
-              ],
-            ),
-          ),
-        ),
+        bottomNavigationBar: getBottomBar(context),
+        // bottomNavigationBar: Container(
+        //   decoration: BoxDecoration(
+        //     color: Colors.white,
+        //     borderRadius: BorderRadius.only(
+        //       topRight: Radius.circular(30),
+        //       topLeft: Radius.circular(30),
+        //     ),
+        //   ),
+        //   child: ClipRRect(
+        //     borderRadius: BorderRadius.only(
+        //       topLeft: Radius.circular(30.0),
+        //       topRight: Radius.circular(30.0),
+        //     ),
+        //     child: BottomNavigationBar(
+        //       backgroundColor: Colors.white,
+        //       selectedItemColor: Colors.red,
+        //       unselectedItemColor: Colors.grey,
+        //       items: <BottomNavigationBarItem>[
+        //         BottomNavigationBarItem(
+        //             icon: Icon(
+        //               Icons.dashboard_rounded,
+        //               color: Colors.grey,
+        //             ),
+        //             label: ''),
+        //         BottomNavigationBarItem(
+        //             icon: Icon(
+        //               Icons.explore_rounded,
+        //               color: Colors.grey,
+        //             ),
+        //             label: ''),
+        //         BottomNavigationBarItem(
+        //             icon: Icon(
+        //               Icons.receipt_rounded,
+        //               color: Colors.red,
+        //             ),
+        //             label: ''),
+        //         BottomNavigationBarItem(
+        //             icon: Icon(
+        //               Icons.local_offer_rounded,
+        //               color: Colors.grey,
+        //             ),
+        //             label: ''),
+        //         BottomNavigationBarItem(
+        //             icon: Icon(
+        //               Icons.person_rounded,
+        //               color: Colors.grey,
+        //             ),
+        //             label: ''),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
