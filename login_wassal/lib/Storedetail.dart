@@ -19,38 +19,67 @@ class _StoreDetailState extends State<StoreDetail> {
   @override
   Widget build(BuildContext context) {
     latestContext = context;
-    return SafeArea(
-      child: Container(
-        color: Colors.white,
-        child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    FutureBuilder(
-                      future: buildProducts(context),
-                      builder: ((context, AsyncSnapshot<Widget> snap) {
-                        if (snap.hasData) {
-                          return snap.data;
-                        } else if (snap.hasError) {
-                          return Text("${snap.error}");
-                        } else {
-                          return Center(
-                              child: Container(
-                                  child: CircularProgressIndicator(
-                                      strokeWidth: 10,
-                                      backgroundColor: Colors.red,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                          Colors.yellow))));
-                        }
-                      }),
-                    )
-                  ],
+    return Container(
+      height: MediaQuery.of(context).size.height - 120,
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+      child: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 250,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(40),
+                      bottomRight: Radius.circular(40)),
+                  // child: Image(
+                  //   fit: BoxFit.fill,
+                  //   image: NetworkImage(   imageURL + '/' + data['images'][0]['path']),
+                  // ),
+                  child: Carousel(
+                    boxFit: BoxFit.cover,
+                    autoplay: true,
+                    animationCurve: Curves.fastOutSlowIn,
+                    animationDuration: Duration(milliseconds: 1100),
+                    dotSize: 6.0,
+                    dotIncreasedColor: Colors.white,
+                    dotBgColor: Colors.transparent,
+                    dotPosition: DotPosition.bottomCenter,
+                    dotVerticalPadding: 5.0,
+                    showIndicator: false,
+                    indicatorBgPadding: 5.0,
+                    images: [
+                      NetworkImage(
+                          imageURL + '/' + "${storeBlock['cover']}")
+                    ],
+                  ),
                 ),
               ),
-            ),
+              FutureBuilder(
+                future: buildProducts(context),
+                builder: ((context, AsyncSnapshot<Widget> snap) {
+                  if (snap.hasData) {
+                    return snap.data;
+                  } else if (snap.hasError) {
+                    return Text("${snap.error}");
+                  } else {
+                    return Center(
+                        child: Container(
+                            child: CircularProgressIndicator(
+                                strokeWidth: 10,
+                                backgroundColor: Colors.red,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.yellow))));
+                  }
+                }),
+              )
+            ],
           ),
+        ),
       ),
     );
   }
@@ -66,7 +95,7 @@ class _StoreDetailState extends State<StoreDetail> {
       List<Widget> x = [];
       data.forEach((element) {
         x.add(
-           InkWell(
+          InkWell(
             onTap: () {
               http
                   .get((Uri.parse("$apiURL/productDetail/${element['id']}")))
@@ -294,12 +323,12 @@ class _StoreDetailState extends State<StoreDetail> {
       });
       return GridView.count(
         primary: false,
-              padding: const EdgeInsets.all(8),
-              crossAxisSpacing: 10,
-              childAspectRatio: 0.8,
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+        padding: const EdgeInsets.all(8),
+        crossAxisSpacing: 10,
+        childAspectRatio: 0.8,
+        crossAxisCount: 2,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
         children: x,
       );
     } else {

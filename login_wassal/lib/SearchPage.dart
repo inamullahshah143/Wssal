@@ -143,11 +143,14 @@ class _SearchPageState extends State<SearchPage> {
       shops.forEach((element) {
         x.add(GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => StoreDetail(storeBlock: element)),
-            );
+             showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return StoreDetail(storeBlock: element);
+                  },
+                );
           },
           child: Container(
               child: Row(
