@@ -99,7 +99,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
               padding: EdgeInsets.symmetric(vertical: 15.0),
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
-                height: 60,
+                height: 50,
                 width: width,
                 child: ElevatedButton(
                   onPressed: () {
@@ -130,7 +130,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
               padding: EdgeInsets.symmetric(vertical: 15.0),
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
-                height: 60,
+                height: 50,
                 width: width,
                 child: ElevatedButton(
                   onPressed: () {

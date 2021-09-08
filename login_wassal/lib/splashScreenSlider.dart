@@ -46,7 +46,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
               children: [
                 CarouselSlider(
                   options: CarouselOptions(
-                    height: height / 1.4,
+                    height: height / 1.25,
                     viewportFraction: 1.0,
                     enlargeCenterPage: false,
                     onPageChanged: (index, reason) {
@@ -278,7 +278,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                       EdgeInsets.symmetric(vertical: 50.0, horizontal: 10.0),
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
-                    height: 60,
+                    height: 50,
                     width: width,
                     child: ElevatedButton(
                       onPressed: () {
