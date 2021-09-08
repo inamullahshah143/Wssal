@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:wassal_customer/const.dart';
+
 // ignore: must_be_immutable
 class MapLoacation extends StatefulWidget {
   Position currentPosition;
@@ -12,143 +14,117 @@ class MapLoacation extends StatefulWidget {
   _MapLoacationState createState() =>
       _MapLoacationState(currentPosition: currentPosition);
 }
+
 class _MapLoacationState extends State<MapLoacation> {
   Position currentPosition;
   _MapLoacationState({
     @required this.currentPosition,
   });
-  GoogleMapController myController;
-  void _onMapCreated(GoogleMapController controller) {
-    myController = controller;
-  }
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
+    PickResult selectedPlace;
     final LatLng _center =
         LatLng(currentPosition.latitude, currentPosition.longitude);
     return Container(
       clipBehavior: Clip.hardEdge,
-      height: MediaQuery.of(context).size.height / 1.2,
+      height: MediaQuery.of(context).size.height / 1.295,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(50),
-        ),
       ),
-      child: Stack(
-        children: <Widget>[
-          GoogleMap(
-            zoomGesturesEnabled: true,
-            rotateGesturesEnabled: true,
-            mapToolbarEnabled:true,
-            padding: const EdgeInsets.all(10),
-            myLocationButtonEnabled: true,
-            myLocationEnabled: true,
-            zoomControlsEnabled: false,
-            buildingsEnabled: true,
-            compassEnabled: true,
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 14.0,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                height: 10,
-                width: 75,
-                decoration: BoxDecoration(
-                  color: Colors.grey[600],
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: Colors.grey[300],
-                      blurRadius: 3.0,
-                      offset: Offset(0.0, 0.5),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                height: 150,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color: Colors.grey[300],
-                      blurRadius: 3.0,
-                      offset: Offset(0.0, 0.5),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      height: 50,
+      child: PlacePicker(
+        apiKey: 'AIzaSyAMp8UY-G3eUJeinsx6uwK-j0lXFYB_KWo',
+        initialPosition: _center,
+        useCurrentLocation: true,
+        selectInitialPosition: true,
+        usePlaceDetailSearch: true,
+        onPlacePicked: (result) {
+          selectedPlace = result;
+          Navigator.of(context).pop();
+          setState(() {});
+        },
+        forceSearchOnZoomChanged: true,
+        automaticallyImplyAppBarLeading: false,
+        selectedPlaceWidgetBuilder:
+            (_, selectedPlace, state, isSearchBarFocused) {
+          return isSearchBarFocused
+              ? Container()
+              : Positioned(
+                  bottom: 0.0,
+                  left: 0.0,
+                  right: 0.0,
+                  child: Padding(
+                    padding: EdgeInsets.all(25.0),
+                    child: Container(
                       width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: pagesBackground,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: TextField(
-                        keyboardType: TextInputType.text,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                        ),
-                        onChanged: (value) {},
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          counterText: "",
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.only(top: 17.5),
-                          hintText: 'Search for Location',
-                          prefixIcon: Icon(Icons.location_on),
-                        ),
-                      ),
+                      child: state == SearchingState.Searching
+                          ? Center(child: CircularProgressIndicator())
+                          : Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(
+                                    color: Colors.grey[400],
+                                    blurRadius: 3.0,
+                                    offset: Offset(0.0, 0.5),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      selectedPlace.formattedAddress,
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        selectedLocation =
+                                            selectedPlace.formattedAddress;
+                                        cureentLat =
+                                            selectedPlace.geometry.location.lat;
+                                        cureentLng =
+                                            selectedPlace.geometry.location.lng;
+                                        Navigator.of(context).pop();
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius:
+                                              new BorderRadius.circular(15.0),
+                                        ),
+                                        primary: themePrimaryColor,
+                                      ),
+                                      child: Text(
+                                        "Pick Here",
+                                        style: TextStyle(
+                                          fontSize: 14.0,
+                                          color: Colors.grey[800],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      height: 50,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                          ),
-                          primary: themePrimaryColor,
-                        ),
-                        child: Text(
-                          "Setup Your Location",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Colors.grey[800],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        
-        ],
+                  ),
+                );
+        },
+        pinBuilder: (context, state) {
+          if (state == PinState.Idle) {
+            return Icon(Icons.location_on, color: Colors.red);
+          } else {
+            return Icon(Icons.location_on_outlined, color: Colors.red);
+          }
+        },
       ),
     );
   }

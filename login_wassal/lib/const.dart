@@ -7,9 +7,6 @@ import 'package:wassal_customer/design_pages/order/Ongoing%20Order.dart';
 import 'package:wassal_customer/design_pages/profile/profile.dart';
 
 import 'Cart.dart';
-import 'Categories.dart';
-import 'Profile.dart';
-import 'Stores.dart';
 import 'numberlogin.dart';
 
 Color text1color = Color.fromRGBO(50, 62, 72, 1);
@@ -38,7 +35,9 @@ Map<int, Color> colorMap = {
 MaterialColor themePrimaryColor = MaterialColor(0xFFFEC500, colorMap);
 Color pagesBackground = Color.fromRGBO(244, 245, 247, 1);
 Color themeSecondaryColor = Color.fromRGBO(221, 55, 1, 1);
-
+String selectedLocation = '';
+double cureentLat;
+double cureentLng;
 String imageURL = 'https://wassldev.einnovention.tech/storage';
 String apiURL = 'https://wassldev.einnovention.tech/api';
 String domainUrl = 'https://wassldev.einnovention.tech';
@@ -82,73 +81,72 @@ getAppbar(context, text) {
 }
 
 getBottomBar(context) {
-   return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30),
-              topLeft: Radius.circular(30),
-            ),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            ),
-            child: BottomNavigationBar(
-              selectedItemColor: Colors.red,
-              unselectedItemColor: Colors.grey,
-              items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.dashboard_rounded,
-                      color: Colors.grey,
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.explore_rounded,
-                      color: Colors.grey,
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: InkWell(
-                      onTap: (){
-                         Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Ongoing()),
-              );
-                      },
-                      child: Icon(
-                        Icons.receipt_rounded,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.local_offer_rounded,
-                      color: Colors.grey,
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: InkWell(
-                      onTap: (){
-                          Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Profile()),
-              );
-
-                      },
-                      child: Icon(
-                        Icons.person_rounded,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    label: ''),
-              ],
-            ),
-          ),
-        );
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.only(
+        topRight: Radius.circular(30),
+        topLeft: Radius.circular(30),
+      ),
+    ),
+    child: ClipRRect(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(30.0),
+        topRight: Radius.circular(30.0),
+      ),
+      child: BottomNavigationBar(
+        selectedItemColor: Colors.red,
+        unselectedItemColor: Colors.grey,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.dashboard_rounded,
+                color: Colors.grey,
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.explore_rounded,
+                color: Colors.grey,
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Ongoing()),
+                  );
+                },
+                child: Icon(
+                  Icons.receipt_rounded,
+                  color: Colors.grey,
+                ),
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.local_offer_rounded,
+                color: Colors.grey,
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Profile()),
+                  );
+                },
+                child: Icon(
+                  Icons.person_rounded,
+                  color: Colors.grey,
+                ),
+              ),
+              label: ''),
+        ],
+      ),
+    ),
+  );
   // return Container(
   //   padding: EdgeInsets.only(left: 25, right: 25),
   //   child: Row(
@@ -156,11 +154,11 @@ getBottomBar(context) {
   //     children: [
   //       Container(
   //         child: InkWell(
-            // onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MainCategories()),
-              // );
+  // onTap: () {
+  // Navigator.push(
+  //   context,
+  //   MaterialPageRoute(builder: (context) => MainCategories()),
+  // );
   //           },
   //           child: Icon(
   //             Icons.dashboard,

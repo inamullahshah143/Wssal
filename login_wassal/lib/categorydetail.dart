@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
@@ -46,8 +47,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
   String yourLocation;
   Position currentPosition;
   final _scrollController = ScrollController();
+  Timer timer;
   @override
   void initState() {
+    timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+      setState(() {
+        yourLocation = selectedLocation;
+      });
+    });
     appbarHeight = 75.0;
     dragButton = false;
     searchClickBtn = true;
@@ -58,9 +65,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
     _minValue = 2;
     _priceRange = 2;
     _radioValue = 'Recomended';
-    yourLocation = 'Mit Ghamer.';
     determinePosition();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -3125,7 +3137,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
       Placemark place = placemarks[0];
       setState(() {
         currentPosition = position;
-        yourLocation =
+        selectedLocation =
             "${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
       });
     } catch (e) {
@@ -3140,7 +3152,29 @@ class _CategoryDetailState extends State<CategoryDetail> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        return MapLoacation(currentPosition: currentPosition);
+        return Container(
+          clipBehavior: Clip.hardEdge,
+          height: MediaQuery.of(context).size.height / 1.2,
+          decoration: BoxDecoration(
+            color: pagesBackground,
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(50),
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 25,
+                  child: Icon(Icons.drag_handle),
+                ),
+              ),
+              MapLoacation(currentPosition: currentPosition),
+            ],
+          ),
+        );
       },
     );
   }
