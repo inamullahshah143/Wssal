@@ -2693,7 +2693,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
             Padding(
               padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 10),
               child: Text(
-                'Top Selling',
+                'Free Delivery',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
