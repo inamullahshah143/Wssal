@@ -68,11 +68,16 @@ class _MainCategoriesState extends State<MainCategories> {
                           Padding(
                             padding: EdgeInsets.symmetric(
                                 vertical: 4.0, horizontal: 8.0),
-                            child: Text(
-                              'Home: Mit Ghamer.',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.grey.shade700,
+                            child: Container(
+                              width: 150,
+                              child: Text(
+                                selectedLocation != '' ? selectedLocation : '',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.grey.shade700,
+                                ),
                               ),
                             ),
                           ),
