@@ -57,6 +57,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
     _priceRange = 2;
     _radioValue = 'Recomended';
     yourLocation = 'Mit Ghamer.';
+    determinePosition();
     super.initState();
   }
 
@@ -2763,7 +2764,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        return MapLoacation();
+        return MapLoacation(currentPosition: currentPosition);
       },
     );
   }

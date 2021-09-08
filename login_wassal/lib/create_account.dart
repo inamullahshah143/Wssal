@@ -241,7 +241,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 padding: EdgeInsets.all(8.0),
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
-                  height: 60,
+                  height: 50,
                   width: width,
                   child: isEnabled
                       ? ElevatedButton(
