@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:wassal_customer/design_pages/user/Confirm_order.dart';
 
 class AddNewItem extends StatefulWidget {
   @override
@@ -242,16 +243,25 @@ class _AddNewItemState extends State<AddNewItem> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0, bottom: 20),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 50,
-                  width: 300,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: Color.fromRGBO(255, 199, 0, 100)),
-                  child: Text(
-                    "Add to Order ( \$7.99)",
-                    style: TextStyle(fontSize: 18),
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ConfirmOrder()),
+                        );
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    width: 300,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Color.fromRGBO(255, 199, 0, 100)),
+                    child: Text(
+                      "Add to Order ( \$7.99)",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                 ),
               ),

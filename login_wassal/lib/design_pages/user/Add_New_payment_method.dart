@@ -198,37 +198,117 @@ class _AddNewPaymentState extends State<AddNewPayment> {
               ],
             ),
              Padding(
-              padding: const EdgeInsets.only(top: 12.0),
-              child: Container(
-                alignment: Alignment.center,
-                height: 60,
-                width: 300,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(255,199,0,1 ),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("Add Card")
+              padding: const EdgeInsets.only(top: 30.0,bottom:50),
+              child: InkWell(
+                onTap:(){
+                  showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(20.0),
+                                            ),
+                                          ),
+                                          // contentPadding: EdgeInsets.all(0),
+                                          content: Stack(
+                                            clipBehavior: Clip.none,
+                                            children: [
+                                              Positioned(
+                                                top: -45,
+                                                left: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    6,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.green,
+                                                    border: Border.all(
+                                                        color: Colors.white,
+                                                        width: 3),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(10.0),
+                                                    ),
+                                                  ),
+                                                  width: 50,
+                                                  height: 50,
+                                                  child: Icon(
+                                                      Icons.check_rounded,
+                                                      color: Colors.white,
+                                                      size: 40),
+                                                ),
+                                              ),
+                                              Container(
+                                                padding:
+                                                    EdgeInsets.only(top: 20),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Text(
+                                                      'Card Successfully Added',
+                                                      style: TextStyle(
+                                                          fontSize: 16),
+                                                    ),
+                                                    Text(
+                                                      'Your Card has successfully added',
+                                                      style: TextStyle(
+                                                          fontSize: 12,
+                                                          color: Colors.grey),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          actions: <Widget>[
+                                            Center(
+                                              child: TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'OK'),
+                                                child: Text(
+                                                  'OK',
+                                                  style: TextStyle(
+                                                      color: Colors.red),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 60,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(255,199,0,1 ),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Add Card")
+                  ),
                 ),
               ),
             ),
-             Padding(
-              padding: const EdgeInsets.only(top: 12.0,bottom: 50),
-              child: Container(
-                alignment: Alignment.center,
-                height: 60,
-                width: 300,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child:  Text("Scan Card")
-                ),
-              ),
-            ),
+            //  Padding(
+            //   padding: const EdgeInsets.only(top: 12.0,bottom: 50),
+            //   child: Container(
+            //     alignment: Alignment.center,
+            //     height: 60,
+            //     width: 300,
+            //     decoration: BoxDecoration(
+            //       color: Colors.grey.shade300,
+            //       borderRadius: BorderRadius.circular(15),
+            //     ),
+            //     child: Padding(
+            //       padding: const EdgeInsets.all(8.0),
+            //       child:  Text("Scan Card")
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

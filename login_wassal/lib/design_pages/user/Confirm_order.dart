@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
+import 'package:wassal_customer/design_pages/user/Add_New_payment_method.dart';
 
 class ConfirmOrder extends StatefulWidget {
   @override
@@ -88,7 +89,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         alignment: Alignment.topCenter,
-        height: 500,
+        height: 530,
         child: Column(
           children: [
             DefaultTabController(
@@ -111,7 +112,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     ),
                   ),
                   Container(
-                      height: 430,
+                      height: 470,
                       decoration: BoxDecoration(
                           color: Colors.white,
                           border: Border(
@@ -157,7 +158,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
       child: Container(
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(15)),
-        height: 430,
+        height: 600,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -243,6 +244,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                             ),
                       ),
 
+
                     ],
                   ),
                   decoration: BoxDecoration(
@@ -251,6 +253,29 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                       border: Border.all(color: Colors.grey)),
                 ),
               ),
+               Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: InkWell(
+                  onTap:(){
+                      showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => SingleChildScrollView(
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom),
+                          child: AddNewPayment(),
+                        ),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "Add New Card",
+                    style: TextStyle(fontSize: 14,color:Colors.red),
+                  ),
+                ),
+              ),
+             
               Padding(
                 padding: const EdgeInsets.only(top: 15.0),
                 child: Text(
@@ -796,44 +821,126 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
         padding: const EdgeInsets.only(top:15.0,bottom: 15),
         child: Column(
           children: [
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Container(
+            //     alignment: Alignment.center,
+            //     height: 60,
+            //     width: 300,
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.center,
+            //       children: [
+            //         Image.asset(
+            //           "assets/apple.png",
+            //           color: Colors.white,
+            //         ),
+            //         Text(
+            //           "Apple Pay",
+            //           style: TextStyle(color: Colors.white, fontSize: 17,fontWeight:FontWeight.bold),
+            //         )
+            //       ],
+            //     ),
+            //     decoration: BoxDecoration(
+            //       color: Colors.black,
+            //       borderRadius: BorderRadius.circular(15),
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
-                alignment: Alignment.center,
-                height: 60,
-                width: 300,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      "assets/apple.png",
-                      color: Colors.white,
-                    ),
-                    Text(
-                      "Apple Pay",
-                      style: TextStyle(color: Colors.white, fontSize: 17,fontWeight:FontWeight.bold),
-                    )
-                  ],
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 60,
-                width: 300,
-                alignment: Alignment.center,
-                child: Text(
-                  "Place Order",
-                  style: TextStyle(color: Colors.black, fontSize: 17,fontWeight:FontWeight.bold),
-                ),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(255, 200, 48, 1),
-                  borderRadius: BorderRadius.circular(15),
+              child: InkWell(
+                onTap: (){
+                  showDialog<String>(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            AlertDialog(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(20.0),
+                                            ),
+                                          ),
+                                          // contentPadding: EdgeInsets.all(0),
+                                          content: Stack(
+                                            clipBehavior: Clip.none,
+                                            children: [
+                                              Positioned(
+                                                top: -45,
+                                                left: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    4,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.green,
+                                                    border: Border.all(
+                                                        color: Colors.white,
+                                                        width: 3),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(10.0),
+                                                    ),
+                                                  ),
+                                                  width: 50,
+                                                  height: 50,
+                                                  child: Icon(
+                                                      Icons.check_rounded,
+                                                      color: Colors.white,
+                                                      size: 40),
+                                                ),
+                                              ),
+                                              Container(
+                                             
+                                                padding:
+                                                    EdgeInsets.only(top: 20,left: 50),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Text(
+                                                      'Order Success!',
+                                                      style: TextStyle(
+                                                          fontSize: 17),
+                                                    ),
+                                                    Text(
+                                                      'Your Order is Placed',
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color: Colors.grey),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          actions: <Widget>[
+                                            Center(
+                                              child: TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'OK'),
+                                                child: Text(
+                                                  'OK',
+                                                  style: TextStyle(
+                                                      color: Colors.red),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                },
+                child: Container(
+                  height: 60,
+                  width: 300,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Place Order",
+                    style: TextStyle(color: Colors.black, fontSize: 17,fontWeight:FontWeight.bold),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(255, 200, 48, 1),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
               ),
             )
