@@ -79,12 +79,14 @@ class _SubcategoryState extends State<Subcategory> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ProductDetails(d: element)),
-                          );
+                         showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return ProductDetails(d: element);
+                    },
+                  );
                         },
                         child: Container(
                           height: 120,

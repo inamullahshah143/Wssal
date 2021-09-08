@@ -72,11 +72,13 @@ class _StoreDetailState extends State<StoreDetail> {
                   .get((Uri.parse("$apiURL/productDetail/${element['id']}")))
                   .then((value) {
                 if (value.statusCode == 200) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ProductDetails(d: json.decode(value.body)['data'])),
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return ProductDetails(d: json.decode(value.body)['data']);
+                    },
                   );
                 }
               });
