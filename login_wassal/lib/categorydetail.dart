@@ -2476,7 +2476,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               imageURL +
                                   '/' +
                                   '${element['images'][0]['path']}',
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
+                              height: 125,
                             ),
                           ),
                           Padding(
