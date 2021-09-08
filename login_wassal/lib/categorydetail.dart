@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -44,6 +45,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
   Color selectedColor = Color.fromRGBO(222, 61, 48, 0.25);
   String yourLocation;
   Position currentPosition;
+  final _scrollController = ScrollController();
   @override
   void initState() {
     appbarHeight = 75.0;
@@ -463,40 +465,43 @@ class _CategoryDetailState extends State<CategoryDetail> {
               curve: Curves.fastOutSlowIn,
               width: double.infinity,
               height: MediaQuery.of(context).size.height - (appbarHeight + 115),
-              child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: returnedData == null
-                    ? Column(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.all(10),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Container(
-                                height: 200.0,
-                                width: MediaQuery.of(context).size.width,
-                                child: Carousel(
-                                  boxFit: BoxFit.cover,
-                                  autoplay: true,
-                                  animationCurve: Curves.fastOutSlowIn,
-                                  animationDuration:
-                                      Duration(milliseconds: 1000),
-                                  dotSize: 6.0,
-                                  dotIncreasedColor: Colors.white,
-                                  dotBgColor: Colors.transparent,
-                                  dotPosition: DotPosition.bottomCenter,
-                                  dotVerticalPadding: 5.0,
-                                  showIndicator: true,
-                                  indicatorBgPadding: 5.0,
-                                  images: [
-                                    AssetImage('assets/sliderImage.png'),
-                                    AssetImage('assets/sliderImage.png'),
-                                    AssetImage('assets/sliderImage.png'),
-                                  ],
+              child: FadingEdgeScrollView.fromSingleChildScrollView(
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  physics: BouncingScrollPhysics(),
+                  child: returnedData == null
+                      ? Column(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.all(10),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Container(
+                                  height: 200.0,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Carousel(
+                                    boxFit: BoxFit.cover,
+                                    autoplay: true,
+                                    animationCurve: Curves.fastOutSlowIn,
+                                    animationDuration:
+                                        Duration(milliseconds: 1000),
+                                    dotSize: 6.0,
+                                    dotIncreasedColor: Colors.white,
+                                    dotBgColor: Colors.transparent,
+                                    dotPosition: DotPosition.bottomCenter,
+                                    dotVerticalPadding: 5.0,
+                                    showIndicator: true,
+                                    indicatorBgPadding: 5.0,
+                                    images: [
+                                      AssetImage('assets/sliderImage.png'),
+                                      AssetImage('assets/sliderImage.png'),
+                                      AssetImage('assets/sliderImage.png'),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+                          
                           foodData(),
                           FutureBuilder(
                             future: promotedShops(),
@@ -543,118 +548,118 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                 Colors.yellow),
                                       ),
                                     ),
-                                  ),
-                                );
-                              }
-                            }),
-                          ),
-                          FutureBuilder(
-                            future: topSellingProduct(),
-                            builder: ((context, snap) {
-                              if (snap.hasData) {
-                                return snap.data;
-                              } else if (snap.hasError) {
-                                return Text("${snap.error}");
-                              } else {
-                                return Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Container(
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        backgroundColor: Colors.red,
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Colors.yellow),
+                                  ));
+                                }
+                              }),
+                            ),
+                            FutureBuilder(
+                              future: topSellingProduct(),
+                              builder: ((context, snap) {
+                                if (snap.hasData) {
+                                  return snap.data;
+                                } else if (snap.hasError) {
+                                  return Text("${snap.error}");
+                                } else {
+                                  return Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Container(
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          backgroundColor: Colors.red,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.yellow),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              }
-                            }),
-                          ),
-                          FutureBuilder(
-                            future: topSeller(),
-                            builder: ((context, snap) {
-                              if (snap.hasData) {
-                                return snap.data;
-                              } else if (snap.hasError) {
-                                return Text("${snap.error}");
-                              } else {
-                                return Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Container(
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        backgroundColor: Colors.red,
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Colors.yellow),
+                                  );
+                                }
+                              }),
+                            ),
+                            FutureBuilder(
+                              future: topSeller(),
+                              builder: ((context, snap) {
+                                if (snap.hasData) {
+                                  return snap.data;
+                                } else if (snap.hasError) {
+                                  return Text("${snap.error}");
+                                } else {
+                                  return Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Container(
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          backgroundColor: Colors.red,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.yellow),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              }
-                            }),
-                          ),
-                          FutureBuilder(
-                            future: nearBy(),
-                            builder: ((context, snap) {
-                              if (snap.hasData) {
-                                return snap.data;
-                              } else if (snap.hasError) {
-                                return Text("${snap.error}");
-                              } else {
-                                return Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Container(
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        backgroundColor: Colors.red,
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Colors.yellow),
+                                  );
+                                }
+                              }),
+                            ),
+                            FutureBuilder(
+                              future: nearBy(),
+                              builder: ((context, snap) {
+                                if (snap.hasData) {
+                                  return snap.data;
+                                } else if (snap.hasError) {
+                                  return Text("${snap.error}");
+                                } else {
+                                  return Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Container(
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          backgroundColor: Colors.red,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.yellow),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              }
-                            }),
-                          ),
-                          FutureBuilder(
-                            future: freeDelivery(),
-                            builder: ((context, snap) {
-                              if (snap.hasData) {
-                                return snap.data;
-                              } else if (snap.hasError) {
-                                return Text("${snap.error}");
-                              } else {
-                                return Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Container(
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        backgroundColor: Colors.red,
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Colors.yellow),
+                                  );
+                                }
+                              }),
+                            ),
+                            FutureBuilder(
+                              future: freeDelivery(),
+                              builder: ((context, snap) {
+                                if (snap.hasData) {
+                                  return snap.data;
+                                } else if (snap.hasError) {
+                                  return Text("${snap.error}");
+                                } else {
+                                  return Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Container(
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          backgroundColor: Colors.red,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.yellow),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              }
-                            }),
-                          ),
-                        ],
-                      )
-                    : Column(
-                        children: [
-                          returnedData,
-                        ],
-                      ),
+                                  );
+                                }
+                              }),
+                            ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            returnedData,
+                          ],
+                        ),
+                ),
               ),
             ),
           ],
@@ -1723,7 +1728,10 @@ class _CategoryDetailState extends State<CategoryDetail> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8, top: 5),
                             child: Text(
+                              
                               "${element['shop']['title']}",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines:1,
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 11,
@@ -1904,7 +1912,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
               primary: false,
               padding: const EdgeInsets.all(8),
               crossAxisSpacing: 10,
-              childAspectRatio: 0.8,
+              childAspectRatio: 0.7,
               crossAxisCount: 2,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
@@ -2651,7 +2659,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
               primary: false,
               padding: const EdgeInsets.all(8),
               crossAxisSpacing: 10,
-              childAspectRatio: 0.8,
+              childAspectRatio: 0.7,
               crossAxisCount: 2,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
