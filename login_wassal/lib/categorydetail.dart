@@ -598,8 +598,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               }
                             }),
                           ),
-                          
-                           FutureBuilder(
+                          FutureBuilder(
                             future: freeDelivery(),
                             builder: ((context, snap) {
                               if (snap.hasData) {
@@ -624,7 +623,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               }
                             }),
                           ),
-                          
                         ],
                       )
                     : Column(
@@ -1858,9 +1856,17 @@ class _CategoryDetailState extends State<CategoryDetail> {
           Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return StoreDetail(storeBlock: element);
+                  },
+                );
+              },
               child: Container(
-             
                 width: 75.0,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -1895,7 +1901,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
       });
       return Container(
         width: MediaQuery.of(context).size.width,
-  
         margin: EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -2374,8 +2379,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                 borderRadius: BorderRadius.circular(35),
                                 child: Image(
                                   fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      imageURL + '/${element['user']['shop']['logo']}'),
+                                  image: NetworkImage(imageURL +
+                                      '/${element['user']['shop']['logo']}'),
                                 ),
                               ),
                             ),
@@ -2417,9 +2422,10 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
-                                color: element['user']['shop']['open_close'] == 1
-                                    ? Colors.green
-                                    : Colors.red,
+                                color:
+                                    element['user']['shop']['open_close'] == 1
+                                        ? Colors.green
+                                        : Colors.red,
                               ),
                             ),
                             WidgetSpan(

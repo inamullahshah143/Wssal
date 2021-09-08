@@ -19,11 +19,7 @@ class _StoreDetailState extends State<StoreDetail> {
   @override
   Widget build(BuildContext context) {
     latestContext = context;
-    return Scaffold(
-      appBar: getAppbar(context, "${storeBlock['title']}"),
-      bottomNavigationBar: getBottomBar(context),
-      backgroundColor: pagesBackground,
-      body: Padding(
+    return Padding(
         padding: const EdgeInsets.all(8.0),
         child: SafeArea(
           child: SingleChildScrollView(
@@ -51,8 +47,7 @@ class _StoreDetailState extends State<StoreDetail> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 
   Future<Widget> buildProducts(BuildContext context) async {
