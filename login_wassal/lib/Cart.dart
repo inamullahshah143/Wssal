@@ -287,7 +287,7 @@ class _CartProductState extends State<CartProduct> {
                       
                     ])),
                           ),
-                        )
+                        ),
                     // RichText(
                     //     text: TextSpan(text: "", children: [
                     //   WidgetSpan(
@@ -333,7 +333,15 @@ class _CartProductState extends State<CartProduct> {
                     //       ),
                     //     ),
                     //   ),
-                    // ]))
+                    // ])),
+                    Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Container(
+              margin: EdgeInsets.only(left: 10),
+              child: Container(
+              child: Icon(Icons.delete),
+            ),),
+        ),
                   ],
                 ),
               ),
@@ -364,16 +372,7 @@ Widget buildExtras(List extras) {
             margin: EdgeInsets.only(left: 10),
             child: Text("\$${extra['price']}")),
       ),
-        WidgetSpan(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Container(
-              margin: EdgeInsets.only(left: 10),
-              child: Container(
-              child: Icon(Icons.delete),
-            ),),
-        ),
-      ),
+        
       
     ])));
   });
