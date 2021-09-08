@@ -211,7 +211,6 @@ class _CreateAccountState extends State<CreateAccount> {
                   ),
                 ),
               ),
-<<<<<<< Updated upstream
               ListTile(
                 leading: Checkbox(
                   value: isChecked,
@@ -230,27 +229,6 @@ class _CreateAccountState extends State<CreateAccount> {
                     text: TextSpan(children: [
                   TextSpan(
                     text: 'By creating an account, you agree to our',
-=======
-             
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-              Checkbox(
-                value: isChecked,
-                onChanged: (value) {
-                  setState(() {
-                    isChecked = value;
-                    if (number != '' && name != '' && isChecked != false) {
-                      isEnabled = true;
-                    } else {
-                      isEnabled = false;
-                    }
-                  });
-                },
-              ),
-                  Text(
-                    'By creating an account, you agree to our',
->>>>>>> Stashed changes
                     style: TextStyle(color: Color.fromRGBO(180, 186, 198, 1)),
                   ),
                   TextSpan(
