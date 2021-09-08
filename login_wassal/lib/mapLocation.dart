@@ -2,30 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wassal_customer/const.dart';
-
 // ignore: must_be_immutable
 class MapLoacation extends StatefulWidget {
   Position currentPosition;
   MapLoacation({
     @required this.currentPosition,
   });
-
   @override
   _MapLoacationState createState() =>
       _MapLoacationState(currentPosition: currentPosition);
 }
-
 class _MapLoacationState extends State<MapLoacation> {
   Position currentPosition;
   _MapLoacationState({
     @required this.currentPosition,
   });
   GoogleMapController myController;
-
   void _onMapCreated(GoogleMapController controller) {
     myController = controller;
   }
-
   @override
   Widget build(BuildContext context) {
     final LatLng _center =

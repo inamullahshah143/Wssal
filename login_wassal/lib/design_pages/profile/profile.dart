@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wassal_customer/const.dart';
 import 'account_info.dart';
 import 'delivery_details.dart';
 import 'delivery_locations.dart';
@@ -246,35 +247,35 @@ class _ProfileState extends State<Profile> {
                           Divider(
                             height: 1,
                           ),
-                          ListTile(
-                            onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                builder: (context) => SingleChildScrollView(
-                                  child: Container(
-                                    padding: EdgeInsets.only(
-                                        bottom: MediaQuery.of(context)
-                                            .viewInsets
-                                            .bottom),
-                                    child: DeliveryForm(),
-                                  ),
-                                ),
-                              );
-                            },
-                            leading: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.receipt_long_rounded,
-                                  color: Colors.grey,
-                                ),
-                              ],
-                            ),
-                            title: Text('BIlling Information'),
-                            trailing: Icon(Icons.arrow_forward_ios_rounded),
-                            subtitle: Text('Set your billing info'),
-                          ),
+                          // ListTile(
+                          //   onTap: () {
+                          //     showModalBottomSheet(
+                          //       context: context,
+                          //       isScrollControlled: true,
+                          //       builder: (context) => SingleChildScrollView(
+                          //         child: Container(
+                          //           padding: EdgeInsets.only(
+                          //               bottom: MediaQuery.of(context)
+                          //                   .viewInsets
+                          //                   .bottom),
+                          //           child: DeliveryForm(),
+                          //         ),
+                          //       ),
+                          //     );
+                          //   },
+                          //   leading: Column(
+                          //     mainAxisAlignment: MainAxisAlignment.center,
+                          //     children: [
+                          //       Icon(
+                          //         Icons.receipt_long_rounded,
+                          //         color: Colors.grey,
+                          //       ),
+                          //     ],
+                          //   ),
+                          //   title: Text('BIlling Information'),
+                          //   trailing: Icon(Icons.arrow_forward_ios_rounded),
+                          //   subtitle: Text('Set your billing info'),
+                          // ),
                           Divider(
                             height: 1,
                           ),
@@ -476,56 +477,57 @@ class _ProfileState extends State<Profile> {
             ],
           ),
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30),
-              topLeft: Radius.circular(30),
-            ),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            ),
-            child: BottomNavigationBar(
-              selectedItemColor: Colors.red,
-              unselectedItemColor: Colors.grey,
-              items: <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.dashboard_rounded,
-                      color: Colors.grey,
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.explore_rounded,
-                      color: Colors.grey,
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.receipt_rounded,
-                      color: Colors.grey,
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.local_offer_rounded,
-                      color: Colors.grey,
-                    ),
-                    label: ''),
-                BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.person_rounded,
-                      color: Colors.red,
-                    ),
-                    label: ''),
-              ],
-            ),
-          ),
-        ),
+          bottomNavigationBar: getBottomBar(context),
+        // bottomNavigationBar: Container(
+        //   decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.only(
+        //       topRight: Radius.circular(30),
+        //       topLeft: Radius.circular(30),
+        //     ),
+        //   ),
+        //   child: ClipRRect(
+        //     borderRadius: BorderRadius.only(
+        //       topLeft: Radius.circular(30.0),
+        //       topRight: Radius.circular(30.0),
+        //     ),
+        //     child: BottomNavigationBar(
+        //       selectedItemColor: Colors.red,
+        //       unselectedItemColor: Colors.grey,
+        //       items: <BottomNavigationBarItem>[
+        //         BottomNavigationBarItem(
+        //             icon: Icon(
+        //               Icons.dashboard_rounded,
+        //               color: Colors.grey,
+        //             ),
+        //             label: ''),
+        //         BottomNavigationBarItem(
+        //             icon: Icon(
+        //               Icons.explore_rounded,
+        //               color: Colors.grey,
+        //             ),
+        //             label: ''),
+        //         BottomNavigationBarItem(
+        //             icon: Icon(
+        //               Icons.receipt_rounded,
+        //               color: Colors.grey,
+        //             ),
+        //             label: ''),
+        //         BottomNavigationBarItem(
+        //             icon: Icon(
+        //               Icons.local_offer_rounded,
+        //               color: Colors.grey,
+        //             ),
+        //             label: ''),
+        //         BottomNavigationBarItem(
+        //             icon: Icon(
+        //               Icons.person_rounded,
+        //               color: Colors.red,
+        //             ),
+        //             label: ''),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
