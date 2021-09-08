@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'const.dart';
@@ -10,6 +12,13 @@ class MainCategories extends StatefulWidget {
 }
 
 class _MainCategoriesState extends State<MainCategories> {
+  Position currentPosition;
+  @override
+  void initState() {
+    determinePosition();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     latestContext = context;
@@ -69,9 +78,9 @@ class _MainCategoriesState extends State<MainCategories> {
                             padding: EdgeInsets.symmetric(
                                 vertical: 4.0, horizontal: 8.0),
                             child: Container(
-                              width: 150,
+                              width: 200,
                               child: Text(
-                                selectedLocation != '' ? selectedLocation : '',
+                                selectedLocation,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 style: TextStyle(
@@ -183,6 +192,42 @@ class _MainCategoriesState extends State<MainCategories> {
         ),
       ),
     );
+  }
+
+  Future<Position> determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      print('Please enable Your Location Service');
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        print('Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      print(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    try {
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+      Placemark place = placemarks[0];
+      setState(() {
+        currentPosition = position;
+        selectedLocation =
+            "${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
+        locationChange = true;
+      });
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 }
 

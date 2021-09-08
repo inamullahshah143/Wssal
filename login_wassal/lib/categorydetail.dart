@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:wassal_customer/design_pages/user/DetailResturant.dart';
 import 'Cart.dart';
 import 'Storedetail.dart';
 import 'digit_slider.dart';
