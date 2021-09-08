@@ -44,7 +44,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
   String selectedCategory;
   Color unselectedColor = Color.fromRGBO(244, 245, 247, 1);
   Color selectedColor = Color.fromRGBO(222, 61, 48, 0.25);
-  String yourLocation;
+  String yourLocation = '';
   Position currentPosition;
   final _scrollController = ScrollController();
   Timer timer;
