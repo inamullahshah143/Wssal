@@ -51,6 +51,10 @@ dependencies:
   roundcheckbox: ^2.0.2
   geocoding: ^2.0.1
   geolocator: ^7.6.0
+  dio: ^4.0.0
+  flutter_polyline_points: ^0.2.4
+  percent_indicator: ^2.1.7+2
+  dash_chat: ^1.1.16
    
 
 dev_dependencies:

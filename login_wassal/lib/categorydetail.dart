@@ -942,8 +942,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            width: 100,
-                            height: 100,
+                            width: 80,
+                            height: 80,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Image(
@@ -1453,7 +1453,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
             primary: false,
             padding: const EdgeInsets.all(8),
             crossAxisSpacing: 10,
-            childAspectRatio: 0.8,
+            childAspectRatio: 0.7,
             crossAxisCount: 2,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
@@ -2011,7 +2011,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
             primary: false,
             padding: const EdgeInsets.all(8),
             crossAxisSpacing: 10,
-            childAspectRatio: 0.8,
+            childAspectRatio: 0.7,
             crossAxisCount: 2,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
