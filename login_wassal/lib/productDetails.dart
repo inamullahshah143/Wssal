@@ -51,7 +51,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(25))
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))
       ),
       
       child: SafeArea(
@@ -62,7 +62,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Stack(children: [
                   Container(
-                    height: 250,
+                    height: 175,
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(40),

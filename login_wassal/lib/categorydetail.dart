@@ -1392,9 +1392,10 @@ class _CategoryDetailState extends State<CategoryDetail> {
                     width: 70,
                     height: 70,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image(
-                        image: NetworkImage(imageURL + '/${element['logo']}'),
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        imageURL + '/${element['logo']}',
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -1405,12 +1406,17 @@ class _CategoryDetailState extends State<CategoryDetail> {
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              '${element['title']}',
-                              style: TextStyle(
-                                fontSize: 20,
+                          Container(
+                            width: 200,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '${element['title']}',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
                           ),
@@ -1587,6 +1593,16 @@ class _CategoryDetailState extends State<CategoryDetail> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Padding(
+              padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 10),
+              child: Text(
+                'Promoted Shops',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
             Divider(),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -1668,7 +1684,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
                       return ProductDetails(d: json.decode(value.body)['data']);
                     },
                   );
-               
                 }
               });
             },
@@ -1689,14 +1704,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               imageURL +
                                   '/' +
                                   '${element['images'][0]['path']}',
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Colors.red,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(10),
                                 ),
@@ -2010,12 +2024,19 @@ class _CategoryDetailState extends State<CategoryDetail> {
                 ),
                 child: Column(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.network(
-                        imageURL + '/${element['shop']['logo']}',
-                        width: 75.0,
-                        height: 75.0,
+                    Container(
+                      clipBehavior: Clip.hardEdge,
+                      width: 75.0,
+                      height: 75.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          imageURL + '/${element['shop']['logo']}',
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     Padding(
@@ -2427,7 +2448,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                   .get((Uri.parse("$apiURL/productDetail/${element['id']}")))
                   .then((value) {
                 if (value.statusCode == 200) {
-               showModalBottomSheet(
+                  showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
                     backgroundColor: Colors.transparent,
@@ -2455,7 +2476,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               imageURL +
                                   '/' +
                                   '${element['images'][0]['path']}',
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
+                              height: 125,
                             ),
                           ),
                           Padding(
@@ -2672,7 +2694,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
             Padding(
               padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 10),
               child: Text(
-                'Top Selling',
+                'Free Delivery',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
@@ -2752,14 +2774,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                         showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) {
-                      return ProductDetails(d: element);
-                    },
-                  );
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (context) {
+                              return ProductDetails(d: element);
+                            },
+                          );
                         },
                         child: Container(
                           height: 120,
@@ -3011,14 +3033,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
                 .get((Uri.parse("$apiURL/productDetail/${element['id']}")))
                 .then((value) {
               if (value.statusCode == 200) {
-               showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) {
-                      return ProductDetails(d: json.decode(value.body)['data']);
-                    },
-                  );
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return ProductDetails(d: json.decode(value.body)['data']);
+                  },
+                );
               }
             });
           },
@@ -3075,11 +3097,15 @@ class _CategoryDetailState extends State<CategoryDetail> {
       shops.forEach((element) {
         x.add(GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => StoreDetail(storeBlock: element)),
-            );
+             showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return StoreDetail(storeBlock: element);
+                  },
+                );
+       
           },
           child: Container(
               child: Row(
@@ -3166,14 +3192,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
                 .get((Uri.parse("$apiURL/productDetail/${element['id']}")))
                 .then((value) {
               if (value.statusCode == 200) {
-              showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) {
-                      return ProductDetails(d: json.decode(value.body)['data']);
-                    },
-                  );
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return ProductDetails(d: json.decode(value.body)['data']);
+                  },
+                );
               }
             });
           },

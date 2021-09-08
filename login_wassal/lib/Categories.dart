@@ -283,7 +283,7 @@ Future<Widget> mainCategories(BuildContext context) async {
                           end: Alignment.bottomCenter,
                           colors: [
                             Color.fromRGBO(255, 255, 255, 0),
-                            Color.fromRGBO(0, 0, 0, 1),
+                            Color.fromRGBO(25, 25, 25, 1),
                           ],
                         ),
                         borderRadius: BorderRadius.vertical(
@@ -294,12 +294,26 @@ Future<Widget> mainCategories(BuildContext context) async {
                         alignment: Alignment.bottomLeft,
                         child: Padding(
                           padding: EdgeInsets.all(10.0),
-                          child: Text(
-                            element['name'].toUpperCase(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                element['name'].toUpperCase(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              RichText(
+                                overflow:TextOverflow.ellipsis,
+                                maxLines: 1,
+                                text: TextSpan(
+                                  text: '',
+                                  children: subCategory(element['children']),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -324,4 +338,15 @@ Future<Widget> mainCategories(BuildContext context) async {
   } else {
     return Center(child: Text("No Products Available"));
   }
+}
+
+List<InlineSpan> subCategory(List data) {
+  List<InlineSpan> x = [];
+  data.forEach((element) {
+    x.add(
+      TextSpan(text: '${element['name']}, '),
+    );
+  });
+
+  return x;
 }
