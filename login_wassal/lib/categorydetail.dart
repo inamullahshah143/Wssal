@@ -51,9 +51,12 @@ class _CategoryDetailState extends State<CategoryDetail> {
   @override
   void initState() {
     timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-      setState(() {
-        yourLocation = selectedLocation;
-      });
+      if (locationChange) {
+        setState(() {
+          yourLocation = selectedLocation;
+        });
+        locationChange = false;
+      }
     });
     appbarHeight = 75.0;
     dragButton = false;
@@ -513,43 +516,42 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                 ),
                               ),
                             ),
-                          
-                          foodData(),
-                          FutureBuilder(
-                            future: promotedShops(),
-                            builder: ((context, snap) {
-                              if (snap.hasData) {
-                                return snap.data;
-                              } else if (snap.hasError) {
-                                return Text("${snap.error}");
-                              } else {
-                                return Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Container(
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        backgroundColor: Colors.red,
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Colors.yellow),
+                            foodData(),
+                            FutureBuilder(
+                              future: promotedShops(),
+                              builder: ((context, snap) {
+                                if (snap.hasData) {
+                                  return snap.data;
+                                } else if (snap.hasError) {
+                                  return Text("${snap.error}");
+                                } else {
+                                  return Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Container(
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          backgroundColor: Colors.red,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.yellow),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              }
-                            }),
-                          ),
-                          FutureBuilder(
-                            future: featuredProduct(),
-                            builder: ((context, snap) {
-                              if (snap.hasData) {
-                                return snap.data;
-                              } else if (snap.hasError) {
-                                return Text("${snap.error}");
-                              } else {
-                                return Center(
-                                  child: Padding(
+                                  );
+                                }
+                              }),
+                            ),
+                            FutureBuilder(
+                              future: featuredProduct(),
+                              builder: ((context, snap) {
+                                if (snap.hasData) {
+                                  return snap.data;
+                                } else if (snap.hasError) {
+                                  return Text("${snap.error}");
+                                } else {
+                                  return Center(
+                                      child: Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Container(
                                       child: CircularProgressIndicator(
@@ -1180,19 +1182,19 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               ),
                             ),
                             WidgetSpan(
-                             child: Container(
-                               margin: EdgeInsets.only(left:
-                               5, right: 5),
-                               child: SingleChildScrollView(
-                                 scrollDirection: Axis.horizontal,
-                                 child: Text("${element['shop']['tags']}",
+                                child: Container(
+                              margin: EdgeInsets.only(left: 5, right: 5),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Text(
+                                  "${element['shop']['tags']}",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
-                                      color: Colors.grey),),
-                               ),
-                             )
-                            ),
+                                      color: Colors.grey),
+                                ),
+                              ),
+                            )),
                           ],
                         ),
                       ),
@@ -1461,19 +1463,19 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                 ),
                               ),
                               WidgetSpan(
-                             child: Container(
-                               margin: EdgeInsets.only(left:
-                               5, right: 5),
-                               child: SingleChildScrollView(
-                                 scrollDirection: Axis.horizontal,
-                                 child: Text("${element['tags']}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                      color: Colors.grey),),
-                               ),
-                             )
-                            ),
+                                  child: Container(
+                                margin: EdgeInsets.only(left: 5, right: 5),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Text(
+                                    "${element['tags']}",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                        color: Colors.grey),
+                                  ),
+                                ),
+                              )),
                             ],
                           ),
                         ),
@@ -1740,10 +1742,9 @@ class _CategoryDetailState extends State<CategoryDetail> {
                           Padding(
                             padding: const EdgeInsets.only(left: 8, top: 5),
                             child: Text(
-                              
                               "${element['shop']['title']}",
                               overflow: TextOverflow.ellipsis,
-                              maxLines:1,
+                              maxLines: 1,
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 11,
@@ -1769,56 +1770,54 @@ class _CategoryDetailState extends State<CategoryDetail> {
                       child: Row(
                         children: [
                           Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: RichText(
-                        overflow: TextOverflow.ellipsis,
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: element['shop']['open_close'] == 1
-                                  ? 'Open'
-                                  : 'Close',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                                color: element['shop']['open_close'] == 1
-                                    ? Colors.green
-                                    : Colors.red,
-                              ),
-                            ),
-                            WidgetSpan(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Icon(
-                                  Icons.circle,
-                                  size: 5,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                          
-                             WidgetSpan(
-                             child: Container(
-                               margin: EdgeInsets.only(left:
-                               5, right: 5),
-                               child: SingleChildScrollView(
-                                 scrollDirection: Axis.horizontal,
-                                 child: Text("${element['shop']['tags']}",
-                                  style: TextStyle(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: RichText(
+                              overflow: TextOverflow.ellipsis,
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: element['shop']['open_close'] == 1
+                                        ? 'Open'
+                                        : 'Close',
+                                    style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
-                                      color: Colors.grey),),
-                               ),
-                             )
+                                      color: element['shop']['open_close'] == 1
+                                          ? Colors.green
+                                          : Colors.red,
+                                    ),
+                                  ),
+                                  WidgetSpan(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Icon(
+                                        Icons.circle,
+                                        size: 5,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                  WidgetSpan(
+                                      child: Container(
+                                    margin: EdgeInsets.only(left: 5, right: 5),
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Text(
+                                        "${element['shop']['tags']}",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12,
+                                            color: Colors.grey),
+                                      ),
+                                    ),
+                                  )),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
+                          ),
                         ],
                       ),
                     ),
-                    
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Row(
@@ -2228,20 +2227,20 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                 ),
                               ),
                             ),
-                      WidgetSpan(
-                             child: Container(
-                               margin: EdgeInsets.only(left:
-                               5, right: 5),
-                               child: SingleChildScrollView(
-                                 scrollDirection: Axis.horizontal,
-                                 child: Text("${element['shop']['tags']}",
+                            WidgetSpan(
+                                child: Container(
+                              margin: EdgeInsets.only(left: 5, right: 5),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Text(
+                                  "${element['shop']['tags']}",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
-                                      color: Colors.grey),),
-                               ),
-                             )
-                            ),
+                                      color: Colors.grey),
+                                ),
+                              ),
+                            )),
                           ],
                         ),
                       ),
@@ -3248,6 +3247,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
         currentPosition = position;
         selectedLocation =
             "${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
+        locationChange = true;
       });
     } catch (e) {
       print(e);

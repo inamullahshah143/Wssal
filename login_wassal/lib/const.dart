@@ -37,6 +37,7 @@ MaterialColor themePrimaryColor = MaterialColor(0xFFFEC500, colorMap);
 Color pagesBackground = Color.fromRGBO(244, 245, 247, 1);
 Color themeSecondaryColor = Color.fromRGBO(221, 55, 1, 1);
 String selectedLocation = '';
+bool locationChange = true;
 double cureentLat;
 double cureentLng;
 String imageURL = 'https://wassldev.einnovention.tech/storage';

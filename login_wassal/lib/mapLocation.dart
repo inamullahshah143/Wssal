@@ -93,6 +93,7 @@ class _MapLoacationState extends State<MapLoacation> {
                                             selectedPlace.geometry.location.lat;
                                         cureentLng =
                                             selectedPlace.geometry.location.lng;
+                                        locationChange = true;
                                         Navigator.of(context).pop();
                                       },
                                       style: ElevatedButton.styleFrom(
