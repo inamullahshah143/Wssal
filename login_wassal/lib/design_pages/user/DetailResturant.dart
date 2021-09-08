@@ -181,7 +181,7 @@ class _DetailResturantState extends State<DetailResturant> {
                                                           children: [
                                                             Text(
                                                               'Are You sure to Remove this item',
-                                                              style: TextStyle(
+                                                            style: TextStyle(
                                                                   fontSize: 15),
                                                             ),
                                                           ],
@@ -429,59 +429,3 @@ class _DetailResturantState extends State<DetailResturant> {
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:tabs/delivery.dart';
-// import 'package:tabs/review.dart';
-
-// class DetailResturant extends StatefulWidget {
-//   const DetailResturant({Key? key}) : super(key: key);
-
-//   @override
-//   _DetailResturantState createState() => _DetailResturantState();
-// }
-
-// class _DetailResturantState extends State<DetailResturant> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: Scaffold(
-//         body: 
-        // DefaultTabController(
-        //   length: 2,
-        //   child: Column(
-        //     mainAxisSize: MainAxisSize.min,
-        //     children: <Widget>[
-        //       Container(
-        //         child: TabBar(
-        //           unselectedLabelColor: Colors.black,
-        //           labelColor: Colors.red,
-        //           indicatorColor: Colors.red,
-        //           indicatorPadding: EdgeInsets.only(right: 30, left: 30),
-        //           tabs: [
-        //             Tab(text: "Delivery"),
-        //             Tab(text: "Review"),
-        //           ],
-        //         ),
-        //       ),
-        //       Container(
-        //         decoration: BoxDecoration(
-        //           border: Border(
-        //             top: BorderSide(color: Colors.grey),
-        //           ),
-        //         ),
-        //         height: MediaQuery.of(context).size.height / 1.15,
-        //         child: TabBarView(
-        //           children: [
-        //             Delivery(),
-        //             Review(),
-        //           ],
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-//       ),
-//     );
-//   }
-// }
