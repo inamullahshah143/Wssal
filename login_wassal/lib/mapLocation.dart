@@ -38,16 +38,18 @@ class _MapLoacationState extends State<MapLoacation> {
         children: <Widget>[
           GoogleMap(
             zoomGesturesEnabled: true,
-            padding: EdgeInsets.all(10),
+            rotateGesturesEnabled: true,
+            mapToolbarEnabled:true,
+            padding: const EdgeInsets.all(10),
             myLocationButtonEnabled: true,
             myLocationEnabled: true,
             zoomControlsEnabled: false,
-            scrollGesturesEnabled: true,
+            buildingsEnabled: true,
             compassEnabled: true,
             onMapCreated: _onMapCreated,
             initialCameraPosition: CameraPosition(
               target: _center,
-              zoom: 11.0,
+              zoom: 14.0,
             ),
           ),
           Padding(
@@ -145,6 +147,7 @@ class _MapLoacationState extends State<MapLoacation> {
               ),
             ),
           ),
+        
         ],
       ),
     );
