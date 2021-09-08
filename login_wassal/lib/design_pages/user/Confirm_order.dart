@@ -565,50 +565,52 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                               decoration: BoxDecoration(
                                   color: Color.fromRGBO(244, 245, 247, 1),
                                   borderRadius: BorderRadius.circular(12)),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Container(
-                                    height: 20,
-                                    width: 20,
-                                    child: RawMaterialButton(
-                                      onPressed: () {
-                                        _decrementCounter2();
-                                      },
-                                      elevation: 1.0,
-                                      fillColor:
-                                          Color.fromRGBO(193, 199, 208, 1),
-                                      child: Icon(
-                                        Icons.remove,
-                                        size: 15.0,
-                                        color: Colors.white,
+                              child: Container(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: RawMaterialButton(
+                                        onPressed: () {
+                                          _decrementCounter2();
+                                        },
+                                        elevation: 1.0,
+                                        fillColor:
+                                            Color.fromRGBO(193, 199, 208, 1),
+                                        child: Icon(
+                                          Icons.remove,
+                                          size: 15.0,
+                                          color: Colors.white,
+                                        ),
+                                        shape: CircleBorder(),
                                       ),
-                                      shape: CircleBorder(),
                                     ),
-                                  ),
-                                  Text(
-                                    "$_itemCount2",
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                  Container(
-                                    height: 20,
-                                    width: 20,
-                                    child: RawMaterialButton(
-                                      onPressed: () {
-                                        _incrementCounter2();
-                                      },
-                                      elevation: 1.0,
-                                      fillColor: Color.fromRGBO(223, 51, 19, 1),
-                                      child: Icon(
-                                        Icons.add,
-                                        size: 15.0,
-                                        color: Colors.white,
+                                    Text(
+                                      "$_itemCount2",
+                                      style: TextStyle(fontSize: 12),
+                                    ),
+                                    Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: RawMaterialButton(
+                                        onPressed: () {
+                                          _incrementCounter2();
+                                        },
+                                        elevation: 1.0,
+                                        fillColor: Color.fromRGBO(223, 51, 19, 1),
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 15.0,
+                                          color: Colors.white,
+                                        ),
+                                        shape: CircleBorder(),
                                       ),
-                                      shape: CircleBorder(),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                             Padding(

@@ -30,7 +30,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     });
     productPriceValue = d['sale_price'];
     timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-      print("FinalPrice: $productPriceValue");
+      // print("FinalPrice: $productPriceValue");
       setState(() {
         finalPrice = productPriceValue;
       });
