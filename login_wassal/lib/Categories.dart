@@ -342,11 +342,18 @@ Future<Widget> mainCategories(BuildContext context) async {
 
 List<InlineSpan> subCategory(List data) {
   List<InlineSpan> x = [];
-  data.forEach((element) {
-    x.add(
-      TextSpan(text: '${element['name']}, '),
-    );
-  });
+  for (var i = 0; i < data.length; i++) {
+      if (i!=data.length-1) {
+  x.add(
+  TextSpan(text: '${data[i]['name']}, '),
+      );
+}else{
+   x.add(
+  TextSpan(text: '${data[i]['name']}'),
+      );
+}
+  }
+
 
   return x;
 }
