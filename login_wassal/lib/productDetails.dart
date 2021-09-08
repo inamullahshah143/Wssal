@@ -30,7 +30,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     });
     productPriceValue = d['sale_price'];
     timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-      print("FinalPrice: $productPriceValue");
+      // print("FinalPrice: $productPriceValue");
       setState(() {
         finalPrice = productPriceValue;
       });
@@ -51,7 +51,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(25))
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))
       ),
       
       child: SafeArea(
