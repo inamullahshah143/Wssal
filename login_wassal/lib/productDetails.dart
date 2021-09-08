@@ -62,7 +62,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Stack(children: [
                   Container(
-                    height: 250,
+                    height: 175,
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(40),
