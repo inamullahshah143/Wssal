@@ -1082,12 +1082,20 @@ class _CategoryDetailState extends State<CategoryDetail> {
                   .get((Uri.parse("$apiURL/productDetail/${element['id']}")))
                   .then((value) {
                 if (value.statusCode == 200) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ProductDetails(d: json.decode(value.body)['data'])),
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return ProductDetails(d: json.decode(value.body)['data']);
+                    },
                   );
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) =>
+                  //           ),
+                  // );
                 }
               });
             },
@@ -1382,8 +1390,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    width: 100,
-                    height: 100,
+                    width: 70,
+                    height: 70,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image(
@@ -1653,12 +1661,15 @@ class _CategoryDetailState extends State<CategoryDetail> {
                   .get((Uri.parse("$apiURL/productDetail/${element['id']}")))
                   .then((value) {
                 if (value.statusCode == 200) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ProductDetails(d: json.decode(value.body)['data'])),
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return ProductDetails(d: json.decode(value.body)['data']);
+                    },
                   );
+               
                 }
               });
             },
@@ -2128,11 +2139,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
                   .get((Uri.parse("$apiURL/productDetail/${element['id']}")))
                   .then((value) {
                 if (value.statusCode == 200) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ProductDetails(d: json.decode(value.body)['data'])),
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return ProductDetails(d: json.decode(value.body)['data']);
+                    },
                   );
                 }
               });
@@ -2415,11 +2428,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
                   .get((Uri.parse("$apiURL/productDetail/${element['id']}")))
                   .then((value) {
                 if (value.statusCode == 200) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ProductDetails(d: json.decode(value.body)['data'])),
+               showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return ProductDetails(d: json.decode(value.body)['data']);
+                    },
                   );
                 }
               });
@@ -2738,12 +2753,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ProductDetails(d: element)),
-                          );
+                         showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return ProductDetails(d: element);
+                    },
+                  );
                         },
                         child: Container(
                           height: 120,
@@ -2995,12 +3012,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
                 .get((Uri.parse("$apiURL/productDetail/${element['id']}")))
                 .then((value) {
               if (value.statusCode == 200) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          ProductDetails(d: json.decode(value.body)['data'])),
-                );
+               showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return ProductDetails(d: json.decode(value.body)['data']);
+                    },
+                  );
               }
             });
           },
@@ -3148,12 +3167,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
                 .get((Uri.parse("$apiURL/productDetail/${element['id']}")))
                 .then((value) {
               if (value.statusCode == 200) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          ProductDetails(d: json.decode(value.body)['data'])),
-                );
+              showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return ProductDetails(d: json.decode(value.body)['data']);
+                    },
+                  );
               }
             });
           },
