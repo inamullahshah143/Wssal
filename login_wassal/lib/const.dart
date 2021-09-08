@@ -99,9 +99,17 @@ getBottomBar(context) {
               unselectedItemColor: Colors.grey,
               items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.dashboard_rounded,
-                      color: Colors.grey,
+                    icon: InkWell(
+                      onTap: (){
+                         Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainCategories()),
+              );
+                      },
+                      child: Icon(
+                        Icons.dashboard_rounded,
+                        color: Colors.grey,
+                      ),
                     ),
                     label: ''),
                 BottomNavigationBarItem(
