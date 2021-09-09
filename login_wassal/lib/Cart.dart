@@ -225,7 +225,7 @@ class _CartProductState extends State<CartProduct> {
                             text: TextSpan(text: "", children: [
                       WidgetSpan(
                             child:  Container(
-                                height:20,
+                                height:20
                                 width: 20,
                                 child: RawMaterialButton(
                                   onPressed: () {
