@@ -313,13 +313,47 @@ class _CartProductState extends State<CartProduct> {
                         ),
                         child: RichText(
                             text: TextSpan(text: "", children: [
-                          WidgetSpan(
-                            child: Container(
-                              height: 20,
-                              width: 20,
-                              child: RawMaterialButton(
-                                onPressed: () {
-                                  if (cartProductBlockQty > 1) {
+                      WidgetSpan(
+                            child:  Container(
+                                height:20,
+                                width: 20,
+                                child: RawMaterialButton(
+                                  onPressed: () {
+                                    if (cartProductBlockQty > 1) {
+                                      setState(() {
+                                        cartProductBlockQty--;
+                                        cartProductBlockPrice =
+                                            cartProductBlock['product_price'] *
+                                                cartProductBlockQty;
+                                        finalPriceForCart = finalPriceForCart -
+                                            cartProductBlock['product_price'];
+                                      });
+                                    }
+                                  },
+                                  elevation: 1.0,
+                                  fillColor: Color.fromRGBO(193, 199, 208, 1),
+                                  child: Icon(
+                                    Icons.remove,
+                                    size: 15.0,
+                                    color: Colors.white,
+                                  ),
+                                  shape: CircleBorder(),
+                                ),
+                              ),
+                      ),
+                      WidgetSpan(
+                    child: Container(
+                            margin: EdgeInsets.only(left: 3, right: 3),
+                            child: Text("$cartProductBlockQty",style: TextStyle(
+                              fontSize: 16,
+                            ),)),
+                      ),
+                      WidgetSpan(
+                            child:   Container(
+                                height: 20,
+                                width:20,
+                                child: RawMaterialButton(
+                                  onPressed: () {
                                     setState(() {
                                       cartProductBlockQty--;
                                       cartProductBlockPrice =
@@ -328,8 +362,7 @@ class _CartProductState extends State<CartProduct> {
                                       finalPriceForCart = finalPriceForCart -
                                           cartProductBlock['product_price'];
                                     });
-                                  }
-                                },
+                                  },
                                 elevation: 1.0,
                                 fillColor: Color.fromRGBO(193, 199, 208, 1),
                                 child: Icon(
