@@ -15,7 +15,7 @@ var ffccmmTTookkeenn;
 bool logs = false;
 Color textColor = Color.fromRGBO(164, 172, 186, 1);
 Color headingColor = Color.fromRGBO(122, 134, 154, 1);
-
+Color themePrimaryColor = Color.fromRGBO(254, 197, 0, 1);
 BuildContext latestContext;
 
 var picBaseURL = 'https://wassldev.einnovention.tech/storage/';

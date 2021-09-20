@@ -2,7 +2,7 @@
     package="com.example.wssal_driver">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="وصّل Driver"
+        android:label="وصل ديلفري"
         android:icon="@mipmap/ic_launcher">
           <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyCuyriY7QVqaX6WZrKR-9fI-QfHgjei7nE"/>

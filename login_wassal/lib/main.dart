@@ -85,13 +85,13 @@ class _SplashScreenState extends State<SplashScreen> {
           storedNumber = z;
           logs = true;
           Timer(Duration(seconds: 3), () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => MainCategories()));
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (_) => MainCategories()), (Route<dynamic> route) => false);
           });
         } else {
           Timer(Duration(seconds: 3), () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => LoginPage()));
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (_) => MainCategories()), (Route<dynamic> route) => false);
           });
         }
       }

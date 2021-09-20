@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wassal_customer/Categories.dart';
 
 import 'const.dart';
 import 'numberlogin.dart';
@@ -285,7 +286,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LoginPage(),
+                            builder: (context) => MainCategories(),
                           ),
                         );
                       },

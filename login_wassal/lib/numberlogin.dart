@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 bool tick = false;
-String countryCode = '';
+String countryCode = '+20';
 String number;
 
 class _LoginPageState extends State<LoginPage> {
@@ -174,6 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
+              
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 height: 50,
@@ -208,6 +209,29 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 customerlogin(context) async {
   try {
     var url = "https://wassldev.einnovention.tech/api/login";
@@ -222,33 +246,12 @@ customerlogin(context) async {
     print("$data");
     if (data["status"] == 200 &&
         data["message"] == 'Otp sent. User is found!') {
-      loginToken = data['token'];
-      storedName = data['data']['name'];
-      storedNumber = data['data']['phone'];
-
-      SharedPreferences mypref = await SharedPreferences.getInstance();
-      mypref.setString('abs', '$loginToken');
-      mypref.setString('name', '$storedName');
-      mypref.setString('number', '$storedNumber');
-      print("$loginToken");
-      showAlert(
-        context: context,
-        title: "Login successfully",
-        actions: [
-          AlertAction(
-              text: "Ok",
-              isDestructiveAction: true,
-              onPressed: () {
-                Navigator.pushReplacement(
+                    Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          Varifyphonenumber(phonenumber)),
+                          Varifyphonenumber(data)),
                 );
-              }),
-        ],
-        cancelable: true,
-      );
     } else {
       showAlert(
         context: context,

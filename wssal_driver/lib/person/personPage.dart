@@ -348,7 +348,7 @@ class _PersonState extends State<Person> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LogIn()));
+                                  builder: (context) => LoginPage()));
                         }),
                   ],
                   cancelable: true,

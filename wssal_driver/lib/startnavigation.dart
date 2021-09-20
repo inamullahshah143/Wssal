@@ -1,135 +1,247 @@
-import 'dart:async';
-import 'package:location/location.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:convert';
+import 'dart:io';
 
-import 'function.dart';
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:pusher/pusher.dart' as push;
+import 'package:wssal_driver/orderDetails.dart';
+
+import 'ChatPage.dart';
 
 String _mapStyle;
 
-class StartNavigation extends StatefulWidget {
+class DriverMapBuilder extends StatelessWidget {
+  final Map orderDetails;
+  DriverMapBuilder({@required this.orderDetails});
   @override
-  _StartNavigationState createState() => _StartNavigationState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: DriverMap(orderDetails: orderDetails),
+    );
+  }
 }
 
-class _StartNavigationState extends State<StartNavigation> {
-  Completer<GoogleMapController> _controller = Completer();
+class DriverMap extends StatefulWidget {
+  final Map orderDetails;
+  DriverMap({@required this.orderDetails});
+  @override
+  _DriverMapState createState() => _DriverMapState(orderDetails: orderDetails);
+}
 
-  BitmapDescriptor busIcon;
+class _DriverMapState extends State<DriverMap> {
+  final Map orderDetails;
+  _DriverMapState({@required this.orderDetails});
+  GoogleMapController mapController;
+  BitmapDescriptor deliveryIcon;
+  BitmapDescriptor shopIcon;
+  BitmapDescriptor customerIcon;
   Set<Marker> _markers = Set<Marker>();
-  Timer timer;
-  var latitude;
-  var longitude;
-  var datetime;
+  double pinPillPosition = 1000;
+  // Set<Circle> _circles = Set<Circle>();
+
   @override
   void initState() {
-    super.initState();
-    print('object');
-    getuserLocation().then((value) {
-      print("UUU: ${value.latitude}");
-    });
-    timer = Timer.periodic(Duration(seconds: 3), (Timer t) => _getlocation());
-    // _getlocation();
-    rootBundle.loadString('assets/map.txt').then((string) {
+    rootBundle.loadString('assets/style.txt').then((string) {
       _mapStyle = string;
     });
-    print('Ahmad');
     setMarkerImages();
+    super.initState();
   }
 
   @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("${orderDetails['order_no']} Navigation"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          ChatPage(orderDetails: orderDetails)),
+                );
+              },
+              icon: Icon(Icons.chat_bubble))
+        ],
+      ),
+      body: FutureBuilder(
+        future: getLocation(),
+        builder: (context, AsyncSnapshot<LocationData> snapshot) {
+          if (snapshot.hasData) {
+            return Stack(
+              children: [
+                GoogleMap(
+                  myLocationEnabled: true,
+                  myLocationButtonEnabled: true,
+                  markers: _markers,
+                  mapType: MapType.normal,
+                  onMapCreated: (GoogleMapController controller) {
+                    mapController = controller;
+
+                    setMarkerImages();
+                    setState(() {
+                      _markers.add(Marker(
+                          markerId: MarkerId("shop"),
+                          position: LatLng(
+                              double.parse(orderDetails['ordered_products'][0]
+                                  ['products']['shop']['latitude']),
+                              double.parse(orderDetails['ordered_products'][0]
+                                  ['products']['shop']['longitude'])),
+                          onTap: () {},
+                          icon: shopIcon));
+                      _markers.add(Marker(
+                          markerId: MarkerId("customer"),
+                          position: LatLng(
+                              double.parse(
+                                  orderDetails['user']['address']['lat']),
+                              double.parse(
+                                  orderDetails['user']['address']['lng'])),
+                          onTap: () {},
+                          icon: customerIcon));
+                    });
+                    markerAdd(LatLng(
+                        snapshot.data.latitude, snapshot.data.longitude));
+                    locationUpdates();
+                  },
+                  initialCameraPosition: CameraPosition(
+                      target: LatLng(
+                          snapshot.data.latitude, snapshot.data.longitude),
+                      zoom: 14),
+                ),
+                AnimatedPositioned(
+                  bottom: pinPillPosition, right: 0, left: 0,
+                  duration: Duration(milliseconds: 200),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      margin: EdgeInsets.all(20),
+
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(50)),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                                blurRadius: 20,
+                                offset: Offset.zero,
+                                color: Colors.grey.withOpacity(0.5))
+                          ]),
+                      child: Container(
+                        margin: EdgeInsets.all(25),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            RaisedButton(
+                              onPressed: () {
+                                setState(() {
+                                  pinPillPosition = 1000;
+                                });
+                              },
+                              child: Text(
+                                "Close",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ), // end of Row
+                    ), // end of Container
+                  ), // end of Align
+                ),
+              ],
+            );
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error);
+          } else {
+            return CircularProgressIndicator();
+          }
+        },
+      ),
+    );
   }
 
-  _getlocation() {
+  Future<LocationData> getLocation() async {
     Location location = Location();
     location.getLocation().then((value) {
-      setState(() {
-        latitude = value.latitude;
-        longitude = value.longitude;
-        datetime = DateTime.now();
-      });
-
-      print('latitude : $latitude');
-      print('longitude : $longitude');
-      print("Time: $datetime");
+      push.Pusher(
+        '1266741',
+        '75277f8cc7ab6202152a',
+        '5722578c3b137a34832c',
+        push.PusherOptions(cluster: 'ap2'),
+      ).trigger(
+          ["${orderDetails['order_no']}"],
+          "${orderDetails['order_no']}",
+          json.encode({
+            "data": "Driver Location",
+            "lat": value.latitude,
+            "lng": value.longitude
+          })).then((value) {});
     });
-  }
-
-  Future<LocationData> getuserLocation() async {
-    Location location = Location();
 
     return location.getLocation();
   }
 
-  @override
-    Widget build(BuildContext context) {
-    latestContext = context;
-    return Scaffold(
-        appBar: AppBar(actions: [], title: Text("Order")),
-        body: FutureBuilder(
-          future: getuserLocation(),
-          builder: (context, AsyncSnapshot<LocationData> snapshot) {
-            if (snapshot.hasData) {
-              // return Text(
-              //     "${snapshot.data.latitude} \n ${snapshot.data.longitude}");
-              return GoogleMap(
-                myLocationEnabled: true,
-                myLocationButtonEnabled: true,
-                markers: _markers,
-                mapType: MapType.normal,
-                // onMapCreated: (GoogleMapController controller) {
-                //   controller.setMapStyle(_mapStyle);
-                //   setMarkerImages();
-                //   markerAdd(
-                //       LatLng(snapshot.data.latitude, snapshot.data.longitude));
-                //   locationUpdates();
-                // },
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
-
-                initialCameraPosition: CameraPosition(
-                    target: LatLng(
-                        snapshot.data.latitude, snapshot.data.longitude)),
-              );
-            } else if (snapshot.hasError) {
-              return Text(snapshot.error);
-            } else {
-              return CircularProgressIndicator(
-                backgroundColor: Colors.white,
-              );
-            }
-          },
-        ));
-  }
-
-  setMarkerImages() async {
-    busIcon = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5), 'assets/car2.png');
-  }
-
   locationUpdates() {
     Location location = Location();
-    location.onLocationChanged.listen((cLoc) {
-      print(cLoc);
+
+    location.onLocationChanged().listen((cLoc) {
+      push.Pusher(
+        '1266741',
+        '75277f8cc7ab6202152a',
+        '5722578c3b137a34832c',
+        push.PusherOptions(cluster: 'ap2'),
+      ).trigger(
+          ["${orderDetails['order_no']}"],
+          "${orderDetails['order_no']}",
+          json.encode({
+            "data": "Driver Location",
+            "lat": cLoc.latitude,
+            "lng": cLoc.longitude
+          })).then((value) {});
       markerAdd(LatLng(cLoc.latitude, cLoc.longitude));
+      mapController.getZoomLevel().then((zoom) {
+        mapController.animateCamera(CameraUpdate.newCameraPosition(
+            CameraPosition(
+                target: LatLng(cLoc.latitude, cLoc.longitude), zoom: zoom)));
+      });
     });
   }
 
+  setMarkerImages() async {
+    deliveryIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5), 'assets/delivery.png');
+
+    shopIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5), 'assets/shop.png');
+
+    customerIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5), 'assets/customer.png');
+  }
+
   markerAdd(LatLng pinPosition) {
-    print("marker");
     setState(() {
       _markers
           .removeWhere((element) => element.markerId == MarkerId("busPointer"));
       _markers.add(Marker(
           markerId: MarkerId("busPointer"),
           position: pinPosition,
-          onTap: () {},
-          icon: busIcon));
+          onTap: () {
+            setState(() {
+              pinPillPosition = 0;
+            });
+          },
+          icon: deliveryIcon));
     });
   }
 }

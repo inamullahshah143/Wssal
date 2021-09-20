@@ -167,26 +167,8 @@ class _HomeState extends State<Home> {
               ),
               child: Column(
                 children: [
-                  ListTile(
-                    leading: Image(
-                      image: AssetImage('assets/starbuck.png'),
-                    ),
-                    title: Text('Hello,'),
-                    subtitle: Text(
-                      'Starbucks',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 5, bottom: 10),
-                    child: Divider(
-                      thickness: 0.5,
-                      color: Colors.grey,
-                    ),
-                  ),
+                
+               
                   Container(
                     margin: EdgeInsets.only(left: 15, top: 20, right: 15),
                     child: Row(

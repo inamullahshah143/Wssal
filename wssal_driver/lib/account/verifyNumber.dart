@@ -1,29 +1,37 @@
-import 'package:animated_icon_button/animated_icon_button.dart';
-import 'package:country_code_picker/country_code_picker.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_alert/flutter_alert.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
-import 'package:wssal_driver/account/driverProfile.dart';
-import 'package:wssal_driver/function.dart';
-
-import '../home.dart';
-
-
-String number;
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wssal_driver/home.dart';
+import '../function.dart';
 
 class Varifyphonenumber extends StatefulWidget {
-  final phonenumber;
-  Varifyphonenumber(this.phonenumber);
+  final Map data;
+  Varifyphonenumber(this.data);
   @override
-  _VarifyphonenumberState createState() =>
-      _VarifyphonenumberState(this.phonenumber);
+  _VarifyphonenumberState createState() => _VarifyphonenumberState(this.data);
 }
 
 class _VarifyphonenumberState extends State<Varifyphonenumber> {
-  final phonenumber;
-  _VarifyphonenumberState(this.phonenumber);
+  final Map data;
+  bool isChecked = false;
   @override
-    Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    isChecked = false;
+  }
+
+  _VarifyphonenumberState(this.data);
+
+  String verificationCode;
+  @override
+  Widget build(BuildContext context) {
     latestContext = context;
+    // double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -46,7 +54,9 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                   child: Text(
                     'Verify phone number',
                     style: TextStyle(
-                        color: Color.fromRGBO(128, 136, 142, 1), fontSize: 22),
+                      color: Color.fromRGBO(128, 136, 142, 1),
+                      fontSize: 18,
+                    ),
                   )),
             ),
             Container(
@@ -54,112 +64,107 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
               child: Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'We have just sent a code to +923041111111',
-                    style: TextStyle(
-                        color: Color.fromRGBO(149, 159, 175, 1), fontSize: 16),
-                  )),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 5, right: 5),
-              height: 130,
-              width: width,
-              margin: EdgeInsets.only(top: 17, left: 10, right: 10),
-              alignment: Alignment.center,
-
-              child: VerificationCode(
-                textStyle: TextStyle(fontSize: 20.0, color: Colors.red[900]),
-                underlineColor: Colors.amber,
-                keyboardType: TextInputType.number,
-                length: 4,
-                clearAll: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'clear all',
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        decoration: TextDecoration.underline,
-                        color: Colors.blue[700]),
-                  ),
-                ),
-                onCompleted: (String value) {
-                  setState(() {
-                    number = value;
-                    print('Code = $number');
-                  });
-                },
-                onEditing: (bool value) {
-                  // setState(() {
-                  //   _onEditing = value;
-                  // });
-                },
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                   print('Code = $number');
-                // phoneverify(context);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => Home()),
-                );
-              },
-              child: Container(
-                margin: EdgeInsets.only(top: 25, left: 20, right: 20),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(255, 199, 0, 1),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                height: 50,
-                width: width,
-                child: Align(alignment: Alignment.center, child: Text('Next')),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                // Navigator.pushReplacement(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (BuildContext context) => StoreProfile()),
-                // );
-              },
-              child: Container(
-                margin: EdgeInsets.only(top: 25, left: 20, right: 20),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(244, 245, 247, 1),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                height: 50,
-                width: width,
-                child: Align(
-                    alignment: Alignment.center, child: Text('Send again')),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 25, left: 22, right: 20),
-              height: 20,
-              width: width,
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'By Signing up, you agree to our.',
+                    'We have just sent a code to $phonenumber',
                     style: TextStyle(
                       color: Color.fromRGBO(149, 159, 175, 1),
+                      fontSize: 14,
                     ),
                   )),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 2, left: 22, right: 20),
-              height: 20,
-              width: width,
-              child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Text(
-                    'Term and Conditions',
-                    style: TextStyle(
-                      color: Color.fromRGBO(222, 53, 11, 1),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 25.0),
+              child: Container(
+                width: width,
+                alignment: Alignment.center,
+                child: VerificationCode(
+                  textStyle: TextStyle(fontSize: 20.0, color: Colors.red[900]),
+                  underlineColor: Colors.amber,
+                  keyboardType: TextInputType.number,
+                  length: 4,
+                  onCompleted: (String value) async {
+                    print("Value: $value = Data: ${data['data']['otp']}");
+                    if ("${data['data']['otp']}" == "$value") {
+                      stringValue = data['token'];
+          
+                      SharedPreferences mypref =
+                          await SharedPreferences.getInstance();
+                      mypref.setString('abs', '$stringValue');
+             
+               
+                      showAlert(
+                        context: context,
+                        title: "Login successful",
+                        actions: [
+                          AlertAction(
+                              text: "Ok",
+                              isDestructiveAction: true,
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          Home()),
+                                );
+                              }),
+                        ],
+                        cancelable: true,
+                      );
+                    } else {
+                      showAlert(
+                          context: context,
+                          title: "Error",
+                          body: "Incorrect OTP");
+                    }
+                  },
+                  onEditing: (bool value) {
+                    // setState(() {
+                    //   _onEditing = value;
+                    // });
+                  },
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 15.0),
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                height: 50,
+                width: width,
+                child: ElevatedButton(
+                  onPressed: () {
+                    http.post(Uri.parse("https://wassldev.einnovention.tech/api/login"), body: {
+                      "phone": "${data['data']['phone']}",
+                      "fcm_token": "$fcmToken",
+                    }, headers: {}).then((response) {
+                      var data = json.decode(response.body);
+                      print("$data");
+                      if (data["status"] == 200 &&
+                          data["message"] == 'Otp sent. User is found!') {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  Varifyphonenumber(data)),
+                        );
+                      }
+                    });
+                  
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(15.0),
                     ),
-                  )),
+                    primary: Colors.grey[200],
+                  ),
+                  child: Text(
+                    "Send Again",
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
@@ -167,80 +172,3 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
     );
   }
 }
-
-// phoneverify(context) async {
-//   var url = 'https://wassl.einnovention.tech/api/getcode';
-//   var response = await http.post(Uri.parse(url), body: {
-//     // 'name': '$name',
-//     'code': '$number1$number2$number3$number4',
-//   }
-//       // headers: {
-//       //   'Accept':'application/json'
-//       // }
-//       );
-//   print('Response body: ${response.body}');
-//   var data = json.decode(response.body);
-//   print('$data');
-//   if (data['status'] == 'success') {
-//     // accessToken = data['token'];
-//     // print("$accessToken");
-//     // print('Login Successfully');
-//     // SharedPreferences mypref = await SharedPreferences.getInstance();
-//     // mypref.setString('accessToken', '$accessToken');
-//     //  logs = true;
-//     Navigator.pushReplacement(
-//       context,
-//       MaterialPageRoute(builder: (BuildContext context) => EnterAddress()),
-//     );
-//   } else {
-//     showAlert(
-//       context: context,
-//       title: "Error ",
-//       actions: [
-//         AlertAction(text: "Ok ", isDestructiveAction: true, onPressed: () {}
-//             //  Navigator.push(
-//             //     context, MaterialPageRoute(builder: (context) => LoginPage())),
-//             ),
-//       ],
-//       cancelable: true,
-//     );
-//   }
-// }
-
-// sendagain(context) async {
-//   var url = 'https://wassl.einnovention.tech/api/login';
-//   var response = await http.post(Uri.parse(url), body: {
-//     // 'name': '$name',
-//     'phone': '$phonenumber',
-//   }, headers: {
-//     'Accept': 'application/json'
-//   });
-//   print('Response body: ${response.body}');
-//   var data = json.decode(response.body);
-//   print('$data');
-//   if (data['status'] == 'success') {
-//     accessToken = data['token'];
-//     print("$accessToken");
-//     print('Login Successfully');
-//     // SharedPreferences mypref = await SharedPreferences.getInstance();
-//     // mypref.setString('accessToken', '$accessToken');
-//     //  logs = true;
-//     Navigator.pushReplacement(
-//       context,
-//       MaterialPageRoute(
-//           builder: (BuildContext context) => Varifyphonenumber(phonenumber)),
-//     );
-//   } else {
-//     showAlert(
-//       context: context,
-//       title: "Account Not Exist",
-//       actions: [
-//         AlertAction(text: "Ok ", isDestructiveAction: true, onPressed: () {}
-//             //  Navigator.push(
-//             //     context, MaterialPageRoute(builder: (context) => LoginPage())),
-//             ),
-//       ],
-//       cancelable: true,
-//     );
-//   }
-// }

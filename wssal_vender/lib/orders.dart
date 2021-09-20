@@ -51,46 +51,8 @@ class _OrdersState extends State<Orders> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 25, left: 15, right: 15),
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(244, 245, 247, 1),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    // margin: EdgeInsets.only(left: 30),
-                    height: 50,
-                    width: width,
-                    child: TextFormField(
-                      // controller: seachController,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return "This field is required";
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (value) {},
-                      // onFieldSubmitted: (value) {
-                      //   print(value);
-                      //   setState(() {
-                      //     addressList.add(value);
-                      //   });
-                      //   addressController.clear();
-                      // },
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          // icon: Icon(
-                          //   Icons.calendar_today_outlined,
-                          //   color: Color.fromRGBO(193, 199, 208, 1),
-                          // ),
-                          labelText: '     Product Name'),
-                    ),
-                  ),
-                  Container(
+                Container(
+                     width: width,
                     margin: EdgeInsets.only(
                       top: 15,
                     ),

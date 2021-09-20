@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:wassal_customer/Cart.dart';
@@ -47,168 +48,214 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     latestContext = context;
-    return  Container(
+    return Container(
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))
-      ),
-      
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25), topRight: Radius.circular(25))),
       child: SafeArea(
-              child: SingleChildScrollView(
-            child: Container(
-              color: Color.fromRGBO(244, 245, 247, 100),
-              child:
-                  Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Stack(children: [
-                  Container(
-                    height: 175,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(40),
-                          bottomRight: Radius.circular(40)),
-                      // child: Image(
-                      //   fit: BoxFit.fill,
-                      //   image: NetworkImage(   imageURL + '/' + data['images'][0]['path']),
-                      // ),
-                      child: Carousel(
-                        boxFit: BoxFit.cover,
-                        autoplay: true,
-                        animationCurve: Curves.fastOutSlowIn,
-                        animationDuration: Duration(milliseconds: 1100),
-                        dotSize: 6.0,
-                        dotIncreasedColor: Colors.white,
-                        dotBgColor: Colors.transparent,
-                        dotPosition: DotPosition.bottomCenter,
-                        dotVerticalPadding: 5.0,
-                        showIndicator: true,
-                        indicatorBgPadding: 5.0,
-                        images: d['images'].map((value) {
-                          return NetworkImage(
-                              imageURL + '/' + "${value['path']}");
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 25, left: 13),
-                  //   child: ClipRRect(
-                  //     borderRadius: BorderRadius.circular(50),
-                  //     child: InkWell(
-                  //       onTap: () {
-                  //         Navigator.pop(context);
-                  //       },
-                  //       child: Container(
-                  //         height: 30,
-                  //         width: 30,
-                  //         color: Color.fromRGBO(255, 254, 255, 1),
-                  //         child: Icon(
-                  //           Icons.arrow_back,
-                  //           color: Color.fromRGBO(191, 37, 103, 1),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // )
-                ]),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          d['title'],
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "\$ $finalPrice",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.grey.shade800,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )
-                    ],
+          child: SingleChildScrollView(
+        child: Container(
+          color: Color.fromRGBO(244, 245, 247, 100),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Stack(children: [
+              Container(
+                height: 175,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(40),
+                      bottomRight: Radius.circular(40)),
+                  // child: Image(
+                  //   fit: BoxFit.fill,
+                  //   image: NetworkImage(   imageURL + '/' + data['images'][0]['path']),
+                  // ),
+                  child: Carousel(
+                    boxFit: BoxFit.cover,
+                    autoplay: true,
+                    animationCurve: Curves.fastOutSlowIn,
+                    animationDuration: Duration(milliseconds: 1100),
+                    dotSize: 6.0,
+                    dotIncreasedColor: Colors.white,
+                    dotBgColor: Colors.transparent,
+                    dotPosition: DotPosition.bottomCenter,
+                    dotVerticalPadding: 5.0,
+                    showIndicator: true,
+                    indicatorBgPadding: 5.0,
+                    images: d['images'].map((value) {
+                      return NetworkImage(imageURL + '/' + "${value['path']}");
+                    }).toList(),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Text(
-                    d['description'],
-                    style: TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                Divider(
-                  indent: 10,
-                  endIndent: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: _buildVariations(d['variations']),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: _buildAttributes(d['attributes']),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: GestureDetector(
-              onTap: () {
-                finalProductsForCart.add({
-                  "product_id": "${d['id']}",
-                  "product_image": imageURL + '/' + "${d['images'][0]['path']}",
-                  "product_name": "${d['title']}",
-                  "quantity": 1,
-                  "product_price": finalPrice,
-                  "extras": productExtrasForCart
-                });
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CartPage()),
-                );
-              },
-              child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(255, 199, 0, 100),
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Align(
-                    alignment: Alignment.center,
+              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 25, left: 13),
+              //   child: ClipRRect(
+              //     borderRadius: BorderRadius.circular(50),
+              //     child: InkWell(
+              //       onTap: () {
+              //         Navigator.pop(context);
+              //       },
+              //       child: Container(
+              //         height: 30,
+              //         width: 30,
+              //         color: Color.fromRGBO(255, 254, 255, 1),
+              //         child: Icon(
+              //           Icons.arrow_back,
+              //           color: Color.fromRGBO(191, 37, 103, 1),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // )
+            ]),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
                     child: Text(
-                      "Add To Cart (\$ ${finalPrice})",
+                      d['title'].toString(),
                       style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  )),
+                  ),
+                  Text(
+                    "\$ $finalPrice",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey.shade800,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-              ]),
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Text(
+                d['description'],
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
             ),
-          )),
+            Divider(
+              indent: 10,
+              endIndent: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: _buildVariations(d['variations']),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: _buildAttributes(d['attributes']),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: GestureDetector(
+                onTap: () {
+                  if (finalProductsForCart.isEmpty ||
+                      finalProductsForCart.first['shop_id'] ==
+                          "${d['user']['shop']['id']}") {
+                    finalProductsForCart.add({
+                      "shop_id": "${d['user']['shop']['id']}",
+                      "shop_open_close": "${d['user']['shop']['open_close']}",
+                      "product_id": "${d['id']}",
+                      "product_image":
+                          imageURL + '/' + "${d['images'][0]['path']}",
+                      "product_name": "${d['title']}",
+                      "quantity": 1,
+                      "product_price": finalPrice,
+                      "extras": productExtrasForCart
+                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CartPage()),
+                    );
+                  } else {
+                    showAlert(
+                        context: context,
+                        title: "Error",
+                        body:
+                            "You already have products in your cart from another shop.Do you want to replace them?",
+                        actions: [
+                          AlertAction(
+                            text: "Yes",
+                            onPressed: () {
+                              finalProductsForCart = [];
+                              finalProductsForCart.add({
+                                "shop_id": "${d['user']['shop']['id']}",
+                                "shop_open_close": "${d['user']['shop']['open_close']}",
+                                "product_id": "${d['id']}",
+                                "product_image": imageURL +
+                                    '/' +
+                                    "${d['images'][0]['path']}",
+                                "product_name": "${d['title']}",
+                                "quantity": 1,
+                                "product_price": finalPrice,
+                                "extras": productExtrasForCart
+                              });
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CartPage()),
+                              );
+                            },
+                          ),
+                          AlertAction(
+                            text: "No",
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CartPage()),
+                              );
+                            },
+                          ),
+                        ]);
+                  }
+                },
+                child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: Color.fromRGBO(255, 199, 0, 100),
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Add To Cart (\$ ${finalPrice})",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                    )),
+              ),
+            ),
+          ]),
+        ),
+      )),
     );
   }
 }

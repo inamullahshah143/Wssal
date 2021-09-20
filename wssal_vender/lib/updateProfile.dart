@@ -107,8 +107,8 @@ class _UpdateVenderProfileState extends State<UpdateVenderProfile> {
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
-                        hintText: 'Name',
-                        hintStyle: TextStyle(
+                        labelText: 'Name',
+                        labelStyle: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Color.fromRGBO(182, 189, 200, 1)),
@@ -143,8 +143,8 @@ class _UpdateVenderProfileState extends State<UpdateVenderProfile> {
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
-                        hintText: 'Email',
-                        hintStyle: TextStyle(
+                        labelText: 'Email',
+                        labelStyle: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Color.fromRGBO(182, 189, 200, 1)),
@@ -178,8 +178,8 @@ class _UpdateVenderProfileState extends State<UpdateVenderProfile> {
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
-                        hintText: 'Phone',
-                        hintStyle: TextStyle(
+                        labelText: 'Phone',
+                        labelStyle: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Color.fromRGBO(182, 189, 200, 1)),
@@ -213,8 +213,8 @@ class _UpdateVenderProfileState extends State<UpdateVenderProfile> {
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
-                        hintText: 'paypal_email',
-                        hintStyle: TextStyle(
+                        labelText: 'paypal_email',
+                        labelStyle: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Color.fromRGBO(182, 189, 200, 1)),
@@ -251,8 +251,8 @@ class _UpdateVenderProfileState extends State<UpdateVenderProfile> {
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
-                        hintText: 'Password',
-                        hintStyle: TextStyle(
+                        labelText: 'Password',
+                        labelStyle: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Color.fromRGBO(182, 189, 200, 1)),

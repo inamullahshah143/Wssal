@@ -58,7 +58,7 @@ class _LocationEnableState extends State<LocationEnable> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) => LogIn()),
+                      builder: (BuildContext context) => LoginPage()),
                 );
               },
               child: Container(

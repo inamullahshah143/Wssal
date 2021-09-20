@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_alert/flutter_alert.dart';
+import 'package:flutter_tags/flutter_tags.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
@@ -21,6 +23,7 @@ class StoreProfile extends StatefulWidget {
 }
 
 class _StoreProfileState extends State<StoreProfile> {
+  LatLng lock = LatLng(31.5204, 74.3587);
   final tokenUser;
   _StoreProfileState(this.tokenUser);
   final _formKey = GlobalKey<FormState>();
@@ -32,14 +35,16 @@ class _StoreProfileState extends State<StoreProfile> {
   var len2;
   var latitude1;
   var longitude1;
+  List _tagitems = [];
+  List<String> tagList = [];
 
   Set<Marker> markers = {};
 
   String firstname;
   String lastname;
   String shopName;
-  var shoplatitude;
-  var shoplongitude;
+  String lat;
+  String lng;
   String comments;
   String shopdescription;
   String shopAddress;
@@ -103,16 +108,7 @@ class _StoreProfileState extends State<StoreProfile> {
                     ),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 25),
-                  child: Text(
-                    'Your phone number +201003456789',
-                    style: TextStyle(
-                      fontSize: 16,
-                      // fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+
                 Container(
                     margin: EdgeInsets.only(top: 45, left: 25, right: 25),
                     decoration: BoxDecoration(
@@ -152,9 +148,9 @@ class _StoreProfileState extends State<StoreProfile> {
                         //   Icons.pin_drop_sharp,
                         //   color: Color.fromRGBO(193, 199, 208, 1),
                         // ),
-                        // hintText: '     First Name'
-                        hintText: 'First Name',
-                        hintStyle: TextStyle(
+                        // labelText: '     First Name'
+                        labelText: 'First Name',
+                        labelStyle: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             // color: Color.fromRGBO(195, 153, 141, 1)
@@ -195,8 +191,8 @@ class _StoreProfileState extends State<StoreProfile> {
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
-                        hintText: 'Last Name',
-                        hintStyle: TextStyle(
+                        labelText: 'Last Name',
+                        labelStyle: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             // color: Color.fromRGBO(195, 153, 141, 1)
@@ -241,7 +237,7 @@ class _StoreProfileState extends State<StoreProfile> {
                 //           //   Icons.pin_drop_sharp,
                 //           //   color: Color.fromRGBO(193, 199, 208, 1),
                 //           // ),
-                //           hintText: '     Phone Number'),
+                //           labelText: '     Phone Number'),
                 //     )),
                 Container(
                     margin: EdgeInsets.only(top: 25, left: 25, right: 25),
@@ -281,9 +277,9 @@ class _StoreProfileState extends State<StoreProfile> {
                         //   Icons.pin_drop_sharp,
                         //   color: Color.fromRGBO(193, 199, 208, 1),
                         // ),
-                        hintText: 'Shop Address',
+                        labelText: 'Shop Address',
 
-                        hintStyle: TextStyle(
+                        labelStyle: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             // color: Color.fromRGBO(195, 153, 141, 1)
@@ -328,9 +324,9 @@ class _StoreProfileState extends State<StoreProfile> {
                         //   Icons.calendar_today_outlined,
                         //   color: Color.fromRGBO(193, 199, 208, 1),
                         // ),
-                        hintText: 'Shop Description',
+                        labelText: 'Shop Description',
 
-                        hintStyle: TextStyle(
+                        labelStyle: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             // color: Color.fromRGBO(195, 153, 141, 1)
@@ -375,7 +371,7 @@ class _StoreProfileState extends State<StoreProfile> {
                 //           //   Icons.calendar_today_outlined,
                 //           //   color: Color.fromRGBO(193, 199, 208, 1),
                 //           // ),
-                //           hintText: '     City'),
+                //           labelText: '     City'),
                 //     )),
                 // Container(
                 //     margin: EdgeInsets.only(top: 25, left: 25, right: 25),
@@ -415,7 +411,7 @@ class _StoreProfileState extends State<StoreProfile> {
                 //           //   Icons.calendar_today_outlined,
                 //           //   color: Color.fromRGBO(193, 199, 208, 1),
                 //           // ),
-                //           hintText: '     Country'),
+                //           labelText: '     Country'),
                 //     )),
                 // Container(
                 //     margin: EdgeInsets.only(top: 25, left: 25, right: 25),
@@ -455,7 +451,7 @@ class _StoreProfileState extends State<StoreProfile> {
                 //           //   Icons.calendar_today_outlined,
                 //           //   color: Color.fromRGBO(193, 199, 208, 1),
                 //           // ),
-                //           hintText: '     State'),
+                //           labelText: '     State'),
                 //     )),
                 // Container(
                 //     margin: EdgeInsets.only(top: 25, left: 25, right: 25),
@@ -495,7 +491,7 @@ class _StoreProfileState extends State<StoreProfile> {
                 //           //   Icons.calendar_today_outlined,
                 //           //   color: Color.fromRGBO(193, 199, 208, 1),
                 //           // ),
-                //           hintText: '     ZipCode'),
+                //           labelText: '     ZipCode'),
                 //     )),
                 // Container(
                 //     margin: EdgeInsets.only(top: 25, left: 25, right: 25),
@@ -535,7 +531,7 @@ class _StoreProfileState extends State<StoreProfile> {
                 //           //   Icons.calendar_today_outlined,
                 //           //   color: Color.fromRGBO(193, 199, 208, 1),
                 //           // ),
-                //           hintText: '     Buisness Category'),
+                //           labelText: '     Buisness Category'),
                 //     )),
                 Container(
                     margin: EdgeInsets.only(top: 25, left: 25, right: 25),
@@ -575,9 +571,9 @@ class _StoreProfileState extends State<StoreProfile> {
                         //   Icons.calendar_today_outlined,
                         //   color: Color.fromRGBO(193, 199, 208, 1),
                         // ),
-                        hintText: 'Comment',
+                        labelText: 'Comment',
 
-                        hintStyle: TextStyle(
+                        labelStyle: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             // color: Color.fromRGBO(195, 153, 141, 1)
@@ -622,15 +618,105 @@ class _StoreProfileState extends State<StoreProfile> {
                         //   Icons.calendar_today_outlined,
                         //   color: Color.fromRGBO(193, 199, 208, 1),
                         // ),
-                        hintText: 'Shop Title',
+                        labelText: 'Shop Title',
 
-                        hintStyle: TextStyle(
+                        labelStyle: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             // color: Color.fromRGBO(195, 153, 141, 1)
                             color: Color.fromRGBO(182, 189, 200, 1)),
                       ),
                     )),
+                Container(
+                  width: 400,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Color.fromRGBO(244, 245, 247, 1),
+                  ),
+                  margin: EdgeInsets.only(top: 25, left: 15, right: 15),
+                  child: Container(
+                    margin: EdgeInsets.all(5),
+                    child: Tags(
+                      alignment: WrapAlignment.start,
+                      spacing: 2,
+                      textField: TagsTextField(
+                        textStyle: TextStyle(
+                            color: Color.fromRGBO(30, 92, 135, 1),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                        autofocus: false,
+                        helperText: "Product Tags",
+                        lowerCase: true,
+                        inputDecoration: InputDecoration(
+                          focusedBorder: new OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(25)),
+                            borderSide: new BorderSide(
+                                color: Colors.transparent, width: 3),
+                          ),
+                          enabledBorder: new OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(25)),
+                            borderSide: new BorderSide(
+                                color: Colors.transparent, width: 3),
+                          ),
+                          border: new OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(25)),
+                            borderSide: new BorderSide(
+                                color: Colors.transparent, width: 3),
+                          ),
+                          // labelText: "attribute Values",
+                          labelStyle: TextStyle(
+                            // color: Color.fromRGBO(30, 92, 135, 1),
+                            color: Colors.black45,
+                            // fontSize: 16,
+                            // fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        onSubmitted: (String str) {
+                          if (_tagitems.length < 20) {
+                            tagList.add(str);
+                            setState(() {
+                              // required
+                              _tagitems.add(str);
+                            });
+                          } else {
+                            print("Limit Reached");
+                          }
+                          print(tagList);
+                        },
+                      ),
+                      itemCount: _tagitems.length, // required
+                      itemBuilder: (int index) {
+                        final item = _tagitems[index];
+
+                        return ItemTags(
+                          key: Key(index.toString()),
+                          index: index, // required
+                          title: item,
+
+                          customData: item,
+                          textStyle: TextStyle(
+                            fontSize: 12,
+                          ),
+                          combine: ItemTagsCombine.withTextBefore,
+
+                          removeButton: ItemTagsRemoveButton(
+                            icon: Icons.remove,
+                            size: 7,
+                            onRemoved: () {
+                              setState(() {
+                                _tagitems.removeAt(index);
+                              });
+                              //required
+                              return true;
+                            },
+                          ), // OR null,
+                          onPressed: (item) => print(item),
+                          onLongPressed: (item) => print(item),
+                        );
+                      },
+                    ),
+                  ),
+                ),
                 InkWell(
                   onTap: () {
                     setState(() {
@@ -788,130 +874,89 @@ class _StoreProfileState extends State<StoreProfile> {
                           ),
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      logfile = [];
-                    });
-                    FilePicker.platform
-                        .pickFiles(allowMultiple: false)
-                        .then((value) {
-                      value.files.forEach((element) async {
-                        logfile.add(File(element.path));
-                        setState(() {
-                          len2 = logfile.length;
-                          print('$len2');
-                        });
-                      });
-                    });
-                    // _showPicker2(context);
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(top: 10),
-                    decoration: BoxDecoration(
-                      // color: Color.fromRGBO(244, 245, 247, 1),
-                      // color: Colors.yellow,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    height: 130,
-                    width: width,
-                    child: len2 != null
-                        ? Container(
-                            margin:
-                                EdgeInsets.only(top: 25, left: 25, right: 25),
-                            decoration: BoxDecoration(
-                              color: Color.fromRGBO(244, 245, 247, 1),
-                              // color: Colors.yellow,
-                              borderRadius: BorderRadius.circular(15),
-                              // image: Image.file(file)
-                            ),
-                            height: 130,
-                            width: width,
-                            child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'You have Selected $len2 Files',
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(182, 189, 200, 1),
-                                      fontSize: 16),
-                                )),
-                            // child: Image.file(
-                            //   _image1,
-                            //   fit: BoxFit.cover,
-                            // ),
-                          )
-                        : Container(
-                            margin:
-                                EdgeInsets.only(top: 25, left: 25, right: 25),
-                            padding: EdgeInsets.only(top: 5, bottom: 5),
-                            decoration: BoxDecoration(
-                              color: Color.fromRGBO(244, 245, 247, 1),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            height: 130,
-                            width: width,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  'Select Logo Image',
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(182, 189, 200, 1),
-                                      fontSize: 16),
-                                ),
-                                Icon(
-                                  Icons.camera_alt_sharp,
-                                  size: 30,
-                                  color: Color.fromRGBO(182, 189, 200, 1),
-                                ),
-                              ],
-                            ),
-                          ),
-                  ),
-                ),
                 Container(
-                  height: height / 4,
-                  width: width,
-                  margin: EdgeInsets.only(top: 25, left: 25, right: 25),
-                  child: FutureBuilder(
-                    future: getuserLocation(),
-                    builder: (context, AsyncSnapshot<LocationData> snapshot) {
-                      if (snapshot.hasData) {
-                        return GoogleMap(
-                          myLocationEnabled: true,
-                          myLocationButtonEnabled: true,
-                          markers: markers,
-                          // mapType: MapType.normal,
-                          // onMapCreated: (GoogleMapController controller) {
+                  child: Divider(),
+                ),
+                Text(
+                  'Address (Coordinates)',
+                  style: TextStyle(color: Colors.grey, fontSize: 14),
+                ),
+                lat != null && lng != null
+                    ? Container(
+                        margin: EdgeInsets.all(25),
+                        child: Table(
+                          children: [
+                            TableRow(children: [
+                              Container(
+                                  margin: EdgeInsets.all(10),
+                                  child: Text(
+                                    "Latitude:",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16),
+                                  )),
+                              Container(
+                                  margin: EdgeInsets.all(10),
+                                  child: Text(
+                                    "$lat",
+                                    style: TextStyle(fontSize: 16),
+                                  ))
+                            ]),
+                            TableRow(children: [
+                              Container(
+                                  margin: EdgeInsets.all(10),
+                                  child: Text(
+                                    "Latitude:",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16),
+                                  )),
+                              Container(
+                                  margin: EdgeInsets.all(10),
+                                  child: Text(
+                                    "$lng",
+                                    style: TextStyle(fontSize: 16),
+                                  ))
+                            ]),
+                          ],
+                        ),
+                      )
+                    : Container(),
+                Container(
+                  clipBehavior: Clip.hardEdge,
+                  height: 350,
+                  alignment: Alignment.center,
+                  width: double.infinity,
 
-                          // },
-                          initialCameraPosition: CameraPosition(
-                              target: LatLng(snapshot.data.latitude,
-                                  snapshot.data.longitude),
-                              zoom: 15),
-                          onTap: (latlong) {
-                            setState(() {
-                              print("latitude Taped = ${latlong.latitude}");
-                              print("longitude Taped = ${latlong.longitude}");
-                              shoplatitude = latlong.latitude;
-                              shoplongitude = latlong.longitude;
-                              final _snackBar = SnackBar(
-                                  content:
-                                      Text('$shoplatitude $shoplongitude'));
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(_snackBar);
-                              // markers.add(Marker(
-                              //     markerId: MarkerId("Shopp"),
-                              //     position: LatLng(latitude, longitude)));
-                            });
-                          },
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text(snapshot.error);
+                  // padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.only(top: 15, bottom: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(17),
+                  ),
+
+                  child: PlacePicker(
+                    apiKey: 'AIzaSyAMp8UY-G3eUJeinsx6uwK-j0lXFYB_KWo',
+                    initialPosition: lock,
+                    useCurrentLocation: false,
+                    selectInitialPosition: false,
+                    usePlaceDetailSearch: true,
+                    forceSearchOnZoomChanged: true,
+                    automaticallyImplyAppBarLeading: false,
+                    onPlacePicked: (result) {
+                      setState(() {
+                        lock = LatLng(result.geometry.location.lat,
+                            result.geometry.location.lng);
+                        lat = result.geometry.location.lat.toString();
+                        lng = result.geometry.location.lng.toString();
+                      });
+                    },
+                    pinBuilder: (context, state) {
+                      if (state == PinState.Idle) {
+                        return Icon(Icons.location_on, color: Colors.red);
                       } else {
-                        return CircularProgressIndicator(
-                          backgroundColor: Colors.white,
-                        );
+                        return Icon(Icons.location_on_outlined,
+                            color: Colors.red);
                       }
                     },
                   ),
@@ -923,14 +968,14 @@ class _StoreProfileState extends State<StoreProfile> {
                       "lastname": "$lastname",
                       "comments": "$comments",
                       "shop_title": "$shopName",
-                      'shop_latitude': '$shoplatitude',
-                      'shop_longitude': '$shoplongitude',
+                      'shop_latitude': '$lat',
+                      'shop_longitude': '$lng',
                       "shop_description": "$shopdescription",
                       "shop_address": "$shopAddress",
                       // "documents": multifile,
                       // 'shop_cover': coverfile,
                       // 'shop_logo': logfile
-                       "documents": multifile,
+                      "documents": multifile,
                       'shop_cover': coverfile,
                       'shop_logo': logfile
                     });
@@ -946,6 +991,10 @@ class _StoreProfileState extends State<StoreProfile> {
                       } else if (logfile.isEmpty) {
                         final _snackBar =
                             SnackBar(content: Text('Logo file is missing'));
+                        ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                      } else if (lat == null && lng == null) {
+                        final _snackBar =
+                            SnackBar(content: Text('Select Address'));
                         ScaffoldMessenger.of(context).showSnackBar(_snackBar);
                       } else {
                         showAlert(
@@ -998,9 +1047,9 @@ class _StoreProfileState extends State<StoreProfile> {
 //   var comments;
 //   var shopName;
   becomeVender(context) async {
-  MultipartFile x ;
-  MultipartFile y ;
-    MultipartFile z ;
+    MultipartFile x;
+    MultipartFile y;
+    MultipartFile z;
     multifile.forEach((element) {
       MultipartFile.fromFile(element.path).then((value) {
         x = value;
@@ -1009,7 +1058,7 @@ class _StoreProfileState extends State<StoreProfile> {
     coverfile.forEach((element) {
       MultipartFile.fromFile(element.path).then((value) {
         // y.add(value);
-        y= value;
+        y = value;
       });
     });
     logfile.forEach((element) {
@@ -1021,19 +1070,18 @@ class _StoreProfileState extends State<StoreProfile> {
     Timer(Duration(seconds: 1), () async {
       try {
         var formData = FormData.fromMap({
-         
           "firstname": "$firstname",
           "lastname": "$lastname",
           "comments": "$comments",
           "shop_title": "$shopName",
-          'shop_latitude': '$shoplatitude',
-          'shop_longitude': '$shoplongitude',
+          'shop_latitude': '$lat',
+          'shop_longitude': '$lng',
           "shop_description": "$shopdescription",
           "shop_address": "$shopAddress",
           "documents": x,
           'shop_cover': y,
-          'shop_logo': z
-         
+          'shop_logo': z,
+          'tags': _tagitems.toString().replaceAll("[", "").replaceAll("]", ""),
         });
 
         Dio dio = Dio();
@@ -1044,13 +1092,14 @@ class _StoreProfileState extends State<StoreProfile> {
           "lastname": "$lastname",
           "comments": "$comments",
           "shop_title": "$shopName",
-          'shop_latitude': '$shoplatitude',
-          'shop_longitude': '$shoplongitude',
+          'shop_latitude': '$lat',
+          'shop_longitude': '$lng',
           "shop_description": "$shopdescription",
           "shop_address": "$shopAddress",
           "documents": x,
           'shop_cover': y,
-          'shop_logo': z
+          'shop_logo': z,
+          'tags': _tagitems.toString().replaceAll("[", "").replaceAll("]", ""),
         });
         var response =
             await dio.post("$apiBaseURL/user/request", data: formData);

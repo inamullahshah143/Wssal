@@ -46,7 +46,7 @@ class _DisplayAttributesState extends State<DisplayAttributes> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
         onPressed: () {
-          Navigator.push(
+          Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => AddAttribute()));
         },
         child: Icon(Icons.add),
@@ -105,8 +105,9 @@ class _DisplayAttributesState extends State<DisplayAttributes> {
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('response = ${response.body}');
+      if (json.decode(response.body)['status'] == 200) {
       List data = json.decode(response.body)['data'];
-      if (data.length > 0) {
+
         data.forEach((element) {
           attributes.add(Container(
             child: Column(
@@ -144,7 +145,7 @@ class _DisplayAttributesState extends State<DisplayAttributes> {
                                     child: Text('Edit'),
                                     onPressed: () {
                                       print(element);
-                                      Navigator.push(
+                                      Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
@@ -162,7 +163,7 @@ class _DisplayAttributesState extends State<DisplayAttributes> {
                                   showAlert(
                                     context: context,
                                     title:
-                                        "Do You Really want to  Deleted Attributes",
+                                        "Do You Really want to delete this Attribute",
                                     actions: [
                                       AlertAction(
                                           text: "Yes",
@@ -262,7 +263,7 @@ class _DisplayAttributesState extends State<DisplayAttributes> {
           title: "Record Not Deleted",
           actions: [
             AlertAction(text: "Ok ", isDestructiveAction: true, onPressed: () {}
-                //  Navigator.push(
+                //  Navigator.pushReplacement(
                 //     context, MaterialPageRoute(builder: (context) => LoginPage())),
                 ),
           ],

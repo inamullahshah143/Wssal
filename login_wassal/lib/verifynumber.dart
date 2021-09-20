@@ -1,24 +1,22 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_verification_code/flutter_verification_code.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_alert/flutter_alert.dart';
+import 'package:flutter_verification_code/flutter_verification_code.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Categories.dart';
 import 'const.dart';
 
-String number1;
-String number2;
-String number3;
-String number4;
-
 class Varifyphonenumber extends StatefulWidget {
-  final phonenumber;
-  Varifyphonenumber(this.phonenumber);
+  final Map data;
+  Varifyphonenumber(this.data);
   @override
-  _VarifyphonenumberState createState() =>
-      _VarifyphonenumberState(this.phonenumber);
+  _VarifyphonenumberState createState() => _VarifyphonenumberState(this.data);
 }
 
 class _VarifyphonenumberState extends State<Varifyphonenumber> {
-  final phonenumber;
+  final Map data;
   bool isChecked = false;
   @override
   void initState() {
@@ -26,7 +24,9 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
     isChecked = false;
   }
 
-  _VarifyphonenumberState(this.phonenumber);
+  _VarifyphonenumberState(this.data);
+
+  String verificationCode;
   @override
   Widget build(BuildContext context) {
     latestContext = context;
@@ -81,11 +81,45 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                   underlineColor: Colors.amber,
                   keyboardType: TextInputType.number,
                   length: 4,
-                  onCompleted: (String value) {
-                    setState(() {
-                      number4 = value;
-                      print('Code = $number4');
-                    });
+                  onCompleted: (String value) async {
+                    print("Value: $value = Data: ${data['data']['otp']}");
+                    if ("${data['data']['otp']}" == "$value") {
+                      loginToken = data['token'];
+                      storedName = data['data']['name'];
+                      storedNumber = data['data']['phone'];
+                      logs = true;
+
+                      SharedPreferences mypref =
+                          await SharedPreferences.getInstance();
+                      mypref.setString('abs', '$loginToken');
+                      mypref.setString('name', '$storedName');
+                      mypref.setString('number', '$storedNumber');
+                      print("$loginToken");
+                      showAlert(
+                        context: context,
+                        title: "Login successful",
+                        actions: [
+                          AlertAction(
+                              text: "Ok",
+                              isDestructiveAction: true,
+                              onPressed: () {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          MainCategories()),
+                                  (Route<dynamic> route) => false,
+                                );
+                              }),
+                        ],
+                        cancelable: true,
+                      );
+                    } else {
+                      showAlert(
+                          context: context,
+                          title: "Error",
+                          body: "Incorrect OTP");
+                    }
                   },
                   onEditing: (bool value) {
                     // setState(() {
@@ -103,42 +137,22 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                 width: width,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => MainCategories(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(15.0),
-                    ),
-                    primary: themePrimaryColor,
-                  ),
-                  child: Text(
-                    "Next",
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      color: Colors.grey[800],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.0),
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                height: 50,
-                width: width,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => MainCategories()),
-                    );
+                    http.post(Uri.parse("$apiURL/login"), body: {
+                      "phone": "${data['data']['phone']}",
+                      "fcm_token": "$fcmToken",
+                    }, headers: {}).then((response) {
+                      var data = json.decode(response.body);
+                      print("$data");
+                      if (data["status"] == 200 &&
+                          data["message"] == 'Otp sent. User is found!') {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  Varifyphonenumber(data)),
+                        );
+                      }
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                     shape: new RoundedRectangleBorder(

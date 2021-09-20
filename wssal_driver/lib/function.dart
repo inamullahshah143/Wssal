@@ -11,6 +11,7 @@ double height;
 List<Widget> introSliderList = [];
 Color textColor = Color.fromRGBO(164, 172, 186, 1);
 Color headingColor = Color.fromRGBO(122, 134, 154, 1);
+Color themePrimaryColor = Color.fromRGBO(254, 197, 0, 1);
 // var accessToken;
 var stringValue;
 bool logs = false;

@@ -56,29 +56,29 @@ class _ProfileState extends State<Profile> {
                     color: Colors.grey,
                     thickness: 0.3,
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    height: 100,
-                    width: width,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        image: DecorationImage(
-                            image: AssetImage('assets/starbuck.png'))),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child: Text(
-                      'Starbuck',
-                      style: TextStyle(color: Colors.black, fontSize: 19),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 10, bottom: 10),
-                    child: Text(
-                      '+2 0100 345 6789',
-                      style: TextStyle(color: Colors.black, fontSize: 13),
-                    ),
-                  ),
+                  // Container(
+                  //   margin: EdgeInsets.only(top: 10),
+                  //   height: 100,
+                  //   width: width,
+                  //   decoration: BoxDecoration(
+                  //       color: Colors.white,
+                  //       image: DecorationImage(
+                  //           image: AssetImage('assets/starbuck.png'))),
+                  // ),
+                  // Container(
+                  //   margin: EdgeInsets.only(top: 10),
+                  //   child: Text(
+                  //     'Starbuck',
+                  //     style: TextStyle(color: Colors.black, fontSize: 19),
+                  //   ),
+                  // ),
+                  // Container(
+                  //   margin: EdgeInsets.only(top: 10, bottom: 10),
+                  //   child: Text(
+                  //     '+2 0100 345 6789',
+                  //     style: TextStyle(color: Colors.black, fontSize: 13),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -341,10 +341,10 @@ class _ProfileState extends State<Profile> {
                               await SharedPreferences.getInstance();
                           mypref.remove('abs');
                           print("$stringValue");
-                          Navigator.pushReplacement(
+                          Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
+                                  builder: (context) => LoginPage()), (Route<dynamic> route) => false);
                         }),
                   ],
                   cancelable: true,

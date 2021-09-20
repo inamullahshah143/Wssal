@@ -71,63 +71,63 @@ class _StoreDetailState extends State<StoreDetail> {
                   ),
                 ),
                 title: Text("${storeBlock['title']}"),
-                subtitle:  Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: RichText(
-                        overflow: TextOverflow.ellipsis,
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: storeBlock['open_close'] == 1
-                                  ? 'Open'
-                                  : 'Close',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                                color: storeBlock['open_close'] == 1
-                                    ? Colors.green
-                                    : Colors.red,
-                              ),
-                            ),
-                            WidgetSpan(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Icon(
-                                  Icons.circle,
-                                  size: 5,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                            WidgetSpan(
-                                child: Container(
-                              margin: EdgeInsets.only(left: 5, right: 5),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  "${storeBlock['tags']}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                      color: Colors.grey),
-                                ),
-                              ),
-                            )),
-                          ],
-                        ),
-                      ),
-                    ),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                subtitle: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: RichText(
+                    overflow: TextOverflow.ellipsis,
+                    text: TextSpan(
                       children: [
-                         Padding(
-                            padding: const EdgeInsets.only(left: 3.0),
+                        TextSpan(
+                          text:
+                              storeBlock['open_close'] == 1 ? 'Open' : 'Close',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                            color: storeBlock['open_close'] == 1
+                                ? Colors.green
+                                : Colors.red,
+                          ),
+                        ),
+                        WidgetSpan(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
                             child: Icon(
-                              Icons.verified,
-                              color: Colors.green,
+                              Icons.circle,
+                              size: 5,
+                              color: Colors.grey,
                             ),
                           ),
-                           storeBlock['promoted'] == 1?Padding(
+                        ),
+                        WidgetSpan(
+                            child: Container(
+                          margin: EdgeInsets.only(left: 5, right: 5),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Text(
+                              "${storeBlock['tags']}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                  color: Colors.grey),
+                            ),
+                          ),
+                        )),
+                      ],
+                    ),
+                  ),
+                ),
+                trailing: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 3.0),
+                      child: Icon(
+                        Icons.verified,
+                        color: Colors.green,
+                      ),
+                    ),
+                    storeBlock['promoted'] == 1
+                        ? Padding(
                             padding: const EdgeInsets.all(3.0),
                             child: Container(
                               decoration: BoxDecoration(
@@ -144,11 +144,14 @@ class _StoreDetailState extends State<StoreDetail> {
                                 ),
                               ),
                             ),
-                          ):Container()
-                      ],
-                    ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.all(3.0),
+                          )
+                  ],
+                ),
               ),
-            
+
               FutureBuilder(
                 future: buildProducts(context),
                 builder: ((context, AsyncSnapshot<Widget> snap) {

@@ -1,25 +1,13 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wssal_vender/product/allProduct.dart';
-import 'package:wssal_vender/rejectedRequest.dart';
-import 'package:wssal_vender/shops/displayShop.dart';
-import 'package:wssal_vender/store_profile.dart';
-import 'approveRequest.dart';
-import 'custom_enimation.dart';
 import 'functions.dart';
 import 'home.dart';
 import 'login_page.dart';
-import 'package:http/http.dart' as http;
 
-import 'map.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -83,9 +71,7 @@ class SplashScreenState extends State<SplashScreen> {
     latestContext = context;
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: initScreen(context),
-    );
+    return initScreen(context);
   }
 
   startTime() async {
@@ -161,11 +147,27 @@ class SplashScreenState extends State<SplashScreen> {
 //   }
 
   initScreen(BuildContext context) {
+    latestContext = context;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(210, 74, 58, 1),
-      body: Center(
-        child: Container(
-          child: Image.asset("assets/splash.png"),
+      body: Container(
+        height: height,
+        width: width,
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              child: Image.asset(
+                "assets/Logo_wssal.png",
+                height: height / 6,
+                width: width / 3,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -81,7 +81,7 @@ class _MapAppState extends State<MapApp> {
 
   getUserLocations() {
     Location location = Location();
-    location.onLocationChanged.listen((event) {
+    location.onLocationChanged().listen((event) {
       setState(() {
         markers.add(Marker(
             markerId: MarkerId("driver"),

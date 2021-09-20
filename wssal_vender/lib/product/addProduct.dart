@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:flutter_tags/flutter_tags.dart';
@@ -23,6 +24,7 @@ class AddProduct extends StatefulWidget {
 
 class _AddProductState extends State<AddProduct> {
   final _formKey = GlobalKey<FormState>();
+  bool freeDelivery = false;
   List<File> multifile = [];
   List _tagitems = [];
   List<String> tagList = [];
@@ -94,213 +96,99 @@ class _AddProductState extends State<AddProduct> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    //    Container(
-                    //   margin: EdgeInsets.only(top: 15, left: 10, right: 10),
-                    //   padding: EdgeInsets.only(top: 15, left: 10, right: 10),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       Text('Active / Deactive'),
-                    //       FlutterSwitch(
-                    //         width: 50.0,
-                    //         height: 25.0,
-                    //         valueFontSize: 15.0,
-                    //         toggleSize: 15.0,
-                    //         value: status,
-                    //         borderRadius: 30.0,
-                    //         activeColor: Colors.red,
-                    //         // inactiveColor: ,
-                    //         // padding: 8.0,
-                    //         showOnOff: true,
-                    //         onToggle: (val) {
-                    //           setState(() {
-                    //             status = val;
-                    //             setState(() {
-                    //             status = val;
-                    //             if (status == true) {
-                    //             // var feture;
-                    //             // var status;
-                    //             statusvalue = 1;
-                    //             print('statusvalue = $statusvalue');
-                    //           } else if (status == false) {
-                    //             statusvalue = 0;
-                    //             print('statusvalue = $statusvalue');
-                    //           }
-                    //           });
-                    //           });
-                    //         },
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-
                     Container(
-                      margin: EdgeInsets.only(top: 15, left: 10, right: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              // margin: EdgeInsets.only(top: 25, left: 5, right: 15),
-                              decoration: BoxDecoration(
-                                color: Color.fromRGBO(244, 245, 247, 1),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              // margin: EdgeInsets.only(left: 30),
-                              height: 50,
-                              width: 150,
-                              padding: EdgeInsets.all(10),
-                              child: TextFormField(
-                                // controller: seachController,
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return "This field is required";
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                onChanged: (value) {
-                                  price = value;
-                                },
-                                keyboardType: TextInputType.number,
-                                // onFieldSubmitted: (value) {
-                                //   print(value);
-                                //   setState(() {
-                                //     addressList.add(value);
-                                //   });
-                                //   addressController.clear();
-                                // },
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                  // icon: Icon(
-                                  //   Icons.calendar_today_outlined,
-                                  //   color: Color.fromRGBO(193, 199, 208, 1),
-                                  // ),
-                                  hintText: 'Regular Price',
-                                  hintStyle: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      // color: Color.fromRGBO(195, 153, 141, 1)
-                                      color: Color.fromRGBO(182, 189, 200, 1)),
-                                ),
-                              )),
-                          Container(
-                              // margin: EdgeInsets.only(top: 25, left: 5, right: 15),
-                              decoration: BoxDecoration(
-                                color: Color.fromRGBO(244, 245, 247, 1),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              padding: EdgeInsets.only(left: 10),
-                              height: 50,
-                              width: 150,
-                              child: TextFormField(
-                                keyboardType: TextInputType.number,
-                                controller: salepriceController,
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return "This field is required";
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                onChanged: (value) {
-                                  saleprice = value;
-                                },
-                                // onFieldSubmitted: (value) {
-                                //   print(value);
-                                //   setState(() {
-                                //     addressList.add(value);
-                                //   });
-                                //   addressController.clear();
-                                // },
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                  // icon: Icon(
-                                  //   Icons.calendar_today_outlined,
-                                  //   color: Color.fromRGBO(193, 199, 208, 1),
-                                  // ),
-                                  hintText: 'Sale Price',
-                                  hintStyle: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      // color: Color.fromRGBO(195, 153, 141, 1)
-                                      color: Color.fromRGBO(182, 189, 200, 1)),
-                                ),
-                              )),
-                        ],
-                      ),
-                    ),
-
-                    // Container(
-                    //                     margin: EdgeInsets.only(top: 25, left: 15, right: 15),
-                    //                     decoration: BoxDecoration(
-                    //                       color: Color.fromRGBO(244, 245, 247, 1),
-                    //                       borderRadius: BorderRadius.circular(15),
-                    //                     ),
-                    //                     // margin: EdgeInsets.only(left: 30),
-                    //                     height: 50,
-                    //                     width: width,
-                    //                     padding: EdgeInsets.only(left: 10),
-                    //                     child: TextFormField(
-                    //                       // controller: titleController,
-                    //                       validator: (value) {
-                    //                         if (value.isEmpty) {
-                    //                           return "This field is required";
-                    //                         } else {
-                    //                           return null;
-                    //                         }
-                    //                       },
-                    //                       onChanged: (value) {
-                    //                         title = value;
-                    //                       },
-                    //                       // onFieldSubmitted: (value) {
-                    //                       //   print(value);
-                    //                       //   setState(() {
-                    //                       //     addressList.add(value);
-                    //                       //   });
-                    //                       //   addressController.clear();
-                    //                       // },
-
-                    //                       decoration: InputDecoration(
-                    //                         //  border: InputBorder.none,
-                    //                             focusedBorder: InputBorder.none,
-                    //                             enabledBorder: InputBorder.none,
-                    //                             // errorBorder: InputBorder.none,
-                    //                             // disabledBorder: InputBorder.none,
-                    //                         // enabledBorder: OutlineInputBorder
-                    //                         // const OutlineInputBorder(
-                    //                         //   borderSide: BorderSide(
-                    //                         //       color: Color.fromRGBO(89, 2, 0, 1), width: 2),
-                    //                         // ),
-                    //                         // focusedBorder: const OutlineInputBorder(
-                    //                         //   borderSide: BorderSide(
-                    //                         //       color: Color.fromRGBO(89, 2, 0, 1), width: 2),
-                    //                         // ),
-                    //                         border: InputBorder.none,
-                    //                         // focusedBorder: InputBorder.none,
-                    //                         // enabledBorder: InputBorder.none,
-                    //                         errorBorder: InputBorder.none,
-                    //                         disabledBorder: InputBorder.none,
-                    //                         // icon: Icon(
-                    //                         //   Icons.calendar_today_outlined,
-                    //                         //   color: Color.fromRGBO(193, 199, 208, 1),
-                    //                         // ),
-                    //                         hintText: "Attribute Title",
-                    //                         hintStyle: TextStyle(
-                    //                             fontSize: 16,
-                    //                             fontWeight: FontWeight.w600,
-                    //                             color: Color.fromRGBO(195, 153, 141, 1)),
-                    //                         // labelText: '     Product Title'
-                    //                       ),
-                    //                     )),
-
+                        margin: EdgeInsets.only(top: 25, left: 15, right: 15),
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(244, 245, 247, 1),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        // margin: EdgeInsets.only(left: 30),
+                        height: 50,
+                        padding: EdgeInsets.only(left: 10),
+                        child: TextFormField(
+                          // controller: seachController,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "This field is required";
+                            } else {
+                              return null;
+                            }
+                          },
+                          onChanged: (value) {
+                            price = value;
+                          },
+                          keyboardType: TextInputType.number,
+                          // onFieldSubmitted: (value) {
+                          //   print(value);
+                          //   setState(() {
+                          //     addressList.add(value);
+                          //   });
+                          //   addressController.clear();
+                          // },
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            // icon: Icon(
+                            //   Icons.calendar_today_outlined,
+                            //   color: Color.fromRGBO(193, 199, 208, 1),
+                            // ),
+                            labelText: 'Regular Price',
+                            labelStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                // color: Color.fromRGBO(195, 153, 141, 1)
+                                color: Color.fromRGBO(182, 189, 200, 1)),
+                          ),
+                        )),
+                    Container(
+                        margin: EdgeInsets.only(top: 25, left: 15, right: 15),
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(244, 245, 247, 1),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        padding: EdgeInsets.only(left: 10),
+                        height: 50,
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: salepriceController,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "This field is required";
+                            } else {
+                              return null;
+                            }
+                          },
+                          onChanged: (value) {
+                            saleprice = value;
+                          },
+                          // onFieldSubmitted: (value) {
+                          //   print(value);
+                          //   setState(() {
+                          //     addressList.add(value);
+                          //   });
+                          //   addressController.clear();
+                          // },
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            // icon: Icon(
+                            //   Icons.calendar_today_outlined,
+                            //   color: Color.fromRGBO(193, 199, 208, 1),
+                            // ),
+                            labelText: 'Sale Price',
+                            labelStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                // color: Color.fromRGBO(195, 153, 141, 1)
+                                color: Color.fromRGBO(182, 189, 200, 1)),
+                          ),
+                        )),
                     Container(
                         margin: EdgeInsets.only(top: 25, left: 15, right: 15),
                         decoration: BoxDecoration(
@@ -339,8 +227,8 @@ class _AddProductState extends State<AddProduct> {
                             //   Icons.calendar_today_outlined,
                             //   color: Color.fromRGBO(193, 199, 208, 1),
                             // ),
-                            hintText: 'Product Title',
-                            hintStyle: TextStyle(
+                            labelText: 'Product Title',
+                            labelStyle: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                                 // color: Color.fromRGBO(195, 153, 141, 1)
@@ -386,8 +274,8 @@ class _AddProductState extends State<AddProduct> {
                             //   Icons.calendar_today_outlined,
                             //   color: Color.fromRGBO(193, 199, 208, 1),
                             // ),
-                            hintText: 'Description',
-                            hintStyle: TextStyle(
+                            labelText: 'Description',
+                            labelStyle: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                                 // color: Color.fromRGBO(195, 153, 141, 1)
@@ -487,7 +375,6 @@ class _AddProductState extends State<AddProduct> {
                         ),
                       ),
                     ),
-
                     Container(
                       decoration: BoxDecoration(
                           color: Color.fromRGBO(244, 245, 247, 1),
@@ -656,6 +543,27 @@ class _AddProductState extends State<AddProduct> {
                         items: aSAttributes,
                       ),
                     ),
+                    Container(
+                      margin: EdgeInsets.all(25),
+                      child: ListTile(
+                        leading: Checkbox(
+                          value: freeDelivery,
+                          onChanged: (value) {
+                            setState(() {
+                              freeDelivery = value;
+                            });
+                          },
+                        ),
+                        title: RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                            text: 'Free Delivery?',
+                            style: TextStyle(
+                                color: Color.fromRGBO(180, 186, 198, 1)),
+                          ),
+                        ])),
+                      ),
+                    ),
                     InkWell(
                       onTap: () {
                         setState(() {
@@ -771,6 +679,7 @@ class _AddProductState extends State<AddProduct> {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(_snackBar);
                           } else {
+                            addProducts(context);
                             showAlert(
                               context: context,
                               title:
@@ -779,9 +688,7 @@ class _AddProductState extends State<AddProduct> {
                                 AlertAction(
                                     text: "Ok ",
                                     isDestructiveAction: true,
-                                    onPressed: () {
-                                      addProducts(context);
-                                    }),
+                                    onPressed: () {}),
                               ],
                               cancelable: true,
                             );
@@ -978,7 +885,8 @@ class _AddProductState extends State<AddProduct> {
           "tags": "$asd",
           "attribute_product": "$attributesid",
           "variation_product": "$variantsid",
-          "image[]": x,
+          "image": x,
+          "free_delivery": freeDelivery?"1":"0"
         });
 
         Dio dio = Dio();
@@ -996,11 +904,13 @@ class _AddProductState extends State<AddProduct> {
           "attribute_product": "$attributesid",
           "variation_product": "$variantsid",
           "image": x,
+          "free_delivery": freeDelivery?"1":"0"
         });
         var response = await dio.post(
             // https://wassldev.einnovention.tech/api/vendor/products
             "https://wassldev.einnovention.tech/api/vendor/products",
             data: formData);
+        Clipboard.setData(ClipboardData(text: "$response"));
         print("Become Vender: $response");
 
         var gg = response.data;
@@ -1036,7 +946,7 @@ class _AddProductState extends State<AddProduct> {
         } else {
           // Something happened in setting up or sending the request that triggered an Error
           // print(e.request);
-          print(e.message);
+          print("qwe: ${e.message}");
         }
       }
     });

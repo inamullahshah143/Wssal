@@ -46,7 +46,7 @@ class _DisplayVariantsState extends State<DisplayVariants> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
         onPressed: () {
-          Navigator.push(
+          Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => AddVariants()));
         },
         child: Icon(Icons.add),
@@ -108,8 +108,9 @@ class _DisplayVariantsState extends State<DisplayVariants> {
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('Variants: ${response.body}');
+            if (json.decode(response.body)['status'] == 200) {
       List data = json.decode(response.body)['data'];
-      if (data.length > 0) {
+
         data.forEach((element) {
           variants.add(Container(
             child: Column(
@@ -150,7 +151,7 @@ class _DisplayVariantsState extends State<DisplayVariants> {
                                     color: Color.fromRGBO(240, 173, 78, 1),
                                     child: Text('Edit'),
                                     onPressed: () {
-                                      Navigator.push(
+                                      Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
@@ -282,7 +283,7 @@ class _DisplayVariantsState extends State<DisplayVariants> {
           title: "Record Not Deleted",
           actions: [
             AlertAction(text: "Ok ", isDestructiveAction: true, onPressed: () {}
-                //  Navigator.push(
+                //  Navigator.pushReplacement(
                 //     context, MaterialPageRoute(builder: (context) => LoginPage())),
                 ),
           ],

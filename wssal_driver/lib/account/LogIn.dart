@@ -1,268 +1,215 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_alert/flutter_alert.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wssal_driver/account/signUp.dart';
-import 'package:wssal_driver/account/verifyNumber.dart';
-import 'package:wssal_driver/function.dart';
-import 'package:wssal_driver/home.dart';
+import 'package:http/http.dart' as http;
+import 'package:wssal_driver/account/driverProfile.dart';
 
-import 'driverProfile.dart';
+import '../function.dart';
+import 'signUp.dart';
+import 'verifyNumber.dart';
 
-
-var tokenUser;
-class LogIn extends StatefulWidget {
-
+class LoginPage extends StatefulWidget {
   @override
-  _LogInState createState() => _LogInState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-String countryCode = "+92";
+bool tick = false;
+String countryCode = '+20';
 String number;
 
-class _LogInState extends State<LogIn> {
+class _LoginPageState extends State<LoginPage> {
   @override
-    Widget build(BuildContext context) {
+  void initState() {
+    tick = false;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     latestContext = context;
-    return Scaffold(
-      body: SingleChildScrollView(
+    // double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
-              children: [
-          Container(
-            height: 300,
-            width: width,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: ExactAssetImage("assets/Illustration4.png"),
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 20),
-            child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Welcome Back',
-                  style: TextStyle(color: Color.fromRGBO(128, 136, 142, 1),  fontSize: 22),
-                )),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 10),
-            child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Hello there, sign in to continue!   ',
-                  style: TextStyle(  color: Color.fromRGBO(149, 159, 175, 1), fontSize: 16),
-                )),
-          ),
-          Container(
-              margin: EdgeInsets.only(top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Or',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 10,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                        Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => CreateAccount()),
-                  );
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(left: 5),
-                      child: Text(
-                        'Create new account.',
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              )),
-               Container(
-                margin: EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  top: 15,
-                ),
+            children: [
+              Container(
+                height: 300,
                 width: width,
                 decoration: BoxDecoration(
-                  color: Color.fromRGBO(244, 245, 247, 1),
-                  borderRadius: BorderRadius.circular(15),
+                  image: DecorationImage(
+                    image: ExactAssetImage("assets/Illustration4.png"),
+                    fit: BoxFit.fill,
+                  ),
                 ),
-                child: Column(
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Welcome Back',
+                    style: TextStyle(
+                      color: Color.fromRGBO(128, 136, 142, 1),
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Hello there, sign in to continue!   ',
+                    style: TextStyle(
+                      color: Color.fromRGBO(149, 159, 175, 1),
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 10, top: 10),
-                      child: Align(
-                        alignment: Alignment.topLeft,
+                    Text(
+                      'Or',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  CreateAccount()),
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(left: 5),
                         child: Text(
-                          "Phone Number",
-                          style: TextStyle(color: Colors.grey),
+                          'Create new account.',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 10, bottom: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            child: CountryCodePicker(
-                              onChanged: (code) {
-                                countryCode = "$code";
-                              },
-                              initialSelection: "+92",
-                              textStyle:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                              showCountryOnly: true,
-                              hideMainText: true,
-                            ),
-                          ),
-                          Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(19)),
-                              padding: EdgeInsets.all(5),
-                              height: 70,
-                              width: 190,
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return "This field is required";
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                onChanged: (value) {
-                                  number = value;
-                                },
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.black),
-                                  ),
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                  
-                                  labelText: 'Your Number',
-                                  labelStyle: TextStyle(color: Colors.black),
-                                ),
-                              )),
-                          AnimatedIconButton(
-                            size: 20,
-                            onPressed: () => print('all icons pressed'),
-                            icons: [
-                              AnimatedIconItem(
-                                icon: Icon(
-                                  Icons.check_circle,
-                                  color: textColor,
-                                ),
-                                onPressed: () => print('add pressed'),
-                              ),
-                              AnimatedIconItem(
-                                icon: Icon(
-                                  Icons.check_circle,
-                                  color: Colors.green,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                    )
                   ],
                 ),
               ),
-          InkWell(
-            onTap: () {
-              print('$countryCode$number');
-              phonenumber = '$countryCode$number';
-               print('phonenumber :$phonenumber');
-              login(context);
-                 showAlert(
-        context: context,
-        title: "Please Wait",
-        actions: [
-          AlertAction(text: "Ok ", isDestructiveAction: true, onPressed: () {}),
-        ],
-        cancelable: true,
-      );
-              // Navigator.pushReplacement(
-              //   context,
-              //   MaterialPageRoute(builder: (BuildContext context) => Varifyphonenumber(phonenumber)),
-              // );
-            },
-            child: Container(
-              margin: EdgeInsets.only(top: 35, left: 20, right: 20),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(255, 199, 0, 1),
-                borderRadius: BorderRadius.circular(15),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
+                child: Container(
+                  width: width,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(244, 245, 247, 1),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(12.5),
+                        child: Text(
+                          "Phone Number",
+                          style: TextStyle(color: Colors.grey, fontSize: 14.0),
+                        ),
+                      ),
+                      TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'please enter your valid phone no.';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.phone,
+                        style: TextStyle(
+                          fontSize: 14.0,
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            number = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.only(top: 17.5),
+                          hintText: 'Phone No',
+                          suffixIcon: tick ? Icon(Icons.done) : null,
+                          prefixIcon: CountryCodePicker(
+                            onChanged: (CountryCode code) {
+                              setState(() {
+                                countryCode = code.dialCode;
+                              });
+                            },
+                            initialSelection: 'EG',
+                            favorite: ['+20', 'EG'],
+                            hideMainText: false,
+                            showCountryOnly: false,
+                            showOnlyCountryWhenClosed: false,
+                            flagDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              height: 50,
-              width: width,
-              child: Align(alignment: Alignment.center, child: Text('Next')),
-            ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                height: 50,
+                width: width,
+                child: ElevatedButton(
+                  onPressed: () {
+                    print('$countryCode$number');
+                    phonenumber = "$countryCode$number";
+                    print("Phonenumber :$phonenumber");
+                    customerlogin(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(15.0),
+                    ),
+                primary: themePrimaryColor,
+                  ),
+                  child: Text(
+                    "Next",
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.grey[800],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-              ],
-            ),
         ),
-      
+      ),
     );
   }
+}
 
-
-
-// getProfile() async {
-//   try {
-//         var url = 'https://wassl.einnovention.tech/api/user/driverrequest';
-//     var response = await http
-//         .get(Uri.parse(url), headers: {'Authorization': 'Bearer $stringValue'});
-//     print('response = ${response.body}');
-//     var data = json.decode(response.body);
-//     print(data);
-//     if (data['status'] == 200) {
-//       print('Ahmad');
-//         Navigator.pushReplacement(
-//         context,
-//         MaterialPageRoute(
-//           builder: (BuildContext context) => Home(),
-//         ),
-//       );
-//     } else {
-//      print('Nazir');  
-//           Navigator.pushReplacement(
-//         context,
-//         MaterialPageRoute(
-//           builder: (BuildContext context) => DriverProfile(),
-//         ),
-//       );
-//     }
-//   } catch (e) {
-//     return Text(e);
-//   }
-// }
-
-
-
-login(context) async {
+customerlogin(context) async {
   try {
     var url = 'https://wassldev.einnovention.tech/api/login';
     var response = await http.post(Uri.parse(url), body: {
@@ -274,50 +221,8 @@ login(context) async {
     print('Response body: ${response.body}');
     var data = json.decode(response.body);
     print('$data');
-    // if (data['status'] == 200) {
-    //   stringValue = data['token'];
-    //   SharedPreferences mypref = await SharedPreferences.getInstance();
-    //   mypref.setString('abs', '$stringValue');
-    //   print("$stringValue");
-    //   showAlert(
-    //     context: context,
-    //     title: "LogeIn successfully",
-    //     actions: [
-    //       AlertAction(
-    //           text: "Ok",
-    //           isDestructiveAction: true,
-    //           onPressed: () {
-    //             Navigator.pushReplacement(
-    //               context,
-    //               MaterialPageRoute(
-    //                   builder: (BuildContext context) =>
-    //                       // Varifyphonenumber(phonenumber)
-    //                       // DriverProfile()
-    //                       Home()
-    //                       ),
-    //             );
-    //             // if (data['status'] == 'success') {
-    //             //   getProfile();
-    //             // } else {
-    //             //   print('Ahmad');
-    //             // }
-    //           }),
-    //     ],
-    //     cancelable: true,
-    //   );
-    // } else {
-    //   showAlert(
-    //     context: context,
-    //     title: "Account Not Exist",
-    //     actions: [
-    //       AlertAction(text: "Ok ", isDestructiveAction: true, onPressed: () {}),
-    //     ],
-    //     cancelable: true,
-    //   );
-    // }
 
     if  (data['status'] == 200 && data['request_status'] == null) {
-     
       showAlert(
         context: context,
         title: "Create Driver Request",
@@ -326,13 +231,12 @@ login(context) async {
               text: "Ok ",
               isDestructiveAction: true,
               onPressed: () {
-                tokenUser = data['token'];
-                print('$tokenUser');
+        
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          DriverProfile(tokenUser)),
+                          DriverProfile(data['token'])),
                 );
               }),
         ],
@@ -350,29 +254,12 @@ login(context) async {
       );
     }
     else if (data['status'] == 200 && data['request_status'] == 1) {
-      stringValue = data['token'];
-      SharedPreferences mypref = await SharedPreferences.getInstance();
-      mypref.setString('abs', '$stringValue');
-      print("$stringValue");
-      showAlert(
-        context: context,
-        title: "Logedin successfully",
-        actions: [
-          AlertAction(
-              text: "Ok",
-              isDestructiveAction: true,
-              onPressed: () {
-                Navigator.pushReplacement(
+        Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          Varifyphonenumber(phonenumber)),
+                          Varifyphonenumber(data)),
                 );
-
-              }),
-        ],
-        cancelable: true,
-      );
     }
     else {
       showAlert(
@@ -384,7 +271,6 @@ login(context) async {
         cancelable: true,
       );
     }
-  
   } on Exception catch (e) {
     showAlert(
       context: context,
@@ -396,11 +282,6 @@ login(context) async {
     );
   }
 }
-
-
-
-}
-
 
 
 

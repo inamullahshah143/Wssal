@@ -53,6 +53,7 @@ dependencies:
   firebase_core: ^1.4.0
   http_auth: ^1.0.1
   webview_flutter: ^2.0.12
+  google_maps_place_picker:
 
 dev_dependencies:
   flutter_test:

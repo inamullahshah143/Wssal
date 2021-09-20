@@ -27,36 +27,40 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.0
+  cupertino_icons:
   shared_preferences:  
   animated_icon_button:  
   country_code_picker:  
-  flutter_rating_bar: ^4.0.0
+  flutter_rating_bar:
   flutter_alert:  
   http:  
   carousel_slider:  
   flutter_verification_code:  
   firebase_core_web: 
   carousel_pro:
-  http_auth: ^1.0.1
-  webview_flutter: ^2.0.12 
-  sticky_headers: ^0.2.0
-  firebase_messaging: ^10.0.4
-  firebase_core: ^1.4.0
-  flutter_xlider: ^3.4.0
+  http_auth:
+  webview_flutter:
+  sticky_headers:
+  firebase_messaging:
+  firebase_core:
+  flutter_xlider:
   google_maps_flutter_web:
   google_maps_flutter:
   dotted_border:
-  font_awesome_flutter: ^9.1.0
-  roundcheckbox: ^2.0.2
-  geocoding: ^2.0.1
-  geolocator: ^7.6.0
-  fading_edge_scrollview: ^2.0.0
-  dio: ^4.0.0
-  flutter_polyline_points: ^0.2.4
-  percent_indicator: ^2.1.7+2
-  dash_chat: ^1.1.16
-  google_maps_place_picker: ^2.0.0-nullsafety.3
+  font_awesome_flutter:
+  roundcheckbox:
+  geocoding:
+  geolocator:
+  fading_edge_scrollview:
+  dio:
+  flutter_polyline_points:
+  percent_indicator:
+  google_maps_place_picker:
+  location:
+  pusher_websocket_flutter:
+  pusher:
+  timeago:
+  device_info_plus: ^2.1.0
    
 
 dev_dependencies:
@@ -64,7 +68,7 @@ dev_dependencies:
     sdk: flutter
 
 
-  flutter_launcher_icons: "^0.9.0"
+  flutter_launcher_icons:
 
 flutter_icons:
   image_path: "assets/app_logo.png" 

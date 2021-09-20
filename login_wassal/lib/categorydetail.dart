@@ -67,7 +67,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
     _minValue = 2;
     _priceRange = 2;
     _radioValue = 'Recomended';
-    determinePosition();
+
     super.initState();
   }
 
@@ -81,6 +81,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
   Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
+      
       resizeToAvoidBottomInset: false,
       backgroundColor: pagesBackground,
       bottomNavigationBar: getBottomBar(context),
@@ -119,105 +120,56 @@ class _CategoryDetailState extends State<CategoryDetail> {
                         Padding(
                           padding: EdgeInsets.only(top: 10.0),
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              IconButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                icon: Icon(
-                                  Icons.arrow_back_ios,
-                                  color: Colors.grey[800],
-                                ),
-                              ),
-                              searchClickBtn
-                                  ? IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          searchClickBtn = false;
-                                          dragButton = true;
-                                          appbarHeight = 175.0;
-                                        });
-                                      },
-                                      icon: Icon(
-                                        Icons.search,
-                                        color: Colors.grey[800],
-                                      ),
-                                    )
-                                  : Text(''),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                              Row(
                                 children: [
-                                  Text(
-                                    'Delivery To.',
-                                    style: TextStyle(color: textcolor),
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    icon: Icon(
+                                      Icons.arrow_back_ios,
+                                      color: Colors.grey[800],
+                                    ),
                                   ),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.near_me,
-                                        color: themePrimaryColor,
-                                      ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                3.75,
-                                        child: Text(
-                                          yourLocation,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 16.0,
-                                            color: Colors.grey.shade700,
-                                          ),
-                                        ),
-                                      ),
-                                      PopupMenuButton(
-                                        icon: Icon(
-                                          Icons.arrow_drop_down,
-                                          color: themeSecondaryColor,
-                                        ),
-                                        onSelected: (value) async {
-                                          if (value == 1) {
-                                            determinePosition();
-                                          }
-                                          if (value == 2) {
-                                            openMap();
-                                          }
-                                        },
-                                        itemBuilder: (context) => [
-                                          PopupMenuItem(
-                                            child: Text('Current Location'),
-                                            value: 1,
-                                          ),
-                                          PopupMenuItem(
-                                            child:
-                                                Text('Get Specific Location'),
-                                            value: 2,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                  Text("وصل", style: TextStyle(color: themePrimaryColor, fontWeight: FontWeight.bold, fontSize: 20)),
                                 ],
                               ),
-                              IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          CartPage(),
+                              Row(
+                                children: [
+                                  searchClickBtn
+                                      ? IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              searchClickBtn = false;
+                                              dragButton = true;
+                                              appbarHeight = 175.0;
+                                            });
+                                          },
+                                          icon: Icon(
+                                            Icons.search,
+                                            color: Colors.grey[800],
+                                          ),
+                                        )
+                                      : Text(''),
+                                  
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              CartPage(),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.shopping_cart_outlined,
+                                      color: Colors.grey[800],
                                     ),
-                                  );
-                                },
-                                icon: Icon(
-                                  Icons.shopping_cart_outlined,
-                                  color: Colors.grey[800],
-                                ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -2473,9 +2425,9 @@ class _CategoryDetailState extends State<CategoryDetail> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.network(
-                              imageURL +
+                              element['images'].isNotEmpty?imageURL +
                                   '/' +
-                                  '${element['images'][0]['path']}',
+                                  '${element['images'][0]['path']}':"https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png",
                               fit: BoxFit.cover,
                               height: 125,
                             ),
@@ -3265,72 +3217,5 @@ class _CategoryDetailState extends State<CategoryDetail> {
     }
   }
 
-  Future<Position> determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      print('Please enable Your Location Service');
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        print('Location permissions are denied');
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      print(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    try {
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
-      Placemark place = placemarks[0];
-      setState(() {
-        currentPosition = position;
-        selectedLocation =
-            "${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
-        locationChange = true;
-      });
-    } catch (e) {
-      print(e);
-    }
-    return null;
-  }
-
-  Future<Widget> openMap() {
-    return showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
-        return Container(
-          clipBehavior: Clip.hardEdge,
-          height: MediaQuery.of(context).size.height / 1.2,
-          decoration: BoxDecoration(
-            color: pagesBackground,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(50),
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 25,
-                  child: Icon(Icons.drag_handle),
-                ),
-              ),
-              MapLoacation(currentPosition: currentPosition),
-            ],
-          ),
-        );
-      },
-    );
-  }
+ 
 }

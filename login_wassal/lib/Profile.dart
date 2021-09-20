@@ -1,10 +1,14 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/cupertino.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:wassal_customer/LatestOrderDetail.dart';
+import 'package:location/location.dart';
+import 'package:wassal_customer/PUSHER/LatestOrderDetail.dart';
 import 'package:wassal_customer/wallet/venderWoilet.dart';
 import 'const.dart';
+import 'design_pages/profile/addUpdateBilling.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -151,6 +155,28 @@ class _ProfilePageState extends State<ProfilePage> {
                           height: 1,
                         ),
                         ListTile(
+                          onTap: () {
+                            http.get(
+                                Uri.parse("$apiURL/user/getBillingAddress"),
+                                headers: {
+                                  'Authorization': 'Bearer $loginToken'
+                                }).then((response) {
+                              print("getBillingAddress: ${response.body}");
+                              if (response.statusCode == 200) {
+                                Location().getLocation().then((location) {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    builder: (context) => AddUpdateBilling(
+                                        data:
+                                            json.decode(response.body)['data'],
+                                        location: LatLng(location.latitude,
+                                            location.longitude)),
+                                  );
+                                });
+                              }
+                            });
+                          },
                           leading: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

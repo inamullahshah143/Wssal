@@ -7,12 +7,11 @@ import 'package:wassal_customer/const.dart';
 import 'package:wassal_customer/numberlogin.dart';
 import 'package:http/http.dart' as http;
 
-String countryCode = "+92";
+String countryCode = "+20";
 String name;
 String number;
-bool isEnabled = false;
-bool isChecked = false;
 bool tick = false;
+
 
 class CreateAccount extends StatefulWidget {
   @override
@@ -20,11 +19,10 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
+  bool isChecked = false;
   @override
   void initState() {
     super.initState();
-    isEnabled = false;
-    tick = false;
   }
 
   @override
@@ -114,11 +112,6 @@ class _CreateAccountState extends State<CreateAccount> {
                     onChanged: (value) {
                       setState(() {
                         name = value;
-                        if (number != '' && name != '' && isChecked != false) {
-                          isEnabled = true;
-                        } else {
-                          isEnabled = false;
-                        }
                       });
                     },
                     decoration: InputDecoration(
@@ -159,25 +152,12 @@ class _CreateAccountState extends State<CreateAccount> {
                           return null;
                         },
                         keyboardType: TextInputType.phone,
-                        maxLength: 10,
                         style: TextStyle(
                           fontSize: 14.0,
                         ),
                         onChanged: (value) {
                           setState(() {
                             number = value;
-                            if (value.length == 10) {
-                              tick = true;
-                            } else {
-                              tick = false;
-                            }
-                            if (value.length == 10 &&
-                                name != '' &&
-                                isChecked != false) {
-                              isEnabled = true;
-                            } else {
-                              isEnabled = false;
-                            }
                           });
                         },
                         decoration: InputDecoration(
@@ -217,11 +197,6 @@ class _CreateAccountState extends State<CreateAccount> {
                   onChanged: (value) {
                     setState(() {
                       isChecked = value;
-                      if (number != '' && name != '' && isChecked != false) {
-                        isEnabled = true;
-                      } else {
-                        isEnabled = false;
-                      }
                     });
                   },
                 ),
@@ -240,45 +215,27 @@ class _CreateAccountState extends State<CreateAccount> {
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  height: 50,
-                  width: width,
-                  child: isEnabled
-                      ? ElevatedButton(
-                          onPressed: () {
-                            signUp(context);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(15.0),
-                            ),
-                            primary: themePrimaryColor,
-                          ),
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.grey[800],
-                            ),
-                          ),
-                        )
-                      : ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(15.0),
-                            ),
-                            primary: Colors.grey[500],
-                          ),
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.white,
-                            ),
-                          ),
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    height: 50,
+                    width: width,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        signUp(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(15.0),
                         ),
-                ),
+                        primary: themePrimaryColor,
+                      ),
+                      child: Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+                    )),
               ),
             ],
           ),
@@ -289,6 +246,11 @@ class _CreateAccountState extends State<CreateAccount> {
 }
 
 signUp(context) async {
+  print({
+    'name': '$name',
+    'fcm_token': '$fcmToken',
+    'phone': '$countryCode$number',
+  });
   var url = 'https://wassldev.einnovention.tech/api/register';
   var response = await http.post(Uri.parse(url), body: {
     'name': '$name',

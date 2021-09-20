@@ -842,7 +842,7 @@ class _DriverProfileState extends State<DriverProfile> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => LogIn(),
+                        builder: (BuildContext context) => LoginPage(),
                       ),
                     );
                   }),

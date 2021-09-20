@@ -56,7 +56,7 @@ class _ProductsGridCardState extends State<ProductsGridCard> {
               leading: ClipRRect(
                 borderRadius: BorderRadius.circular(9.0),
                 child: Image.network(
-                    '$picBaseURL${productData['images'][0]['path']}'),
+                    productData['images'].isNotEmpty?'$picBaseURL${productData['images'][0]['path']}':""),
               ),
               // leading:       Container(
               //         width: 60,
@@ -120,280 +120,57 @@ class _ProductsGridCardState extends State<ProductsGridCard> {
           )
         ],
       ),
-
-      // Container(
-      //     margin: EdgeInsets.all(5),
-      //     decoration: BoxDecoration(
-      //       color: Colors.yellow[50],
-      //       borderRadius: BorderRadius.circular(8),
-      //     ),
-      //     //  child: Text('$productData'),
-      //     child: Column(
-      //       children: [
-      //         Container(
-      //           margin: EdgeInsets.all(5),
-      //           width: width,
-      //           child: Align(
-      //             alignment: Alignment.center,
-      //             child: Text(
-      //               '${productData['title']}',
-      //               style: TextStyle(
-      //                   fontSize: 25,
-      //                   color: Colors.red,
-      //                   fontWeight: FontWeight.bold),
-      //             ),
-      //           ),
-      //         ),
-      //         // Container(
-      //         //     margin: EdgeInsets.all(5),
-      //         //     width: width,
-      //         //     child: Table(
-      //         //       children: [
-      //         //         T
-      //         //       ],
-      //         //     ),
-      //         // child: Row(
-      //         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         //   children: [
-      //         //     Text(
-      //         //       'Price :',
-      //         //       style: TextStyle(
-      //         //           fontSize: 20,
-      //         //           fontWeight: FontWeight.bold,
-      //         //           color: Colors.black),
-      //         //     ),
-      //         //     RichText(
-      //         //         text: TextSpan(children: [
-      //         //       WidgetSpan(
-      //         //           child: Container(
-      //         //         margin: EdgeInsets.only(right: 5),
-      //         //         child: Text(
-      //         //           '\$${productData['price']}',
-      //         //           style: TextStyle(
-      //         //               fontSize: 15,
-      //         //               decoration: TextDecoration.lineThrough,
-      //         //               color: Colors.red),
-      //         //         ),
-      //         //       )),
-      //         //       WidgetSpan(
-      //         //           child: Container(
-      //         //         margin: EdgeInsets.only(left: 5),
-      //         //         child: Text(
-      //         //           '\$${productData['sale_price']}',
-      //         //           style: TextStyle(
-      //         //               fontSize: 20,
-
-      //         //               // decoration: TextDecoration.lineThrough,
-      //         //               color: Colors.black),
-      //         //         ),
-      //         //       )),
-      //         //     ]))
-      //         //   ],
-      //         // )
-      //         // ),
-      //         Container(
-      //           margin: EdgeInsets.all(10),
-      //           child: Table(
-      //             children: [
-      //               TableRow(children: [
-      //                 Container(
-      //                   margin: EdgeInsets.all(10),
-      //                   child: Text(
-      //                     'Price :',
-      //                     style: TextStyle(
-      //                         fontSize: 20,
-      //                         fontWeight: FontWeight.bold,
-      //                         color: Colors.black),
-      //                   ),
-      //                 ),
-      //                 Container(
-      //                   margin: EdgeInsets.all(10),
-      //                   child: RichText(
-      //                       text: TextSpan(children: [
-      //                     WidgetSpan(
-      //                         child: Container(
-      //                       margin: EdgeInsets.only(right: 5),
-      //                       child: Text(
-      //                         '\$${productData['price']}',
-      //                         style: TextStyle(
-      //                             fontSize: 15,
-      //                             decoration: TextDecoration.lineThrough,
-      //                             color: Colors.red),
-      //                       ),
-      //                     )),
-      //                     WidgetSpan(
-      //                         child: Container(
-      //                       margin: EdgeInsets.only(left: 5),
-      //                       child: Text(
-      //                         '\$${productData['sale_price']}',
-      //                         style: TextStyle(
-      //                             fontSize: 20, color: Colors.black),
-      //                       ),
-      //                     )),
-      //                   ])),
-      //                 )
-      //               ]),
-      //               TableRow(children: [
-      //                 Container(
-      //                   margin: EdgeInsets.all(10),
-      //                   child: Text(
-      //                     'Description :',
-      //                     style: TextStyle(
-      //                         fontSize: 20,
-      //                         color: Colors.black,
-      //                         fontWeight: FontWeight.bold),
-      //                   ),
-      //                 ),
-      //                 Container(
-      //                   margin: EdgeInsets.all(10),
-      //                   child: Text(
-      //                     '${productData['description']}',
-      //                     style: TextStyle(
-      //                         fontSize: 15,
-      //                         color: Colors.black,
-      //                         fontWeight: FontWeight.normal),
-      //                   ),
-      //                 ),
-      //               ])
-      //             ],
-      //           ),
-      //         ),
-      //         // Column(
-      //         //   children: [
-      //         //     Container(
-      //         //       margin: EdgeInsets.all(5),
-      //         //       width: width,
-      //         //       child: Align(
-      //         //         alignment: Alignment.centerLeft,
-      //         //         child: Text(
-      //         //           'Description :',
-      //         //           style: TextStyle(
-      //         //               fontSize: 20,
-      //         //               color: Colors.black,
-      //         //               fontWeight: FontWeight.bold),
-      //         //         ),
-
-      //         //       ),
-      //         //     ),
-      //         //   Container(
-      //         //       margin: EdgeInsets.all(5),
-      //         //       width: width,
-      //         //       child: Align(
-      //         //         alignment: Alignment.centerLeft,
-      //         //         child: Text(
-      //         //           '${productData['description']}',
-      //         //           style: TextStyle(
-      //         //               fontSize: 15,
-      //         //               color: Colors.black,
-      //         //               fontWeight: FontWeight.normal),
-      //         //         ),
-      //         //       ),
-      //         //     ),
-      //         //   ],
-      //         // ),
-      //         Container(
-      //             width: width,
-      //             height: height / 8,
-      //             margin: EdgeInsets.all(5),
-      //             child: ListView(
-      //               scrollDirection: Axis.horizontal,
-      //               children: buildImage(productData["images"]),
-      //             )),
-      //         Container(
-      //           margin: EdgeInsets.only(left: 5, top: 5, bottom: 5, right: 5),
-      //           child: Row(
-      //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //             children: [
-      //               InkWell(
-      //                   onTap: () {
-      //                     print('${productData['id']}');
-      //                     productId = productData['id'];
-      //                     print('productData = $productData');
-      //                     Navigator.push(
-      //                         context,
-      //                         MaterialPageRoute(
-      //                             builder: (context) =>
-      //                                 UpdateProduct(productData)));
-      //                     // editProducts();
-      //                   },
-      //                   child: Container(
-      //                       margin: EdgeInsets.only(bottom: 5),
-      //                       child: Icon(Icons.edit))),
-      //               InkWell(
-      //                   onTap: () {
-      //                     productId = productData['id'];
-      //                     print('${productData['id']}');
-      //                     showAlert(
-      //                       context: context,
-      //                       title: "Do You Really want to  Deleted Product",
-      //                       actions: [
-      //                         AlertAction(
-      //                             text: "Yes",
-      //                             isDestructiveAction: true,
-      //                             onPressed: () {
-      //                               setState(() {
-      //                                 deleteProduct();
-      //                               });
-      //                             }),
-      //                       ],
-      //                       cancelable: true,
-      //                     );
-      //                   },
-      //                   child: Icon(Icons.delete)),
-      //             ],
-      //           ),
-      //         ),
-      //       ],
-      //     )
     );
   }
 
   List<Widget> buildImage(List descs) {
     List<Widget> x = [];
-    for (final b in descs) {
-      x.add(Stack(children: [
-        Container(
-          height: 100,
-          width: 100,
-          margin: EdgeInsets.only(left: 5),
-          decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                  image: NetworkImage('$picBaseURL${b['path']}'),
-                  fit: BoxFit.contain)),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            InkWell(
-              onTap: () {
-                print('picId = ${b['id']}');
-                picId = b['id'];
-                showAlert(
-                  context: context,
-                  title: "Do You Really want to  Deleted Image",
-                  actions: [
-                    AlertAction(
-                        text: "Yes",
-                        isDestructiveAction: true,
-                        onPressed: () {
-                          deleteImage();
-                        }),
-                  ],
-                  cancelable: true,
-                );
-              },
-              child: Icon(
-                Icons.cancel,
-                size: 30,
-                color: Colors.red,
-              ),
+    if (descs.isNotEmpty) {
+  for (final b in descs) {
+    x.add(Stack(children: [
+      Container(
+        height: 100,
+        width: 100,
+        margin: EdgeInsets.only(left: 5),
+        decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(10),
+            image: DecorationImage(
+                image: NetworkImage('$picBaseURL${b['path']}'),
+                fit: BoxFit.contain)),
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          InkWell(
+            onTap: () {
+              print('picId = ${b['id']}');
+              picId = b['id'];
+              showAlert(
+                context: context,
+                title: "Do You Really want to  Deleted Image",
+                actions: [
+                  AlertAction(
+                      text: "Yes",
+                      isDestructiveAction: true,
+                      onPressed: () {
+                        deleteImage();
+                      }),
+                ],
+                cancelable: true,
+              );
+            },
+            child: Icon(
+              Icons.cancel,
+              size: 30,
+              color: Colors.red,
             ),
-          ],
-        ),
-      ]));
-    }
+          ),
+        ],
+      ),
+    ]));
+  }
+}
     return x;
   }
 

@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'Profile.dart';
 import 'const.dart';
+import 'numberlogin.dart';
 
 class CartPage extends StatefulWidget {
   @override
@@ -40,19 +42,81 @@ class _CartPageState extends State<CartPage> {
         padding: const EdgeInsets.all(12.0),
         child: GestureDetector(
           onTap: () {
-            showAlert(context: context, title: "Payment Method", actions: [
-              AlertAction(
-                  text: "Cash on delivery",
-                  onPressed: () {
-                    cartCheckout(context, "cash_on_delivery");
-                  }),
-              AlertAction(
-                  text: "Pay from wallet",
-                  onPressed: () {
-                    cartCheckout(context, "direct_wallet_payment");
-                  }),
-            ]);
-            print("HelloFinalCartValue: ${json.encode(cartFinalPrice)}");
+            if (logs == true) {
+              if (finalProductsForCart.isNotEmpty) {
+                if (finalProductsForCart.first['shop_open_close'] == "1") {
+                  showAlert(
+                      context: context,
+                      title: "Payment Method",
+                      actions: [
+                        AlertAction(
+                            text: "Deliver to current address",
+                            onPressed: () {
+                              showAlert(
+                                  context: context,
+                                  title: "Payment Method",
+                                  actions: [
+                                    AlertAction(
+                                        text: "Cash on delivery",
+                                        onPressed: () {
+                                          cartCheckout(
+                                              context, "cash_on_delivery");
+                                        }),
+                                    AlertAction(
+                                        text: "Pay from wallet",
+                                        onPressed: () {
+                                          cartCheckout(
+                                              context, "direct_wallet_payment");
+                                        }),
+                                  ]);
+                            }),
+                        AlertAction(
+                            text: "Deliver to different address",
+                            onPressed: () {
+                              showAlert(
+                                  context: context,
+                                  body: "Add address in profile",
+                                  actions: [
+                                    AlertAction(
+                                        text: "ok",
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ProfilePage()),
+                                          );
+                                        })
+                                  ]);
+                            }),
+                      ]);
+
+                  print("HelloFinalCartValue: ${json.encode(cartFinalPrice)}");
+                } else {
+                  showAlert(
+                      context: context, title: "Error", body: "Shop Closed");
+                }
+              } else {
+                showAlert(
+                    context: context, title: "Error", body: "Cart is empty");
+              }
+            } else {
+              showAlert(
+                  context: context,
+                  cancelable: true,
+                  title: "Login Required",
+                  actions: [
+                    AlertAction(
+                        text: "ok",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
+                          );
+                        }),
+                  ]);
+            }
           },
           child: Container(
               height: 50,
@@ -73,7 +137,7 @@ class _CartPageState extends State<CartPage> {
       ),
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
       appBar: AppBar(
-title: Text("Cart"),
+        title: Text("Cart"),
       ),
       body: SafeArea(
           child: SingleChildScrollView(
@@ -122,6 +186,7 @@ title: Text("Cart"),
     print("cartCheckout: ${response.body}");
     Map data = json.decode(response.body);
     if (data['message'] == "Order successfully punched") {
+      finalProductsForCart = [];
       showAlert(
           context: context,
           title: "Success",
@@ -183,111 +248,138 @@ class _CartProductState extends State<CartProduct> {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Container(
-      
         child: Column(
           children: [
             Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-        color:Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(16),
-      ),
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.circular(16),
+              ),
               child: ListTile(
                 leading: Container(
                   height: 80,
                   width: 80,
                   child: ClipRRect(
-                    
                     borderRadius: BorderRadius.circular(13),
                     child: Image(
-                      image: NetworkImage("${cartProductBlock['product_image']}"),
+                      image:
+                          NetworkImage("${cartProductBlock['product_image']}"),
                     ),
                   ),
                 ),
-                title: Text("${cartProductBlock['product_name']}"),
-                subtitle: buildExtras(cartProductBlock['extras']),
+                title: Column(
+                  children: [
+                    Text("${cartProductBlock['product_name']}"),
+                  ],
+                ),
+                subtitle: Column(
+                  children: [
+                    buildExtras(cartProductBlock['extras']),
+                    InkWell(
+                      onTap: () {
+                        print("Hello");
+                        finalProductsForCart.removeWhere(
+                            (element) => element == cartProductBlock);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Container(
+                          margin: EdgeInsets.only(left: 10),
+                          child: Container(
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 trailing: Column(
                   children: [
                     Text("\$ $cartProductBlockPrice"),
-               
 
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            alignment: Alignment.center,
-                            height:22,
-                            width: 65,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color:Colors.grey.shade200,
-                            ),
-                            child: RichText(
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 22,
+                        width: 65,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.grey.shade200,
+                        ),
+                        child: RichText(
                             text: TextSpan(text: "", children: [
-                      WidgetSpan(
-                            child:  Container(
-                                height:20,
-                                width: 20,
-                                child: RawMaterialButton(
-                                  onPressed: () {
-                                    if (cartProductBlockQty > 1) {
-                                      setState(() {
-                                        cartProductBlockQty--;
-                                        cartProductBlockPrice =
-                                            cartProductBlock['product_price'] *
-                                                cartProductBlockQty;
-                                        finalPriceForCart = finalPriceForCart -
-                                            cartProductBlock['product_price'];
-                                      });
-                                    }
-                                  },
-                                  elevation: 1.0,
-                                  fillColor: Color.fromRGBO(193, 199, 208, 1),
-                                  child: Icon(
-                                    Icons.remove,
-                                    size: 15.0,
-                                    color: Colors.white,
-                                  ),
-                                  shape: CircleBorder(),
-                                ),
-                              ),
-                      ),
-                      WidgetSpan(
-                    child: Container(
-                            margin: EdgeInsets.only(left: 3, right: 3),
-                            child: Text("$cartProductBlockQty",style: TextStyle(
-                              fontSize: 16,
-                            ),)),
-                      ),
-                      WidgetSpan(
-                            child:   Container(
-                                height: 20,
-                                width:20,
-                                child: RawMaterialButton(
-                                  onPressed: () {
+                          WidgetSpan(
+                            child: Container(
+                              height: 20,
+                              width: 20,
+                              child: RawMaterialButton(
+                                onPressed: () {
+                                  if (cartProductBlockQty > 1) {
                                     setState(() {
-                                      cartProductBlockQty++;
+                                      cartProductBlockQty--;
                                       cartProductBlockPrice =
                                           cartProductBlock['product_price'] *
                                               cartProductBlockQty;
-                                      finalPriceForCart = finalPriceForCart +
+                                      finalPriceForCart = finalPriceForCart -
                                           cartProductBlock['product_price'];
                                     });
-                                  },
-                                  elevation: 1.0,
-                                  fillColor: Color.fromRGBO(223, 51, 19, 1),
-                                  child: Icon(
-                                    Icons.add,
-                                    size: 15.0,
-                                    color: Colors.white,
-                                  ),
-                                  shape: CircleBorder(),
+                                  }
+                                },
+                                elevation: 1.0,
+                                fillColor: Color.fromRGBO(193, 199, 208, 1),
+                                child: Icon(
+                                  Icons.remove,
+                                  size: 15.0,
+                                  color: Colors.white,
                                 ),
+                                shape: CircleBorder(),
                               ),
-                      ),
-                      
-                    ])),
+                            ),
                           ),
-                        ),
+                          WidgetSpan(
+                            child: Container(
+                                margin: EdgeInsets.only(left: 3, right: 3),
+                                child: Text(
+                                  "$cartProductBlockQty",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                )),
+                          ),
+                          WidgetSpan(
+                            child: Container(
+                              height: 20,
+                              width: 20,
+                              child: RawMaterialButton(
+                                onPressed: () {
+                                  setState(() {
+                                    cartProductBlockQty++;
+                                    cartProductBlockPrice =
+                                        cartProductBlock['product_price'] *
+                                            cartProductBlockQty;
+                                    finalPriceForCart = finalPriceForCart +
+                                        cartProductBlock['product_price'];
+                                  });
+                                },
+                                elevation: 1.0,
+                                fillColor: Color.fromRGBO(223, 51, 19, 1),
+                                child: Icon(
+                                  Icons.add,
+                                  size: 15.0,
+                                  color: Colors.white,
+                                ),
+                                shape: CircleBorder(),
+                              ),
+                            ),
+                          ),
+                        ])),
+                      ),
+                    ),
                     // RichText(
                     //     text: TextSpan(text: "", children: [
                     //   WidgetSpan(
@@ -334,20 +426,12 @@ class _CartProductState extends State<CartProduct> {
                     //     ),
                     //   ),
                     // ])),
-                    Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Container(
-              margin: EdgeInsets.only(left: 10),
-              child: Container(
-              child: Icon(Icons.delete),
-            ),),
-        ),
                   ],
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top:12.0),
+              padding: const EdgeInsets.only(top: 12.0),
               child: Divider(),
             ),
           ],
@@ -372,8 +456,6 @@ Widget buildExtras(List extras) {
             margin: EdgeInsets.only(left: 10),
             child: Text("\$${extra['price']}")),
       ),
-        
-      
     ])));
   });
   return Column(

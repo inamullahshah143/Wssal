@@ -93,7 +93,7 @@ class SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (BuildContext context) => LogIn(),
+          builder: (BuildContext context) => LoginPage(),
         ),
       );
     //   Navigator.pushReplacement(
@@ -143,7 +143,7 @@ class SplashScreenState extends State<SplashScreen> {
   }
 }
 
-class LoginPage {}
+
 
 void main() {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
