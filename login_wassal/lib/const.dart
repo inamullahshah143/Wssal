@@ -82,6 +82,63 @@ getAppbar(context, text) {
   );
 }
 
+getDashboardAppbar(context, text) {
+  return AppBar(
+    elevation: 1.0,
+    backgroundColor: Colors.white,
+    toolbarHeight: 75,
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+      bottomLeft: Radius.circular(25),
+      bottomRight: Radius.circular(25),
+    )),
+    title: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Delivery to',
+          style: TextStyle(
+            color: themeSecondaryColor,
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
+          ),
+        ),
+        RichText(
+          text: TextSpan(
+            children: [
+              WidgetSpan(
+                child: Icon(Icons.near_me_rounded, color: themePrimaryColor),
+              ),
+              WidgetSpan(
+                child: Text(
+                  'Location',
+                  style: TextStyle(
+                    color: text1color,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              WidgetSpan(
+                child: Icon(Icons.arrow_drop_down, color: themeSecondaryColor),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+    actions: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Image(
+          height: 50,
+          width: 50,
+          image: AssetImage('assets/app_logo.png'),
+        ),
+      ),
+    ],
+  );
+}
+
 getBottomBar(context) {
   //  return Container(
   //         decoration: BoxDecoration(
@@ -152,6 +209,21 @@ getBottomBar(context) {
   //       );
   return Container(
     padding: EdgeInsets.only(left: 25, right: 25),
+    decoration: BoxDecoration(
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 2,
+          blurRadius: 2,
+          offset: Offset(0, 3), // changes position of shadow
+        ),
+      ],
+      color: Colors.white,
+      borderRadius: BorderRadius.only(
+        topRight: Radius.circular(25),
+        topLeft: Radius.circular(25),
+      ),
+    ),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -210,12 +282,6 @@ getBottomBar(context) {
       ],
     ),
     height: 60,
-    decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(20),
-          topLeft: Radius.circular(20),
-        )),
   );
 }
 

@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'const.dart';
 import 'categorydetail.dart';
-import 'package:device_info_plus/device_info_plus.dart';
+
+import 'custom_delivery.dart';
 
 class MainCategories extends StatefulWidget {
   @override
@@ -22,89 +22,84 @@ class _MainCategoriesState extends State<MainCategories> {
   @override
   Widget build(BuildContext context) {
     latestContext = context;
-    double height = MediaQuery.of(context).size.height;
-
     return Scaffold(
       bottomNavigationBar: getBottomBar(context),
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
-      appBar: getAppbar(context, "Categories"),
-      body: SafeArea(
+      appBar: getDashboardAppbar(context, "Categories"),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: double.infinity,
+        margin: EdgeInsets.all(20.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.25),
+              spreadRadius: 0,
+              blurRadius: 5,
+              offset: Offset(0, 0), // changes position of shadow
+            ),
+          ],
+        ),
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
             children: [
-              Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Container(
-                  height: height - 225,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white),
-                  child: SingleChildScrollView(
-                    child: Column(
+              logs == true
+                  ? Row(
                       children: [
-                        logs == true
-                            ? Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Container(
-                                      height: 35,
-                                      width: 35,
-                                      child: Image.asset(
-                                        "assets/Profile.png",
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Hello,",
-                                        style: TextStyle(
-                                            color: Colors.grey, fontSize: 12.0),
-                                      ),
-                                      Text(
-                                        "$storedName",
-                                        style: TextStyle(
-                                            color: Colors.grey.shade700,
-                                            fontSize: 18.0),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )
-                            : Container(),
-                        FutureBuilder(
-                          future: mainCategories(context),
-                          builder: ((context, snap) {
-                            if (snap.hasData) {
-                              return snap.data;
-                            } else if (snap.hasError) {
-                              return Text("${snap.error}");
-                            } else {
-                              return Center(
-                                child: Container(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: CircularProgressIndicator(
-                                      backgroundColor: Colors.red,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                          Colors.yellow),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }
-                          }),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Container(
+                            height: 35,
+                            width: 35,
+                            child: Image.asset(
+                              "assets/Profile.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Hello,",
+                              style:
+                                  TextStyle(color: Colors.grey, fontSize: 12.0),
+                            ),
+                            Text(
+                              "$storedName",
+                              style: TextStyle(
+                                  color: Colors.grey.shade700, fontSize: 18.0),
+                            ),
+                          ],
                         ),
                       ],
-                    ),
-                  ),
-                ),
+                    )
+                  : Container(),
+              FutureBuilder(
+                future: mainCategories(context),
+                builder: ((context, snap) {
+                  if (snap.hasData) {
+                    return snap.data;
+                  } else if (snap.hasError) {
+                    return Text("${snap.error}");
+                  } else {
+                    return Center(
+                      child: Container(
+                        child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: CircularProgressIndicator(
+                            backgroundColor: Colors.red,
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.yellow),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                }),
               ),
             ],
           ),
@@ -136,83 +131,166 @@ class _MainCategoriesState extends State<MainCategories> {
                   ),
                 );
               },
-              child: Container(
-                height: 300,
-                child: Stack(
-                  children: [
-                    Container(
-                      height: 350,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                              imageURL + '/' + element['thumbnail']),
-                        ),
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image(
+                        fit: BoxFit.fill,
+                        image: NetworkImage(
+                            imageURL + '/' + element['thumbnail']),
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 100.0,
-                        width: 300.0,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Color.fromRGBO(255, 255, 255, 0),
-                              Color.fromRGBO(25, 25, 25, 1),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 100.0,
+                      width: 300.0,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color.fromRGBO(255, 255, 255, 0),
+                            Color.fromRGBO(25, 25, 25, 1),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(7.5),
+                        ),
+                      ),
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                element['name'].toUpperCase(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              RichText(
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                text: TextSpan(
+                                  text: '',
+                                  children: subCategory(element['children']),
+                                ),
+                              ),
                             ],
                           ),
-                          borderRadius: BorderRadius.vertical(
-                            bottom: Radius.circular(7.5),
-                          ),
-                        ),
-                        child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  element['name'].toUpperCase(),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                RichText(
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  text: TextSpan(
-                                    text: '',
-                                    children: subCategory(element['children']),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
         );
       });
+      x.add(
+        Container(
+          margin: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            color: Color.fromRGBO(244, 245, 247, 1),
+          ),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CustomDelivery(),
+                ),
+              );
+            },
+            child: Container(
+              height: 300,
+              child: Stack(
+                children: [
+                  Container(
+                    height: 350,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image(
+                        fit: BoxFit.fill,
+                        image: NetworkImage(
+                            'https://www.cannabisbusinesstimes.com/fileuploads/image/2019/06/20/Delivery-Adobe_Stock-Credit-boophuket-Resized.jpg'),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 100.0,
+                      width: 300.0,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color.fromRGBO(255, 255, 255, 0),
+                            Color.fromRGBO(25, 25, 25, 1),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(7.5),
+                        ),
+                      ),
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Delivery',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                'From Point to Point',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
       return GridView(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: (2),
-          childAspectRatio: 1.3,
+          childAspectRatio: 1.1,
         ),
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
@@ -236,7 +314,6 @@ class _MainCategoriesState extends State<MainCategories> {
         );
       }
     }
-
     return x;
   }
 }
