@@ -40,7 +40,7 @@ class _ChatPageState extends State<ChatPage> {
                   pusher.trigger(
                       ["${orderDetails['order_no']}Chat"],
                       "${orderDetails['order_no']}Chat",
-                      "$value,${DateTime.now()},User");
+                      "$value,${DateTime.now()},User" as Map);
                 },
               ),
             ),
