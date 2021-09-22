@@ -3,13 +3,11 @@ import 'dart:convert';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'Cart.dart';
 import 'Storedetail.dart';
 import 'digit_slider.dart';
-import 'mapLocation.dart';
 import 'productDetails.dart';
 import 'subcategory.dart';
 import 'const.dart';
@@ -47,6 +45,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
   Position currentPosition;
   final _scrollController = ScrollController();
   Timer timer;
+
+  bool promotedShopItem = true;
+  bool featuredItem = true;
+  bool topSellingItem = true;
+  bool topSellerShop = true;
+  bool nearBySeller = true;
+  bool freeDeliveryShop = true;
   @override
   void initState() {
     timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
@@ -57,7 +62,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
         locationChange = false;
       }
     });
-    appbarHeight = 75.0;
+    appbarHeight = 60.0;
     dragButton = false;
     searchClickBtn = true;
     isRecomended = false;
@@ -81,7 +86,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
   Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
-      
       resizeToAvoidBottomInset: false,
       backgroundColor: pagesBackground,
       bottomNavigationBar: getBottomBar(context),
@@ -117,23 +121,34 @@ class _CategoryDetailState extends State<CategoryDetail> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: 10.0),
+                        Container(
+                          padding: EdgeInsets.only(top: 5.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Row(
                                 children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    icon: Icon(
-                                      Icons.arrow_back_ios,
-                                      color: Colors.grey[800],
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 5.0),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      icon: Icon(
+                                        Icons.arrow_back_ios,
+                                        color: Colors.grey[800],
+                                      ),
                                     ),
                                   ),
-                                  Text("وصل", style: TextStyle(color: themePrimaryColor, fontWeight: FontWeight.bold, fontSize: 20)),
+                                  Text(
+                                    "وصل",
+                                    style: TextStyle(
+                                      color: themePrimaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
                                 ],
                               ),
                               Row(
@@ -144,7 +159,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                             setState(() {
                                               searchClickBtn = false;
                                               dragButton = true;
-                                              appbarHeight = 175.0;
+                                              appbarHeight = 160.0;
                                             });
                                           },
                                           icon: Icon(
@@ -153,20 +168,22 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                           ),
                                         )
                                       : Text(''),
-                                  
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              CartPage(),
-                                        ),
-                                      );
-                                    },
-                                    icon: Icon(
-                                      Icons.shopping_cart_outlined,
-                                      color: Colors.grey[800],
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 5.0),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                CartPage(),
+                                          ),
+                                        );
+                                      },
+                                      icon: Icon(
+                                        Icons.shopping_cart_outlined,
+                                        color: Colors.grey[800],
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -174,7 +191,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                             ],
                           ),
                         ),
-                        appbarHeight >= 175
+                        appbarHeight >= 160
                             ? Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -255,7 +272,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                         IconButton(
                                           onPressed: () {
                                             setState(() {
-                                              appbarHeight = 500;
+                                              appbarHeight = 475;
                                             });
                                           },
                                           icon: Icon(
@@ -266,7 +283,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                       ],
                                     ),
                                   ),
-                                  appbarHeight == 500
+                                  appbarHeight == 475
                                       ? Padding(
                                           padding: EdgeInsets.symmetric(
                                               vertical: 10.0, horizontal: 25),
@@ -298,7 +315,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                   ),
                                                   Container(
                                                     //Add this to give height
-                                                    height: appbarHeight - 300,
+                                                    height: appbarHeight - 275,
                                                     child: TabBarView(
                                                       controller:
                                                           _tabController,
@@ -325,7 +342,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                     child: ElevatedButton(
                                                       onPressed: () {
                                                         setState(() {
-                                                          appbarHeight = 175.0;
+                                                          appbarHeight = 160.0;
                                                           returnedData =
                                                               FutureBuilder(
                                                             future:
@@ -412,7 +429,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                       setState(() {
                                         searchClickBtn = true;
                                         dragButton = false;
-                                        appbarHeight = 75.0;
+                                        appbarHeight = 60.0;
                                         returnedData = null;
                                       });
                                     },
@@ -426,204 +443,224 @@ class _CategoryDetailState extends State<CategoryDetail> {
                 ),
               ),
             ),
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.fastOutSlowIn,
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height - (appbarHeight + 115),
-              child: FadingEdgeScrollView.fromSingleChildScrollView(
-                child: SingleChildScrollView(
-                  controller: _scrollController,
-                  physics: BouncingScrollPhysics(),
-                  child: returnedData == null
-                      ? Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.all(10),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Container(
-                                  height: 200.0,
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Carousel(
-                                    boxFit: BoxFit.cover,
-                                    autoplay: true,
-                                    animationCurve: Curves.fastOutSlowIn,
-                                    animationDuration:
-                                        Duration(milliseconds: 1000),
-                                    dotSize: 6.0,
-                                    dotIncreasedColor: Colors.white,
-                                    dotBgColor: Colors.transparent,
-                                    dotPosition: DotPosition.bottomCenter,
-                                    dotVerticalPadding: 5.0,
-                                    showIndicator: true,
-                                    indicatorBgPadding: 5.0,
-                                    images: [
-                                      AssetImage('assets/sliderImage.png'),
-                                      AssetImage('assets/sliderImage.png'),
-                                      AssetImage('assets/sliderImage.png'),
-                                    ],
+            Expanded(
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.fastOutSlowIn,
+                width: double.infinity,
+                child: FadingEdgeScrollView.fromSingleChildScrollView(
+                  gradientFractionOnStart: 0.05,
+                  gradientFractionOnEnd: 0.05,
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    physics: BouncingScrollPhysics(),
+                    child: returnedData == null
+                        ? Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.all(10),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Container(
+                                    height: 200.0,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Carousel(
+                                      boxFit: BoxFit.cover,
+                                      autoplay: true,
+                                      animationCurve: Curves.fastOutSlowIn,
+                                      animationDuration:
+                                          Duration(milliseconds: 1000),
+                                      dotSize: 6.0,
+                                      dotIncreasedColor: Colors.white,
+                                      dotBgColor: Colors.transparent,
+                                      dotPosition: DotPosition.bottomCenter,
+                                      dotVerticalPadding: 5.0,
+                                      showIndicator: true,
+                                      indicatorBgPadding: 5.0,
+                                      images: [
+                                        AssetImage('assets/sliderImage.png'),
+                                        AssetImage('assets/sliderImage.png'),
+                                        AssetImage('assets/sliderImage.png'),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            foodData(),
-                            FutureBuilder(
-                              future: promotedShops(),
-                              builder: ((context, snap) {
-                                if (snap.hasData) {
-                                  return snap.data;
-                                } else if (snap.hasError) {
-                                  return Text("${snap.error}");
-                                } else {
-                                  return Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Container(
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          backgroundColor: Colors.red,
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                                  Colors.yellow),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }),
-                            ),
-                            FutureBuilder(
-                              future: featuredProduct(),
-                              builder: ((context, snap) {
-                                if (snap.hasData) {
-                                  return snap.data;
-                                } else if (snap.hasError) {
-                                  return Text("${snap.error}");
-                                } else {
-                                  return Center(
-                                      child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Container(
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        backgroundColor: Colors.red,
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Colors.yellow),
-                                      ),
-                                    ),
-                                  ));
-                                }
-                              }),
-                            ),
-                            FutureBuilder(
-                              future: topSellingProduct(),
-                              builder: ((context, snap) {
-                                if (snap.hasData) {
-                                  return snap.data;
-                                } else if (snap.hasError) {
-                                  return Text("${snap.error}");
-                                } else {
-                                  return Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Container(
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          backgroundColor: Colors.red,
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                                  Colors.yellow),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }),
-                            ),
-                            FutureBuilder(
-                              future: topSeller(),
-                              builder: ((context, snap) {
-                                if (snap.hasData) {
-                                  return snap.data;
-                                } else if (snap.hasError) {
-                                  return Text("${snap.error}");
-                                } else {
-                                  return Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Container(
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          backgroundColor: Colors.red,
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                                  Colors.yellow),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }),
-                            ),
-                            FutureBuilder(
-                              future: nearBy(),
-                              builder: ((context, snap) {
-                                if (snap.hasData) {
-                                  return snap.data;
-                                } else if (snap.hasError) {
-                                  return Text("${snap.error}");
-                                } else {
-                                  return Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Container(
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          backgroundColor: Colors.red,
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                                  Colors.yellow),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }),
-                            ),
-                            FutureBuilder(
-                              future: freeDelivery(),
-                              builder: ((context, snap) {
-                                if (snap.hasData) {
-                                  return snap.data;
-                                } else if (snap.hasError) {
-                                  return Text("${snap.error}");
-                                } else {
-                                  return Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Container(
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          backgroundColor: Colors.red,
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                                  Colors.yellow),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }),
-                            ),
-                          ],
-                        )
-                      : Column(
-                          children: [
-                            returnedData,
-                          ],
-                        ),
+                              foodData(),
+                              promotedShopItem != false
+                                  ? FutureBuilder(
+                                      future: promotedShops(),
+                                      builder: ((context, snap) {
+                                        if (snap.hasData) {
+                                          return snap.data;
+                                        } else if (snap.hasError) {
+                                          return Text("${snap.error}");
+                                        } else {
+                                          return Center(
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Container(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                  backgroundColor: Colors.red,
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(Colors.yellow),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      }),
+                                    )
+                                  : Container(),
+                              featuredItem != false
+                                  ? FutureBuilder(
+                                      future: featuredProduct(),
+                                      builder: ((context, snap) {
+                                        if (snap.hasData) {
+                                          return snap.data;
+                                        } else if (snap.hasError) {
+                                          return Text("${snap.error}");
+                                        } else {
+                                          return Center(
+                                              child: Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Container(
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 2,
+                                                backgroundColor: Colors.red,
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(Colors.yellow),
+                                              ),
+                                            ),
+                                          ));
+                                        }
+                                      }),
+                                    )
+                                  : Container(),
+                              topSellingItem != false
+                                  ? FutureBuilder(
+                                      future: topSellingProduct(),
+                                      builder: ((context, snap) {
+                                        if (snap.hasData) {
+                                          return snap.data;
+                                        } else if (snap.hasError) {
+                                          return Text("${snap.error}");
+                                        } else {
+                                          return Center(
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Container(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                  backgroundColor: Colors.red,
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(Colors.yellow),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      }),
+                                    )
+                                  : Container(),
+                              topSellerShop != false
+                                  ? FutureBuilder(
+                                      future: topSeller(),
+                                      builder: ((context, snap) {
+                                        if (snap.hasData) {
+                                          return snap.data;
+                                        } else if (snap.hasError) {
+                                          return Text("${snap.error}");
+                                        } else {
+                                          return Center(
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Container(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                  backgroundColor: Colors.red,
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(Colors.yellow),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      }),
+                                    )
+                                  : Container(),
+                              nearBySeller != false
+                                  ? FutureBuilder(
+                                      future: nearBy(),
+                                      builder: ((context, snap) {
+                                        if (snap.hasData) {
+                                          return snap.data;
+                                        } else if (snap.hasError) {
+                                          return Text("${snap.error}");
+                                        } else {
+                                          return Center(
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Container(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                  backgroundColor: Colors.red,
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(Colors.yellow),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      }),
+                                    )
+                                  : Container(),
+                              freeDeliveryShop != false
+                                  ? FutureBuilder(
+                                      future: freeDelivery(),
+                                      builder: ((context, snap) {
+                                        if (snap.hasData) {
+                                          return snap.data;
+                                        } else if (snap.hasError) {
+                                          return Text("${snap.error}");
+                                        } else {
+                                          return Center(
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Container(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                  backgroundColor: Colors.red,
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(Colors.yellow),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      }),
+                                    )
+                                  : Container(),
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              returnedData,
+                            ],
+                          ),
+                  ),
                 ),
               ),
             ),
@@ -865,7 +902,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      height: 105,
                       width: 90,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -890,7 +926,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                     imageURL +
                                         '/' +
                                         '${categoryBlock['children'][index]['thumbnail']}',
-                                    fit: BoxFit.cover),
+                                    fit: BoxFit.fill),
                               ),
                             ),
                             Padding(
@@ -928,11 +964,17 @@ class _CategoryDetailState extends State<CategoryDetail> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    height: 105,
                     width: 90,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Color.fromRGBO(244, 245, 247, 1),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                          color: Colors.grey[300],
+                          blurRadius: 3.0,
+                          offset: Offset(0.0, 0.5),
+                        ),
+                      ],
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -959,7 +1001,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image(
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.fill,
                                   image: NetworkImage(
                                       imageURL + '/' + element['thumbnail']),
                                 ),
@@ -990,6 +1032,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
       return Container(
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.all(10),
+        clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
@@ -1016,7 +1059,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       );
     } else {
-      return Text("No Sub-Categories Available");
+      return Center(child: Text("No Sub-Categories Available"));
     }
   }
 
@@ -1272,6 +1315,9 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       );
     } else {
+      setState(() {
+        featuredItem = true;
+      });
       return Container(
         width: MediaQuery.of(context).size.width,
         height: 325,
@@ -1570,6 +1616,9 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       );
     } else {
+      setState(() {
+        promotedShopItem = true;
+      });
       return Container(
         width: MediaQuery.of(context).size.width,
         height: 180.0,
@@ -1909,6 +1958,9 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       );
     } else {
+      setState(() {
+        topSellerShop = true;
+      });
       return Container(
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.all(10),
@@ -2053,6 +2105,9 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       );
     } else {
+      setState(() {
+        topSellerShop = true;
+      });
       return Container(
         width: MediaQuery.of(context).size.width,
         height: 180.0,
@@ -2325,7 +2380,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
               child: Text(
-                'Nearby',
+                'Near By',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
@@ -2344,6 +2399,9 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       );
     } else {
+      setState(() {
+        nearBySeller = true;
+      });
       return Container(
         width: MediaQuery.of(context).size.width,
         height: 325,
@@ -2368,7 +2426,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
               child: Text(
-                'Featured',
+                'Near By',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
@@ -2425,9 +2483,11 @@ class _CategoryDetailState extends State<CategoryDetail> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.network(
-                              element['images'].isNotEmpty?imageURL +
-                                  '/' +
-                                  '${element['images'][0]['path']}':"https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png",
+                              element['images'].isNotEmpty
+                                  ? imageURL +
+                                      '/' +
+                                      '${element['images'][0]['path']}'
+                                  : "https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png",
                               fit: BoxFit.cover,
                               height: 125,
                             ),
@@ -2668,6 +2728,9 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       );
     } else {
+      setState(() {
+        freeDeliveryShop = true;
+      });
       return Container(
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.all(10),
@@ -3049,15 +3112,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
       shops.forEach((element) {
         x.add(GestureDetector(
           onTap: () {
-             showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) {
-                    return StoreDetail(storeBlock: element);
-                  },
-                );
-       
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              builder: (context) {
+                return StoreDetail(storeBlock: element);
+              },
+            );
           },
           child: Container(
               child: Row(
@@ -3216,6 +3278,4 @@ class _CategoryDetailState extends State<CategoryDetail> {
       return Center(child: Text("No data found.Try another keyword"));
     }
   }
-
- 
 }

@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Categories.dart';
 import 'const.dart';
+import 'dashboard.dart';
 
 class Varifyphonenumber extends StatefulWidget {
   final Map data;
@@ -107,7 +108,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          MainCategories()),
+                                          MainDashboard()),
                                   (Route<dynamic> route) => false,
                                 );
                               }),

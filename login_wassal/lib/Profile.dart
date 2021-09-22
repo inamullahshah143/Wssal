@@ -24,7 +24,6 @@ class _ProfilePageState extends State<ProfilePage> {
     latestContext = context;
     //
     return Scaffold(
-      bottomNavigationBar: getBottomBar(context),
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
       appBar: getAppbar(context, 'Profile Page'),
       body: SingleChildScrollView(

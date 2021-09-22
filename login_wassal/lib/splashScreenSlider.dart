@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassal_customer/Categories.dart';
 
 import 'const.dart';
+import 'dashboard.dart';
 import 'numberlogin.dart';
 
 class SplashScreenSlider extends StatefulWidget {
@@ -286,7 +287,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MainCategories(),
+                            builder: (context) => MainDashboard(),
                           ),
                         );
                       },

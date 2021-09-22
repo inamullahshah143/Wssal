@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassal_customer/const.dart';
+import 'package:wassal_customer/dashboard.dart';
 import 'package:wassal_customer/splashScreenSlider.dart';
 import 'Categories.dart';
 import 'numberlogin.dart';
@@ -86,12 +87,12 @@ class _SplashScreenState extends State<SplashScreen> {
           logs = true;
           Timer(Duration(seconds: 3), () {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (_) => MainCategories()), (Route<dynamic> route) => false);
+                MaterialPageRoute(builder: (_) => MainDashboard()), (Route<dynamic> route) => false);
           });
         } else {
           Timer(Duration(seconds: 3), () {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (_) => MainCategories()), (Route<dynamic> route) => false);
+                MaterialPageRoute(builder: (_) => MainDashboard()), (Route<dynamic> route) => false);
           });
         }
       }

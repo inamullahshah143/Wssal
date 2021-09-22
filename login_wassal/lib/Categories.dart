@@ -23,7 +23,7 @@ class _MainCategoriesState extends State<MainCategories> {
   Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
-      bottomNavigationBar: getBottomBar(context),
+      // bottomNavigationBar: getBottomBar(context),
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
       appBar: getDashboardAppbar(context, "Categories"),
       body: Container(
@@ -134,16 +134,25 @@ class _MainCategoriesState extends State<MainCategories> {
               child: Stack(
                 children: [
                   Container(
+                    width: 300.0,
                     decoration: BoxDecoration(
                       color: Colors.grey.shade100,
                       borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 0,
+                          blurRadius: 5,
+                          offset: Offset(0, 1), // changes position of shadow
+                        ),
+                      ],
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image(
                         fit: BoxFit.fill,
-                        image: NetworkImage(
-                            imageURL + '/' + element['thumbnail']),
+                        image:
+                            NetworkImage(imageURL + '/' + element['thumbnail']),
                       ),
                     ),
                   ),
@@ -206,6 +215,14 @@ class _MainCategoriesState extends State<MainCategories> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(8)),
             color: Color.fromRGBO(244, 245, 247, 1),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 0,
+                blurRadius: 5,
+                offset: Offset(0, 1),
+              ),
+            ],
           ),
           child: InkWell(
             onTap: () {
