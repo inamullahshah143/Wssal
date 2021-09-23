@@ -76,11 +76,11 @@ class _MainDashboardState extends State<MainDashboard> {
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.store_outlined),
+              icon: Icon(Icons.store),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
+              icon: Icon(Icons.person),
               label: '',
             ),
           ],

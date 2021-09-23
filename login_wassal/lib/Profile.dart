@@ -34,6 +34,14 @@ class _ProfilePageState extends State<ProfilePage> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.25),
+                    spreadRadius: 0,
+                    blurRadius: 5,
+                    offset: Offset(0, 0), // changes position of shadow
+                  ),
+                ],
               ),
               width: double.infinity,
               child: Column(
@@ -70,6 +78,14 @@ class _ProfilePageState extends State<ProfilePage> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.25),
+                    spreadRadius: 0,
+                    blurRadius: 5,
+                    offset: Offset(0, 0), // changes position of shadow
+                  ),
+                ],
               ),
               child: Column(
                 children: [
@@ -242,6 +258,14 @@ class _ProfilePageState extends State<ProfilePage> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.25),
+                    spreadRadius: 0,
+                    blurRadius: 5,
+                    offset: Offset(0, 0), // changes position of shadow
+                  ),
+                ],
               ),
               child: Column(
                 children: [
@@ -321,7 +345,14 @@ class _ProfilePageState extends State<ProfilePage> {
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(20),boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.25),
+              spreadRadius: 0,
+              blurRadius: 5,
+              offset: Offset(0, 0), // changes position of shadow
+            ),
+          ],
               ),
               child: Column(
                 children: [

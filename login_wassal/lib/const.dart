@@ -70,7 +70,7 @@ getAppbar(context, text) {
       IconButton(
         onPressed: () {
           Navigator.of(context)
-              .pushReplacement(MaterialPageRoute(builder: (_) => SearchPage()));
+              .push(MaterialPageRoute(builder: (_) => SearchPage()));
         },
         icon: Icon(
           Icons.search,
@@ -303,4 +303,3 @@ int productPriceValue = 0;
 List productExtrasForCart = [];
 List finalProductsForCart = [];
 int finalPriceForCart = 0;
-

@@ -45,7 +45,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
   Position currentPosition;
   final _scrollController = ScrollController();
   Timer timer;
-
+  bool havePromotedShopData;
+  bool haveFeaturedData;
+  bool haveTopSellingData;
+  bool haveTopSellerData;
+  bool haveNearByData;
+  bool haveFreeDeliveryData;
+  
   @override
   void initState() {
     timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
@@ -78,6 +84,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
 
   @override
   Widget build(BuildContext context) {
+    
+    havePromotedShopData = false;
+    haveFeaturedData = false;
+    haveTopSellingData = false;
+    haveTopSellerData = false;
+    haveNearByData = false;
+    haveFreeDeliveryData = false;
     latestContext = context;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -129,7 +142,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                         Navigator.of(context).pop();
                                       },
                                       icon: Icon(
-                                        Icons.arrow_back_ios,
+                                        Icons.arrow_back,
                                         color: Colors.grey[800],
                                       ),
                                     ),
@@ -450,191 +463,163 @@ class _CategoryDetailState extends State<CategoryDetail> {
                     child: returnedData == null
                         ? Column(
                             children: [
-                              Container(
-                                margin: EdgeInsets.all(10),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Container(
-                                    height: 200.0,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Carousel(
-                                      boxFit: BoxFit.cover,
-                                      autoplay: true,
-                                      animationCurve: Curves.fastOutSlowIn,
-                                      animationDuration:
-                                          Duration(milliseconds: 1000),
-                                      dotSize: 6.0,
-                                      dotIncreasedColor: Colors.white,
-                                      dotBgColor: Colors.transparent,
-                                      dotPosition: DotPosition.bottomCenter,
-                                      dotVerticalPadding: 5.0,
-                                      showIndicator: true,
-                                      indicatorBgPadding: 5.0,
-                                      images: [
-                                        AssetImage('assets/sliderImage.png'),
-                                        AssetImage('assets/sliderImage.png'),
-                                        AssetImage('assets/sliderImage.png'),
+                              havePromotedShopData == true &&
+                                      haveFeaturedData == true &&
+                                      haveTopSellingData == true &&
+                                      haveTopSellerData == true &&
+                                      haveNearByData == true &&
+                                      haveFreeDeliveryData == true
+                                  ? Column(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.all(10),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: Container(
+                                              height: 200.0,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child: Carousel(
+                                                boxFit: BoxFit.cover,
+                                                autoplay: true,
+                                                animationCurve:
+                                                    Curves.fastOutSlowIn,
+                                                animationDuration: Duration(
+                                                    milliseconds: 1000),
+                                                dotSize: 6.0,
+                                                dotIncreasedColor: Colors.white,
+                                                dotBgColor: Colors.transparent,
+                                                dotPosition:
+                                                    DotPosition.bottomCenter,
+                                                dotVerticalPadding: 5.0,
+                                                showIndicator: true,
+                                                indicatorBgPadding: 5.0,
+                                                images: [
+                                                  AssetImage(
+                                                      'assets/sliderImage.png'),
+                                                  AssetImage(
+                                                      'assets/sliderImage.png'),
+                                                  AssetImage(
+                                                      'assets/sliderImage.png'),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        foodData(),
+                                        FutureBuilder(
+                                          future: promotedShops(),
+                                          builder: ((context, snap) {
+                                            if (snap.hasData) {
+                                              havePromotedShopData = true;
+                                              return snap.data;
+                                            } else if (snap.hasError) {
+                                              havePromotedShopData = true;
+                                              return Container();
+                                            } else {
+                                              return Container();
+                                            }
+                                          }),
+                                        ),
+                                        FutureBuilder(
+                                          future: featuredProduct(),
+                                          builder: ((context, snap) {
+                                            if (snap.hasData) {
+                                                haveFeaturedData = true;
+                                              
+                                              return snap.data;
+                                            } else if (snap.hasError) {
+                                                haveFeaturedData = true;
+                                            
+                                              return Container();
+                                            } else {
+                                              return Container();
+                                            }
+                                          }),
+                                        ),
+                                        FutureBuilder(
+                                          future: topSellingProduct(),
+                                          builder: ((context, snap) {
+                                            if (snap.hasData) {
+                                                haveTopSellingData = true;
+                                              
+                                              return snap.data;
+                                            } else if (snap.hasError) {
+                                                haveTopSellingData = true;
+                                              
+                                              return Container();
+                                            } else {
+                                              return Container();
+                                            }
+                                          }),
+                                        ),
+                                        FutureBuilder(
+                                          future: topSeller(),
+                                          builder: ((context, snap) {
+                                            if (snap.hasData) {
+                                                haveTopSellerData = true;
+                                              
+                                              return snap.data;
+                                            } else if (snap.hasError) {
+                                                haveTopSellerData = true;
+                                              
+                                              return Container();
+                                            } else {
+                                              return Container();
+                                            }
+                                          }),
+                                        ),
+                                        FutureBuilder(
+                                          future: nearBy(),
+                                          builder: ((context, snap) {
+                                            if (snap.hasData) {
+                                                haveNearByData = true;
+                                              
+                                              return snap.data;
+                                            } else if (snap.hasError) {
+                                                haveNearByData = true;
+                                              
+                                              return Container();
+                                            } else {
+                                              return Container();
+                                            }
+                                          }),
+                                        ),
+                                        FutureBuilder(
+                                          future: freeDelivery(),
+                                          builder: ((context, snap) {
+                                            if (snap.hasData) {
+                                                haveFreeDeliveryData = true;
+                                              
+                                              return snap.data;
+                                            } else if (snap.hasError) {
+                                                haveFreeDeliveryData = true;
+                                              
+                                              return Container();
+                                            } else {
+                                              return Container();
+                                            }
+                                          }),
+                                        ),
                                       ],
+                                    )
+                                  : Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Container(
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            backgroundColor: Colors.red,
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              Colors.yellow,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                              ),
-                              foodData(),
-                              FutureBuilder(
-                                future: promotedShops(),
-                                builder: ((context, snap) {
-                                  if (snap.hasData) {
-                                    return snap.data;
-                                  } else if (snap.hasError) {
-                                    return Container();
-                                  } else {
-                                    return Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Container(
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            backgroundColor: Colors.red,
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                              Colors.yellow,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                }),
-                              ),
-                              FutureBuilder(
-                                future: featuredProduct(),
-                                builder: ((context, snap) {
-                                  if (snap.hasData) {
-                                    return snap.data;
-                                  } else if (snap.hasError) {
-                                    return Container();
-                                  } else {
-                                    return Center(
-                                        child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Container(
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          backgroundColor: Colors.red,
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            Colors.yellow,
-                                          ),
-                                        ),
-                                      ),
-                                    ));
-                                  }
-                                }),
-                              ),
-                              FutureBuilder(
-                                future: topSellingProduct(),
-                                builder: ((context, snap) {
-                                  if (snap.hasData) {
-                                    return snap.data;
-                                  } else if (snap.hasError) {
-                                    return Container();
-                                  } else {
-                                    return Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Container(
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            backgroundColor: Colors.red,
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                              Colors.yellow,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                }),
-                              ),
-                              FutureBuilder(
-                                future: topSeller(),
-                                builder: ((context, snap) {
-                                  if (snap.hasData) {
-                                    return snap.data;
-                                  } else if (snap.hasError) {
-                                    return Container();
-                                  } else {
-                                    return Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Container(
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            backgroundColor: Colors.red,
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                              Colors.yellow,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                }),
-                              ),
-                              FutureBuilder(
-                                future: nearBy(),
-                                builder: ((context, snap) {
-                                  if (snap.hasData) {
-                                    return snap.data;
-                                  } else if (snap.hasError) {
-                                    return Container();
-                                  } else {
-                                    return Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Container(
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            backgroundColor: Colors.red,
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                              Colors.yellow,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                }),
-                              ),
-                              FutureBuilder(
-                                future: freeDelivery(),
-                                builder: ((context, snap) {
-                                  if (snap.hasData) {
-                                    return snap.data;
-                                  } else if (snap.hasError) {
-                                    return Container();
-                                  } else {
-                                    return Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Container(
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            backgroundColor: Colors.red,
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                              Colors.yellow,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                }),
-                              ),
                             ],
                           )
                         : Column(
@@ -1302,8 +1287,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
   }
 
   Future<Widget> promotedShops() async {
-    var response = await http.get(
-        Uri.parse("$apiURL/promotedShops/${categoryBlock['id']}"));
+    var response = await http
+        .get(Uri.parse("$apiURL/promotedShops/${categoryBlock['id']}"));
     if (response.statusCode == 200 &&
         json.decode(response.body)['data'] != null) {
       List data = json.decode(response.body)['data'];
@@ -1562,8 +1547,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
   }
 
   Future<Widget> topSellingProduct() async {
-    var response = await http.get(
-        Uri.parse("$apiURL/topSellingProduct/${categoryBlock['id']}"));
+    var response = await http
+        .get(Uri.parse("$apiURL/topSellingProduct/${categoryBlock['id']}"));
     if (response.statusCode == 200) {
       List data = json.decode(response.body)['data'];
       List<Widget> x = [];
@@ -1860,8 +1845,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
   }
 
   Future<Widget> topSeller() async {
-    var response = await http
-        .get(Uri.parse("$apiURL/topSeller/${categoryBlock['id']}"));
+    var response =
+        await http.get(Uri.parse("$apiURL/topSeller/${categoryBlock['id']}"));
     if (response.statusCode == 200 &&
         json.decode(response.body)['data'] != null) {
       List data = json.decode(response.body)['data'];
@@ -1971,8 +1956,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
   }
 
   Future<Widget> nearBy() async {
-    var response = await http.get(
-        Uri.parse("$apiURL/FeatureProduct/${categoryBlock['id']}"));
+    var response = await http
+        .get(Uri.parse("$apiURL/FeatureProduct/${categoryBlock['id']}"));
     if (response.statusCode == 200) {
       List data = json.decode(response.body)['data'];
       List<Widget> x = [];
@@ -2221,8 +2206,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
   }
 
   Future<Widget> freeDelivery() async {
-    var response = await http.get(Uri.parse(
-        "$apiURL/freeDeliveryProducts/${categoryBlock['id']}"));
+    var response = await http
+        .get(Uri.parse("$apiURL/freeDeliveryProducts/${categoryBlock['id']}"));
     if (response.statusCode == 200) {
       List data = json.decode(response.body)['free delivery products'];
       List<Widget> x = [];

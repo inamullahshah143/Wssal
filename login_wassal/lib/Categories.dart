@@ -27,7 +27,7 @@ class _MainCategoriesState extends State<MainCategories> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: double.infinity,
-        margin: EdgeInsets.all(20.0),
+        margin: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: Colors.white,
