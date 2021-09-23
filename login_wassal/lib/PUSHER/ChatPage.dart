@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:pusher/pusher.dart' as push;
 import 'package:pusher_websocket_flutter/pusher.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+// ignore: must_be_immutable
 class ChatPage extends StatefulWidget {
   final Map orderDetails;
   ChatPage({this.orderDetails});
@@ -40,7 +40,7 @@ class _ChatPageState extends State<ChatPage> {
                   pusher.trigger(
                       ["${orderDetails['order_no']}Chat"],
                       "${orderDetails['order_no']}Chat",
-                      "$value,${DateTime.now()},User");
+                      "$value,${DateTime.now()},User" as Map);
                 },
               ),
             ),
@@ -84,6 +84,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 }
 
+// ignore: must_be_immutable
 class MessageTile extends StatefulWidget {
   String name;
   final Event data;

@@ -3,11 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassal_customer/SearchPage.dart';
-import 'package:wassal_customer/Stores.dart';
-
 import 'Cart.dart';
-import 'Categories.dart';
-import 'Profile.dart';
 import 'numberlogin.dart';
 
 Color text1color = Color.fromRGBO(50, 62, 72, 1);
@@ -61,23 +57,94 @@ logoutFunction({@required context}) async {
 
 getAppbar(context, text) {
   return AppBar(
-    backgroundColor: themePrimaryColor,
+    elevation: 1.0,
+    backgroundColor: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        bottomLeft: Radius.circular(25),
+        bottomRight: Radius.circular(25),
+      ),
+    ),
     title: Text("$text"),
     actions: [
       IconButton(
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (_) => SearchPage()));
-          },
-          icon: Icon(Icons.search)),
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => SearchPage()));
+        },
+        icon: Icon(
+          Icons.search,
+        ),
+      ),
       IconButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CartPage()),
-            );
-          },
-          icon: Icon(Icons.shopping_cart)),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CartPage()),
+          );
+        },
+        icon: Icon(
+          Icons.shopping_cart_outlined,
+        ),
+      ),
+    ],
+  );
+}
+
+getDashboardAppbar(context, text) {
+  return AppBar(
+    elevation: 1.0,
+    backgroundColor: Colors.white,
+    toolbarHeight: 75,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        bottomLeft: Radius.circular(25),
+        bottomRight: Radius.circular(25),
+      ),
+    ),
+    title: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Delivery to',
+          style: TextStyle(
+            color: themeSecondaryColor,
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
+          ),
+        ),
+        RichText(
+          text: TextSpan(
+            children: [
+              WidgetSpan(
+                child: Icon(Icons.near_me_rounded, color: themePrimaryColor),
+              ),
+              WidgetSpan(
+                child: Text(
+                  'Location',
+                  style: TextStyle(
+                    color: text1color,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              WidgetSpan(
+                child: Icon(Icons.arrow_drop_down, color: themeSecondaryColor),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+    actions: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Image(
+          height: 50,
+          width: 50,
+          image: AssetImage('assets/app_logo.png'),
+        ),
+      ),
     ],
   );
 }
@@ -150,79 +217,89 @@ getBottomBar(context) {
   //           ),
   //         ),
   //       );
-  return Container(
-    padding: EdgeInsets.only(left: 25, right: 25),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainCategories()),
-              );
-            },
-            child: Icon(
-              Icons.dashboard,
-              color: Colors.grey,
-              size: 30,
-            ),
-          ),
-        ),
-        Container(
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AllShops()),
-              );
-            },
-            child: Icon(
-              Icons.store,
-              color: Colors.grey,
-              size: 30,
-            ),
-          ),
-        ),
-        Container(
-          child: InkWell(
-            onTap: () {
-              if (logs == true) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfilePage()),
-                );
-              } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-              }
-            },
-            child: Icon(
-              Icons.person,
-              color: Colors.grey,
-              size: 30,
-            ),
-          ),
-        ),
-      ],
-    ),
-    height: 60,
-    decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(20),
-          topLeft: Radius.circular(20),
-        )),
-  );
+  // return
+
+  // Container(
+  //   padding: EdgeInsets.only(left: 25, right: 25),
+  //   decoration: BoxDecoration(
+  //     boxShadow: [
+  //       BoxShadow(
+  //         color: Colors.grey.withOpacity(0.5),
+  //         spreadRadius: 2,
+  //         blurRadius: 2,
+  //         offset: Offset(0, 3), // changes position of shadow
+  //       ),
+  //     ],
+  //     color: Colors.white,
+  //     borderRadius: BorderRadius.only(
+  //       topRight: Radius.circular(25),
+  //       topLeft: Radius.circular(25),
+  //     ),
+  //   ),
+  //   child: Row(
+  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //     children: [
+  //       Container(
+  //         child: InkWell(
+  //           onTap: () {
+  //             Navigator.pushReplacement(
+  //               context,
+  //               MaterialPageRoute(builder: (context) => MainCategories()),
+  //             );
+  //           },
+  //           child: Icon(
+  //             Icons.dashboard,
+  //             color: Colors.grey[600],
+  //             size: 26,
+  //           ),
+  //         ),
+  //       ),
+  //       Container(
+  //         child: InkWell(
+  //           onTap: () {
+  //             Navigator.push(
+  //               context,
+  //               MaterialPageRoute(builder: (context) => AllShops()),
+  //             );
+  //           },
+  //           child: Icon(
+  //             Icons.store,
+  //             color: Colors.grey,
+  //             size: 30,
+  //           ),
+  //         ),
+  //       ),
+  //       Container(
+  //         child: InkWell(
+  //           onTap: () {
+  //             if (logs == true) {
+  //               Navigator.push(
+  //                 context,
+  //                 MaterialPageRoute(builder: (context) => ProfilePage()),
+  //               );
+  //             } else {
+  //               Navigator.push(
+  //                 context,
+  //                 MaterialPageRoute(builder: (context) => LoginPage()),
+  //               );
+  //             }
+  //           },
+  //           child: Icon(
+  //             Icons.person,
+  //             color: Colors.grey,
+  //             size: 30,
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   ),
+  //   height: 60,
+  // );
 }
 
 // For Cart
 
 int productPriceValue = 0;
 List productExtrasForCart = [];
-
 List finalProductsForCart = [];
 int finalPriceForCart = 0;

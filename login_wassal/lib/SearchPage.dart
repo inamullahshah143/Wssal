@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:wassal_customer/productDetails.dart';
 import 'Storedetail.dart';
 import 'const.dart';
-import 'categorydetail.dart';
 
 class SearchPage extends StatefulWidget {
   @override

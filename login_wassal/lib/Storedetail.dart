@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:http/http.dart' as http;
 import 'productDetails.dart';
-import 'subcategory.dart';
 import 'const.dart';
 
 class StoreDetail extends StatefulWidget {

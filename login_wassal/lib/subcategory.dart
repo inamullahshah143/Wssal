@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'const.dart';
 import 'productDetails.dart';
 
+// ignore: must_be_immutable
 class Subcategory extends StatefulWidget {
   final Map subcatBlock;
   Subcategory({this.subcatBlock});
@@ -18,11 +19,6 @@ class _SubcategoryState extends State<Subcategory> {
   _SubcategoryState({this.subcatBlock});
 
   Widget productwidget = Container();
-  int _selectedIndex = 0;
-
-  _onSelected(int index) {
-    setState(() => _selectedIndex = index);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,14 +75,14 @@ class _SubcategoryState extends State<Subcategory> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                         showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) {
-                      return ProductDetails(d: element);
-                    },
-                  );
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            builder: (context) {
+                              return ProductDetails(d: element);
+                            },
+                          );
                         },
                         child: Container(
                           height: 120,

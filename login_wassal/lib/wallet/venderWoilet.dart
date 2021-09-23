@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:wassal_customer/PayPal/PaypalPayment.dart';
@@ -120,9 +119,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                       children: [
                         Container(
                             margin: EdgeInsets.all(10),
-                            child: RaisedButton(
-                              textColor: Colors.white,
-                              color: Color.fromRGBO(240, 173, 78, 1),
+                            child: ElevatedButton(
                               child: Text('Deposit'),
                               onPressed: () {
                                 String depositValue = "";
@@ -131,7 +128,6 @@ class _DriverWoiletState extends State<DriverWoilet> {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         content: Stack(
-                                          overflow: Overflow.visible,
                                           children: <Widget>[
                                             Positioned(
                                               right: -40.0,
@@ -176,7 +172,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                                                     padding:
                                                         const EdgeInsets.all(
                                                             8.0),
-                                                    child: RaisedButton(
+                                                    child: ElevatedButton(
                                                       child: Text("Submit"),
                                                       onPressed: () {
                                                         if (_formKey
@@ -217,9 +213,11 @@ class _DriverWoiletState extends State<DriverWoilet> {
                             )),
                         Container(
                             margin: EdgeInsets.all(10),
-                            child: RaisedButton(
-                              color: Color.fromRGBO(215, 89, 70, 1),
-                              textColor: Colors.white,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Color.fromRGBO(215, 89, 70, 1),
+                                onPrimary: Colors.white,
+                              ),
                               child: Text('WithDraw'),
                               onPressed: () {
                                 Navigator.pushReplacement(
@@ -250,7 +248,6 @@ class _DriverWoiletState extends State<DriverWoilet> {
           headers: {'Authorization': 'Bearer $loginToken'});
 
       String balance = json.decode(response.body)['blance'];
-      print('buildWoiletRequest: ${balance}');
       List data = json.decode(response.body)['data'];
       print('$data');
       // setState(() {

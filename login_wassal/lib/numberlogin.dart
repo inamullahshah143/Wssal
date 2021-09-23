@@ -3,7 +3,6 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_alert/flutter_alert.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:wassal_customer/create_account.dart';
 import 'package:wassal_customer/verifynumber.dart';

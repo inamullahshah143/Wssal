@@ -10,9 +10,7 @@ class AddNewPayment extends StatefulWidget {
 class _AddNewPaymentState extends State<AddNewPayment> {
   @override
   Widget build(BuildContext context) {
-    bool isChecked;
     return Container(
-      // height: MediaQuery.of(context).size.height / 1.1,
       color: Color(0xff757575),
       child: Container(
         decoration: BoxDecoration(

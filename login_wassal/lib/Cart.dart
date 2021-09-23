@@ -126,6 +126,7 @@ class _CartPageState extends State<CartPage> {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
+                  // ignore: unnecessary_brace_in_string_interps
                   "Checkout (\$ ${cartFinalPrice})",
                   style: TextStyle(
                       color: Colors.white,
