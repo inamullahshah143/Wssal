@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassal_customer/SearchPage.dart';
 import 'Cart.dart';
@@ -303,3 +304,6 @@ int productPriceValue = 0;
 List productExtrasForCart = [];
 List finalProductsForCart = [];
 int finalPriceForCart = 0;
+
+LatLng currentPostion;
+
