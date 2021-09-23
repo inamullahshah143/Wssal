@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'Cart.dart';
@@ -45,13 +46,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
   Position currentPosition;
   final _scrollController = ScrollController();
   Timer timer;
+
   bool havePromotedShopData;
   bool haveFeaturedData;
   bool haveTopSellingData;
   bool haveTopSellerData;
   bool haveNearByData;
   bool haveFreeDeliveryData;
-  
+
   @override
   void initState() {
     timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
@@ -73,6 +75,12 @@ class _CategoryDetailState extends State<CategoryDetail> {
     _priceRange = 2;
     _radioValue = 'Recomended';
 
+    havePromotedShopData = false;
+    haveFeaturedData = false;
+    haveTopSellingData = false;
+    haveTopSellerData = false;
+    haveNearByData = false;
+    haveFreeDeliveryData = false;
     super.initState();
   }
 
@@ -84,13 +92,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
 
   @override
   Widget build(BuildContext context) {
-    
-    havePromotedShopData = false;
-    haveFeaturedData = false;
-    haveTopSellingData = false;
-    haveTopSellerData = false;
-    haveNearByData = false;
-    haveFreeDeliveryData = false;
     latestContext = context;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -463,149 +464,195 @@ class _CategoryDetailState extends State<CategoryDetail> {
                     child: returnedData == null
                         ? Column(
                             children: [
-                              havePromotedShopData == true &&
-                                      haveFeaturedData == true &&
-                                      haveTopSellingData == true &&
-                                      haveTopSellerData == true &&
-                                      haveNearByData == true &&
-                                      haveFreeDeliveryData == true
-                                  ? Column(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.all(10),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            child: Container(
-                                              height: 200.0,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              child: Carousel(
-                                                boxFit: BoxFit.cover,
-                                                autoplay: true,
-                                                animationCurve:
-                                                    Curves.fastOutSlowIn,
-                                                animationDuration: Duration(
-                                                    milliseconds: 1000),
-                                                dotSize: 6.0,
-                                                dotIncreasedColor: Colors.white,
-                                                dotBgColor: Colors.transparent,
-                                                dotPosition:
-                                                    DotPosition.bottomCenter,
-                                                dotVerticalPadding: 5.0,
-                                                showIndicator: true,
-                                                indicatorBgPadding: 5.0,
-                                                images: [
-                                                  AssetImage(
-                                                      'assets/sliderImage.png'),
-                                                  AssetImage(
-                                                      'assets/sliderImage.png'),
-                                                  AssetImage(
-                                                      'assets/sliderImage.png'),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
+                              Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Container(
+                                        height: 200.0,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Carousel(
+                                          boxFit: BoxFit.cover,
+                                          autoplay: true,
+                                          animationCurve: Curves.fastOutSlowIn,
+                                          animationDuration:
+                                              Duration(milliseconds: 1000),
+                                          dotSize: 6.0,
+                                          dotIncreasedColor: Colors.white,
+                                          dotBgColor: Colors.transparent,
+                                          dotPosition: DotPosition.bottomCenter,
+                                          dotVerticalPadding: 5.0,
+                                          showIndicator: true,
+                                          indicatorBgPadding: 5.0,
+                                          images: [
+                                            AssetImage(
+                                                'assets/sliderImage.png'),
+                                            AssetImage(
+                                                'assets/sliderImage.png'),
+                                            AssetImage(
+                                                'assets/sliderImage.png'),
+                                          ],
                                         ),
-                                        foodData(),
-                                        FutureBuilder(
-                                          future: promotedShops(),
-                                          builder: ((context, snap) {
-                                            if (snap.hasData) {
-                                              havePromotedShopData = true;
-                                              return snap.data;
-                                            } else if (snap.hasError) {
-                                              havePromotedShopData = true;
-                                              return Container();
-                                            } else {
-                                              return Container();
-                                            }
-                                          }),
-                                        ),
-                                        FutureBuilder(
-                                          future: featuredProduct(),
-                                          builder: ((context, snap) {
-                                            if (snap.hasData) {
-                                                haveFeaturedData = true;
-                                              
-                                              return snap.data;
-                                            } else if (snap.hasError) {
-                                                haveFeaturedData = true;
-                                            
-                                              return Container();
-                                            } else {
-                                              return Container();
-                                            }
-                                          }),
-                                        ),
-                                        FutureBuilder(
-                                          future: topSellingProduct(),
-                                          builder: ((context, snap) {
-                                            if (snap.hasData) {
-                                                haveTopSellingData = true;
-                                              
-                                              return snap.data;
-                                            } else if (snap.hasError) {
-                                                haveTopSellingData = true;
-                                              
-                                              return Container();
-                                            } else {
-                                              return Container();
-                                            }
-                                          }),
-                                        ),
-                                        FutureBuilder(
-                                          future: topSeller(),
-                                          builder: ((context, snap) {
-                                            if (snap.hasData) {
-                                                haveTopSellerData = true;
-                                              
-                                              return snap.data;
-                                            } else if (snap.hasError) {
-                                                haveTopSellerData = true;
-                                              
-                                              return Container();
-                                            } else {
-                                              return Container();
-                                            }
-                                          }),
-                                        ),
-                                        FutureBuilder(
-                                          future: nearBy(),
-                                          builder: ((context, snap) {
-                                            if (snap.hasData) {
-                                                haveNearByData = true;
-                                              
-                                              return snap.data;
-                                            } else if (snap.hasError) {
-                                                haveNearByData = true;
-                                              
-                                              return Container();
-                                            } else {
-                                              return Container();
-                                            }
-                                          }),
-                                        ),
-                                        FutureBuilder(
-                                          future: freeDelivery(),
-                                          builder: ((context, snap) {
-                                            if (snap.hasData) {
-                                                haveFreeDeliveryData = true;
-                                              
-                                              return snap.data;
-                                            } else if (snap.hasError) {
-                                                haveFreeDeliveryData = true;
-                                              
-                                              return Container();
-                                            } else {
-                                              return Container();
-                                            }
-                                          }),
-                                        ),
-                                      ],
-                                    )
-                                  : Center(
+                                      ),
+                                    ),
+                                  ),
+                                  foodData(),
+                                  FutureBuilder(
+                                    future: promotedShops(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                                (_) => setState(() {
+                                                      havePromotedShopData =
+                                                          true;
+                                                    }));
+
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                                (_) => setState(() {
+                                                      havePromotedShopData =
+                                                          true;
+                                                    }));
+
+                                        return Container();
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
+                                    future: featuredProduct(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                                (_) => setState(() {
+                                                      haveFeaturedData = true;
+                                                    }));
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                                (_) => setState(() {
+                                                      haveFeaturedData = true;
+                                                    }));
+
+                                        return Container();
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
+                                    future: topSellingProduct(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                                (_) => setState(() {
+                                                      haveTopSellingData = true;
+                                                    }));
+
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                                (_) => setState(() {
+                                                      haveTopSellingData = true;
+                                                    }));
+
+                                        return Container();
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
+                                    future: topSeller(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                                (_) => setState(() {
+                                                      haveTopSellerData = true;
+                                                    }));
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                                (_) => setState(() {
+                                                      haveTopSellerData = true;
+                                                    }));
+
+                                        return Container();
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
+                                    future: nearBy(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                                (_) => setState(() {
+                                                      haveNearByData = true;
+                                                    }));
+
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                                (_) => setState(() {
+                                                      haveNearByData = true;
+                                                    }));
+
+                                        return Container();
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
+                                    future: freeDelivery(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                                (_) => setState(() {
+                                                      haveFreeDeliveryData =
+                                                          true;
+                                                    }));
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                                (_) => setState(() {
+                                                      haveFreeDeliveryData =
+                                                          true;
+                                                    }));
+                                        return Container();
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                ],
+                              ),
+                              havePromotedShopData == false &&
+                                      haveFeaturedData == false &&
+                                      haveTopSellingData == false &&
+                                      haveTopSellerData == false &&
+                                      haveNearByData == false &&
+                                      haveFreeDeliveryData == false
+                                  ? Center(
                                       child: Padding(
                                         padding: EdgeInsets.all(8.0),
                                         child: Container(
@@ -619,7 +666,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                           ),
                                         ),
                                       ),
-                                    ),
+                                    )
+                                  : Container(),
                             ],
                           )
                         : Column(
