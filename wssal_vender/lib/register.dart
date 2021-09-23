@@ -6,15 +6,14 @@ import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'login_page.dart';
+import 'store_profile.dart';
 import 'verifynumber.dart';
 import 'functions.dart';
 
 String countryCode = "+20";
 String name;
 String number;
-bool isEnabled = false;
 bool isChecked = false;
-bool tick = false;
 
 class CreateAccount extends StatefulWidget {
   @override
@@ -25,8 +24,6 @@ class _CreateAccountState extends State<CreateAccount> {
   @override
   void initState() {
     super.initState();
-    isEnabled = false;
-    tick = false;
   }
 
   @override
@@ -116,11 +113,6 @@ class _CreateAccountState extends State<CreateAccount> {
                     onChanged: (value) {
                       setState(() {
                         name = value;
-                        if (number != '' && name != '' && isChecked != false) {
-                          isEnabled = true;
-                        } else {
-                          isEnabled = false;
-                        }
                       });
                     },
                     decoration: InputDecoration(
@@ -168,18 +160,6 @@ class _CreateAccountState extends State<CreateAccount> {
                         onChanged: (value) {
                           setState(() {
                             number = value;
-                            if (value.length == 10) {
-                              tick = true;
-                            } else {
-                              tick = false;
-                            }
-                            if (value.length == 10 &&
-                                name != '' &&
-                                isChecked != false) {
-                              isEnabled = true;
-                            } else {
-                              isEnabled = false;
-                            }
                           });
                         },
                         decoration: InputDecoration(
@@ -191,7 +171,6 @@ class _CreateAccountState extends State<CreateAccount> {
                           disabledBorder: InputBorder.none,
                           contentPadding: EdgeInsets.only(top: 17.5),
                           hintText: 'Phone No',
-                          suffixIcon: tick ? Icon(Icons.done) : null,
                           prefixIcon: CountryCodePicker(
                             onChanged: (CountryCode code) {
                               setState(() {
@@ -219,11 +198,6 @@ class _CreateAccountState extends State<CreateAccount> {
                   onChanged: (value) {
                     setState(() {
                       isChecked = value;
-                      if (number != '' && name != '' && isChecked != false) {
-                        isEnabled = true;
-                      } else {
-                        isEnabled = false;
-                      }
                     });
                   },
                 ),
@@ -242,45 +216,27 @@ class _CreateAccountState extends State<CreateAccount> {
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  height: 50,
-                  width: width,
-                  child: isEnabled
-                      ? ElevatedButton(
-                          onPressed: () {
-                            signUp(context);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(15.0),
-                            ),
-                            primary: themePrimaryColor,
-                          ),
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.grey[800],
-                            ),
-                          ),
-                        )
-                      : ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(15.0),
-                            ),
-                            primary: Colors.grey[500],
-                          ),
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.white,
-                            ),
-                          ),
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    height: 50,
+                    width: width,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        signUp(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(15.0),
                         ),
-                ),
+                        primary: themePrimaryColor,
+                      ),
+                      child: Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+                    )),
               ),
             ],
           ),
@@ -290,22 +246,23 @@ class _CreateAccountState extends State<CreateAccount> {
   }
 }
 
-
 signUp(context) async {
   var url = 'https://wassldev.einnovention.tech/api/register';
   var response = await http.post(Uri.parse(url), body: {
     'name': '$name',
-    'fcm_token':'$ffccmmTTookkeenn',
+    'fcm_token': '$ffccmmTTookkeenn',
     'phone': '$countryCode$number',
   });
   print('Response body: ${response.body}');
   var data = json.decode(response.body);
   print('$data');
-  if (data['message'] == 'User registered successfully.') {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
-    );
+  if (data['status'] == 200) {
+ Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          Varifyphonenumber(data)),
+                );
   } else {
     showAlert(
       context: context,

@@ -6,12 +6,11 @@ import 'package:flutter_alert/flutter_alert.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:wassal_customer/numberlogin.dart';
 import 'package:http/http.dart' as http;
+import 'package:wassal_customer/verifynumber.dart';
 
 String countryCode = "+20";
 String name;
 String number;
-bool tick = false;
-
 
 class CreateAccount extends StatefulWidget {
   @override
@@ -169,7 +168,6 @@ class _CreateAccountState extends State<CreateAccount> {
                           disabledBorder: InputBorder.none,
                           contentPadding: EdgeInsets.only(top: 17.5),
                           hintText: 'Phone No',
-                          suffixIcon: tick ? Icon(Icons.done) : null,
                           prefixIcon: CountryCodePicker(
                             onChanged: (CountryCode code) {
                               setState(() {
@@ -271,10 +269,10 @@ signUp(context) async {
             isDestructiveAction: true,
             onPressed: () {
               Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context) => LoginPage()),
-              );
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          Varifyphonenumber(data)));
             }),
       ],
       cancelable: true,

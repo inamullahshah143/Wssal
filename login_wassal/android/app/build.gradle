@@ -37,8 +37,8 @@ android {
         applicationId "com.einnovention.wassal"
         minSdkVersion 20
         targetSdkVersion 30
-        versionCode flutterVersionCode.toInteger() + 7
-        versionName flutterVersionName + 7
+        versionCode flutterVersionCode.toInteger() + 8
+        versionName flutterVersionName + 8
     }
     signingConfigs {
         release {

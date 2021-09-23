@@ -15,14 +15,12 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-bool tick = false;
 String countryCode = '+20';
 String number;
 
 class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
-    tick = false;
     super.initState();
   }
 
@@ -153,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                           disabledBorder: InputBorder.none,
                           contentPadding: EdgeInsets.only(top: 17.5),
                           hintText: 'Phone No',
-                          suffixIcon: tick ? Icon(Icons.done) : null,
+                         
                           prefixIcon: CountryCodePicker(
                             onChanged: (CountryCode code) {
                               setState(() {
@@ -222,38 +220,8 @@ customerlogin(context) async {
     var data = json.decode(response.body);
     print('$data');
 
-    if  (data['status'] == 200 && data['request_status'] == null) {
-      showAlert(
-        context: context,
-        title: "Create Driver Request",
-        actions: [
-          AlertAction(
-              text: "Ok ",
-              isDestructiveAction: true,
-              onPressed: () {
-        
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          DriverProfile(data['token'])),
-                );
-              }),
-        ],
-        cancelable: true,
-      );
-    }
-    else if (data['status'] == 200 && data['request_status'] == 0) {
-      showAlert(
-        context: context,
-        title: "Your Request As Vender Rejected ",
-        actions: [
-          AlertAction(text: "Ok ", isDestructiveAction: true, onPressed: () {}),
-        ],
-        cancelable: true,
-      );
-    }
-    else if (data['status'] == 200 && data['request_status'] == 1) {
+    if  (data['status'] == 200) {
+ 
         Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(

@@ -50,6 +50,7 @@ dependencies:
   http_auth:
   webview_flutter:
   timeago:
+  google_maps_place_picker:
 
   file_picker:
   dio:

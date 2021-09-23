@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wssal_driver/home.dart';
 import '../function.dart';
+import 'driverProfile.dart';
 
 class Varifyphonenumber extends StatefulWidget {
   final Map data;
@@ -82,33 +83,67 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                   keyboardType: TextInputType.number,
                   length: 4,
                   onCompleted: (String value) async {
-                    print("Value: $value = Data: ${data['data']['otp']}");
                     if ("${data['data']['otp']}" == "$value") {
-                      stringValue = data['token'];
-          
-                      SharedPreferences mypref =
-                          await SharedPreferences.getInstance();
-                      mypref.setString('abs', '$stringValue');
-             
-               
-                      showAlert(
-                        context: context,
-                        title: "Login successful",
-                        actions: [
-                          AlertAction(
-                              text: "Ok",
-                              isDestructiveAction: true,
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          Home()),
-                                );
-                              }),
-                        ],
-                        cancelable: true,
-                      );
+                      if (data['status'] == 200 &&
+                          data['request_status'] == null) {
+                        showAlert(
+                          context: context,
+                          title: "Create Driver Request",
+                          actions: [
+                            AlertAction(
+                                text: "Ok ",
+                                isDestructiveAction: true,
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            DriverProfile(data['token'])),
+                                  );
+                                }),
+                          ],
+                          cancelable: true,
+                        );
+                      } else if (data['status'] == 200 &&
+                          data['request_status'] == 0) {
+                        showAlert(
+                          context: context,
+                          title: "Your Request As Driver Rejected ",
+                          actions: [
+                            AlertAction(
+                                text: "Ok ",
+                                isDestructiveAction: true,
+                                onPressed: () {}),
+                          ],
+                          cancelable: true,
+                        );
+                      } else if (data['status'] == 200 &&
+                          data['request_status'] == 1) {
+                        stringValue = data['token'];
+
+                        SharedPreferences mypref =
+                            await SharedPreferences.getInstance();
+                        mypref.setString('abs', '$stringValue');
+
+                        showAlert(
+                          context: context,
+                          title: "Login successful",
+                          actions: [
+                            AlertAction(
+                                text: "Ok",
+                                isDestructiveAction: true,
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            Home()),
+                                  );
+                                }),
+                          ],
+                          cancelable: true,
+                        );
+                      }
                     } else {
                       showAlert(
                           context: context,
@@ -132,10 +167,14 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                 width: width,
                 child: ElevatedButton(
                   onPressed: () {
-                    http.post(Uri.parse("https://wassldev.einnovention.tech/api/login"), body: {
-                      "phone": "${data['data']['phone']}",
-                      "fcm_token": "$fcmToken",
-                    }, headers: {}).then((response) {
+                    http.post(
+                        Uri.parse(
+                            "https://wassldev.einnovention.tech/api/login"),
+                        body: {
+                          "phone": "${data['data']['phone']}",
+                          "fcm_token": "$fcmToken",
+                        },
+                        headers: {}).then((response) {
                       var data = json.decode(response.body);
                       print("$data");
                       if (data["status"] == 200 &&
@@ -148,7 +187,6 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                         );
                       }
                     });
-                  
                   },
                   style: ElevatedButton.styleFrom(
                     shape: new RoundedRectangleBorder(

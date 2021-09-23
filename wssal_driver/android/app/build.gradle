@@ -38,8 +38,8 @@ android {
         applicationId "com.einnovention.wassal_driver"
         minSdkVersion 20
         targetSdkVersion 30
-        versionCode flutterVersionCode.toInteger() + 3
-        versionName flutterVersionName + 3
+        versionCode flutterVersionCode.toInteger() + 4
+        versionName flutterVersionName + 4
         multiDexEnabled true
     }
     signingConfigs {

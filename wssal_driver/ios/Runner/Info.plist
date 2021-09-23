@@ -22,16 +22,16 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Required to access location</string>
 	<key>NSLocationWhenInUseUsageDescri</key>
 	<string>Required to access location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Required to access photo library</string>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

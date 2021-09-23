@@ -874,6 +874,85 @@ class _StoreProfileState extends State<StoreProfile> {
                           ),
                   ),
                 ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      logfile = [];
+                    });
+                    FilePicker.platform
+                        .pickFiles(allowMultiple: false)
+                        .then((value) {
+                      value.files.forEach((element) async {
+                        logfile.add(File(element.path));
+                        setState(() {
+                          len1 = logfile.length;
+                          print('$len1');
+                        });
+                      });
+                    });
+                    // _showPicker2(context);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(top: 10),
+                    decoration: BoxDecoration(
+                      // color: Color.fromRGBO(244, 245, 247, 1),
+                      // color: Colors.yellow,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    height: 130,
+                    width: width,
+                    child: len1 != null
+                        ? Container(
+                            margin:
+                                EdgeInsets.only(top: 25, left: 25, right: 25),
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(244, 245, 247, 1),
+                              // color: Colors.yellow,
+                              borderRadius: BorderRadius.circular(15),
+                              // image: Image.file(file)
+                            ),
+                            height: 130,
+                            width: width,
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'You have Selected $len1 Files',
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(182, 189, 200, 1),
+                                      fontSize: 16),
+                                )),
+                            // child: Image.file(
+                            //   _image1,
+                            //   fit: BoxFit.cover,
+                            // ),
+                          )
+                        : Container(
+                            margin:
+                                EdgeInsets.only(top: 25, left: 25, right: 25),
+                            padding: EdgeInsets.only(top: 5, bottom: 5),
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(244, 245, 247, 1),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            height: 130,
+                            width: width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  'Select Logo Image',
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(182, 189, 200, 1),
+                                      fontSize: 16),
+                                ),
+                                Icon(Icons.camera_alt_sharp,
+                                    size: 30,
+                                    color: Color.fromRGBO(182, 189, 200, 1)),
+                              ],
+                            ),
+                          ),
+                  ),
+                ),
                 Container(
                   child: Divider(),
                 ),

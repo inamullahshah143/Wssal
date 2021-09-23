@@ -157,7 +157,7 @@ class _OrderDetailsState extends State<OrderDetails> {
               children: [
                 Align(
                     alignment: Alignment.center,
-                    child: Text("Assign Adriver :")),
+                    child: Text("Assign driver :")),
                 InkWell(
                   onTap: () {
                     showMaterialModalBottomSheet(

@@ -210,11 +210,11 @@ class _DriverMapState extends State<DriverMap> {
             "lng": cLoc.longitude
           })).then((value) {});
       markerAdd(LatLng(cLoc.latitude, cLoc.longitude));
-      mapController.getZoomLevel().then((zoom) {
+
         mapController.animateCamera(CameraUpdate.newCameraPosition(
             CameraPosition(
-                target: LatLng(cLoc.latitude, cLoc.longitude), zoom: zoom)));
-      });
+                target: LatLng(cLoc.latitude, cLoc.longitude), zoom: 16)));
+  
     });
   }
 

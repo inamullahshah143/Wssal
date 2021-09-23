@@ -7,6 +7,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:location/location.dart';
 // import 'package:pattern_formatter/date_formatter.dart';
 import 'package:wssal_driver/account/vehicleProfile.dart';
@@ -53,8 +54,9 @@ class _DriverProfileState extends State<DriverProfile> {
   DateTime date1;
   var latitude1;
   var longitude1;
-  var vehiclelatitude;
-  var vehiclelongitude;
+  String lat;
+  String lng;
+  LatLng lock = LatLng(31.5204, 74.3587);
 
   Set<Marker> markers = {};
   void initState() {
@@ -147,8 +149,8 @@ class _DriverProfileState extends State<DriverProfile> {
                       //   Icons.calendar_today_outlined,
                       //   color: Color.fromRGBO(193, 199, 208, 1),
                       // ),
-                      hintText: 'Full Name',
-                      hintStyle: TextStyle(
+                      labelText: 'Full Name',
+                      labelStyle: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           // color: Color.fromRGBO(195, 153, 141, 1)
@@ -277,8 +279,8 @@ class _DriverProfileState extends State<DriverProfile> {
                       enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
-                      hintText: 'Id Number',
-                      hintStyle: TextStyle(
+                      labelText: 'Id Number',
+                      labelStyle: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           // color: Color.fromRGBO(195, 153, 141, 1)
@@ -337,8 +339,8 @@ class _DriverProfileState extends State<DriverProfile> {
               //         //   Icons.calendar_today_outlined,
               //         //   color: Color.fromRGBO(193, 199, 208, 1),
               //         // ),
-              //         hintText: 'Id Expiry date',
-              //         hintStyle: TextStyle(
+              //         labelText: 'Id Expiry date',
+              //         labelStyle: TextStyle(
               //             fontSize: 16,
               //             fontWeight: FontWeight.w600,
               //             // color: Color.fromRGBO(195, 153, 141, 1)
@@ -393,23 +395,23 @@ class _DriverProfileState extends State<DriverProfile> {
                       enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
-                      hintText: 'vehicle plate number',
-                      hintStyle: TextStyle(
+                      labelText: 'vehicle plate number',
+                      labelStyle: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Color.fromRGBO(182, 189, 200, 1)),
                     ),
                   )),
               Container(
-                  margin: EdgeInsets.only(top: 15, left: 15, right: 15),
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(244, 245, 247, 1),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  height: 50,
-                  width: width,
-                  padding: EdgeInsets.only(left: 10),
-                  child: DateTimePickerFormField(
+                margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(244, 245, 247, 1),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                height: 50,
+                width: width,
+                padding: EdgeInsets.only(left: 10),
+                child: DateTimePickerFormField(
                   inputType: InputType.date,
                   format: DateFormat("dd-MM-yyyy"),
                   initialDate: DateTime(2019, 1, 1),
@@ -433,32 +435,32 @@ class _DriverProfileState extends State<DriverProfile> {
                     // print('Selected date: $date1');
                   },
                 ),
-                  // child: TextFormField(
-                  //   controller: vehiclemodelController,
-                  //   validator: (value) {
-                  //     if (value.isEmpty) {
-                  //       return "This field is required";
-                  //     } else {
-                  //       return null;
-                  //     }
-                  //   },
-                  //   onChanged: (value) {
-                  //     vehiclemodel = value;
-                  //   },
-                  //   decoration: InputDecoration(
-                  //     border: InputBorder.none,
-                  //     focusedBorder: InputBorder.none,
-                  //     enabledBorder: InputBorder.none,
-                  //     errorBorder: InputBorder.none,
-                  //     disabledBorder: InputBorder.none,
-                  //     hintText: 'vehicle model',
-                  //     hintStyle: TextStyle(
-                  //         fontSize: 16,
-                  //         fontWeight: FontWeight.w600,
-                  //         color: Color.fromRGBO(182, 189, 200, 1)),
-                  //   ),
-                  // )
-                  ),
+                // child: TextFormField(
+                //   controller: vehiclemodelController,
+                //   validator: (value) {
+                //     if (value.isEmpty) {
+                //       return "This field is required";
+                //     } else {
+                //       return null;
+                //     }
+                //   },
+                //   onChanged: (value) {
+                //     vehiclemodel = value;
+                //   },
+                //   decoration: InputDecoration(
+                //     border: InputBorder.none,
+                //     focusedBorder: InputBorder.none,
+                //     enabledBorder: InputBorder.none,
+                //     errorBorder: InputBorder.none,
+                //     disabledBorder: InputBorder.none,
+                //     labelText: 'vehicle model',
+                //     labelStyle: TextStyle(
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w600,
+                //         color: Color.fromRGBO(182, 189, 200, 1)),
+                //   ),
+                // )
+              ),
               Container(
                   margin: EdgeInsets.only(top: 15, left: 15, right: 15),
                   decoration: BoxDecoration(
@@ -511,8 +513,8 @@ class _DriverProfileState extends State<DriverProfile> {
                       //   Icons.calendar_today_outlined,
                       //   color: Color.fromRGBO(193, 199, 208, 1),
                       // ),
-                      hintText: 'vehicle name',
-                      hintStyle: TextStyle(
+                      labelText: 'vehicle name',
+                      labelStyle: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           // color: Color.fromRGBO(195, 153, 141, 1)
@@ -658,48 +660,88 @@ class _DriverProfileState extends State<DriverProfile> {
                 ),
               ),
               Container(
-                height: height / 4,
-                width: width,
-                margin: EdgeInsets.only(top: 25, left: 25, right: 25),
-                child: FutureBuilder(
-                  future: getuserLocation(),
-                  builder: (context, AsyncSnapshot<LocationData> snapshot) {
-                    if (snapshot.hasData) {
-                      return GoogleMap(
-                        myLocationEnabled: true,
-                        myLocationButtonEnabled: true,
-                        markers: markers,
-                        // mapType: MapType.normal,
-                        // onMapCreated: (GoogleMapController controller) {
+                child: Divider(),
+              ),
+              Text(
+                'Address (Coordinates)',
+                style: TextStyle(color: Colors.grey, fontSize: 14),
+              ),
+              lat != null && lng != null
+                  ? Container(
+                      margin: EdgeInsets.all(25),
+                      child: Table(
+                        children: [
+                          TableRow(children: [
+                            Container(
+                                margin: EdgeInsets.all(10),
+                                child: Text(
+                                  "Latitude:",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                )),
+                            Container(
+                                margin: EdgeInsets.all(10),
+                                child: Text(
+                                  "$lat",
+                                  style: TextStyle(fontSize: 16),
+                                ))
+                          ]),
+                          TableRow(children: [
+                            Container(
+                                margin: EdgeInsets.all(10),
+                                child: Text(
+                                  "Latitude:",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                )),
+                            Container(
+                                margin: EdgeInsets.all(10),
+                                child: Text(
+                                  "$lng",
+                                  style: TextStyle(fontSize: 16),
+                                ))
+                          ]),
+                        ],
+                      ),
+                    )
+                  : Container(),
+              Container(
+                clipBehavior: Clip.hardEdge,
+                height: 350,
+                alignment: Alignment.center,
+                width: double.infinity,
 
-                        // },
-                        initialCameraPosition: CameraPosition(
-                            target: LatLng(snapshot.data.latitude,
-                                snapshot.data.longitude),
-                            zoom: 15),
-                        onTap: (latlong) {
-                          setState(() {
-                            print("latitude Taped = ${latlong.latitude}");
-                            print("longitude Taped = ${latlong.longitude}");
-                            vehiclelatitude = latlong.latitude;
-                            vehiclelongitude = latlong.longitude;
-                            final _snackBar = SnackBar(
-                                content:
-                                    Text('$vehiclelatitude $vehiclelongitude'));
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(_snackBar);
-                            // markers.add(Marker(
-                            //     markerId: MarkerId("Shopp"),
-                            //     position: LatLng(latitude, longitude)));
-                          });
-                        },
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text(snapshot.error);
+                // padding: EdgeInsets.all(10),
+                margin: EdgeInsets.only(top: 15, bottom: 15),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(17),
+                ),
+
+                child: PlacePicker(
+                  apiKey: 'AIzaSyAMp8UY-G3eUJeinsx6uwK-j0lXFYB_KWo',
+                  initialPosition: lock,
+                  useCurrentLocation: false,
+                  selectInitialPosition: false,
+                  usePlaceDetailSearch: true,
+                  forceSearchOnZoomChanged: true,
+                  automaticallyImplyAppBarLeading: false,
+                  onPlacePicked: (result) {
+                    setState(() {
+                      lock = LatLng(result.geometry.location.lat,
+                          result.geometry.location.lng);
+                      lat = result.geometry.location.lat.toString();
+                      lng = result.geometry.location.lng.toString();
+                    });
+                  },
+                  pinBuilder: (context, state) {
+                    if (state == PinState.Idle) {
+                      return Icon(Icons.location_on, color: Colors.red);
                     } else {
-                      return CircularProgressIndicator(
-                        backgroundColor: Colors.white,
-                      );
+                      return Icon(Icons.location_on_outlined,
+                          color: Colors.red);
                     }
                   },
                 ),
@@ -713,8 +755,8 @@ class _DriverProfileState extends State<DriverProfile> {
                     'vehicle_name': "$vehiclename",
                     'plate_number': "$vehicleplatenumber",
                     'modal': "$vehiclemodel",
-                    'vehicle_latitude': '$vehiclelatitude',
-                    'vehicle_longitude': '$vehiclelongitude',
+                    'vehicle_latitude': '$lat',
+                    'vehicle_longitude': '$lng',
                     'photo': photofile,
                     'id_picture': idCardPicfile,
                   });
@@ -729,7 +771,7 @@ class _DriverProfileState extends State<DriverProfile> {
                       final _snackBar = SnackBar(
                           content: Text('ID_Card of Driver is missing'));
                       ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                    } else if (vehiclelatitude == null) {
+                    } else if (lat == null && lng == null) {
                       final _snackBar = SnackBar(
                           content:
                               Text('Please Select Vehicle Location from Map'));
@@ -800,14 +842,14 @@ class _DriverProfileState extends State<DriverProfile> {
           'vehicle_name': "$vehiclename",
           'plate_number': "$vehicleplatenumber",
           'modal': "$vehiclemodel",
-          'vehicle_latitude': '$vehiclelatitude',
-          'vehicle_longitude': '$vehiclelongitude',
-          'photo': y,
-          'id_picture': x,
+          'vehicle_latitude': '$lat',
+          'vehicle_longitude': '$lng',
+          'photo': y[0],
+          'id_picture': x[0],
         });
 
         Dio dio = Dio();
-        dio.options.headers['Authorization'] = 'Bearer $drivertoken';
+        dio.options.headers['Authorization'] = 'Bearer 346|djAhVqaQbXuSKbmfCqsKybWmciRxY8fR6dkbax9X';
 
         print({
           "name": '$drivername',
@@ -816,15 +858,15 @@ class _DriverProfileState extends State<DriverProfile> {
           'vehicle_name': "$vehiclename",
           'plate_number': "$vehicleplatenumber",
           'modal': "$vehiclemodel",
-          'vehicle_latitude': '$vehiclelatitude',
-          'vehicle_longitude': '$vehiclelongitude',
-          'photo': y,
-          'id_picture': x,
+          'vehicle_latitude': '$lat',
+          'vehicle_longitude': '$lng',
+          'photo': y[0],
+          'id_picture': x[0],
         });
         var response = await dio.post(
             "https://wassldev.einnovention.tech/api/user/driverRequest",
             data: formData);
-        print("Become Vender: $response");
+        print("Become Driver: $response");
 
         Map gg = response.data;
         print('gg = $gg');

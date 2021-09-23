@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'functions.dart';
 import 'home.dart';
+import 'store_profile.dart';
 
 class Varifyphonenumber extends StatefulWidget {
   final Map data;
@@ -83,16 +84,13 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                   keyboardType: TextInputType.number,
                   length: 4,
                   onCompleted: (String value) async {
-                    print("Value: $value = Data: ${data['data']['otp']}");
-                    if ("${data['data']['otp']}" == "$value") {
-                      stringValue = data['token'];
-                      SharedPreferences mypref =
-                          await SharedPreferences.getInstance();
-                      mypref.setString('abs', '$stringValue');
-                      print("$stringValue");
+                     print("Value: $value = Data: ${data['data']['otp']}");
+                      if ("${data['data']['otp']}" == "$value") {
+                        if (data['status'] == 200 &&
+                        data['request_status'] == null) {
                       showAlert(
                         context: context,
-                        title: "Logedin successfully",
+                        title: "Create Vender Request",
                         actions: [
                           AlertAction(
                               text: "Ok",
@@ -102,18 +100,59 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          Home()),
+                                          StoreProfile(data['token'])),
                                 );
                               }),
                         ],
                         cancelable: true,
                       );
-                    } else {
+                    } else if (data['status'] == 200 &&
+                        data['request_status'] == 0) {
                       showAlert(
+                        context: context,
+                        title: "Your Request As Vender Rejected ",
+                        actions: [
+                          AlertAction(
+                              text: "Ok ",
+                              isDestructiveAction: true,
+                              onPressed: () {}),
+                        ],
+                        cancelable: true,
+                      );
+                    } else if (data['status'] == 200 &&
+                        data['request_status'] == 1) {
+                     stringValue = data['token'];
+                        SharedPreferences mypref =
+                            await SharedPreferences.getInstance();
+                        mypref.setString('abs', '$stringValue');
+                        print("$stringValue");
+
+                        showAlert(
                           context: context,
-                          title: "Error",
-                          body: "Incorrect OTP");
+                          title: "Logedin successfully",
+                          actions: [
+                            AlertAction(
+                                text: "Ok",
+                                isDestructiveAction: true,
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            Home()),
+                                  );
+                                }),
+                          ],
+                          cancelable: true,
+                        );
                     }
+                      } else {
+                        showAlert(
+                            context: context,
+                            title: "Error",
+                            body: "Incorrect OTP");
+                      }
+                    
                   },
                   onEditing: (bool value) {
                     // setState(() {
