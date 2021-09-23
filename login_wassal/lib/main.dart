@@ -147,7 +147,6 @@ class _SplashScreenState extends State<SplashScreen> {
     List<Placemark> placemark = await Geolocator()
         .placemarkFromCoordinates(position.latitude, position.longitude);
     setState(() {
-      initialPosition = LatLng(position.latitude, position.longitude);
       yourLocation =
           '${placemark[0].subLocality}, ${placemark[0].locality}, ${placemark[0].administrativeArea}, ${placemark[0].country}';
     });

@@ -11,7 +11,8 @@ class MainCategories extends StatefulWidget {
   final String yourAddress;
   MainCategories({@required this.yourAddress});
   @override
-  _MainCategoriesState createState() => _MainCategoriesState(yourAddress: yourAddress);
+  _MainCategoriesState createState() =>
+      _MainCategoriesState(yourAddress: yourAddress);
 }
 
 class _MainCategoriesState extends State<MainCategories> {
@@ -344,12 +345,8 @@ class _MainCategoriesState extends State<MainCategories> {
   void getUserLocation() async {
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    List<Placemark> placemark = await Geolocator()
-        .placemarkFromCoordinates(position.latitude, position.longitude);
     setState(() {
       initialPosition = LatLng(position.latitude, position.longitude);
-      yourLocation =
-          '${placemark[0].subLocality}, ${placemark[0].locality}, ${placemark[0].administrativeArea}, ${placemark[0].country}';
     });
   }
 }
