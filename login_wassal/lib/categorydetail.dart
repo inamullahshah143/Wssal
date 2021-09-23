@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'Cart.dart';
@@ -16,21 +14,22 @@ import 'const.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 
 class CategoryDetail extends StatefulWidget {
-  CategoryDetail({@required this.categoryBlock});
-
+  CategoryDetail(
+      {@required this.categoryBlock, @required this.initialPosition});
+  final LatLng initialPosition;
   final Map categoryBlock;
 
   @override
-  _CategoryDetailState createState() =>
-      _CategoryDetailState(categoryBlock: categoryBlock);
+  _CategoryDetailState createState() => _CategoryDetailState(
+      categoryBlock: categoryBlock, initialPosition: initialPosition);
 }
 
 class _CategoryDetailState extends State<CategoryDetail> {
-  _CategoryDetailState({@required this.categoryBlock});
-
+  _CategoryDetailState(
+      {@required this.categoryBlock, @required this.initialPosition});
+  final LatLng initialPosition;
   double appbarHeight;
   final Map categoryBlock;
-  Position currentPosition;
   bool dragButton;
   bool haveFeaturedData;
   bool haveFreeDeliveryData;
@@ -38,7 +37,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
   bool havePromotedShopData;
   bool haveTopSellerData;
   bool haveTopSellingData;
-  LatLng initialPosition;
   bool isRecomended, isFastDelivery, isMostPopular;
   Widget returnedData;
   bool searchClickBtn;
@@ -48,8 +46,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
   String sortByChoice;
   Timer timer;
   Color unselectedColor = Color.fromRGBO(244, 245, 247, 1);
-  String yourLocation = '';
-
   int _isSelectedIndex = -1;
   double _maxValue;
   double _minValue;
@@ -66,14 +62,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
 
   @override
   void initState() {
-    timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-      if (locationChange) {
-        setState(() {
-          yourLocation = selectedLocation;
-        });
-        locationChange = false;
-      }
-    });
     appbarHeight = 60.0;
     dragButton = false;
     searchClickBtn = true;
@@ -84,7 +72,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
     _minValue = 2;
     _priceRange = 2;
     _radioValue = 'Recomended';
-    getUserLocation();
     havePromotedShopData = false;
     haveFeaturedData = false;
     haveTopSellingData = false;
@@ -92,18 +79,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
     haveNearByData = false;
     haveFreeDeliveryData = false;
     super.initState();
-  }
-
-  void getUserLocation() async {
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    List<Placemark> placemark = await Geolocator()
-        .placemarkFromCoordinates(position.latitude, position.longitude);
-    setState(() {
-      initialPosition = LatLng(position.latitude, position.longitude);
-    });
-    print(
-        '${placemark[0].subLocality}, ${placemark[0].locality}, ${placemark[0].administrativeArea}, ${placemark[0].country}');
   }
 
   Widget searchPrice() {
@@ -1429,7 +1404,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
   Future<Widget> nearBy() async {
     var response = await http.post(Uri.parse("$apiURL/nearbyshops"), body: {
       "lat": '${initialPosition.latitude.toString()}',
-      "long": '${initialPosition.longitude.toString()}'
+      "long": '${initialPosition.longitude.toString()}',
+      "id": '${categoryBlock['id']}',
     });
     if (response.statusCode == 200) {
       List data = json.decode(response.body)['data'];

@@ -107,7 +107,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          MainDashboard()),
+                                          MainDashboard(yourAddress: yourLocation)),
                                   (Route<dynamic> route) => false,
                                 );
                               }),

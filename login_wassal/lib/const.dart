@@ -16,6 +16,7 @@ String storedName;
 String storedNumber;
 String fcmToken;
 bool logs = false;
+String yourLocation = '';
 BuildContext latestContext;
 
 Map<int, Color> colorMap = {
@@ -114,25 +115,39 @@ getDashboardAppbar(context, text) {
             fontSize: 14,
           ),
         ),
-        RichText(
-          text: TextSpan(
-            children: [
-              WidgetSpan(
-                child: Icon(Icons.near_me_rounded, color: themePrimaryColor),
-              ),
-              WidgetSpan(
-                child: Text(
-                  'Location',
-                  style: TextStyle(
-                    color: text1color,
-                    fontWeight: FontWeight.w400,
-                  ),
+        Container(
+          width: MediaQuery.of(context).size.width / 1.25,
+          child: RichText(
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            text: TextSpan(
+              children: [
+                WidgetSpan(
+                  child: Icon(Icons.near_me_rounded, color: themePrimaryColor),
                 ),
-              ),
-              WidgetSpan(
-                child: Icon(Icons.arrow_drop_down, color: themeSecondaryColor),
-              ),
-            ],
+                WidgetSpan(
+                  child: yourLocation == ''
+                      ? Text(
+                          'Finding your Location....',
+                          style: TextStyle(
+                            color: text1color,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        )
+                      : Text(
+                          yourLocation,
+                          style: TextStyle(
+                            color: text1color,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                ),
+                WidgetSpan(
+                  child:
+                      Icon(Icons.arrow_drop_down, color: themeSecondaryColor),
+                ),
+              ],
+            ),
           ),
         ),
       ],
@@ -306,4 +321,3 @@ List finalProductsForCart = [];
 int finalPriceForCart = 0;
 
 LatLng currentPostion;
-

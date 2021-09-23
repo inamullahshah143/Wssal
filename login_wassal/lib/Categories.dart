@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'categories_dashboard.dart';
@@ -7,14 +8,19 @@ import 'const.dart';
 import 'custom_delivery.dart';
 
 class MainCategories extends StatefulWidget {
+  final String yourAddress;
+  MainCategories({@required this.yourAddress});
   @override
-  _MainCategoriesState createState() => _MainCategoriesState();
+  _MainCategoriesState createState() => _MainCategoriesState(yourAddress: yourAddress);
 }
 
 class _MainCategoriesState extends State<MainCategories> {
-  Position currentPosition;
+  final String yourAddress;
+  _MainCategoriesState({@required this.yourAddress});
+  LatLng initialPosition;
   @override
   void initState() {
+    getUserLocation();
     super.initState();
   }
 
@@ -89,6 +95,7 @@ class _MainCategoriesState extends State<MainCategories> {
                         child: Padding(
                           padding: EdgeInsets.all(10.0),
                           child: CircularProgressIndicator(
+                            strokeWidth: 2,
                             backgroundColor: Colors.red,
                             valueColor:
                                 AlwaysStoppedAnimation<Color>(Colors.yellow),
@@ -124,8 +131,10 @@ class _MainCategoriesState extends State<MainCategories> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        CategoryDashboard(categoryBlock: element),
+                    builder: (context) => CategoryDashboard(
+                      categoryBlock: element,
+                      initialPosition: initialPosition,
+                    ),
                   ),
                 );
               },
@@ -330,5 +339,17 @@ class _MainCategoriesState extends State<MainCategories> {
       }
     }
     return x;
+  }
+
+  void getUserLocation() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    List<Placemark> placemark = await Geolocator()
+        .placemarkFromCoordinates(position.latitude, position.longitude);
+    setState(() {
+      initialPosition = LatLng(position.latitude, position.longitude);
+      yourLocation =
+          '${placemark[0].subLocality}, ${placemark[0].locality}, ${placemark[0].administrativeArea}, ${placemark[0].country}';
+    });
   }
 }

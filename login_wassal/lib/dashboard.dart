@@ -7,13 +7,17 @@ import 'Stores.dart';
 import 'const.dart';
 
 class MainDashboard extends StatefulWidget {
-  const MainDashboard({Key key}) : super(key: key);
+  final String yourAddress;
+  MainDashboard({@required this.yourAddress});
 
   @override
-  _MainDashboardState createState() => _MainDashboardState();
+  _MainDashboardState createState() =>
+      _MainDashboardState(yourAddress: yourAddress);
 }
 
 class _MainDashboardState extends State<MainDashboard> {
+  final String yourAddress;
+  _MainDashboardState({@required this.yourAddress});
   int bottomIndex;
   @override
   void initState() {
@@ -26,7 +30,7 @@ class _MainDashboardState extends State<MainDashboard> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
       body: bottomIndex == 0
-          ? MainCategories()
+          ? MainCategories(yourAddress:yourAddress)
           : bottomIndex == 1
               ? AllShops()
               : bottomIndex == 2 && logs == true

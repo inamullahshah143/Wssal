@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:wassal_customer/dashboard.dart';
@@ -47,6 +49,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
+  LatLng initialPosition;
   @override
   void initState() {
     getLogs();
@@ -59,6 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
             body: "${message.notification.body}");
       }
     });
+    getUserLocation();
     super.initState();
   }
 
@@ -82,12 +86,18 @@ class _SplashScreenState extends State<SplashScreen> {
           logs = true;
           Timer(Duration(seconds: 3), () {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (_) => MainDashboard()), (Route<dynamic> route) => false);
+                MaterialPageRoute(
+                    builder: (_) => MainDashboard(
+                          yourAddress: yourLocation,
+                        )),
+                (Route<dynamic> route) => false);
           });
         } else {
           Timer(Duration(seconds: 3), () {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (_) => MainDashboard()), (Route<dynamic> route) => false);
+                MaterialPageRoute(
+                    builder: (_) => MainDashboard(yourAddress: yourLocation)),
+                (Route<dynamic> route) => false);
           });
         }
       }
@@ -129,5 +139,17 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
+  }
+
+  void getUserLocation() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    List<Placemark> placemark = await Geolocator()
+        .placemarkFromCoordinates(position.latitude, position.longitude);
+    setState(() {
+      initialPosition = LatLng(position.latitude, position.longitude);
+      yourLocation =
+          '${placemark[0].subLocality}, ${placemark[0].locality}, ${placemark[0].administrativeArea}, ${placemark[0].country}';
+    });
   }
 }

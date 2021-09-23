@@ -284,7 +284,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => MainDashboard(),
+                            builder: (context) => MainDashboard(yourAddress: yourLocation,),
                           ),
                         );
                       },
