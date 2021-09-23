@@ -1,5 +1,3 @@
- 
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:roundcheckbox/roundcheckbox.dart';
@@ -72,19 +70,17 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                 ],
               ),
             ),
-            DeliverTo(),
-            ItemsCount(),
-            
-            Payment(),
-            Button(),
-            
+            deliverTo(),
+            itemsCount(),
+            payment(),
+            button(),
           ],
         ),
       )),
     );
   }
 
-  Widget Payment() {
+  Widget payment() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -112,15 +108,18 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     ),
                   ),
                   Container(
-                      height: 470,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border(
-                              top: BorderSide(color: Colors.grey, width: 0.5))),
-                      child: TabBarView(children: <Widget>[
-                        Container(child: AdvancePay()),
-                        Container(height: 430, child: CashOnDelivery())
-                      ]))
+                    height: 470,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border(
+                            top: BorderSide(color: Colors.grey, width: 0.5))),
+                    child: TabBarView(
+                      children: <Widget>[
+                        Container(child: advancePay()),
+                        Container(height: 430, child: cashOnDelivery())
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -132,7 +131,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
     );
   }
 
-  Widget CashOnDelivery() {
+  Widget cashOnDelivery() {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Center(
@@ -141,18 +140,14 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
               color: Colors.white, borderRadius: BorderRadius.circular(15)),
           height: 350,
           child: Column(
-            children: [
-             
-               
-              Image.asset("assets/image.png")
-            ],
+            children: [Image.asset("assets/image.png")],
           ),
         ),
       ),
     );
   }
 
-  Widget AdvancePay() {
+  Widget advancePay() {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Container(
@@ -167,41 +162,40 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
               Container(
                 height: 60,
                 child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: ClipRRect(
-                           borderRadius: BorderRadius.circular(30),
-                          child: Container(
-                            height: 45,
-                            width: 45,
-                            child:Image.asset("assets/visa.png",fit:BoxFit.cover),
-                            decoration: BoxDecoration(
-                              color:Color.fromRGBO(255, 239, 230,1),
-                             
-                            ),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: Container(
+                          height: 45,
+                          width: 45,
+                          child:
+                              Image.asset("assets/visa.png", fit: BoxFit.cover),
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 239, 230, 1),
                           ),
                         ),
                       ),
-                      Text("Ahmed Khalid ",style: TextStyle(
-                        color:Colors.black,
-                        fontSize: 12
-                      ),),
-                      Text("Ends with 7009 ",style: TextStyle(
-                        color:Colors.grey,
-                        fontSize: 12
-                      ),),
-                      Padding(
-                        padding: const EdgeInsets.only(left:15.0),
-                        child: RoundCheckBox(
-                              size: 30,
-                              onTap: (selected) {},
-                              uncheckedColor: Colors.white,
-                            ),
+                    ),
+                    Text(
+                      "Ahmed Khalid ",
+                      style: TextStyle(color: Colors.black, fontSize: 12),
+                    ),
+                    Text(
+                      "Ends with 7009 ",
+                      style: TextStyle(color: Colors.grey, fontSize: 12),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: RoundCheckBox(
+                        size: 30,
+                        onTap: (selected) {},
+                        uncheckedColor: Colors.white,
                       ),
-
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
                 decoration: BoxDecoration(
                     color: Color.fromRGBO(200, 204, 213, 1),
                     borderRadius: BorderRadius.circular(20)),
@@ -215,36 +209,35 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: ClipRRect(
-                           borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(30),
                           child: Container(
                             height: 45,
                             width: 45,
-                            child:Image.asset("assets/master.png",),
+                            child: Image.asset(
+                              "assets/master.png",
+                            ),
                             decoration: BoxDecoration(
-                              color:Color.fromRGBO(255, 239, 230,1),
-                             
+                              color: Color.fromRGBO(255, 239, 230, 1),
                             ),
                           ),
                         ),
                       ),
-                      Text("Ahmed Khalid ",style: TextStyle(
-                        color:Colors.black,
-                        fontSize: 12
-                      ),),
-                      Text("Ends with 1433 ",style: TextStyle(
-                        color:Colors.grey,
-                        fontSize: 12
-                      ),),
-                      Padding(
-                        padding: const EdgeInsets.only(left:15.0),
-                        child: RoundCheckBox(
-                              size: 30,
-                              onTap: (selected) {},
-                              uncheckedColor: Colors.white,
-                            ),
+                      Text(
+                        "Ahmed Khalid ",
+                        style: TextStyle(color: Colors.black, fontSize: 12),
                       ),
-
-
+                      Text(
+                        "Ends with 1433 ",
+                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15.0),
+                        child: RoundCheckBox(
+                          size: 30,
+                          onTap: (selected) {},
+                          uncheckedColor: Colors.white,
+                        ),
+                      ),
                     ],
                   ),
                   decoration: BoxDecoration(
@@ -253,11 +246,11 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                       border: Border.all(color: Colors.grey)),
                 ),
               ),
-               Padding(
+              Padding(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: InkWell(
-                  onTap:(){
-                      showModalBottomSheet(
+                  onTap: () {
+                    showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
                       builder: (context) => SingleChildScrollView(
@@ -271,11 +264,10 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   },
                   child: Text(
                     "Add New Card",
-                    style: TextStyle(fontSize: 14,color:Colors.red),
+                    style: TextStyle(fontSize: 14, color: Colors.red),
                   ),
                 ),
               ),
-             
               Padding(
                 padding: const EdgeInsets.only(top: 15.0),
                 child: Text(
@@ -294,7 +286,6 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
-                     
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 12.0),
@@ -308,7 +299,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                             child: Text("45.00 LE",
                                 style: TextStyle(fontSize: 17))),
                         Padding(
-                       padding: const EdgeInsets.only(left: 120.0),
+                          padding: const EdgeInsets.only(left: 120.0),
                           child: RoundCheckBox(
                             size: 30,
                             onTap: (selected) {},
@@ -385,7 +376,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
     );
   }
 
-  Widget ItemsCount() {
+  Widget itemsCount() {
     double item2 = _itemPrice2 * _itemCount2;
     double item1 = _itemPrice * _itemCount;
     double total = item1 + item2;
@@ -600,7 +591,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                                           _incrementCounter2();
                                         },
                                         elevation: 1.0,
-                                        fillColor: Color.fromRGBO(223, 51, 19, 1),
+                                        fillColor:
+                                            Color.fromRGBO(223, 51, 19, 1),
                                         child: Icon(
                                           Icons.add,
                                           size: 15.0,
@@ -712,7 +704,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
     );
   }
 
-  Widget DeliverTo() {
+  Widget deliverTo() {
     return Column(
       children: [
         Padding(
@@ -815,12 +807,12 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
     );
   }
 
-  Widget Button() {
+  Widget button() {
     return Container(
       width: MediaQuery.of(context).size.width,
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.only(top:15.0,bottom: 15),
+        padding: const EdgeInsets.only(top: 15.0, bottom: 15),
         child: Column(
           children: [
             // Padding(
@@ -851,85 +843,70 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   showDialog<String>(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(20.0),
-                                            ),
-                                          ),
-                                          // contentPadding: EdgeInsets.all(0),
-                                          content: Stack(
-                                            clipBehavior: Clip.none,
-                                            children: [
-                                              Positioned(
-                                                top: -45,
-                                                left: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    4,
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.green,
-                                                    border: Border.all(
-                                                        color: Colors.white,
-                                                        width: 3),
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                      Radius.circular(10.0),
-                                                    ),
-                                                  ),
-                                                  width: 50,
-                                                  height: 50,
-                                                  child: Icon(
-                                                      Icons.check_rounded,
-                                                      color: Colors.white,
-                                                      size: 40),
-                                                ),
-                                              ),
-                                              Container(
-                                             
-                                                padding:
-                                                    EdgeInsets.only(top: 20,left: 50),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Text(
-                                                      'Order Success!',
-                                                      style: TextStyle(
-                                                          fontSize: 17),
-                                                    ),
-                                                    Text(
-                                                      'Your Order is Placed',
-                                                      style: TextStyle(
-                                                          fontSize: 13,
-                                                          color: Colors.grey),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          actions: <Widget>[
-                                            Center(
-                                              child: TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    context, 'OK'),
-                                                child: Text(
-                                                  'OK',
-                                                  style: TextStyle(
-                                                      color: Colors.red),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20.0),
+                        ),
+                      ),
+                      // contentPadding: EdgeInsets.all(0),
+                      content: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Positioned(
+                            top: -45,
+                            left: MediaQuery.of(context).size.width / 4,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                border:
+                                    Border.all(color: Colors.white, width: 3),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                              ),
+                              width: 50,
+                              height: 50,
+                              child: Icon(Icons.check_rounded,
+                                  color: Colors.white, size: 40),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 20, left: 50),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'Order Success!',
+                                  style: TextStyle(fontSize: 17),
+                                ),
+                                Text(
+                                  'Your Order is Placed',
+                                  style: TextStyle(
+                                      fontSize: 13, color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      actions: <Widget>[
+                        Center(
+                          child: TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: Text(
+                              'OK',
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
                 },
                 child: Container(
                   height: 60,
@@ -937,7 +914,10 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   alignment: Alignment.center,
                   child: Text(
                     "Place Order",
-                    style: TextStyle(color: Colors.black, fontSize: 17,fontWeight:FontWeight.bold),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold),
                   ),
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(255, 200, 48, 1),

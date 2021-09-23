@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wassal_customer/const.dart';
 import 'account_info.dart';
-import 'delivery_details.dart';
 import 'delivery_locations.dart';
 import 'notifications.dart';
 import 'payment_methods.dart';

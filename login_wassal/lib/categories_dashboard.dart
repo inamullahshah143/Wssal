@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:wassal_customer/numberlogin.dart';
-
-import 'Categories.dart';
 import 'Profile.dart';
 import 'Stores.dart';
+import 'categorydetail.dart';
 import 'const.dart';
 
-class MainDashboard extends StatefulWidget {
-  const MainDashboard({Key key}) : super(key: key);
+class CategoryDashboard extends StatefulWidget {
+  final Map categoryBlock;
+  CategoryDashboard({@required this.categoryBlock});
 
   @override
-  _MainDashboardState createState() => _MainDashboardState();
+  _CategoryDashboardState createState() =>
+      _CategoryDashboardState(categoryBlock: categoryBlock);
 }
 
-class _MainDashboardState extends State<MainDashboard> {
+class _CategoryDashboardState extends State<CategoryDashboard> {
+  final Map categoryBlock;
+  _CategoryDashboardState({@required this.categoryBlock});
   int bottomIndex;
   @override
   void initState() {
@@ -26,10 +29,10 @@ class _MainDashboardState extends State<MainDashboard> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
       body: bottomIndex == 0
-          ? MainCategories()
+          ? CategoryDetail(categoryBlock: categoryBlock)
           : bottomIndex == 1
               ? AllShops()
-              : bottomIndex == 2 && logs == true
+              : bottomIndex == 4 && logs == true
                   ? ProfilePage()
                   : Container(),
       bottomNavigationBar: Container(
@@ -76,11 +79,19 @@ class _MainDashboardState extends State<MainDashboard> {
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.store_outlined),
+              icon: Icon(Icons.explore),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
+              icon: Icon(Icons.receipt_rounded),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.local_offer),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
               label: '',
             ),
           ],

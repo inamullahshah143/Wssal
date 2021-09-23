@@ -1,11 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wassal_customer/Categories.dart';
-
 import 'const.dart';
 import 'dashboard.dart';
-import 'numberlogin.dart';
 
 class SplashScreenSlider extends StatefulWidget {
   const SplashScreenSlider({Key key}) : super(key: key);

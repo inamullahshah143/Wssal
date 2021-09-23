@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     latestContext = context;
-    //
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
       appBar: getAppbar(context, 'Profile Page'),
@@ -30,9 +29,12 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 2),
-              padding: EdgeInsets.all(20),
-              color: Colors.white,
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
               width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -236,7 +238,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             Container(
               width: double.infinity,
-              margin: EdgeInsets.only(top: 50, right: 10, left: 10, bottom: 10),
+              margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -377,20 +379,26 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                logoutFunction(context: context);
-              },
-              child: Container(
-                padding: EdgeInsets.all(20),
-                width: double.infinity,
-                margin: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.yellow,
-                  borderRadius: BorderRadius.circular(20),
+            Container(
+              margin: EdgeInsets.all(10),
+              height: 50,
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  logoutFunction(context: context);
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(15.0),
+                  ),
+                  primary: themePrimaryColor,
                 ),
-                child: Center(
-                  child: Text('Logout'),
+                child: Text(
+                  "Logout",
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.grey[800],
+                  ),
                 ),
               ),
             ),

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../const.dart';
-import '../categorydetail.dart';
 import 'MapNavigation.dart';
 
 class LatestOrderDetail extends StatefulWidget {
@@ -115,7 +114,8 @@ Future<Widget> latestOrderDetail(BuildContext context) async {
                       style: TextStyle(fontWeight: FontWeight.w500),
                     )),
                 Container(
-                    margin: EdgeInsets.all(10), child: Text("${data['order_no']}")),
+                    margin: EdgeInsets.all(10),
+                    child: Text("${data['order_no']}")),
               ]),
               TableRow(children: [
                 Container(
@@ -155,35 +155,39 @@ Future<Widget> latestOrderDetail(BuildContext context) async {
             ],
           ),
         ),
-        data['driver_id'] == null?Container(
-          margin: EdgeInsets.all(25),
-          child: Text("No Driver Assigned"),
-        ): Container(
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            color: Color.fromRGBO(244, 245, 247, 1),
-          ),
-          child: Table(
-            children: [
-              TableRow(children: [
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text(
-                      "Assigned",
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    )),
-                Container(
-                    margin: EdgeInsets.all(10), child: Text("${data['driver']['name']}")),
-              ]),
-              TableRow(children: [
-                      Container(
-                        margin: EdgeInsets.all(10),
-                      ),
+        data['driver_id'] == null
+            ? Container(
+                margin: EdgeInsets.all(25),
+                child: Text("No Driver Assigned"),
+              )
+            : Container(
+                padding: EdgeInsets.all(10),
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  color: Color.fromRGBO(244, 245, 247, 1),
+                ),
+                child: Table(
+                  children: [
+                    TableRow(children: [
                       Container(
                           margin: EdgeInsets.all(10),
-                          child: RaisedButton(
+                          child: Text(
+                            "Assigned",
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          )),
+                      Container(
+                          margin: EdgeInsets.all(10),
+                          child: Text("${data['driver']['name']}")),
+                    ]),
+                    TableRow(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.all(10),
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          child: ElevatedButton(
                             onPressed: () {
                               Navigator.push(
                                   context,
@@ -192,11 +196,13 @@ Future<Widget> latestOrderDetail(BuildContext context) async {
                                           ParentMap(orderDetails: data)));
                             },
                             child: Text("Track Order"),
-                          )),
-                    ]),
-            ],
-          ),
-        ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
       ],
     );
   } else {

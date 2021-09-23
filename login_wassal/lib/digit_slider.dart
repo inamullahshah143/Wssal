@@ -300,26 +300,19 @@ class _DigitFlutterSliderState extends State<DigitFlutterSlider>
             _rightHandlerXPosition = 0;
             _leftHandlerYPosition = 0;
             _rightHandlerYPosition = 0;
-
             _renderBoxInitialization();
-
             _arrangeHandlersPosition();
-
             _drawHatchMark();
-
             oldOrientation = MediaQuery.of(context).orientation;
           }
 
           return Stack(
-            overflow: Overflow.visible,
             children: <Widget>[
-//                  ..._points,
               Container(
                 key: containerKey,
                 height: _containerHeight,
                 width: _containerWidth,
                 child: Stack(
-                  overflow: Overflow.visible,
                   children: drawHandlers(),
                 ),
                 foregroundDecoration: widget.foregroundDecoration,
@@ -1486,7 +1479,6 @@ class _DigitFlutterSliderState extends State<DigitFlutterSlider>
         child: Draggable(
             axis: widget.axis,
             child: Stack(
-              overflow: Overflow.visible,
               children: <Widget>[
                 _tooltip(
                     side: 'left',
@@ -1607,7 +1599,6 @@ class _DigitFlutterSliderState extends State<DigitFlutterSlider>
         child: Draggable(
             axis: Axis.horizontal,
             child: Stack(
-              overflow: Overflow.visible,
               children: <Widget>[
                 _tooltip(
                     side: 'right',

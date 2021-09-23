@@ -2,9 +2,8 @@ import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'categories_dashboard.dart';
 import 'const.dart';
-import 'categorydetail.dart';
-
 import 'custom_delivery.dart';
 
 class MainCategories extends StatefulWidget {
@@ -23,7 +22,6 @@ class _MainCategoriesState extends State<MainCategories> {
   Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
-      // bottomNavigationBar: getBottomBar(context),
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
       appBar: getDashboardAppbar(context, "Categories"),
       body: Container(
@@ -127,7 +125,7 @@ class _MainCategoriesState extends State<MainCategories> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        CategoryDetail(categoryBlock: element),
+                        CategoryDashboard(categoryBlock: element),
                   ),
                 );
               },

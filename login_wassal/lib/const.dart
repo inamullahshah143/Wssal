@@ -3,11 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassal_customer/SearchPage.dart';
-import 'package:wassal_customer/Stores.dart';
-
 import 'Cart.dart';
-import 'Categories.dart';
-import 'Profile.dart';
 import 'numberlogin.dart';
 
 Color text1color = Color.fromRGBO(50, 62, 72, 1);
@@ -221,7 +217,7 @@ getBottomBar(context) {
   //           ),
   //         ),
   //       );
-  // return 
+  // return
 
   // Container(
   //   padding: EdgeInsets.only(left: 25, right: 25),
@@ -305,6 +301,6 @@ getBottomBar(context) {
 
 int productPriceValue = 0;
 List productExtrasForCart = [];
-
 List finalProductsForCart = [];
 int finalPriceForCart = 0;
+

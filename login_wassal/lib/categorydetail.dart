@@ -46,12 +46,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
   final _scrollController = ScrollController();
   Timer timer;
 
-  bool promotedShopItem = true;
-  bool featuredItem = true;
-  bool topSellingItem = true;
-  bool topSellerShop = true;
-  bool nearBySeller = true;
-  bool freeDeliveryShop = true;
   @override
   void initState() {
     timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
@@ -88,7 +82,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: pagesBackground,
-      bottomNavigationBar: getBottomBar(context),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -487,172 +480,161 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                 ),
                               ),
                               foodData(),
-                              promotedShopItem != false
-                                  ? FutureBuilder(
-                                      future: promotedShops(),
-                                      builder: ((context, snap) {
-                                        if (snap.hasData) {
-                                          return snap.data;
-                                        } else if (snap.hasError) {
-                                          return Text("${snap.error}");
-                                        } else {
-                                          return Center(
-                                            child: Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Container(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  backgroundColor: Colors.red,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(Colors.yellow),
-                                                ),
-                                              ),
+                              FutureBuilder(
+                                future: promotedShops(),
+                                builder: ((context, snap) {
+                                  if (snap.hasData) {
+                                    return snap.data;
+                                  } else if (snap.hasError) {
+                                    return Container();
+                                  } else {
+                                    return Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Container(
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            backgroundColor: Colors.red,
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              Colors.yellow,
                                             ),
-                                          );
-                                        }
-                                      }),
-                                    )
-                                  : Container(),
-                              featuredItem != false
-                                  ? FutureBuilder(
-                                      future: featuredProduct(),
-                                      builder: ((context, snap) {
-                                        if (snap.hasData) {
-                                          return snap.data;
-                                        } else if (snap.hasError) {
-                                          return Text("${snap.error}");
-                                        } else {
-                                          return Center(
-                                              child: Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Container(
-                                              child: CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                backgroundColor: Colors.red,
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(Colors.yellow),
-                                              ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }),
+                              ),
+                              FutureBuilder(
+                                future: featuredProduct(),
+                                builder: ((context, snap) {
+                                  if (snap.hasData) {
+                                    return snap.data;
+                                  } else if (snap.hasError) {
+                                    return Container();
+                                  } else {
+                                    return Center(
+                                        child: Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Container(
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          backgroundColor: Colors.red,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                            Colors.yellow,
+                                          ),
+                                        ),
+                                      ),
+                                    ));
+                                  }
+                                }),
+                              ),
+                              FutureBuilder(
+                                future: topSellingProduct(),
+                                builder: ((context, snap) {
+                                  if (snap.hasData) {
+                                    return snap.data;
+                                  } else if (snap.hasError) {
+                                    return Container();
+                                  } else {
+                                    return Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Container(
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            backgroundColor: Colors.red,
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              Colors.yellow,
                                             ),
-                                          ));
-                                        }
-                                      }),
-                                    )
-                                  : Container(),
-                              topSellingItem != false
-                                  ? FutureBuilder(
-                                      future: topSellingProduct(),
-                                      builder: ((context, snap) {
-                                        if (snap.hasData) {
-                                          return snap.data;
-                                        } else if (snap.hasError) {
-                                          return Text("${snap.error}");
-                                        } else {
-                                          return Center(
-                                            child: Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Container(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  backgroundColor: Colors.red,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(Colors.yellow),
-                                                ),
-                                              ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }),
+                              ),
+                              FutureBuilder(
+                                future: topSeller(),
+                                builder: ((context, snap) {
+                                  if (snap.hasData) {
+                                    return snap.data;
+                                  } else if (snap.hasError) {
+                                    return Container();
+                                  } else {
+                                    return Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Container(
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            backgroundColor: Colors.red,
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              Colors.yellow,
                                             ),
-                                          );
-                                        }
-                                      }),
-                                    )
-                                  : Container(),
-                              topSellerShop != false
-                                  ? FutureBuilder(
-                                      future: topSeller(),
-                                      builder: ((context, snap) {
-                                        if (snap.hasData) {
-                                          return snap.data;
-                                        } else if (snap.hasError) {
-                                          return Text("${snap.error}");
-                                        } else {
-                                          return Center(
-                                            child: Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Container(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  backgroundColor: Colors.red,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(Colors.yellow),
-                                                ),
-                                              ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }),
+                              ),
+                              FutureBuilder(
+                                future: nearBy(),
+                                builder: ((context, snap) {
+                                  if (snap.hasData) {
+                                    return snap.data;
+                                  } else if (snap.hasError) {
+                                    return Container();
+                                  } else {
+                                    return Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Container(
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            backgroundColor: Colors.red,
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              Colors.yellow,
                                             ),
-                                          );
-                                        }
-                                      }),
-                                    )
-                                  : Container(),
-                              nearBySeller != false
-                                  ? FutureBuilder(
-                                      future: nearBy(),
-                                      builder: ((context, snap) {
-                                        if (snap.hasData) {
-                                          return snap.data;
-                                        } else if (snap.hasError) {
-                                          return Text("${snap.error}");
-                                        } else {
-                                          return Center(
-                                            child: Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Container(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  backgroundColor: Colors.red,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(Colors.yellow),
-                                                ),
-                                              ),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }),
+                              ),
+                              FutureBuilder(
+                                future: freeDelivery(),
+                                builder: ((context, snap) {
+                                  if (snap.hasData) {
+                                    return snap.data;
+                                  } else if (snap.hasError) {
+                                    return Container();
+                                  } else {
+                                    return Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Container(
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            backgroundColor: Colors.red,
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              Colors.yellow,
                                             ),
-                                          );
-                                        }
-                                      }),
-                                    )
-                                  : Container(),
-                              freeDeliveryShop != false
-                                  ? FutureBuilder(
-                                      future: freeDelivery(),
-                                      builder: ((context, snap) {
-                                        if (snap.hasData) {
-                                          return snap.data;
-                                        } else if (snap.hasError) {
-                                          return Text("${snap.error}");
-                                        } else {
-                                          return Center(
-                                            child: Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Container(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  backgroundColor: Colors.red,
-                                                  valueColor:
-                                                      AlwaysStoppedAnimation<
-                                                          Color>(Colors.yellow),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                      }),
-                                    )
-                                  : Container(),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }),
+                              ),
                             ],
                           )
                         : Column(
@@ -1064,7 +1046,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
   }
 
   Future<Widget> featuredProduct() async {
-    var response = await http.get(Uri.parse("$apiURL/FeatureProduct"));
+    var response = await http
+        .get(Uri.parse("$apiURL/FeatureProduct/${categoryBlock['id']}"));
     if (response.statusCode == 200) {
       List data = json.decode(response.body)['data'];
       List<Widget> x = [];
@@ -1271,7 +1254,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
           ),
         );
       });
-
       return Container(
         width: MediaQuery.of(context).size.width,
         height: 325,
@@ -1315,54 +1297,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       );
     } else {
-      setState(() {
-        featuredItem = true;
-      });
-      return Container(
-        width: MediaQuery.of(context).size.width,
-        height: 325,
-        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.grey[300],
-              blurRadius: 3.0,
-              offset: Offset(0.0, 0.5),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-              child: Text(
-                'Featured',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-            Divider(),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
-              child: Text('No Records Found'),
-            ),
-          ],
-        ),
-      );
+      return Container();
     }
   }
 
   Future<Widget> promotedShops() async {
-    var response = await http.get(Uri.parse("$apiURL/promotedShops"));
+    var response = await http.get(
+        Uri.parse("$apiURL/promotedShops/${categoryBlock['id']}"));
     if (response.statusCode == 200 &&
         json.decode(response.body)['data'] != null) {
       List data = json.decode(response.body)['data'];
@@ -1616,56 +1557,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       );
     } else {
-      setState(() {
-        promotedShopItem = true;
-      });
-      return Container(
-        width: MediaQuery.of(context).size.width,
-        height: 180.0,
-        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.grey[300],
-              blurRadius: 3.0,
-              offset: Offset(0.0, 0.5),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 8),
-              child: Text(
-                'Top Seller',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-            Divider(),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
-              child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text("No Record Found")),
-            ),
-          ],
-        ),
-      );
+      return Container();
     }
   }
 
   Future<Widget> topSellingProduct() async {
-    var response = await http.get(Uri.parse("$apiURL/topSellingProduct"));
+    var response = await http.get(
+        Uri.parse("$apiURL/topSellingProduct/${categoryBlock['id']}"));
     if (response.statusCode == 200) {
       List data = json.decode(response.body)['data'];
       List<Widget> x = [];
@@ -1912,7 +1810,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
           ),
         );
       });
-
       return Container(
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.all(10),
@@ -1958,49 +1855,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       );
     } else {
-      setState(() {
-        topSellerShop = true;
-      });
-      return Container(
-        width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.grey[300],
-              blurRadius: 3.0,
-              offset: Offset(0.0, 0.5),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 10),
-              child: Text(
-                'Top Selling',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-            Divider(),
-            Text("No Record Found"),
-          ],
-        ),
-      );
+      return Container();
     }
   }
 
   Future<Widget> topSeller() async {
-    var response = await http.get(Uri.parse("$apiURL/topSeller"));
+    var response = await http
+        .get(Uri.parse("$apiURL/topSeller/${categoryBlock['id']}"));
     if (response.statusCode == 200 &&
         json.decode(response.body)['data'] != null) {
       List data = json.decode(response.body)['data'];
@@ -2105,56 +1966,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       );
     } else {
-      setState(() {
-        topSellerShop = true;
-      });
-      return Container(
-        width: MediaQuery.of(context).size.width,
-        height: 180.0,
-        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.grey[300],
-              blurRadius: 3.0,
-              offset: Offset(0.0, 0.5),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 8),
-              child: Text(
-                'Top Seller',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-            Divider(),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
-              child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text("No Record Found")),
-            ),
-          ],
-        ),
-      );
+      return Container();
     }
   }
 
   Future<Widget> nearBy() async {
-    var response = await http.get(Uri.parse("$apiURL/FeatureProduct"));
+    var response = await http.get(
+        Uri.parse("$apiURL/FeatureProduct/${categoryBlock['id']}"));
     if (response.statusCode == 200) {
       List data = json.decode(response.body)['data'];
       List<Widget> x = [];
@@ -2355,7 +2173,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
           ),
         );
       });
-
       return Container(
         width: MediaQuery.of(context).size.width,
         height: 325,
@@ -2399,54 +2216,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       );
     } else {
-      setState(() {
-        nearBySeller = true;
-      });
-      return Container(
-        width: MediaQuery.of(context).size.width,
-        height: 325,
-        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.grey[300],
-              blurRadius: 3.0,
-              offset: Offset(0.0, 0.5),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-              child: Text(
-                'Near By',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-            Divider(),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
-              child: Text('No Records Found'),
-            ),
-          ],
-        ),
-      );
+      return Container();
     }
   }
 
   Future<Widget> freeDelivery() async {
-    var response = await http.get(Uri.parse("$apiURL/freeDeliveryProducts"));
+    var response = await http.get(Uri.parse(
+        "$apiURL/freeDeliveryProducts/${categoryBlock['id']}"));
     if (response.statusCode == 200) {
       List data = json.decode(response.body)['free delivery products'];
       List<Widget> x = [];
@@ -2682,7 +2458,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
           ),
         );
       });
-
       return Container(
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.all(10),
@@ -2728,44 +2503,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       );
     } else {
-      setState(() {
-        freeDeliveryShop = true;
-      });
-      return Container(
-        width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          ),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.grey[300],
-              blurRadius: 3.0,
-              offset: Offset(0.0, 0.5),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 10),
-              child: Text(
-                'Top Selling',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-            Divider(),
-            Text("No Record Found"),
-          ],
-        ),
-      );
+      return Container();
     }
   }
 

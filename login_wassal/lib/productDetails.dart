@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter_alert/flutter_alert.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:wassal_customer/Cart.dart';
 import 'const.dart';
@@ -244,6 +242,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
+                        // ignore: unnecessary_brace_in_string_interps
                         "Add To Cart (\$ ${finalPrice})",
                         style: TextStyle(
                             color: Colors.white,
