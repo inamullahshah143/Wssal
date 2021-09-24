@@ -186,15 +186,20 @@ class _CartPageState extends State<CartPage> {
       'Authorization': 'Bearer $loginToken',
     });
     print("cartCheckout: ${response.body}");
-       Clipboard.setData(ClipboardData(text: response.body));
+    Clipboard.setData(ClipboardData(text: response.body));
     Map data = json.decode(response.body);
- 
+
     if (data['message'] == "Order successfully punched") {
       finalProductsForCart = [];
       showAlert(
           context: context,
           title: "Success",
           body: "Order No ${data['order no']} successfully created");
+    } else if (data['message'] == "No drivers found.") {
+      showAlert(
+          context: context,
+          title: "Error",
+          body: "No drivers available right now.Try again later");
     } else {
       showAlert(
           context: context, title: "Error", body: "Not Enough Funds in wallet");
