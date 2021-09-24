@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'Cart.dart';
 import 'Storedetail.dart';
@@ -15,55 +14,54 @@ import 'const.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 
 class CategoryDetail extends StatefulWidget {
+  CategoryDetail(
+      {@required this.categoryBlock, @required this.initialPosition});
+  final LatLng initialPosition;
   final Map categoryBlock;
-  CategoryDetail({@required this.categoryBlock});
+
   @override
-  _CategoryDetailState createState() =>
-      _CategoryDetailState(categoryBlock: categoryBlock);
+  _CategoryDetailState createState() => _CategoryDetailState(
+      categoryBlock: categoryBlock, initialPosition: initialPosition);
 }
 
 class _CategoryDetailState extends State<CategoryDetail> {
+  _CategoryDetailState(
+      {@required this.categoryBlock, @required this.initialPosition});
+  final LatLng initialPosition;
+  double appbarHeight;
   final Map categoryBlock;
-  _CategoryDetailState({@required this.categoryBlock});
-  String searckKeyword;
+  bool dragButton;
+  bool haveFeaturedData;
+  bool haveFreeDeliveryData;
+  bool haveNearByData;
+  bool havePromotedShopData;
+  bool haveTopSellerData;
+  bool haveTopSellingData;
+  bool isRecomended, isFastDelivery, isMostPopular;
   Widget returnedData;
   bool searchClickBtn;
-  bool dragButton;
-  double appbarHeight;
-  bool isRecomended, isFastDelivery, isMostPopular;
-  TabController _tabController;
-
+  String searckKeyword;
+  String selectedCategory;
+  Color selectedColor = Color.fromRGBO(222, 61, 48, 0.25);
+  String sortByChoice;
+  Timer timer;
+  Color unselectedColor = Color.fromRGBO(244, 245, 247, 1);
+  int _isSelectedIndex = -1;
   double _maxValue;
   double _minValue;
   double _priceRange;
   String _radioValue;
-  String sortByChoice;
-  int _isSelectedIndex = -1;
-  String selectedCategory;
-  Color unselectedColor = Color.fromRGBO(244, 245, 247, 1);
-  Color selectedColor = Color.fromRGBO(222, 61, 48, 0.25);
-  String yourLocation = '';
-  Position currentPosition;
   final _scrollController = ScrollController();
-  Timer timer;
+  TabController _tabController;
 
-  bool havePromotedShopData;
-  bool haveFeaturedData;
-  bool haveTopSellingData;
-  bool haveTopSellerData;
-  bool haveNearByData;
-  bool haveFreeDeliveryData;
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
 
   @override
   void initState() {
-    timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-      if (locationChange) {
-        setState(() {
-          yourLocation = selectedLocation;
-        });
-        locationChange = false;
-      }
-    });
     appbarHeight = 60.0;
     dragButton = false;
     searchClickBtn = true;
@@ -74,7 +72,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
     _minValue = 2;
     _priceRange = 2;
     _radioValue = 'Recomended';
-
     havePromotedShopData = false;
     haveFeaturedData = false;
     haveTopSellingData = false;
@@ -82,607 +79,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
     haveNearByData = false;
     haveFreeDeliveryData = false;
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    latestContext = context;
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: pagesBackground,
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Column(
-          children: [
-            SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 5.0),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.fastOutSlowIn,
-                  width: double.infinity,
-                  height: appbarHeight,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(25.0),
-                    ),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                        color: Colors.grey[300],
-                        blurRadius: 3.0,
-                        offset: Offset(0.0, 0.5),
-                      ),
-                    ],
-                  ),
-                  child: SingleChildScrollView(
-                    physics: ClampingScrollPhysics(),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(top: 5.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 5.0),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      icon: Icon(
-                                        Icons.arrow_back,
-                                        color: Colors.grey[800],
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    "وصل",
-                                    style: TextStyle(
-                                      color: themePrimaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  searchClickBtn
-                                      ? IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              searchClickBtn = false;
-                                              dragButton = true;
-                                              appbarHeight = 160.0;
-                                            });
-                                          },
-                                          icon: Icon(
-                                            Icons.search,
-                                            color: Colors.grey[800],
-                                          ),
-                                        )
-                                      : Text(''),
-                                  Padding(
-                                    padding: EdgeInsets.only(right: 5.0),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                CartPage(),
-                                          ),
-                                        );
-                                      },
-                                      icon: Icon(
-                                        Icons.shopping_cart_outlined,
-                                        color: Colors.grey[800],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        appbarHeight >= 160
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 25.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Flexible(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Color.fromRGBO(
-                                                  244, 245, 247, 1),
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            child: TextField(
-                                              keyboardType: TextInputType.text,
-                                              style: TextStyle(
-                                                fontSize: 14.0,
-                                              ),
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  searckKeyword = value;
-                                                  returnedData = FutureBuilder(
-                                                    future:
-                                                        searchProduct(context),
-                                                    builder: ((context, snap) {
-                                                      if (snap.hasData) {
-                                                        return snap.data;
-                                                      } else if (snap
-                                                          .hasError) {
-                                                        return Text(
-                                                            "${snap.error}");
-                                                      } else {
-                                                        return Center(
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    8.0),
-                                                            child: Container(
-                                                              child:
-                                                                  CircularProgressIndicator(
-                                                                strokeWidth: 2,
-                                                                backgroundColor:
-                                                                    Colors.red,
-                                                                valueColor:
-                                                                    AlwaysStoppedAnimation<
-                                                                            Color>(
-                                                                        Colors
-                                                                            .yellow),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        );
-                                                      }
-                                                    }),
-                                                  );
-                                                });
-                                              },
-                                              decoration: InputDecoration(
-                                                hintText: 'Search on Wssal…',
-                                                border: InputBorder.none,
-                                                focusedBorder: InputBorder.none,
-                                                enabledBorder: InputBorder.none,
-                                                errorBorder: InputBorder.none,
-                                                disabledBorder:
-                                                    InputBorder.none,
-                                                prefixIcon: Icon(Icons.search),
-                                                contentPadding:
-                                                    EdgeInsets.only(top: 15.0),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              appbarHeight = 475;
-                                            });
-                                          },
-                                          icon: Icon(
-                                            Icons.tune,
-                                            size: 24.0,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  appbarHeight == 475
-                                      ? Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 10.0, horizontal: 25),
-                                          child: Container(
-                                            child: DefaultTabController(
-                                              length: 3,
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: <Widget>[
-                                                  TabBar(
-                                                    indicatorColor:
-                                                        themeSecondaryColor,
-                                                    labelColor:
-                                                        themeSecondaryColor,
-                                                    controller: _tabController,
-                                                    unselectedLabelColor:
-                                                        Colors.grey[500],
-                                                    tabs: [
-                                                      Tab(
-                                                        text: 'Category',
-                                                      ),
-                                                      Tab(
-                                                        text: 'Sort By',
-                                                      ),
-                                                      Tab(
-                                                        text: 'Price',
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Container(
-                                                    //Add this to give height
-                                                    height: appbarHeight - 275,
-                                                    child: TabBarView(
-                                                      controller:
-                                                          _tabController,
-                                                      children: [
-                                                        searchCategory(),
-                                                        Container(
-                                                          child: searchSortBy(),
-                                                        ),
-                                                        Center(
-                                                          child: Container(
-                                                            child:
-                                                                searchPrice(),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 10),
-                                                    height: 50,
-                                                    width: double.infinity,
-                                                    child: ElevatedButton(
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          appbarHeight = 160.0;
-                                                          returnedData =
-                                                              FutureBuilder(
-                                                            future:
-                                                                searchProductByFilter(
-                                                                    context),
-                                                            builder: ((context,
-                                                                snap) {
-                                                              if (snap
-                                                                  .hasData) {
-                                                                return snap
-                                                                    .data;
-                                                              } else if (snap
-                                                                  .hasError) {
-                                                                return Text(
-                                                                    "${snap.error}");
-                                                              } else {
-                                                                return Center(
-                                                                  child:
-                                                                      Padding(
-                                                                    padding:
-                                                                        EdgeInsets.all(
-                                                                            8.0),
-                                                                    child:
-                                                                        Container(
-                                                                      child:
-                                                                          CircularProgressIndicator(
-                                                                        strokeWidth:
-                                                                            2,
-                                                                        backgroundColor:
-                                                                            Colors.red,
-                                                                        valueColor:
-                                                                            AlwaysStoppedAnimation<Color>(Colors.yellow),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              }
-                                                            }),
-                                                          );
-                                                        });
-                                                      },
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                        shape:
-                                                            new RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              new BorderRadius
-                                                                      .circular(
-                                                                  15.0),
-                                                        ),
-                                                        primary:
-                                                            themePrimaryColor,
-                                                      ),
-                                                      child: Text(
-                                                        "Complete",
-                                                        style: TextStyle(
-                                                          fontSize: 12.0,
-                                                          color:
-                                                              Colors.grey[800],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      : Container(),
-                                  InkWell(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(25.0),
-                                      child: Container(
-                                        height: 5,
-                                        width: 50,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey[400],
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                        ),
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      setState(() {
-                                        searchClickBtn = true;
-                                        dragButton = false;
-                                        appbarHeight = 60.0;
-                                        returnedData = null;
-                                      });
-                                    },
-                                  ),
-                                ],
-                              )
-                            : Container(),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.fastOutSlowIn,
-                width: double.infinity,
-                child: FadingEdgeScrollView.fromSingleChildScrollView(
-                  gradientFractionOnStart: 0.05,
-                  gradientFractionOnEnd: 0.05,
-                  child: SingleChildScrollView(
-                    controller: _scrollController,
-                    physics: BouncingScrollPhysics(),
-                    child: returnedData == null
-                        ? Column(
-                            children: [
-                              Column(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.all(10),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Container(
-                                        height: 200.0,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: Carousel(
-                                          boxFit: BoxFit.cover,
-                                          autoplay: true,
-                                          animationCurve: Curves.fastOutSlowIn,
-                                          animationDuration:
-                                              Duration(milliseconds: 1000),
-                                          dotSize: 6.0,
-                                          dotIncreasedColor: Colors.white,
-                                          dotBgColor: Colors.transparent,
-                                          dotPosition: DotPosition.bottomCenter,
-                                          dotVerticalPadding: 5.0,
-                                          showIndicator: true,
-                                          indicatorBgPadding: 5.0,
-                                          images: [
-                                            AssetImage(
-                                                'assets/sliderImage.png'),
-                                            AssetImage(
-                                                'assets/sliderImage.png'),
-                                            AssetImage(
-                                                'assets/sliderImage.png'),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  foodData(),
-                                  FutureBuilder(
-                                    future: promotedShops(),
-                                    builder: ((context, snap) {
-                                      if (snap.hasData) {
-                                        SchedulerBinding.instance
-                                            .addPostFrameCallback(
-                                                (_) => setState(() {
-                                                      havePromotedShopData =
-                                                          true;
-                                                    }));
-
-                                        return snap.data;
-                                      } else if (snap.hasError) {
-                                        SchedulerBinding.instance
-                                            .addPostFrameCallback(
-                                                (_) => setState(() {
-                                                      havePromotedShopData =
-                                                          true;
-                                                    }));
-
-                                        return Container();
-                                      } else {
-                                        return Container();
-                                      }
-                                    }),
-                                  ),
-                                  FutureBuilder(
-                                    future: featuredProduct(),
-                                    builder: ((context, snap) {
-                                      if (snap.hasData) {
-                                        SchedulerBinding.instance
-                                            .addPostFrameCallback(
-                                                (_) => setState(() {
-                                                      haveFeaturedData = true;
-                                                    }));
-                                        return snap.data;
-                                      } else if (snap.hasError) {
-                                        SchedulerBinding.instance
-                                            .addPostFrameCallback(
-                                                (_) => setState(() {
-                                                      haveFeaturedData = true;
-                                                    }));
-
-                                        return Container();
-                                      } else {
-                                        return Container();
-                                      }
-                                    }),
-                                  ),
-                                  FutureBuilder(
-                                    future: topSellingProduct(),
-                                    builder: ((context, snap) {
-                                      if (snap.hasData) {
-                                        SchedulerBinding.instance
-                                            .addPostFrameCallback(
-                                                (_) => setState(() {
-                                                      haveTopSellingData = true;
-                                                    }));
-
-                                        return snap.data;
-                                      } else if (snap.hasError) {
-                                        SchedulerBinding.instance
-                                            .addPostFrameCallback(
-                                                (_) => setState(() {
-                                                      haveTopSellingData = true;
-                                                    }));
-
-                                        return Container();
-                                      } else {
-                                        return Container();
-                                      }
-                                    }),
-                                  ),
-                                  FutureBuilder(
-                                    future: topSeller(),
-                                    builder: ((context, snap) {
-                                      if (snap.hasData) {
-                                        SchedulerBinding.instance
-                                            .addPostFrameCallback(
-                                                (_) => setState(() {
-                                                      haveTopSellerData = true;
-                                                    }));
-                                        return snap.data;
-                                      } else if (snap.hasError) {
-                                        SchedulerBinding.instance
-                                            .addPostFrameCallback(
-                                                (_) => setState(() {
-                                                      haveTopSellerData = true;
-                                                    }));
-
-                                        return Container();
-                                      } else {
-                                        return Container();
-                                      }
-                                    }),
-                                  ),
-                                  FutureBuilder(
-                                    future: nearBy(),
-                                    builder: ((context, snap) {
-                                      if (snap.hasData) {
-                                        SchedulerBinding.instance
-                                            .addPostFrameCallback(
-                                                (_) => setState(() {
-                                                      haveNearByData = true;
-                                                    }));
-
-                                        return snap.data;
-                                      } else if (snap.hasError) {
-                                        SchedulerBinding.instance
-                                            .addPostFrameCallback(
-                                                (_) => setState(() {
-                                                      haveNearByData = true;
-                                                    }));
-
-                                        return Container();
-                                      } else {
-                                        return Container();
-                                      }
-                                    }),
-                                  ),
-                                  FutureBuilder(
-                                    future: freeDelivery(),
-                                    builder: ((context, snap) {
-                                      if (snap.hasData) {
-                                        SchedulerBinding.instance
-                                            .addPostFrameCallback(
-                                                (_) => setState(() {
-                                                      haveFreeDeliveryData =
-                                                          true;
-                                                    }));
-                                        return snap.data;
-                                      } else if (snap.hasError) {
-                                        SchedulerBinding.instance
-                                            .addPostFrameCallback(
-                                                (_) => setState(() {
-                                                      haveFreeDeliveryData =
-                                                          true;
-                                                    }));
-                                        return Container();
-                                      } else {
-                                        return Container();
-                                      }
-                                    }),
-                                  ),
-                                ],
-                              ),
-                              havePromotedShopData == false &&
-                                      haveFeaturedData == false &&
-                                      haveTopSellingData == false &&
-                                      haveTopSellerData == false &&
-                                      haveNearByData == false &&
-                                      haveFreeDeliveryData == false
-                                  ? Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0),
-                                        child: Container(
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            backgroundColor: Colors.red,
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                              Colors.yellow,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : Container(),
-                            ],
-                          )
-                        : Column(
-                            children: [
-                              returnedData,
-                            ],
-                          ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   Widget searchPrice() {
@@ -728,7 +124,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
                   ),
                 ),
                 onDragging: (handlerIndex, lowerValue, upperValue) {
-                  
                   setState(() {
                     _minValue = lowerValue;
                     _maxValue = upperValue;
@@ -1638,12 +1033,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                   '/' +
                                   '${element['images'][0]['path']}',
                               fit: BoxFit.cover,
+                              height: 125,
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               decoration: BoxDecoration(
+                                color: Colors.red,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(10),
                                 ),
@@ -2005,8 +1402,11 @@ class _CategoryDetailState extends State<CategoryDetail> {
   }
 
   Future<Widget> nearBy() async {
-    var response = await http
-        .get(Uri.parse("$apiURL/FeatureProduct/${categoryBlock['id']}"));
+    var response = await http.post(Uri.parse("$apiURL/nearbyshops"), body: {
+      "lat": '${initialPosition.latitude.toString()}',
+      "long": '${initialPosition.longitude.toString()}',
+      "id": '${categoryBlock['id']}',
+    });
     if (response.statusCode == 200) {
       List data = json.decode(response.body)['data'];
       List<Widget> x = [];
@@ -2048,7 +1448,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(25),
                         child: Image.network(
-                          imageURL + '/${element['images'][0]['path']}',
+                          imageURL + '/${element['cover']}',
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -2063,7 +1463,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(25),
                               child: Image.network(
-                                imageURL + '/${element['shop']['logo']}',
+                                imageURL + '/${element['logo']}',
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -2071,7 +1471,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              '${element['shop']['title']}',
+                              '${element['title']}',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey[500],
@@ -2098,13 +1498,12 @@ class _CategoryDetailState extends State<CategoryDetail> {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: element['shop']['open_close'] == 1
-                                  ? 'Open'
-                                  : 'Close',
+                              text:
+                                  element['open_close'] == 1 ? 'Open' : 'Close',
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
-                                color: element['shop']['open_close'] == 1
+                                color: element['open_close'] == 1
                                     ? Colors.green
                                     : Colors.red,
                               ),
@@ -2125,7 +1524,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
                                 child: Text(
-                                  "${element['shop']['tags']}",
+                                  "${element['tags']}",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
@@ -3049,5 +2448,627 @@ class _CategoryDetailState extends State<CategoryDetail> {
     } else {
       return Center(child: Text("No data found.Try another keyword"));
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    latestContext = context;
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: pagesBackground,
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Column(
+          children: [
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 5.0),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.fastOutSlowIn,
+                  width: double.infinity,
+                  height: appbarHeight,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.vertical(
+                      bottom: Radius.circular(25.0),
+                    ),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Colors.grey[300],
+                        blurRadius: 3.0,
+                        offset: Offset(0.0, 0.5),
+                      ),
+                    ],
+                  ),
+                  child: SingleChildScrollView(
+                    physics: ClampingScrollPhysics(),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 5.0),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      icon: Icon(
+                                        Icons.arrow_back,
+                                        color: Colors.grey[800],
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    "وصل",
+                                    style: TextStyle(
+                                      color: themePrimaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  searchClickBtn
+                                      ? IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              searchClickBtn = false;
+                                              dragButton = true;
+                                              appbarHeight = 160.0;
+                                            });
+                                          },
+                                          icon: Icon(
+                                            Icons.search,
+                                            color: Colors.grey[800],
+                                          ),
+                                        )
+                                      : Text(''),
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 5.0),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                CartPage(),
+                                          ),
+                                        );
+                                      },
+                                      icon: Icon(
+                                        Icons.shopping_cart_outlined,
+                                        color: Colors.grey[800],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        appbarHeight >= 160
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 25.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Color.fromRGBO(
+                                                  244, 245, 247, 1),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                            child: TextField(
+                                              keyboardType: TextInputType.text,
+                                              style: TextStyle(
+                                                fontSize: 14.0,
+                                              ),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  searckKeyword = value;
+                                                  returnedData = FutureBuilder(
+                                                    future:
+                                                        searchProduct(context),
+                                                    builder: ((context, snap) {
+                                                      if (snap.hasData) {
+                                                        return snap.data;
+                                                      } else if (snap
+                                                          .hasError) {
+                                                        return Text(
+                                                            "${snap.error}");
+                                                      } else {
+                                                        return Center(
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    8.0),
+                                                            child: Container(
+                                                              child:
+                                                                  CircularProgressIndicator(
+                                                                strokeWidth: 2,
+                                                                backgroundColor:
+                                                                    Colors.red,
+                                                                valueColor:
+                                                                    AlwaysStoppedAnimation<
+                                                                            Color>(
+                                                                        Colors
+                                                                            .yellow),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+                                                    }),
+                                                  );
+                                                });
+                                              },
+                                              decoration: InputDecoration(
+                                                hintText: 'Search on Wssal…',
+                                                border: InputBorder.none,
+                                                focusedBorder: InputBorder.none,
+                                                enabledBorder: InputBorder.none,
+                                                errorBorder: InputBorder.none,
+                                                disabledBorder:
+                                                    InputBorder.none,
+                                                prefixIcon: Icon(Icons.search),
+                                                contentPadding:
+                                                    EdgeInsets.only(top: 15.0),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              appbarHeight = 475;
+                                            });
+                                          },
+                                          icon: Icon(
+                                            Icons.tune,
+                                            size: 24.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  appbarHeight == 475
+                                      ? Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 10.0, horizontal: 25),
+                                          child: Container(
+                                            child: DefaultTabController(
+                                              length: 3,
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  TabBar(
+                                                    indicatorColor:
+                                                        themeSecondaryColor,
+                                                    labelColor:
+                                                        themeSecondaryColor,
+                                                    controller: _tabController,
+                                                    unselectedLabelColor:
+                                                        Colors.grey[500],
+                                                    tabs: [
+                                                      Tab(
+                                                        text: 'Category',
+                                                      ),
+                                                      Tab(
+                                                        text: 'Sort By',
+                                                      ),
+                                                      Tab(
+                                                        text: 'Price',
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Container(
+                                                    //Add this to give height
+                                                    height: appbarHeight - 275,
+                                                    child: TabBarView(
+                                                      controller:
+                                                          _tabController,
+                                                      children: [
+                                                        searchCategory(),
+                                                        Container(
+                                                          child: searchSortBy(),
+                                                        ),
+                                                        Center(
+                                                          child: Container(
+                                                            child:
+                                                                searchPrice(),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 10),
+                                                    height: 50,
+                                                    width: double.infinity,
+                                                    child: ElevatedButton(
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          appbarHeight = 160.0;
+                                                          returnedData =
+                                                              FutureBuilder(
+                                                            future:
+                                                                searchProductByFilter(
+                                                                    context),
+                                                            builder: ((context,
+                                                                snap) {
+                                                              if (snap
+                                                                  .hasData) {
+                                                                return snap
+                                                                    .data;
+                                                              } else if (snap
+                                                                  .hasError) {
+                                                                return Text(
+                                                                    "${snap.error}");
+                                                              } else {
+                                                                return Center(
+                                                                  child:
+                                                                      Padding(
+                                                                    padding:
+                                                                        EdgeInsets.all(
+                                                                            8.0),
+                                                                    child:
+                                                                        Container(
+                                                                      child:
+                                                                          CircularProgressIndicator(
+                                                                        strokeWidth:
+                                                                            2,
+                                                                        backgroundColor:
+                                                                            Colors.red,
+                                                                        valueColor:
+                                                                            AlwaysStoppedAnimation<Color>(Colors.yellow),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              }
+                                                            }),
+                                                          );
+                                                        });
+                                                      },
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        shape:
+                                                            new RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              new BorderRadius
+                                                                      .circular(
+                                                                  15.0),
+                                                        ),
+                                                        primary:
+                                                            themePrimaryColor,
+                                                      ),
+                                                      child: Text(
+                                                        "Complete",
+                                                        style: TextStyle(
+                                                          fontSize: 12.0,
+                                                          color:
+                                                              Colors.grey[800],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Container(),
+                                  InkWell(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(25.0),
+                                      child: Container(
+                                        height: 5,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[400],
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        searchClickBtn = true;
+                                        dragButton = false;
+                                        appbarHeight = 60.0;
+                                        returnedData = null;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              )
+                            : Container(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.fastOutSlowIn,
+                width: double.infinity,
+                child: FadingEdgeScrollView.fromSingleChildScrollView(
+                  gradientFractionOnStart: 0.05,
+                  gradientFractionOnEnd: 0.05,
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    physics: BouncingScrollPhysics(),
+                    child: returnedData == null
+                        ? Column(
+                            children: [
+                              Column(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Container(
+                                        height: 200.0,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Carousel(
+                                          boxFit: BoxFit.cover,
+                                          autoplay: true,
+                                          animationCurve: Curves.fastOutSlowIn,
+                                          animationDuration:
+                                              Duration(milliseconds: 1000),
+                                          dotSize: 6.0,
+                                          dotIncreasedColor: Colors.white,
+                                          dotBgColor: Colors.transparent,
+                                          dotPosition: DotPosition.bottomCenter,
+                                          dotVerticalPadding: 5.0,
+                                          showIndicator: true,
+                                          indicatorBgPadding: 5.0,
+                                          images: [
+                                            AssetImage(
+                                                'assets/sliderImage.png'),
+                                            AssetImage(
+                                                'assets/sliderImage.png'),
+                                            AssetImage(
+                                                'assets/sliderImage.png'),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  foodData(),
+                                  FutureBuilder(
+                                    future: promotedShops(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        // SchedulerBinding.instance
+                                        //     .addPostFrameCallback(
+                                        //   (_) => setState(
+                                        //     () {
+                                        //       havePromotedShopData = true;
+                                        //     },
+                                        //   ),
+                                        // );
+
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        // SchedulerBinding.instance
+                                        //     .addPostFrameCallback(
+                                        //   (_) => setState(
+                                        //     () {
+                                        //       havePromotedShopData = true;
+                                        //     },
+                                        //   ),
+                                        // );
+                                        return Text('${snap.hasError}');
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
+                                    future: featuredProduct(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        // SchedulerBinding.instance
+                                        //     .addPostFrameCallback(
+                                        //   (_) => setState(
+                                        //     () {
+                                        //       haveFeaturedData = true;
+                                        //     },
+                                        //   ),
+                                        // );
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        // SchedulerBinding.instance
+                                        //     .addPostFrameCallback(
+                                        //   (_) => setState(
+                                        //     () {
+                                        //       haveFeaturedData = true;
+                                        //     },
+                                        //   ),
+                                        // );
+                                        return Text('${snap.hasError}');
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
+                                    future: topSellingProduct(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        // SchedulerBinding.instance
+                                        //     .addPostFrameCallback(
+                                        //   (_) => setState(
+                                        //     () {
+                                        //       haveTopSellingData = true;
+                                        //     },
+                                        //   ),
+                                        // );
+
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        // SchedulerBinding.instance
+                                        //     .addPostFrameCallback(
+                                        //   (_) => setState(
+                                        //     () {
+                                        //       haveTopSellingData = true;
+                                        //     },
+                                        //   ),
+                                        // );
+                                        return Text('${snap.hasError}');
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
+                                    future: topSeller(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        // SchedulerBinding.instance
+                                        //     .addPostFrameCallback(
+                                        //   (_) => setState(
+                                        //     () {
+                                        //       haveTopSellerData = true;
+                                        //     },
+                                        //   ),
+                                        // );
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        // SchedulerBinding.instance
+                                        //     .addPostFrameCallback(
+                                        //   (_) => setState(
+                                        //     () {
+                                        //       haveTopSellerData = true;
+                                        //     },
+                                        //   ),
+                                        // );
+                                        return Text('${snap.hasError}');
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
+                                    future: nearBy(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        // SchedulerBinding.instance
+                                        //     .addPostFrameCallback(
+                                        //   (_) => setState(
+                                        //     () {
+                                        //       haveNearByData = true;
+                                        //     },
+                                        //   ),
+                                        // );
+
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        // SchedulerBinding.instance
+                                        //     .addPostFrameCallback(
+                                        //   (_) => setState(
+                                        //     () {
+                                        //       haveNearByData = true;
+                                        //     },
+                                        //   ),
+                                        // );
+                                        return Text('${snap.error}');
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
+                                    future: freeDelivery(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        // SchedulerBinding.instance
+                                        //     .addPostFrameCallback(
+                                        //   (_) => setState(
+                                        //     () {
+                                        //       haveFreeDeliveryData = true;
+                                        //     },
+                                        //   ),
+                                        // );
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        // SchedulerBinding.instance
+                                        //     .addPostFrameCallback(
+                                        //   (_) => setState(
+                                        //     () {
+                                        //       haveFreeDeliveryData = true;
+                                        //     },
+                                        //   ),
+                                        // );
+                                        return Text('${snap.hasError}');
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                ],
+                              ),
+                              // havePromotedShopData == false &&
+                              //         haveFeaturedData == false &&
+                              //         haveTopSellingData == false &&
+                              //         haveTopSellerData == false &&
+                              //         haveNearByData == false &&
+                              //         haveFreeDeliveryData == false
+                              //     ? Center(
+                              //         child: Padding(
+                              //           padding: EdgeInsets.all(8.0),
+                              //           child: Container(
+                              //             child: CircularProgressIndicator(
+                              //               strokeWidth: 2,
+                              //               backgroundColor: Colors.red,
+                              //               valueColor:
+                              //                   AlwaysStoppedAnimation<Color>(
+                              //                 Colors.yellow,
+                              //               ),
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       )
+                              //     : Container(),
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              returnedData,
+                            ],
+                          ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

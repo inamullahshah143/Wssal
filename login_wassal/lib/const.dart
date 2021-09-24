@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassal_customer/SearchPage.dart';
 import 'Cart.dart';
+import 'google_map/app_states.dart';
 import 'numberlogin.dart';
 
 Color text1color = Color.fromRGBO(50, 62, 72, 1);
@@ -15,6 +18,7 @@ String storedName;
 String storedNumber;
 String fcmToken;
 bool logs = false;
+String yourLocation = '';
 BuildContext latestContext;
 
 Map<int, Color> colorMap = {
@@ -92,6 +96,7 @@ getAppbar(context, text) {
 }
 
 getDashboardAppbar(context, text) {
+  final appState = Provider.of<AppState>(context);
   return AppBar(
     elevation: 1.0,
     backgroundColor: Colors.white,
@@ -113,25 +118,25 @@ getDashboardAppbar(context, text) {
             fontSize: 14,
           ),
         ),
-        RichText(
-          text: TextSpan(
-            children: [
-              WidgetSpan(
-                child: Icon(Icons.near_me_rounded, color: themePrimaryColor),
-              ),
-              WidgetSpan(
-                child: Text(
-                  'Location',
+        Container(
+          width: MediaQuery.of(context).size.width / 1.25,
+          child: RichText(
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            text: TextSpan(
+              children: [
+                WidgetSpan(
+                  child: Icon(Icons.near_me_rounded, color: themePrimaryColor),
+                ),
+                TextSpan(
+                  text: appState.locationController.text,
                   style: TextStyle(
                     color: text1color,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-              ),
-              WidgetSpan(
-                child: Icon(Icons.arrow_drop_down, color: themeSecondaryColor),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
@@ -303,3 +308,5 @@ int productPriceValue = 0;
 List productExtrasForCart = [];
 List finalProductsForCart = [];
 int finalPriceForCart = 0;
+
+LatLng currentPostion;

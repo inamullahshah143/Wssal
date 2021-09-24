@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wassal_customer/numberlogin.dart';
 import 'Profile.dart';
 import 'Stores.dart';
@@ -7,16 +8,20 @@ import 'const.dart';
 
 class CategoryDashboard extends StatefulWidget {
   final Map categoryBlock;
-  CategoryDashboard({@required this.categoryBlock});
+  CategoryDashboard(
+      {@required this.categoryBlock, @required this.initialPosition});
+  final LatLng initialPosition;
 
   @override
-  _CategoryDashboardState createState() =>
-      _CategoryDashboardState(categoryBlock: categoryBlock);
+  _CategoryDashboardState createState() => _CategoryDashboardState(
+      categoryBlock: categoryBlock, initialPosition: initialPosition);
 }
 
 class _CategoryDashboardState extends State<CategoryDashboard> {
+  _CategoryDashboardState(
+      {@required this.categoryBlock, @required this.initialPosition});
+  final LatLng initialPosition;
   final Map categoryBlock;
-  _CategoryDashboardState({@required this.categoryBlock});
   int bottomIndex;
   @override
   void initState() {
@@ -29,7 +34,10 @@ class _CategoryDashboardState extends State<CategoryDashboard> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
       body: bottomIndex == 0
-          ? CategoryDetail(categoryBlock: categoryBlock)
+          ? CategoryDetail(
+              categoryBlock: categoryBlock,
+              initialPosition: initialPosition,
+            )
           : bottomIndex == 1
               ? AllShops()
               : bottomIndex == 4 && logs == true

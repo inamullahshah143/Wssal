@@ -16,7 +16,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     latestContext = context;
-    //
+    
     return Scaffold(
       bottomNavigationBar: getBottomBar(context),
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
@@ -44,7 +44,7 @@ class _SearchPageState extends State<SearchPage> {
                             return Center(
                               child: Container(
                                 child: CircularProgressIndicator(
-                                  strokeWidth: 10,
+                                  strokeWidth: 2,
                                   backgroundColor: Colors.red,
                                   valueColor: AlwaysStoppedAnimation<Color>(
                                       Colors.yellow),
@@ -78,14 +78,14 @@ class _SearchPageState extends State<SearchPage> {
                 .get((Uri.parse("$apiURL/productDetail/${element['id']}")))
                 .then((value) {
               if (value.statusCode == 200) {
-               showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) {
-                      return ProductDetails(d: json.decode(value.body)['data']);
-                    },
-                  );
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return ProductDetails(d: json.decode(value.body)['data']);
+                  },
+                );
               }
             });
           },
@@ -142,14 +142,14 @@ class _SearchPageState extends State<SearchPage> {
       shops.forEach((element) {
         x.add(GestureDetector(
           onTap: () {
-             showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) {
-                    return StoreDetail(storeBlock: element);
-                  },
-                );
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              backgroundColor: Colors.transparent,
+              builder: (context) {
+                return StoreDetail(storeBlock: element);
+              },
+            );
           },
           child: Container(
               child: Row(

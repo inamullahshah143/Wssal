@@ -34,31 +34,28 @@ class _AllShopsState extends State<AllShops> {
           ],
         ),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              FutureBuilder(
-                future: allShops(context),
-                builder: ((context, snap) {
-                  if (snap.hasData) {
-                    return snap.data;
-                  } else if (snap.hasError) {
-                    return Text("${snap.error}");
-                  } else {
-                    return Center(
-                      child: Container(
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          backgroundColor: Colors.red,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.yellow,
-                          ),
-                        ),
+          child: FutureBuilder(
+            future: allShops(context),
+            builder: ((context, snap) {
+              if (snap.hasData) {
+                return snap.data;
+              } else if (snap.hasError) {
+                return Text("No Record Found");
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      backgroundColor: Colors.red,
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Colors.yellow,
                       ),
-                    );
-                  }
-                }),
-              ),
-            ],
+                    ),
+                  ),
+                );
+              }
+            }),
           ),
         ),
       ),
@@ -73,209 +70,213 @@ Future<Widget> allShops(BuildContext context) async {
     List<Widget> x = [];
     data.forEach((element) {
       x.add(
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: InkWell(
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                builder: (context) {
-                  return StoreDetail(storeBlock: element);
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) {
+                      return StoreDetail(storeBlock: element);
+                    },
+                  );
                 },
-              );
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image(
-                      image: NetworkImage(imageURL + '/${element['logo']}'),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-                Column(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            '${element['title']}',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Icon(
-                            Icons.verified,
-                            color: Colors.green,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: backgroundColor,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                            padding: EdgeInsets.all(5),
-                            child: Text(
-                              'Promoted',
-                              style: TextStyle(
-                                fontSize: 10,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: RichText(
-                        overflow: TextOverflow.ellipsis,
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text:
-                                  element['open_close'] == 1 ? 'Open' : 'Close',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                                color: element['open_close'] == 1
-                                    ? Colors.green
-                                    : Colors.red,
-                              ),
-                            ),
-                            WidgetSpan(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Icon(
-                                  Icons.circle,
-                                  size: 5,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                            TextSpan(
-                              text: "Burger",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                  color: Colors.grey),
-                            ),
-                            WidgetSpan(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Icon(
-                                  Icons.circle,
-                                  size: 5,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
-                            TextSpan(
-                              text: "Sandwitch",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                  color: Colors.grey),
-                            ),
-                          ],
+                    Container(
+                      width: 100,
+                      height: 100,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image(
+                          image: NetworkImage(imageURL + '/${element['logo']}'),
+                          fit: BoxFit.fill,
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '${element['title']}',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
-                            padding: EdgeInsets.all(5),
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  WidgetSpan(
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Icon(
+                                Icons.verified,
+                                color: Colors.green,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: backgroundColor,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                child: Text(
+                                  'Promoted',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: RichText(
+                            overflow: TextOverflow.ellipsis,
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text:
+                                      element['open_close'] == 1 ? 'Open' : 'Close',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                    color: element['open_close'] == 1
+                                        ? Colors.green
+                                        : Colors.red,
+                                  ),
+                                ),
+                                WidgetSpan(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
                                     child: Icon(
-                                      Icons.star,
-                                      size: 14,
-                                      color: Colors.white,
+                                      Icons.circle,
+                                      size: 5,
+                                      color: Colors.grey,
                                     ),
                                   ),
-                                  TextSpan(text: " "),
-                                  TextSpan(
-                                    text: "4.8",
-                                    style: TextStyle(
+                                ),
+                                TextSpan(
+                                  text: "Burger",
+                                  style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
-                                      color: Colors.white,
+                                      color: Colors.grey),
+                                ),
+                                WidgetSpan(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Icon(
+                                      Icons.circle,
+                                      size: 5,
+                                      color: Colors.grey,
                                     ),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "Sandwitch",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                child: RichText(
+                                  text: TextSpan(
+                                    children: [
+                                      WidgetSpan(
+                                        child: Icon(
+                                          Icons.star,
+                                          size: 14,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      TextSpan(text: " "),
+                                      TextSpan(
+                                        text: "4.8",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.alarm,
+                                    color: Colors.grey[500],
+                                    size: 16.0,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 5.0),
+                                    child: Text('25-35 Min'),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.alarm,
-                                color: Colors.grey[500],
-                                size: 16.0,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.delivery_dining,
+                                    color: Colors.grey[500],
+                                    size: 16.0,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 5.0),
+                                    child: Text('3.5 L.E'),
+                                  )
+                                ],
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 5.0),
-                                child: Text('25-35 Min'),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.delivery_dining,
-                                color: Colors.grey[500],
-                                size: 16.0,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 5.0),
-                                child: Text('3.5 L.E'),
-                              )
-                            ],
-                          ),
-                        ),
+                            ),
+                          ],
+                        )
                       ],
-                    )
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       );
     });

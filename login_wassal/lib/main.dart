@@ -3,10 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:wassal_customer/dashboard.dart';
 import 'package:wassal_customer/splashScreenSlider.dart';
+
+import 'google_map/app_states.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -18,7 +21,13 @@ void main() {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp().then((value) => {
-        runApp(MyApp()),
+        runApp(
+          MultiProvider(providers: [
+            ChangeNotifierProvider.value(
+              value: AppState(),
+            )
+          ], child: MyApp()),
+        ),
       });
 }
 
@@ -46,7 +55,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
   @override
   void initState() {
     getLogs();
@@ -82,12 +90,16 @@ class _SplashScreenState extends State<SplashScreen> {
           logs = true;
           Timer(Duration(seconds: 3), () {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (_) => MainDashboard()), (Route<dynamic> route) => false);
+                MaterialPageRoute(
+                    builder: (_) => MainDashboard()),
+                (Route<dynamic> route) => false);
           });
         } else {
           Timer(Duration(seconds: 3), () {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (_) => MainDashboard()), (Route<dynamic> route) => false);
+                MaterialPageRoute(
+                    builder: (_) => MainDashboard()),
+                (Route<dynamic> route) => false);
           });
         }
       }
@@ -130,4 +142,6 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
+
+  
 }

@@ -7,8 +7,6 @@ import 'Stores.dart';
 import 'const.dart';
 
 class MainDashboard extends StatefulWidget {
-  const MainDashboard({Key key}) : super(key: key);
-
   @override
   _MainDashboardState createState() => _MainDashboardState();
 }

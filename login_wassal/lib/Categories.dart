@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'categories_dashboard.dart';
@@ -12,9 +13,10 @@ class MainCategories extends StatefulWidget {
 }
 
 class _MainCategoriesState extends State<MainCategories> {
-  Position currentPosition;
+  LatLng initialPosition;
   @override
   void initState() {
+    getUserLocation();
     super.initState();
   }
 
@@ -89,6 +91,7 @@ class _MainCategoriesState extends State<MainCategories> {
                         child: Padding(
                           padding: EdgeInsets.all(10.0),
                           child: CircularProgressIndicator(
+                            strokeWidth: 2,
                             backgroundColor: Colors.red,
                             valueColor:
                                 AlwaysStoppedAnimation<Color>(Colors.yellow),
@@ -124,8 +127,10 @@ class _MainCategoriesState extends State<MainCategories> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        CategoryDashboard(categoryBlock: element),
+                    builder: (context) => CategoryDashboard(
+                      categoryBlock: element,
+                      initialPosition: initialPosition,
+                    ),
                   ),
                 );
               },
@@ -330,5 +335,13 @@ class _MainCategoriesState extends State<MainCategories> {
       }
     }
     return x;
+  }
+
+  void getUserLocation() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      initialPosition = LatLng(position.latitude, position.longitude);
+    });
   }
 }
