@@ -3,12 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:wassal_customer/dashboard.dart';
 import 'package:wassal_customer/splashScreenSlider.dart';
+
+import 'google_map/app_states.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -20,7 +21,13 @@ void main() {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp().then((value) => {
-        runApp(MyApp()),
+        runApp(
+          MultiProvider(providers: [
+            ChangeNotifierProvider.value(
+              value: AppState(),
+            )
+          ], child: MyApp()),
+        ),
       });
 }
 
@@ -48,8 +55,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
-  LatLng initialPosition;
   @override
   void initState() {
     getLogs();
@@ -62,7 +67,6 @@ class _SplashScreenState extends State<SplashScreen> {
             body: "${message.notification.body}");
       }
     });
-    getUserLocation();
     super.initState();
   }
 
@@ -87,16 +91,14 @@ class _SplashScreenState extends State<SplashScreen> {
           Timer(Duration(seconds: 3), () {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                    builder: (_) => MainDashboard(
-                          yourAddress: yourLocation,
-                        )),
+                    builder: (_) => MainDashboard()),
                 (Route<dynamic> route) => false);
           });
         } else {
           Timer(Duration(seconds: 3), () {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                    builder: (_) => MainDashboard(yourAddress: yourLocation)),
+                    builder: (_) => MainDashboard()),
                 (Route<dynamic> route) => false);
           });
         }
@@ -141,14 +143,5 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  void getUserLocation() async {
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    List<Placemark> placemark = await Geolocator()
-        .placemarkFromCoordinates(position.latitude, position.longitude);
-    setState(() {
-      yourLocation =
-          '${placemark[0].subLocality}, ${placemark[0].locality}, ${placemark[0].administrativeArea}, ${placemark[0].country}';
-    });
-  }
+  
 }

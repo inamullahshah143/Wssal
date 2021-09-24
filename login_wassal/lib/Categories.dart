@@ -8,16 +8,11 @@ import 'const.dart';
 import 'custom_delivery.dart';
 
 class MainCategories extends StatefulWidget {
-  final String yourAddress;
-  MainCategories({@required this.yourAddress});
   @override
-  _MainCategoriesState createState() =>
-      _MainCategoriesState(yourAddress: yourAddress);
+  _MainCategoriesState createState() => _MainCategoriesState();
 }
 
 class _MainCategoriesState extends State<MainCategories> {
-  final String yourAddress;
-  _MainCategoriesState({@required this.yourAddress});
   LatLng initialPosition;
   @override
   void initState() {
