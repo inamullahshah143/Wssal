@@ -5,11 +5,27 @@ import 'dart:convert';
 const apiKey = "AIzaSyAMp8UY-G3eUJeinsx6uwK-j0lXFYB_KWo";
 
 class GoogleMapsServices {
+  String distance;
+  String time;
   Future<String> getRouteCoordinates(LatLng l1, LatLng l2) async {
     String url =
         "https://maps.googleapis.com/maps/api/directions/json?origin=${l1.latitude},${l1.longitude}&destination=${l2.latitude},${l2.longitude}&key=AIzaSyAMp8UY-G3eUJeinsx6uwK-j0lXFYB_KWo";
     http.Response response = await http.get(url);
     Map values = jsonDecode(response.body);
     return values["routes"][0]["overview_polyline"]["points"];
+  }
+
+  Future<Map> getDistance(LatLng l1, LatLng l2) async {
+    String url =
+        "https://maps.googleapis.com/maps/api/directions/json?origin=${l1.latitude},${l1.longitude}&destination=${l2.latitude},${l2.longitude}&key=AIzaSyAMp8UY-G3eUJeinsx6uwK-j0lXFYB_KWo";
+    http.Response response = await http.get(url);
+    Map values = jsonDecode(response.body);
+    distance = values['routes'][0]['legs'][0]['distance']['text'];
+    time = values['routes'][0]['legs'][0]['duration']['text'];
+
+    return {
+      "distance": distance,
+      "time": time,
+    };
   }
 }

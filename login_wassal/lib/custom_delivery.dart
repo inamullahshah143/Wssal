@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-
 import 'package:http/http.dart' as http;
+import 'package:wassal_customer/google_map/google_maps_requests.dart';
 import 'const.dart';
 import 'google_map/app_states.dart';
 
@@ -17,6 +17,9 @@ class CustomDelivery extends StatefulWidget {
 
 class _CustomDeliveryState extends State<CustomDelivery> {
   bool isDriverFound;
+  GoogleMapsServices _googleMapsServices = GoogleMapsServices();
+  String distance = '';
+  String time = '';
   @override
   void initState() {
     isDriverFound = false;
@@ -203,13 +206,6 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                           .position
                                           .longitude;
 
-                                  print(pickLocationLatitude.toString() +
-                                      ':' +
-                                      pickLocationLongitude.toString());
-                                  print(dropoffLocationLatitude.toString() +
-                                      ':' +
-                                      dropoffLocationLongitude.toString());
-
                                   var response = await http.post(
                                       Uri.parse("$apiURL/finddriver"),
                                       body: {
@@ -218,8 +214,19 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                         "pick_lng":
                                             '${pickLocationLongitude.toString()}',
                                       });
+                                  _googleMapsServices
+                                      .getDistance(
+                                          LatLng(pickLocationLatitude,
+                                              pickLocationLongitude),
+                                          LatLng(dropoffLocationLatitude,
+                                              dropoffLocationLongitude))
+                                      .then((value) {
+                                    setState(() {
+                                      distance = value['distance'].toString();
+                                      time = value['time'].toString();
+                                    });
+                                  });
 
-                                  print(response.body);
                                   setState(() {
                                     isDriverFound = true;
                                   });
@@ -276,14 +283,66 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text('Pickup Location'),
-                                      Text(''),
-                                      Text('Dropoff Location'),
-                                      Text(''),
-                                      Text('Estimated Distance'),
-                                      Text('Estimated Time'),
-                                      Text('Accepted Price'),
-                                      Text('Deriver Details'),
+                                      Text(
+                                        'Pickup Location',
+                                        style: TextStyle(
+                                          color: themeSecondaryColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          appState.locationController.text,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Dropoff Location',
+                                        style: TextStyle(
+                                          color: themeSecondaryColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          appState.destinationController.text,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Estimated Distance',
+                                        style: TextStyle(
+                                          color: themeSecondaryColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Estimated Time',
+                                        style: TextStyle(
+                                          color: themeSecondaryColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Accepted Price',
+                                        style: TextStyle(
+                                          color: themeSecondaryColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Deriver Details',
+                                        style: TextStyle(
+                                          color: themeSecondaryColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
