@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -185,7 +186,9 @@ class _CartPageState extends State<CartPage> {
       'Authorization': 'Bearer $loginToken',
     });
     print("cartCheckout: ${response.body}");
+       Clipboard.setData(ClipboardData(text: response.body));
     Map data = json.decode(response.body);
+ 
     if (data['message'] == "Order successfully punched") {
       finalProductsForCart = [];
       showAlert(
