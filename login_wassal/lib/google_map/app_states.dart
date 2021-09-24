@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
+import 'package:http/http.dart' as http;
+import '../const.dart';
 import 'google_maps_requests.dart';
 
 class AppState with ChangeNotifier {
@@ -21,14 +26,12 @@ class AppState with ChangeNotifier {
   GoogleMapController get mapController => _mapController;
   Set<Marker> get markers => _markers;
   Set<Polyline> get polyLines => _polyLines;
-
   AppState() {
     _getUserLocation();
     _loadingInitialPosition();
   }
 // ! TO GET THE USERS LOCATION
   void _getUserLocation() async {
-    print("GET USER METHOD RUNNING =========");
     Position position = await Geolocator()
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     List<Placemark> placemark = await Geolocator()
