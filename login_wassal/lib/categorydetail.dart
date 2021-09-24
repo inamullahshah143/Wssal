@@ -728,6 +728,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                   ),
                 ),
                 onDragging: (handlerIndex, lowerValue, upperValue) {
+                  
                   setState(() {
                     _minValue = lowerValue;
                     _maxValue = upperValue;
