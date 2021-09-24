@@ -6,7 +6,7 @@
    <application
         android:label="وصل"
         android:icon="@mipmap/ic_launcher">
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCuyriY7QVqaX6WZrKR-9fI-QfHgjei7nE"/>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyAMp8UY-G3eUJeinsx6uwK-j0lXFYB_KWo"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
