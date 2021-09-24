@@ -1,12 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:http/http.dart' as http;
 import '../const.dart';
 import 'google_maps_requests.dart';
 
@@ -48,10 +44,11 @@ class AppState with ChangeNotifier {
   // ! TO CREATE ROUTE
   void createRoute(String encondedPoly) {
     _polyLines.add(Polyline(
-        polylineId: PolylineId(_lastPosition.toString()),
-        width: 10,
-        points: _convertToLatLng(_decodePoly(encondedPoly)),
-        color: Colors.black));
+      polylineId: PolylineId(_lastPosition.toString()),
+      width: 5,
+      points: _convertToLatLng(_decodePoly(encondedPoly)),
+      color: themeSecondaryColor,
+    ));
     notifyListeners();
   }
 
