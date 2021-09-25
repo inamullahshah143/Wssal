@@ -62,6 +62,7 @@ logoutFunction({@required context}) async {
 getAppbar(context, text) {
   return AppBar(
     elevation: 1.0,
+    automaticallyImplyLeading: false,
     backgroundColor: Colors.white,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
@@ -99,6 +100,7 @@ getDashboardAppbar(context, text) {
   final appState = Provider.of<AppState>(context);
   return AppBar(
     elevation: 1.0,
+    automaticallyImplyLeading: false,
     backgroundColor: Colors.white,
     toolbarHeight: 75,
     shape: RoundedRectangleBorder(

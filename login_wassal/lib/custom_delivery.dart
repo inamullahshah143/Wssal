@@ -436,7 +436,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                             primary: themePrimaryColor,
                                           ),
                                           child: Text(
-                                            "Accept",
+                                            "Proceed",
                                             style: TextStyle(
                                               fontSize: 14.0,
                                               color: Colors.grey[800],
@@ -452,9 +452,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                         height: 50,
                                         width: double.infinity,
                                         child: ElevatedButton(
-                                          onPressed: () {
-                                            // addMarker();
-                                          },
+                                          onPressed: () {},
                                           style: ElevatedButton.styleFrom(
                                             shape: new RoundedRectangleBorder(
                                               borderRadius:
@@ -464,7 +462,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                             primary: themePrimaryColor,
                                           ),
                                           child: Text(
-                                            "Decline",
+                                            "Cancel",
                                             style: TextStyle(
                                               fontSize: 14.0,
                                               color: Colors.grey[800],
