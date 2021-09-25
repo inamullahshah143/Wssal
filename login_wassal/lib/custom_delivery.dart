@@ -1,7 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:geolocator/geolocator.dart';
@@ -426,7 +423,8 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                                   "pick_lat": "$pLat",
                                                   "deliveryfeec": "$price"
                                                 }).then((response) {
-                                              print("Custom Delivery: ${response.body}");
+                                              print(
+                                                  "Custom Delivery: ${response.body}");
                                             });
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -521,9 +519,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
             Padding(
               padding: EdgeInsets.all(10),
               child: Center(
-                child: Platform.isIOS
-                    ? CupertinoActivityIndicator()
-                    : CircularProgressIndicator(),
+                child: CircularProgressIndicator(),
               ),
             ),
           ],
