@@ -212,7 +212,27 @@ class _MainCategoriesState extends State<MainCategories> {
           ),
         );
       });
-      x.add(
+    
+      return GridView(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: (2),
+          childAspectRatio: 1.1,
+        ),
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        children: x,
+      );
+    } else {
+      
+      return GridView(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: (2),
+          childAspectRatio: 1.1,
+        ),
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        children: [
+
         Container(
           margin: EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -305,19 +325,10 @@ class _MainCategoriesState extends State<MainCategories> {
             ),
           ),
         ),
-      );
+      
 
-      return GridView(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: (2),
-          childAspectRatio: 1.1,
-        ),
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        children: x,
+        ],
       );
-    } else {
-      return Center(child: Text("No Products Available"));
     }
   }
 

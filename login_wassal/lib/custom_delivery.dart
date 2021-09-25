@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +22,13 @@ class _CustomDeliveryState extends State<CustomDelivery> {
   GoogleMapsServices _googleMapsServices = GoogleMapsServices();
   String distance = '';
   String time = '';
+  String price = '';
+
+  double dLat;
+  double dLng;
+  double pLat;
+  double pLng;
+
   @override
   void initState() {
     isDriverFound = false;
@@ -190,10 +199,18 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                       pickLocationPlacemark[0]
                                           .position
                                           .latitude;
+                                  pLat = pickLocationLatitude =
+                                      pickLocationPlacemark[0]
+                                          .position
+                                          .latitude;
                                   double pickLocationLongitude =
                                       pickLocationPlacemark[0]
                                           .position
                                           .longitude;
+                                  pLng = pickLocationLatitude =
+                                      pickLocationPlacemark[0]
+                                          .position
+                                          .latitude;
                                   List<Placemark> dropoffLocationPlacemark =
                                       await Geolocator().placemarkFromAddress(
                                           appState.destinationController.text);
@@ -201,10 +218,18 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                       dropoffLocationPlacemark[0]
                                           .position
                                           .latitude;
+                                  dLat = pickLocationLatitude =
+                                      pickLocationPlacemark[0]
+                                          .position
+                                          .latitude;
                                   double dropoffLocationLongitude =
                                       dropoffLocationPlacemark[0]
                                           .position
                                           .longitude;
+                                  dLng = pickLocationLatitude =
+                                      pickLocationPlacemark[0]
+                                          .position
+                                          .latitude;
 
                                   var response = await http.post(
                                       Uri.parse("$apiURL/finddriver"),
@@ -224,6 +249,12 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                     setState(() {
                                       distance = value['distance'].toString();
                                       time = value['time'].toString();
+                                      price =
+                                          (json.decode(response.body)['data']
+                                                      ['perkilometeramount'] *
+                                                  double.parse(distance
+                                                      .replaceAll(" km", "")))
+                                              .toString();
                                     });
                                   });
 
@@ -322,6 +353,15 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          distance,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
                                       Text(
                                         'Estimated Time',
                                         style: TextStyle(
@@ -329,15 +369,33 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          time,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
                                       Text(
-                                        'Accepted Price',
+                                        'Expected Price',
                                         style: TextStyle(
                                           color: themeSecondaryColor,
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          price,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
                                       Text(
-                                        'Deriver Details',
+                                        'Driver Details',
                                         style: TextStyle(
                                           color: themeSecondaryColor,
                                           fontWeight: FontWeight.w500,
@@ -355,7 +413,22 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                         height: 50,
                                         width: double.infinity,
                                         child: ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            http.post("$apiURL/customorder",
+                                                headers: {
+                                                  'Authorization':
+                                                      'Bearer $loginToken',
+                                                },
+                                                body: {
+                                                  "drop_lng": "$dLng",
+                                                  "drop_lat": "$dLat",
+                                                  "pick_lng": "$pLng",
+                                                  "pick_lat": "$pLat",
+                                                  "deliveryfeec": "$price"
+                                                }).then((response) {
+                                              print("Custom Delivery: ${response.body}");
+                                            });
+                                          },
                                           style: ElevatedButton.styleFrom(
                                             shape: new RoundedRectangleBorder(
                                               borderRadius:
