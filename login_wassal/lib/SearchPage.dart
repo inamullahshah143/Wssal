@@ -18,7 +18,6 @@ class _SearchPageState extends State<SearchPage> {
     latestContext = context;
     
     return Scaffold(
-      bottomNavigationBar: getBottomBar(context),
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
       appBar: getAppbar(context, 'Categories'),
       body: Container(

@@ -14,7 +14,6 @@ class _AllShopsState extends State<AllShops> {
   Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
-      bottomNavigationBar: getBottomBar(context),
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
       appBar: getAppbar(context, "Shops"),
       body: Container(
