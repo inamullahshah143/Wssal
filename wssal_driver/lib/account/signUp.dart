@@ -256,7 +256,7 @@ signUp(context) async {
   });
   print('Response body: ${response.body}');
   var data = json.decode(response.body);
-  print('$data');
+
   if (data['status'] == 200) {
     Navigator.pushReplacement(
       context,

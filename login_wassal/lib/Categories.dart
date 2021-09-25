@@ -212,27 +212,8 @@ class _MainCategoriesState extends State<MainCategories> {
           ),
         );
       });
-    
-      return GridView(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: (2),
-          childAspectRatio: 1.1,
-        ),
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        children: x,
-      );
-    } else {
-      
-      return GridView(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: (2),
-          childAspectRatio: 1.1,
-        ),
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        children: [
 
+      x.add(
         Container(
           margin: EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -325,8 +306,118 @@ class _MainCategoriesState extends State<MainCategories> {
             ),
           ),
         ),
-      
+      );
 
+      return GridView(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: (2),
+          childAspectRatio: 1.1,
+        ),
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        children: x,
+      );
+    } else {
+      return GridView(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: (2),
+          childAspectRatio: 1.1,
+        ),
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        children: [
+          Container(
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              color: Color.fromRGBO(244, 245, 247, 1),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 0,
+                  blurRadius: 5,
+                  offset: Offset(0, 1),
+                ),
+              ],
+            ),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CustomDelivery(),
+                  ),
+                );
+              },
+              child: Container(
+                height: 300,
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 350,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(
+                              'https://www.cannabisbusinesstimes.com/fileuploads/image/2019/06/20/Delivery-Adobe_Stock-Credit-boophuket-Resized.jpg'),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: 100.0,
+                        width: 300.0,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Color.fromRGBO(255, 255, 255, 0),
+                              Color.fromRGBO(25, 25, 25, 1),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(7.5),
+                          ),
+                        ),
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Delivery',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  'From Point to Point',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       );
     }

@@ -849,7 +849,7 @@ class _DriverProfileState extends State<DriverProfile> {
         });
 
         Dio dio = Dio();
-        dio.options.headers['Authorization'] = 'Bearer $stringValue';
+        dio.options.headers['Authorization'] = 'Bearer $drivertoken';
 
         print({
           "name": '$drivername',
