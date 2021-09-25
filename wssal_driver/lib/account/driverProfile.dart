@@ -849,7 +849,7 @@ class _DriverProfileState extends State<DriverProfile> {
         });
 
         Dio dio = Dio();
-        dio.options.headers['Authorization'] = 'Bearer 346|djAhVqaQbXuSKbmfCqsKybWmciRxY8fR6dkbax9X';
+        dio.options.headers['Authorization'] = 'Bearer $stringValue';
 
         print({
           "name": '$drivername',
@@ -862,6 +862,7 @@ class _DriverProfileState extends State<DriverProfile> {
           'vehicle_longitude': '$lng',
           'photo': y[0],
           'id_picture': x[0],
+          "token": 'Bearer $stringValue'
         });
         var response = await dio.post(
             "https://wassldev.einnovention.tech/api/user/driverRequest",
