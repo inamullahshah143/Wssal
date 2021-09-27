@@ -136,7 +136,7 @@ getDashboardAppbar(context, text) {
                   child: Icon(Icons.near_me_rounded, color: themePrimaryColor),
                 ),
                 TextSpan(
-                  text: appState.locationController.text,
+                  text: appState.myLocation,
                   style: TextStyle(
                     color: text1color,
                     fontWeight: FontWeight.w400,
