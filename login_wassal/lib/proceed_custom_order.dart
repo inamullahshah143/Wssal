@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:http/http.dart' as http;
-import 'package:wassal_customer/wallet/venderWoilet.dart';
 
 class ProceedCustomOrder extends StatefulWidget {
   final String pickupLocation;
@@ -270,6 +269,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                         "payment_method": "cashondelivery",
                         "pick_loc": "$pickupLocation",
                         "drop_loc": "$dropoffLocation",
+                        "est_distance": "$estimatedDistance",
+                        "est_time": "$estimatedTime",
                       }).then((response) {
                         Clipboard.setData(ClipboardData(
                             text:
@@ -342,12 +343,112 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => DriverWoilet(),
-                        ),
-                      );
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Dialog(
+                              backgroundColor: Colors.white,
+                              child: Container(
+                                height: 150,
+                                width: double.infinity,
+                                padding: EdgeInsets.all(10),
+                                margin: EdgeInsets.all(10),
+                                color: Colors.white,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        'We are puching your Order',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: themeSecondaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        'Please Wait...',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                      http.post("$apiURL/customorder", headers: {
+                        'Authorization': 'Bearer $loginToken',
+                      }, body: {
+                        "drop_lng": "$dropoffLongitude",
+                        "drop_lat": "$dropoffLatitude",
+                        "pick_lng": "$pickupLongitude",
+                        "pick_lat": "$pickupLatitude",
+                        "deliveryfeec": "$expectedPrice",
+                        "payment_method": "walletpayment",
+                        "pick_loc": "$pickupLocation",
+                        "drop_loc": "$dropoffLocation",
+                        "est_distance": "$estimatedDistance",
+                        "est_time": "$estimatedTime",
+                      }).then((response) {
+                        Clipboard.setData(ClipboardData(
+                            text:
+                                "PickLat: $pickupLatitude || PickLng: $pickupLongitude"));
+                        print("Custom Delivery: ${response.body}");
+                        String trackingID =
+                            jsonDecode(response.body)['data']['order_no'];
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Dialog(
+                              backgroundColor: Colors.white,
+                              child: Container(
+                                height: 150,
+                                width: double.infinity,
+                                padding: EdgeInsets.all(10),
+                                margin: EdgeInsets.all(10),
+                                color: Colors.white,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        'Your Order has been placed Successfully!',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: themeSecondaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        'Your Order Tracing id is: ${trackingID.toString()}',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                       shape: new RoundedRectangleBorder(

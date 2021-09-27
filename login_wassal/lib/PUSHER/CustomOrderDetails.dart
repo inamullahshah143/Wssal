@@ -107,7 +107,37 @@ Future<Widget> customOrderDetail(BuildContext context) async {
       x.add(
         Card(
           child: ListTile(
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: Text('Order No'),
+                  content: Container(
+                    child: Column(
+                      children: [
+                        Text('Pickup Location:'),
+                        Text(''),
+                        Text('Dropoff Location:'),
+                        Text(''),
+                        Text('Distance'),
+                        Text(''),
+                        Text('Estimated Time:'),
+                        Text(''),
+                        Text('Estimated Price:'),
+                        Text(''),
+                        Text('Driver Name'),
+                        Text(''),
+                        Text('Vehicle ID'),
+                        Text(''),
+                        Row(
+                          children: [],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
             title: Container(
               width: MediaQuery.of(context).size.width / 1.25,
               child: Column(
