@@ -13,6 +13,7 @@ class AppState with ChangeNotifier {
   final Set<Marker> _markers = {};
   final Set<Polyline> _polyLines = {};
   GoogleMapController _mapController;
+  String myLocation;
   GoogleMapsServices _googleMapsServices = GoogleMapsServices();
   TextEditingController locationController = TextEditingController();
   TextEditingController destinationController = TextEditingController();
@@ -26,6 +27,7 @@ class AppState with ChangeNotifier {
     _getUserLocation();
     _loadingInitialPosition();
   }
+
 // ! TO GET THE USERS LOCATION
   void _getUserLocation() async {
     Position position = await Geolocator()
@@ -33,11 +35,24 @@ class AppState with ChangeNotifier {
     List<Placemark> placemark = await Geolocator()
         .placemarkFromCoordinates(position.latitude, position.longitude);
     _initialPosition = LatLng(position.latitude, position.longitude);
-    print(
-        "the latitude is: ${position.longitude} and th longitude is: ${position.longitude} ");
-    print("initial position is : ${_initialPosition.toString()}");
-    locationController.text =
-        '${placemark[0].subLocality}, ${placemark[0].locality}, ${placemark[0].administrativeArea}, ${placemark[0].country}';
+    String subThoroughfare = placemark[0].subThoroughfare != ''
+        ? '${placemark[0].subThoroughfare}, '
+        : '';
+    String thoroughfare = placemark[0].thoroughfare != ''
+        ? '${placemark[0].thoroughfare}, '
+        : '';
+    String subLocality =
+        placemark[0].subLocality != null ? '${placemark[0].subLocality}, ' : '';
+    String locality =
+        placemark[0].locality != null ? '${placemark[0].locality}, ' : '';
+    String administrativeArea = placemark[0].administrativeArea != null
+        ? '${placemark[0].administrativeArea}, '
+        : '';
+    String country =
+        placemark[0].country != null ? '${placemark[0].country}' : '';
+    myLocation =
+        '${subThoroughfare.toString()}${thoroughfare.toString()}${subLocality.toString()}${locality.toString()}${administrativeArea.toString()}${country.toString()}';
+    locationController.text = myLocation;
     notifyListeners();
   }
 
@@ -54,11 +69,13 @@ class AppState with ChangeNotifier {
 
   // ! ADD A MARKER ON THE MAO
   void _addMarker(LatLng location, String address) {
-    _markers.add(Marker(
-        markerId: MarkerId(_lastPosition.toString()),
-        position: location,
-        infoWindow: InfoWindow(title: address, snippet: "go here"),
-        icon: BitmapDescriptor.defaultMarker));
+    _markers.add(
+      Marker(
+          markerId: MarkerId(_lastPosition.toString()),
+          position: location,
+          infoWindow: InfoWindow(title: address, snippet: "Go Here..."),
+          icon: BitmapDescriptor.defaultMarker),
+    );
     notifyListeners();
   }
 
@@ -109,15 +126,23 @@ class AppState with ChangeNotifier {
   }
 
   // ! SEND REQUEST
-  void sendRequest(String intendedLocation) async {
-    List<Placemark> placemark =
-        await Geolocator().placemarkFromAddress(intendedLocation);
-    double latitude = placemark[0].position.latitude;
-    double longitude = placemark[0].position.longitude;
-    LatLng destination = LatLng(latitude, longitude);
-    _addMarker(destination, intendedLocation);
-    String route = await _googleMapsServices.getRouteCoordinates(
-        _initialPosition, destination);
+  void sendRequest(String startingLocation, String endingLocation) async {
+    List<Placemark> startingPlacemark =
+        await Geolocator().placemarkFromAddress(startingLocation);
+    double startingLatitude = startingPlacemark[0].position.latitude;
+    double startingLongitude = startingPlacemark[0].position.longitude;
+    LatLng startPoint = LatLng(startingLatitude, startingLongitude);
+
+    List<Placemark> endingPlacemark =
+        await Geolocator().placemarkFromAddress(endingLocation);
+    double endingLatitude = endingPlacemark[0].position.latitude;
+    double endingLongitude = endingPlacemark[0].position.longitude;
+    LatLng endPoint = LatLng(endingLatitude, endingLongitude);
+
+    _addMarker(startPoint, startingLocation);
+    _addMarker(endPoint, endingLocation);
+    String route =
+        await _googleMapsServices.getRouteCoordinates(startPoint, endPoint);
     createRoute(route);
     notifyListeners();
   }

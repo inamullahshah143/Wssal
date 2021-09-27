@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassal_customer/SearchPage.dart';
@@ -20,6 +18,7 @@ String fcmToken;
 bool logs = false;
 String yourLocation = '';
 BuildContext latestContext;
+BuildContext customContext;
 String googleApiKey = 'AIzaSyCB-GsSjkYZlAUBB07PROe0zkEqcANHiOQ';
 Map<int, Color> colorMap = {
   50: Color.fromRGBO(254, 197, 0, .1),
@@ -136,7 +135,7 @@ getDashboardAppbar(context, text) {
                   child: Icon(Icons.near_me_rounded, color: themePrimaryColor),
                 ),
                 TextSpan(
-                  text: appState.locationController.text,
+                  text: appState.myLocation,
                   style: TextStyle(
                     color: text1color,
                     fontWeight: FontWeight.w400,
@@ -169,5 +168,3 @@ int productPriceValue = 0;
 List productExtrasForCart = [];
 List finalProductsForCart = [];
 int finalPriceForCart = 0;
-
-LatLng currentPostion;

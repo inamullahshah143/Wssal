@@ -116,7 +116,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                       margin: EdgeInsets.only(top: 15, bottom: 15),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(17),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextFormField(
                         cursorColor: Colors.black,
@@ -150,7 +150,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                       margin: EdgeInsets.only(top: 15, bottom: 15),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(17),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextFormField(
                         onChanged: (value) {
@@ -184,7 +184,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                       margin: EdgeInsets.only(top: 15, bottom: 15),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(17),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextFormField(
                         onChanged: (value) {
@@ -218,7 +218,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                       margin: EdgeInsets.only(top: 15, bottom: 15),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(17),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextFormField(
                         onChanged: (value) {
@@ -252,7 +252,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                       margin: EdgeInsets.only(top: 15, bottom: 15),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(17),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextFormField(
                         onChanged: (value) {
@@ -286,7 +286,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                       margin: EdgeInsets.only(top: 15, bottom: 15),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(17),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextFormField(
                         onChanged: (value) {
@@ -322,7 +322,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                       margin: EdgeInsets.only(top: 15, bottom: 15),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(17),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextFormField(
                         onChanged: (value) {
@@ -407,7 +407,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                       margin: EdgeInsets.only(top: 15, bottom: 15),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(17),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: PlacePicker(
                         apiKey: googleApiKey,
