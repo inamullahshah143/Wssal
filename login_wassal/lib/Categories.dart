@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:flutter_alert/flutter_alert.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:wassal_customer/numberlogin.dart';
 import 'categories_dashboard.dart';
 import 'const.dart';
 import 'custom_delivery.dart';
@@ -227,12 +229,31 @@ class _MainCategoriesState extends State<MainCategories> {
           ),
           child: InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CustomDelivery(),
-                ),
-              );
+               if (logs == true) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CustomDelivery(),
+                    ),
+                  );
+                } else {
+                  showAlert(
+                      context: context,
+                      title: "Login Required",
+                      cancelable: true,
+                      actions: [
+                        AlertAction(
+                            text: "ok",
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoginPage(),
+                                ),
+                              );
+                            }),
+                      ]);
+                }
             },
             child: Container(
               height: 300,
@@ -336,12 +357,31 @@ class _MainCategoriesState extends State<MainCategories> {
             ),
             child: InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CustomDelivery(),
-                  ),
-                );
+                if (logs == true) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CustomDelivery(),
+                    ),
+                  );
+                } else {
+                  showAlert(
+                      context: context,
+                      title: "Login Required",
+                      cancelable: true,
+                      actions: [
+                        AlertAction(
+                            text: "ok",
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoginPage(),
+                                ),
+                              );
+                            }),
+                      ]);
+                }
               },
               child: Container(
                 height: 300,
