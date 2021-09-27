@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:http/http.dart' as http;
+import 'package:wassal_customer/wallet/venderWoilet.dart';
 
 class ProceedCustomOrder extends StatefulWidget {
   final String pickupLocation;
@@ -265,7 +266,7 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                         "pick_lng": "$pickupLongitude",
                         "pick_lat": "$pickupLatitude",
                         "deliveryfeec": "$expectedPrice",
-                        "payment_method": "Cash on Delivery"
+                        "payment_method": "cashondelivery"
                       }).then((response) {
                         print("Custom Delivery: ${response.body}");
                         String trackingID =
@@ -334,7 +335,14 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                   height: 50,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => DriverWoilet(),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(15.0),
