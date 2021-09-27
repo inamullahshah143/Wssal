@@ -416,7 +416,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                       ),
 
                       child: PlacePicker(
-                        apiKey: 'AIzaSyCuyriY7QVqaX6WZrKR-9fI-QfHgjei7nE',
+                        apiKey: 'AIzaSyCB-GsSjkYZlAUBB07PROe0zkEqcANHiOQ',
                         initialPosition: lock,
                         useCurrentLocation: false,
                         selectInitialPosition: false,

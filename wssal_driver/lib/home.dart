@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
+import 'package:location/location.dart';
 import 'account/displayprofile.dart';
 import 'account/driverProfile.dart';
 import 'function.dart';
@@ -17,6 +19,50 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    // Location().getLocation().then((value) {
+    //   http.post(Uri.parse("$apiURL/user/addBillingAddress"), headers: {
+    //     'Authorization': 'Bearer $stringValue'
+    //   }, body: {
+    //     "lat": "${value.latitude}",
+    //     "lng": "${value.longitude}",
+    //     "name": "name",
+    //     "company": "company",
+    //     "address": "address",
+    //     "city": "city",
+    //     "country": "country",
+    //     "postal_code": "1234",
+    //     "phone": "4321",
+    //   }).then((response) {
+    //     print("Location Send: Bearer ${response.body}");
+
+    //     print("Location Send: Bearer $stringValue");
+    //   });
+    // });
+    // Timer.periodic(Duration(minutes: 3), (timer) {
+    //   Location().getLocation().then((value) {
+    //     http.post(Uri.parse("$apiURL/user/addBillingAddress"), headers: {
+    //       'Authorization': 'Bearer $stringValue'
+    //     }, body: {
+    //       "lat": "${value.latitude}",
+    //       "lng": "${value.longitude}",
+    //       "name": "name",
+    //       "company": "company",
+    //       "address": "address",
+    //       "city": "city",
+    //       "country": "country",
+    //       "postal_code": "1234",
+    //       "phone": "4321",
+    //     }).then((response) {
+    //       print("Location Send: Bearer ${response.body}");
+    //       print("Location Send: Bearer $stringValue");
+    //     });
+    //   });
+    // });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     latestContext = context;
@@ -56,51 +102,51 @@ class _HomeState extends State<Home> {
         //                 image: AssetImage('assets/Logo_wssal.png'),
         //                 fit: BoxFit.contain)),
         //       ),
-              // ListTile(
-              //   title: Text('Profile'),
-              //   onTap: () {
+        // ListTile(
+        //   title: Text('Profile'),
+        //   onTap: () {
 
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (BuildContext context) => DriverProfile(),
-              //       ),
-              //     );
-              //   },
-              // ),
-              // ListTile(
-              //   title: Text('Driver Profile'),
-              //   onTap: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (BuildContext context) => Displayprofile(),
-              //       ),
-              //     );
-              //   },
-              // ),
-              // ListTile(
-              //  title: Text('Variants'),
-              //   onTap: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (BuildContext context) => DisplayVariants(),
-              //       ),
-              //     );
-              //   },
-              // ),
-              //   ListTile(
-              //  title: Text('Attributes'),
-              //   onTap: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (BuildContext context) => DisplayAttributes(),
-              //       ),
-              //     );
-              //   },
-              // ),
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (BuildContext context) => DriverProfile(),
+        //       ),
+        //     );
+        //   },
+        // ),
+        // ListTile(
+        //   title: Text('Driver Profile'),
+        //   onTap: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (BuildContext context) => Displayprofile(),
+        //       ),
+        //     );
+        //   },
+        // ),
+        // ListTile(
+        //  title: Text('Variants'),
+        //   onTap: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (BuildContext context) => DisplayVariants(),
+        //       ),
+        //     );
+        //   },
+        // ),
+        //   ListTile(
+        //  title: Text('Attributes'),
+        //   onTap: () {
+        //     Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //         builder: (BuildContext context) => DisplayAttributes(),
+        //       ),
+        //     );
+        //   },
+        // ),
         //     ],
         //   ),
         // ),
@@ -215,137 +261,126 @@ class _HomeState extends State<Home> {
               // Container(
               //   child: ),
               InkWell(
-                onTap: (){
-                    Navigator.push(
-              context, MaterialPageRoute(builder: (context) =>OrderDetails(element)));
-                },
-                child: Container(
-                  margin: EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9),
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 0.5
-                    )
-                  ),
-                  child: ListTile(
-                      title: Column(
-              
-                        children: [
-                          Container(
-                                      margin: EdgeInsets.only(right: 5),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          '\#${element['order_no']}',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black
-                                          ),
-                                        ),
-                                      )),
-                          RichText(
-                            text: TextSpan(children: [
-                              
-                              WidgetSpan(
-                                child: Text(
-                                  "${DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.parse(element['created_at']))}",
-                                // '${DateTime.parse(element['created_at'].toString())}',
-                                  style: TextStyle(
-                                        // fontSize: 15,
-                                        color: Color.fromRGBO(182, 189, 200, 1),
-                                  )
-                                ),
-                              ),
-                              // WidgetSpan(
-                              //     child: Container(
-                              //   margin: EdgeInsets.only(left: 5),
-                              //   child: Text(
-                              //     '${element['created_at'].toString().split('T')[0]}',
-                              //    style: TextStyle(
-                              //           // fontSize: 15,
-                              //           color: Color.fromRGBO(182, 189, 200, 1),
-                              //         )),
-                              
-                              // )),
-                            ]),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => OrderDetails(element)));
+            },
+            child: Container(
+              margin: EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(9),
+                  border: Border.all(color: Colors.black, width: 0.5)),
+              child: ListTile(
+                title: Column(
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(right: 5),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            '\#${element['order_no']}',
+                            style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
-                        ],
-                      ),
-                      subtitle: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              alignment: Alignment.centerLeft,
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                image: DecorationImage(
-                                  image: AssetImage('assets/driver.jpg'),
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ),
-                            Text(
-                                      '${element['payment_method']}',
-                                      style: TextStyle(
-                                        // fontSize: 15,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                              //       Text(
-                              //   '${element['grand_total']}',
-                              //   style: TextStyle(fontSize: 15),
-                              // ),
-                        ],
-                      ),
-                      trailing: RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                              text: 'View Details',
+                        )),
+                    RichText(
+                      text: TextSpan(children: [
+                        WidgetSpan(
+                          child: Text(
+                              "${DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.parse(element['created_at']))}",
+                              // '${DateTime.parse(element['created_at'].toString())}',
                               style: TextStyle(
-                                color: Color.fromRGBO(255, 199, 0, 1)
-                              )
-                            )
-                          ])),
-                      // Column(children: [
-                      //   RichText(
-                      //     text: TextSpan(children: [
-                      //       WidgetSpan(child: Container(
-                      //         alignment: Alignment.centerLeft,
-                      //         height: 50,
-                      //         width: 50,
-                      //         decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(20),
-                      //           image: DecorationImage(
-                      //             image: AssetImage('assets/driver.jpg'),
-                      //             fit: BoxFit.contain,
-                      //           ),
-                      //         ),
-                      //       ),),
-                      //       WidgetSpan(
-                      //           child: Container(
-                      //               margin: EdgeInsets.only(right: 5),
-                      //               child: Text(
-                      //                 '${element['payment_method']}',
-                      //                 style: TextStyle(
-                      //                   // fontSize: 15,
-                      //                   color: Colors.black,
-                      //                 ),
-                      //               ))),
-                      //       WidgetSpan(
-                      //         child: Text(
-                      //           '${element['grand_total']}',
-                      //           style: TextStyle(fontSize: 15),
-                      //         ),
-                      //       ),
-                      //     ]),
-                      //   ),
-                      // ])
-                      ),
+                                // fontSize: 15,
+                                color: Color.fromRGBO(182, 189, 200, 1),
+                              )),
+                        ),
+                        // WidgetSpan(
+                        //     child: Container(
+                        //   margin: EdgeInsets.only(left: 5),
+                        //   child: Text(
+                        //     '${element['created_at'].toString().split('T')[0]}',
+                        //    style: TextStyle(
+                        //           // fontSize: 15,
+                        //           color: Color.fromRGBO(182, 189, 200, 1),
+                        //         )),
+
+                        // )),
+                      ]),
+                    ),
+                  ],
                 ),
-              ));
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                          image: AssetImage('assets/driver.jpg'),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      '${element['payment_method']}',
+                      style: TextStyle(
+                        // fontSize: 15,
+                        color: Colors.black,
+                      ),
+                    ),
+                    //       Text(
+                    //   '${element['grand_total']}',
+                    //   style: TextStyle(fontSize: 15),
+                    // ),
+                  ],
+                ),
+                trailing: RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                      text: 'View Details',
+                      style: TextStyle(color: Color.fromRGBO(255, 199, 0, 1)))
+                ])),
+                // Column(children: [
+                //   RichText(
+                //     text: TextSpan(children: [
+                //       WidgetSpan(child: Container(
+                //         alignment: Alignment.centerLeft,
+                //         height: 50,
+                //         width: 50,
+                //         decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(20),
+                //           image: DecorationImage(
+                //             image: AssetImage('assets/driver.jpg'),
+                //             fit: BoxFit.contain,
+                //           ),
+                //         ),
+                //       ),),
+                //       WidgetSpan(
+                //           child: Container(
+                //               margin: EdgeInsets.only(right: 5),
+                //               child: Text(
+                //                 '${element['payment_method']}',
+                //                 style: TextStyle(
+                //                   // fontSize: 15,
+                //                   color: Colors.black,
+                //                 ),
+                //               ))),
+                //       WidgetSpan(
+                //         child: Text(
+                //           '${element['grand_total']}',
+                //           style: TextStyle(fontSize: 15),
+                //         ),
+                //       ),
+                //     ]),
+                //   ),
+                // ])
+              ),
+            ),
+          ));
         });
         return Container(
           child: ListView(
