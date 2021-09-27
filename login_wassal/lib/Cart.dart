@@ -41,130 +41,141 @@ class _CartPageState extends State<CartPage> {
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: GestureDetector(
-          onTap: () {
-            if (logs == true) {
-              if (finalProductsForCart.isNotEmpty) {
-                if (finalProductsForCart.first['shop_open_close'] == "1") {
-                  showAlert(
-                      context: context,
-                      title: "Payment Method",
-                      actions: [
-                        AlertAction(
-                            text: "Deliver to current address",
-                            onPressed: () {
-                              showAlert(
-                                  context: context,
-                                  title: "Payment Method",
-                                  actions: [
-                                    AlertAction(
-                                        text: "Cash on delivery",
-                                        onPressed: () {
-                                          cartCheckout(
-                                              context, "cash_on_delivery");
-                                        }),
-                                    AlertAction(
-                                        text: "Pay from wallet",
-                                        onPressed: () {
-                                          cartCheckout(
-                                              context, "direct_wallet_payment");
-                                        }),
-                                  ]);
-                            }),
-                        AlertAction(
-                            text: "Deliver to different address",
-                            onPressed: () {
-                              showAlert(
-                                  context: context,
-                                  body: "Add address in profile",
-                                  actions: [
-                                    AlertAction(
-                                        text: "ok",
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ProfilePage()),
-                                          );
-                                        })
-                                  ]);
-                            }),
-                      ]);
+        child: Container(
+          height: 50,
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            child: Text("Checkout (\$ ${cartFinalPrice.toDouble()})"),
+            onPressed: () {
+              if (logs == true) {
+                if (finalProductsForCart.isNotEmpty) {
+                  if (finalProductsForCart.first['shop_open_close'] == "1") {
+                    showAlert(
+                        context: context,
+                        title: "Payment Method",
+                        actions: [
+                          AlertAction(
+                              text: "Deliver to current address",
+                              onPressed: () {
+                                showAlert(
+                                    context: context,
+                                    title: "Payment Method",
+                                    actions: [
+                                      AlertAction(
+                                          text: "Cash on delivery",
+                                          onPressed: () {
+                                            cartCheckout(
+                                                context, "cash_on_delivery");
+                                          }),
+                                      AlertAction(
+                                          text: "Pay from wallet",
+                                          onPressed: () {
+                                            cartCheckout(context,
+                                                "direct_wallet_payment");
+                                          }),
+                                    ]);
+                              }),
+                          AlertAction(
+                              text: "Deliver to different address",
+                              onPressed: () {
+                                showAlert(
+                                    context: context,
+                                    body: "Add address in profile",
+                                    actions: [
+                                      AlertAction(
+                                          text: "ok",
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ProfilePage()),
+                                            );
+                                          })
+                                    ]);
+                              }),
+                        ]);
 
-                  print("HelloFinalCartValue: ${json.encode(cartFinalPrice)}");
+                    print(
+                        "HelloFinalCartValue: ${json.encode(cartFinalPrice)}");
+                  } else {
+                    showAlert(
+                        context: context, title: "Error", body: "Shop Closed");
+                  }
                 } else {
                   showAlert(
-                      context: context, title: "Error", body: "Shop Closed");
+                      context: context, title: "Error", body: "Cart is empty");
                 }
               } else {
                 showAlert(
-                    context: context, title: "Error", body: "Cart is empty");
-              }
-            } else {
-              showAlert(
                   context: context,
                   cancelable: true,
                   title: "Login Required",
                   actions: [
                     AlertAction(
-                        text: "ok",
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginPage()),
-                          );
-                        }),
-                  ]);
-            }
-          },
-          child: Container(
-              height: 50,
-              decoration: BoxDecoration(
-                  color: Color.fromRGBO(255, 199, 0, 100),
-                  borderRadius: BorderRadius.circular(15)),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  // ignore: unnecessary_brace_in_string_interps
-                  "Checkout (\$ ${cartFinalPrice})",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20),
-                ),
-              )),
+                      text: "ok",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
+                      },
+                    ),
+                  ],
+                );
+              }
+            },
+          ),
         ),
       ),
-      backgroundColor: Color.fromRGBO(244, 245, 247, 1),
-      appBar: AppBar(
-        title: Text("Cart"),
-      ),
-      body: SafeArea(
+      backgroundColor: pagesBackground,
+      appBar: getAppbar(true, context, 'Cart', false, false),
+      body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: double.infinity,
+          margin: EdgeInsets.all(10.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.25),
+                spreadRadius: 0,
+                blurRadius: 5,
+                offset: Offset(0, 0), // changes position of shadow
+              ),
+            ],
+          ),
           child: SingleChildScrollView(
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: SingleChildScrollView(
-              child: Container(
-                height: 550,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.white),
+            physics: BouncingScrollPhysics(),
+            child: Column(children: [
+              Padding(
+                padding: const EdgeInsets.all(12.0),
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      _buildCartProducts(),
-                    ],
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.white),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          _buildCartProducts(),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-        ]),
-      )),
+            ]),
+          )),
     );
   }
 

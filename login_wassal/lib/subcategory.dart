@@ -24,7 +24,7 @@ class _SubcategoryState extends State<Subcategory> {
   Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
-      appBar: getAppbar(context, "${subcatBlock['name']}"),
+      appBar: getAppbar(true, context, "${subcatBlock['name']}", true, true),
       backgroundColor: pagesBackground,
       body: SafeArea(
         child: SingleChildScrollView(

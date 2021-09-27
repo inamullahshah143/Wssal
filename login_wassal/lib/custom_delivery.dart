@@ -1,7 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:geolocator/geolocator.dart';
@@ -9,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:wassal_customer/google_map/google_maps_requests.dart';
+import 'package:wassal_customer/proceed_custom_order.dart';
 import 'const.dart';
 import 'google_map/app_states.dart';
 
@@ -19,19 +17,20 @@ class CustomDelivery extends StatefulWidget {
 
 class _CustomDeliveryState extends State<CustomDelivery> {
   bool isDriverFound;
+  bool driverNotFound;
   GoogleMapsServices _googleMapsServices = GoogleMapsServices();
   String distance = '';
   String time = '';
   String price = '';
-
-  double dLat;
   double dLng;
-  double pLat;
+  double dLat;
   double pLng;
+  double pLat;
 
   @override
   void initState() {
     isDriverFound = false;
+    driverNotFound = false;
     super.initState();
   }
 
@@ -126,8 +125,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                               ),
                               child: PlacesAutocompleteField(
                                 hint: 'Pickup Location?',
-                                apiKey:
-                                    'AIzaSyAMp8UY-G3eUJeinsx6uwK-j0lXFYB_KWo',
+                                apiKey: googleApiKey,
                                 controller: appState.locationController,
                                 onChanged: (value) {
                                   appState.sendRequest(value);
@@ -161,8 +159,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                               ),
                               child: PlacesAutocompleteField(
                                 hint: 'Dropoff Location?',
-                                apiKey:
-                                    'AIzaSyAMp8UY-G3eUJeinsx6uwK-j0lXFYB_KWo',
+                                apiKey: googleApiKey,
                                 controller: appState.destinationController,
                                 onChanged: (value) {
                                   appState.sendRequest(value);
@@ -238,7 +235,11 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                             '${pickLocationLatitude.toString()}',
                                         "pick_lng":
                                             '${pickLocationLongitude.toString()}',
+                                      },
+                                      headers: {
+                                        'Authorization': 'Bearer $loginToken',
                                       });
+                                  print(response.body);
                                   _googleMapsServices
                                       .getDistance(
                                           LatLng(pickLocationLatitude,
@@ -249,17 +250,23 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                     setState(() {
                                       distance = value['distance'].toString();
                                       time = value['time'].toString();
-                                      price =
-                                          (json.decode(response.body)['data']
-                                                      ['perkilometeramount'] *
-                                                  double.parse(distance
-                                                      .replaceAll(" km", "")))
-                                              .toString();
+                                      var data =
+                                          json.decode(response.body)['data'];
+                                      if (data['drivers'].isNotEmpty) {
+                                        setState(() {
+                                          isDriverFound = true;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          driverNotFound = true;
+                                        });
+                                      }
+                                      price = (data['perkilometeramount'] *
+                                              double.parse(
+                                                distance.replaceAll(" km", ""),
+                                              ))
+                                          .toString();
                                     });
-                                  });
-
-                                  setState(() {
-                                    isDriverFound = true;
                                   });
 
                                   Navigator.of(context).pop();
@@ -285,6 +292,41 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                       ),
                     ),
                   ),
+                  driverNotFound == true
+                      ? Positioned(
+                          bottom: 0.0,
+                          left: 0.0,
+                          right: 0.0,
+                          child: Container(
+                            margin: EdgeInsets.all(20),
+                            width: double.infinity,
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 0,
+                                  blurRadius: 2,
+                                  offset: Offset(0, 0),
+                                ),
+                              ],
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Currently there is no drivers avaliable in your area',
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                style: TextStyle(
+                                  color: themeSecondaryColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(),
                   isDriverFound == true
                       ? Positioned(
                           bottom: 0.0,
@@ -394,13 +436,6 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                           style: TextStyle(fontSize: 16),
                                         ),
                                       ),
-                                      Text(
-                                        'Driver Details',
-                                        style: TextStyle(
-                                          color: themeSecondaryColor,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
                                     ],
                                   ),
                                 ),
@@ -414,20 +449,28 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                         width: double.infinity,
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            http.post("$apiURL/customorder",
-                                                headers: {
-                                                  'Authorization':
-                                                      'Bearer $loginToken',
-                                                },
-                                                body: {
-                                                  "drop_lng": "$dLng",
-                                                  "drop_lat": "$dLat",
-                                                  "pick_lng": "$pLng",
-                                                  "pick_lat": "$pLat",
-                                                  "deliveryfeec": "$price"
-                                                }).then((response) {
-                                              print("Custom Delivery: ${response.body}");
-                                            });
+                                            showModalBottomSheet(
+                                              context: context,
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              builder: (context) {
+                                                return ProceedCustomOrder(
+                                                  pickupLocation: appState
+                                                      .locationController.text,
+                                                  dropoffLocation: appState
+                                                      .destinationController
+                                                      .text,
+                                                  estimatedDistance: distance,
+                                                  estimatedTime: time,
+                                                  expectedPrice: price,
+                                                  pickupLatitude: pLat,
+                                                  pickupLongitude: pLng,
+                                                  dropoffLatitude: dLat,
+                                                  dropoffLongitude: dLng,
+                                                );
+                                              },
+                                            );
                                           },
                                           style: ElevatedButton.styleFrom(
                                             shape: new RoundedRectangleBorder(
@@ -438,7 +481,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                             primary: themePrimaryColor,
                                           ),
                                           child: Text(
-                                            "Accept",
+                                            "Proceed",
                                             style: TextStyle(
                                               fontSize: 14.0,
                                               color: Colors.grey[800],
@@ -454,9 +497,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                         height: 50,
                                         width: double.infinity,
                                         child: ElevatedButton(
-                                          onPressed: () {
-                                            // addMarker();
-                                          },
+                                          onPressed: () {},
                                           style: ElevatedButton.styleFrom(
                                             shape: new RoundedRectangleBorder(
                                               borderRadius:
@@ -466,7 +507,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                             primary: themePrimaryColor,
                                           ),
                                           child: Text(
-                                            "Decline",
+                                            "Cancel",
                                             style: TextStyle(
                                               fontSize: 14.0,
                                               color: Colors.grey[800],
@@ -521,9 +562,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
             Padding(
               padding: EdgeInsets.all(10),
               child: Center(
-                child: Platform.isIOS
-                    ? CupertinoActivityIndicator()
-                    : CircularProgressIndicator(),
+                child: CircularProgressIndicator(),
               ),
             ),
           ],
