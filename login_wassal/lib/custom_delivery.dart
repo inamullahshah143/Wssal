@@ -147,9 +147,12 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                 hint: 'Pickup Location?',
                                 apiKey: googleApiKey,
                                 controller: locationController,
-                                onChanged: (value) async {
+                                onSelected: (value) async {
+                                  _markers.clear();
+                                  _polyLines.clear();
+                                  destinationController.text = '';
                                   List<Placemark> placemark = await Geolocator()
-                                      .placemarkFromAddress(value);
+                                      .placemarkFromAddress(value.toString());
                                   double latitude =
                                       placemark[0].position.latitude;
                                   double longitude =
@@ -157,7 +160,6 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                   setState(() {
                                     position = LatLng(latitude, longitude);
                                   });
-                                  print(position);
                                 },
                                 inputDecoration: InputDecoration(
                                   border: InputBorder.none,
