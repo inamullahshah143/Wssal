@@ -20,6 +20,10 @@ var userid;
 var namee;
 var picture;
 var picBaseURL = 'https://wassldev.einnovention.tech/storage/';
+String imageURL = 'https://wassldev.einnovention.tech/storage';
+String apiURL = 'https://wassldev.einnovention.tech/api';
+String domainUrl = 'https://wassldev.einnovention.tech';
+
 BuildContext latestContext;
 String fcmToken = "";
 

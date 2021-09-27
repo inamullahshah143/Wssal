@@ -862,7 +862,7 @@ class _DriverProfileState extends State<DriverProfile> {
           'vehicle_longitude': '$lng',
           'photo': y[0],
           'id_picture': x[0],
-          "token": 'Bearer $stringValue'
+          "token": 'Bearer $drivertoken'
         });
         var response = await dio.post(
             "https://wassldev.einnovention.tech/api/user/driverRequest",
