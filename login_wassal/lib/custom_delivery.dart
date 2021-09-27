@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -230,7 +231,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                       pickLocationPlacemark[0]
                                           .position
                                           .latitude;
-                                  pLat = pickLocationLatitude =
+                                  pLat =
                                       pickLocationPlacemark[0]
                                           .position
                                           .latitude;
@@ -238,10 +239,10 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                       pickLocationPlacemark[0]
                                           .position
                                           .longitude;
-                                  pLng = pickLocationLatitude =
+                                  pLng =
                                       pickLocationPlacemark[0]
                                           .position
-                                          .latitude;
+                                          .longitude;
                                   List<Placemark> dropoffLocationPlacemark =
                                       await Geolocator().placemarkFromAddress(
                                           appState.destinationController.text);
@@ -249,18 +250,18 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                       dropoffLocationPlacemark[0]
                                           .position
                                           .latitude;
-                                  dLat = pickLocationLatitude =
-                                      pickLocationPlacemark[0]
+                                  dLat =
+                                      dropoffLocationPlacemark[0]
                                           .position
                                           .latitude;
                                   double dropoffLocationLongitude =
                                       dropoffLocationPlacemark[0]
                                           .position
                                           .longitude;
-                                  dLng = pickLocationLatitude =
-                                      pickLocationPlacemark[0]
+                                  dLng =
+                                      dropoffLocationPlacemark[0]
                                           .position
-                                          .latitude;
+                                          .longitude;
 
                                   var response = await http.post(
                                       Uri.parse("$apiURL/finddriver"),
@@ -273,6 +274,9 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                       headers: {
                                         'Authorization': 'Bearer $loginToken',
                                       });
+                        Clipboard.setData(ClipboardData(
+                            text:
+                                "PickLat: $pickLocationLatitude || PickLng: $pickLocationLongitude"));
                                   print(response.body);
                                   _googleMapsServices
                                       .getDistance(
@@ -297,7 +301,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                       }
                                       price = (data['perkilometeramount'] *
                                               double.parse(
-                                                distance.replaceAll(" km", ""),
+                                                distance.replaceAll(" km", "").replaceAll(",", ""),
                                               ))
                                           .toString();
                                     });

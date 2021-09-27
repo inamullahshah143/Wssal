@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:http/http.dart' as http;
 import 'package:wassal_customer/wallet/venderWoilet.dart';
@@ -268,6 +269,9 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                         "deliveryfeec": "$expectedPrice",
                         "payment_method": "cashondelivery"
                       }).then((response) {
+                        Clipboard.setData(ClipboardData(
+                            text:
+                                "PickLat: $pickupLatitude || PickLng: $pickupLongitude"));
                         print("Custom Delivery: ${response.body}");
                         String trackingID =
                             jsonDecode(response.body)['data']['order_no'];

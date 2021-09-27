@@ -297,7 +297,7 @@ class _HomeState extends State<Home> {
                         child: Align(
                           alignment: Alignment.center,
                           child: Text(
-                            '\#${element['order_no']}',
+                            '\#${element['customorder']['order_no']}',
                             style: TextStyle(fontSize: 15, color: Colors.black),
                           ),
                         )),
