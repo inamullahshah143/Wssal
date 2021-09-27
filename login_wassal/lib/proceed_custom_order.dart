@@ -267,7 +267,9 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                         "pick_lng": "$pickupLongitude",
                         "pick_lat": "$pickupLatitude",
                         "deliveryfeec": "$expectedPrice",
-                        "payment_method": "cashondelivery"
+                        "payment_method": "cashondelivery",
+                        "pick_loc": "$pickupLocation",
+                        "drop_loc": "$dropoffLocation",
                       }).then((response) {
                         Clipboard.setData(ClipboardData(
                             text:

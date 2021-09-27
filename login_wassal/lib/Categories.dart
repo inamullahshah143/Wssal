@@ -86,14 +86,17 @@ class _MainCategoriesState extends State<MainCategories> {
                   if (snap.hasData) {
                     return snap.data;
                   } else if (snap.hasError) {
-                    return Text("${snap.error}");
+                    return Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Center(child: Text("No Record Found")),
+                    );
                   } else {
                     return Center(
                       child: Container(
                         child: Padding(
                           padding: EdgeInsets.all(10.0),
                           child: CircularProgressIndicator(
-                            strokeWidth: 2,
+                            strokeWidth: 1,
                             backgroundColor: Colors.red,
                             valueColor:
                                 AlwaysStoppedAnimation<Color>(Colors.yellow),
@@ -229,31 +232,31 @@ class _MainCategoriesState extends State<MainCategories> {
           ),
           child: InkWell(
             onTap: () {
-               if (logs == true) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CustomDelivery(),
-                    ),
-                  );
-                } else {
-                  showAlert(
-                      context: context,
-                      title: "Login Required",
-                      cancelable: true,
-                      actions: [
-                        AlertAction(
-                            text: "ok",
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoginPage(),
-                                ),
-                              );
-                            }),
-                      ]);
-                }
+              if (logs == true) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CustomDelivery(),
+                  ),
+                );
+              } else {
+                showAlert(
+                    context: context,
+                    title: "Login Required",
+                    cancelable: true,
+                    actions: [
+                      AlertAction(
+                          text: "ok",
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(),
+                              ),
+                            );
+                          }),
+                    ]);
+              }
             },
             child: Container(
               height: 300,

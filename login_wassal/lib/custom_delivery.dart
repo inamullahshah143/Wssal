@@ -535,7 +535,10 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                         width: double.infinity,
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            Navigator.of(context).pop();
+                                            setState(() {
+                                              isDriverFound = false;
+                                              driverNotFound = false;
+                                            });
                                             _markers.clear();
                                             _polyLines.clear();
                                             locationController.text = '';
