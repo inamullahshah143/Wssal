@@ -113,24 +113,62 @@ Future<Widget> customOrderDetail(BuildContext context) async {
                 builder: (_) => AlertDialog(
                   title: Text('Order No'),
                   content: Container(
+                    height: MediaQuery.of(context).size.height / 2,
+                    width: MediaQuery.of(context).size.width,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Pickup Location:'),
-                        Text(''),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(''),
+                        ),
                         Text('Dropoff Location:'),
-                        Text(''),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(''),
+                        ),
                         Text('Distance'),
-                        Text(''),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(''),
+                        ),
                         Text('Estimated Time:'),
-                        Text(''),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(''),
+                        ),
                         Text('Estimated Price:'),
-                        Text(''),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(''),
+                        ),
                         Text('Driver Name'),
-                        Text(''),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(''),
+                        ),
                         Text('Vehicle ID'),
-                        Text(''),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(''),
+                        ),
+                        ),
                         Row(
-                          children: [],
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.phone_in_talk),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.message_outlined),
+                            ),
+                          ],
                         ),
                       ],
                     ),
