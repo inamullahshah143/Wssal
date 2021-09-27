@@ -61,7 +61,7 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
     @required this.pickupLatitude,
     @required this.pickupLongitude,
   });
-  String trackingID = '';
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -267,15 +267,12 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                         "deliveryfeec": "$expectedPrice"
                       }).then((response) {
                         print("Custom Delivery: ${response.body}");
-                        setState(() {
-                          trackingID =
-                              jsonDecode(response.body)['data']['order_no'];
-                        });
-                      });
-
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                      showDialog(
+                        String trackingID =
+                            jsonDecode(response.body)['data']['order_no'];
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return Dialog(
@@ -287,11 +284,12 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                                 margin: EdgeInsets.all(10),
                                 color: Colors.white,
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
-                                        'Your Order Tracing id is',
+                                        'Your Order has been placed Successfully!',
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: themeSecondaryColor,
@@ -301,23 +299,19 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                                     Padding(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
-                                        trackingID,
+                                        'Your Order Tracing id is: ${trackingID.toString()}',
                                         style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 20,
                                         ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.all(10),
-                                      child: Center(
-                                        child: CircularProgressIndicator(),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                             );
-                          });
+                          },
+                        );
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                       shape: new RoundedRectangleBorder(

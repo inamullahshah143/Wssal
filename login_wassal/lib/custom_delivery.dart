@@ -26,7 +26,11 @@ class _CustomDeliveryState extends State<CustomDelivery> {
   double dLat;
   double pLng;
   double pLat;
-
+  LatLng position;
+  TextEditingController locationController = TextEditingController();
+  TextEditingController destinationController = TextEditingController();
+  Set<Marker> _markers = {};
+  Set<Polyline> _polyLines = {};
   @override
   void initState() {
     isDriverFound = false;
@@ -35,8 +39,24 @@ class _CustomDeliveryState extends State<CustomDelivery> {
   }
 
   @override
+  void dispose() {
+    _markers.clear();
+    _polyLines.clear();
+    locationController.text = '';
+    destinationController.text = '';
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context);
+    setState(() {
+      position = appState.initialPosition;
+      locationController = appState.locationController;
+      destinationController = appState.destinationController;
+      _markers = appState.markers;
+      _polyLines = appState.polyLines;
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text('Custom Delivery'),
@@ -69,7 +89,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                   GoogleMap(
                     onMapCreated: appState.onCreated,
                     initialCameraPosition: CameraPosition(
-                      target: appState.initialPosition,
+                      target: position,
                       zoom: 15,
                     ),
                     myLocationEnabled: true,
@@ -78,9 +98,9 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                     zoomGesturesEnabled: true,
                     zoomControlsEnabled: false,
                     compassEnabled: true,
-                    markers: appState.markers,
+                    markers: _markers,
                     onCameraMove: appState.onCameraMove,
-                    polylines: appState.polyLines,
+                    polylines: _polyLines,
                   ),
                   Positioned(
                     top: 0.0,
@@ -126,9 +146,18 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                               child: PlacesAutocompleteField(
                                 hint: 'Pickup Location?',
                                 apiKey: googleApiKey,
-                                controller: appState.locationController,
-                                onChanged: (value) {
-                                  appState.sendRequest(value);
+                                controller: locationController,
+                                onChanged: (value) async {
+                                  List<Placemark> placemark = await Geolocator()
+                                      .placemarkFromAddress(value);
+                                  double latitude =
+                                      placemark[0].position.latitude;
+                                  double longitude =
+                                      placemark[0].position.longitude;
+                                  setState(() {
+                                    position = LatLng(latitude, longitude);
+                                  });
+                                  print(position);
                                 },
                                 inputDecoration: InputDecoration(
                                   border: InputBorder.none,
@@ -160,9 +189,12 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                               child: PlacesAutocompleteField(
                                 hint: 'Dropoff Location?',
                                 apiKey: googleApiKey,
-                                controller: appState.destinationController,
+                                controller: destinationController,
                                 onChanged: (value) {
-                                  appState.sendRequest(value);
+                                  if (locationController.text != '') {
+                                    appState.sendRequest(
+                                        locationController.text, value);
+                                  }
                                 },
                                 inputDecoration: InputDecoration(
                                   border: InputBorder.none,
@@ -268,7 +300,6 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                           .toString();
                                     });
                                   });
-
                                   Navigator.of(context).pop();
                                 },
                                 style: ElevatedButton.styleFrom(
