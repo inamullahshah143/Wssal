@@ -170,7 +170,7 @@ class _HomeState extends State<Home> {
       var url = 'https://wassldev.einnovention.tech/api/driver/driverOrders';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
-      print('build Driver Response: ${response.body}');
+      print('buildDriverRegularOrders: ${response.body}');
       List data = json.decode(response.body)['data'];
       if (data.length > 0) {
         data.forEach((element) {
@@ -269,10 +269,10 @@ class _HomeState extends State<Home> {
    Future<Widget> buildDriverCustomOrders() async {
     List<Widget> x = [];
     try {
-      var url = 'https://wassldev.einnovention.tech/api/driver/drivercustomorder';
+      var url = 'https://wassldev.einnovention.tech/api/drivercustomorder';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
-      print('build Driver Response: ${response.body}');
+      print('buildDriverCustomOrders: ${response.body}');
       List data = json.decode(response.body)['data'];
       if (data.length > 0) {
         data.forEach((element) {
