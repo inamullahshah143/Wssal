@@ -52,6 +52,7 @@ class _MainDashboardState extends State<MainDashboard> {
           currentIndex: bottomIndex,
           showSelectedLabels: false,
           showUnselectedLabels: false,
+          backgroundColor: Colors.white,
           selectedItemColor: themeSecondaryColor,
           unselectedItemColor: Colors.grey[500],
           type: BottomNavigationBarType.fixed,

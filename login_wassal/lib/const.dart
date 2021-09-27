@@ -59,10 +59,11 @@ logoutFunction({@required context}) async {
   });
 }
 
-getAppbar(context, text) {
+getAppbar(
+    bool haveBackBtn, context, text, bool haveSearchBtn, bool haveCartBtn) {
   return AppBar(
     elevation: 1.0,
-    automaticallyImplyLeading: false,
+    automaticallyImplyLeading: haveBackBtn,
     backgroundColor: Colors.white,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
@@ -72,26 +73,30 @@ getAppbar(context, text) {
     ),
     title: Text("$text"),
     actions: [
-      IconButton(
-        onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (_) => SearchPage()));
-        },
-        icon: Icon(
-          Icons.search,
-        ),
-      ),
-      IconButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => CartPage()),
-          );
-        },
-        icon: Icon(
-          Icons.shopping_cart_outlined,
-        ),
-      ),
+      haveSearchBtn == true
+          ? IconButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => SearchPage()));
+              },
+              icon: Icon(
+                Icons.search,
+              ),
+            )
+          : Container(),
+      haveCartBtn == true
+          ? IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CartPage()),
+                );
+              },
+              icon: Icon(
+                Icons.shopping_cart_outlined,
+              ),
+            )
+          : Container()
     ],
   );
 }

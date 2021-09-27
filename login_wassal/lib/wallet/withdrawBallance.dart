@@ -17,7 +17,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
   Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
-      appBar: getAppbar(context, "Withdraw"),
+      appBar: getAppbar(true, context, "Withdraw", false, true),
       bottomNavigationBar: getBottomBar(context),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,

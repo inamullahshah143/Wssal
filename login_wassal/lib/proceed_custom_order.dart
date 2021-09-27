@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:http/http.dart' as http;
@@ -59,6 +61,7 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
     @required this.pickupLatitude,
     @required this.pickupLongitude,
   });
+  String trackingID = '';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -264,10 +267,57 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                         "deliveryfeec": "$expectedPrice"
                       }).then((response) {
                         print("Custom Delivery: ${response.body}");
+                        setState(() {
+                          trackingID =
+                              jsonDecode(response.body)['data']['order_no'];
+                        });
                       });
 
                       Navigator.of(context).pop();
                       Navigator.of(context).pop();
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Dialog(
+                              backgroundColor: Colors.white,
+                              child: Container(
+                                height: 150,
+                                width: double.infinity,
+                                padding: EdgeInsets.all(10),
+                                margin: EdgeInsets.all(10),
+                                color: Colors.white,
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        'Your Order Tracing id is',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: themeSecondaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Text(
+                                        trackingID,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
                     },
                     style: ElevatedButton.styleFrom(
                       shape: new RoundedRectangleBorder(

@@ -24,7 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
-      appBar: getAppbar(context, 'Profile Page'),
+      appBar: getAppbar(false, context, 'Profile Page', false, true),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -125,11 +125,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         ListTile(
                           onTap: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      DriverWoilet()),
+                                builder: (BuildContext context) =>
+                                    DriverWoilet(),
+                              ),
                             );
                           },
                           leading: Column(
@@ -151,7 +152,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         ListTile(
                           onTap: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (BuildContext context) =>
@@ -345,14 +346,15 @@ class _ProfilePageState extends State<ProfilePage> {
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(20),boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.25),
-              spreadRadius: 0,
-              blurRadius: 5,
-              offset: Offset(0, 0), // changes position of shadow
-            ),
-          ],
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.25),
+                    spreadRadius: 0,
+                    blurRadius: 5,
+                    offset: Offset(0, 0), // changes position of shadow
+                  ),
+                ],
               ),
               child: Column(
                 children: [

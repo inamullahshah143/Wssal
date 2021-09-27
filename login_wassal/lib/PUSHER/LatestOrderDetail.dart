@@ -17,7 +17,7 @@ class _LatestOrderDetailState extends State<LatestOrderDetail> {
     return Scaffold(
       bottomNavigationBar: getBottomBar(context),
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
-      appBar: getAppbar(context, 'Current Order'),
+      appBar: getAppbar(true, context, 'Current Order', false, true),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(children: [

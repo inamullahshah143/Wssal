@@ -16,10 +16,9 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     latestContext = context;
-    
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
-      appBar: getAppbar(context, 'Categories'),
+      appBar: getAppbar(true, context, 'Categories', false, true),
       body: Container(
           margin: EdgeInsets.all(5),
           padding: EdgeInsets.all(5),
@@ -28,7 +27,12 @@ class _SearchPageState extends State<SearchPage> {
               Align(
                 child: TextFormField(
                   decoration: InputDecoration(
-                      labelText: "Search", hintText: "Search a keyword"),
+                    hintText: "Search a keyword",
+                    isDense: true,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                  ),
                   onFieldSubmitted: (value) {
                     setState(() {
                       searckKeyword = value;
@@ -40,13 +44,16 @@ class _SearchPageState extends State<SearchPage> {
                           } else if (snap.hasError) {
                             return Text("${snap.error}");
                           } else {
-                            return Center(
-                              child: Container(
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  backgroundColor: Colors.red,
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.yellow),
+                            return Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Center(
+                                child: Container(
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 1,
+                                    backgroundColor: Colors.red,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.yellow),
+                                  ),
                                 ),
                               ),
                             );

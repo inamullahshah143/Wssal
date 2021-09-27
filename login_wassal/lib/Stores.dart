@@ -15,7 +15,7 @@ class _AllShopsState extends State<AllShops> {
     latestContext = context;
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
-      appBar: getAppbar(context, "Shops"),
+      appBar: getAppbar(false, context, "Shops", true, true),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: double.infinity,
@@ -149,8 +149,9 @@ Future<Widget> allShops(BuildContext context) async {
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text:
-                                      element['open_close'] == 1 ? 'Open' : 'Close',
+                                  text: element['open_close'] == 1
+                                      ? 'Open'
+                                      : 'Close',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 12,
