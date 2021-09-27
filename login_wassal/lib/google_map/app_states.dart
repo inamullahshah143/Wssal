@@ -35,9 +35,23 @@ class AppState with ChangeNotifier {
     List<Placemark> placemark = await Geolocator()
         .placemarkFromCoordinates(position.latitude, position.longitude);
     _initialPosition = LatLng(position.latitude, position.longitude);
-
+    String subThoroughfare = placemark[0].subThoroughfare != ''
+        ? '${placemark[0].subThoroughfare}, '
+        : '';
+    String thoroughfare = placemark[0].thoroughfare != ''
+        ? '${placemark[0].thoroughfare}, '
+        : '';
+    String subLocality =
+        placemark[0].subLocality != null ? '${placemark[0].subLocality}, ' : '';
+    String locality =
+        placemark[0].locality != null ? '${placemark[0].locality}, ' : '';
+    String administrativeArea = placemark[0].administrativeArea != null
+        ? '${placemark[0].administrativeArea}, '
+        : '';
+    String country =
+        placemark[0].country != null ? '${placemark[0].country}' : '';
     myLocation =
-        '${placemark[0].subThoroughfare} ,${placemark[0].thoroughfare} ,${placemark[0].subLocality}, ${placemark[0].locality}, ${placemark[0].administrativeArea}, ${placemark[0].country}';
+        '${subThoroughfare.toString()}${thoroughfare.toString()}${subLocality.toString()}${locality.toString()}${administrativeArea.toString()}${country.toString()}';
     locationController.text = myLocation;
     notifyListeners();
   }

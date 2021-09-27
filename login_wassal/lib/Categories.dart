@@ -139,6 +139,11 @@ class _MainCategoriesState extends State<MainCategories> {
                   Container(
                     width: 300.0,
                     decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image:
+                            NetworkImage(imageURL + '/' + element['thumbnail']),
+                        fit: BoxFit.cover,
+                      ),
                       color: Colors.grey.shade100,
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
@@ -149,14 +154,6 @@ class _MainCategoriesState extends State<MainCategories> {
                           offset: Offset(0, 1), // changes position of shadow
                         ),
                       ],
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image(
-                        fit: BoxFit.fill,
-                        image:
-                            NetworkImage(imageURL + '/' + element['thumbnail']),
-                      ),
                     ),
                   ),
                   Align(
@@ -245,15 +242,12 @@ class _MainCategoriesState extends State<MainCategories> {
                     height: 350,
                     decoration: BoxDecoration(
                       color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image(
-                        fit: BoxFit.fill,
+                      image: DecorationImage(
                         image: NetworkImage(
                             'https://www.cannabisbusinesstimes.com/fileuploads/image/2019/06/20/Delivery-Adobe_Stock-Credit-boophuket-Resized.jpg'),
+                        fit: BoxFit.cover,
                       ),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                   ),
                   Align(

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:wassal_customer/PUSHER/LatestOrderDetail.dart';
 import 'package:wassal_customer/wallet/venderWoilet.dart';
+import 'PUSHER/CustomOrderDetails.dart';
 import 'const.dart';
 import 'design_pages/profile/addUpdateBilling.dart';
 
@@ -175,6 +176,32 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         ListTile(
                           onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    CustomOrderDetail(),
+                              ),
+                            );
+                          },
+                          leading: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.account_tree_rounded,
+                                color: Colors.grey,
+                              ),
+                            ],
+                          ),
+                          title: Text('Custom Orders'),
+                          trailing: Icon(Icons.arrow_forward_ios_rounded),
+                          subtitle: Text('Your Custom Order Details'),
+                        ),
+                        Divider(
+                          height: 1,
+                        ),
+                        ListTile(
+                          onTap: () {
                             http.get(
                                 Uri.parse("$apiURL/user/getBillingAddress"),
                                 headers: {
@@ -223,7 +250,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ],
                           ),
-                          title: Text('BIlling Information'),
+                          title: Text('Billing Information'),
                           trailing: Icon(Icons.arrow_forward_ios_rounded),
                           subtitle: Text('Set your billing info'),
                         ),

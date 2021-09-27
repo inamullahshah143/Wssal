@@ -530,7 +530,13 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                         height: 50,
                                         width: double.infinity,
                                         child: ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            _markers.clear();
+                                            _polyLines.clear();
+                                            locationController.text = '';
+                                            destinationController.text = '';
+                                          },
                                           style: ElevatedButton.styleFrom(
                                             shape: new RoundedRectangleBorder(
                                               borderRadius:

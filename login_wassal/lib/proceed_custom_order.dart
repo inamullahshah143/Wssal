@@ -264,7 +264,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                         "drop_lat": "$dropoffLatitude",
                         "pick_lng": "$pickupLongitude",
                         "pick_lat": "$pickupLatitude",
-                        "deliveryfeec": "$expectedPrice"
+                        "deliveryfeec": "$expectedPrice",
+                        "payment_method": "Cash on Delivery"
                       }).then((response) {
                         print("Custom Delivery: ${response.body}");
                         String trackingID =

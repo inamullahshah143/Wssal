@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 import '../const.dart';
 import 'MapNavigation.dart';
 
-class LatestOrderDetail extends StatefulWidget {
+class CustomOrderDetail extends StatefulWidget {
   @override
-  _LatestOrderDetailState createState() => _LatestOrderDetailState();
+  _CustomOrderDetailState createState() => _CustomOrderDetailState();
 }
 
-class _LatestOrderDetailState extends State<LatestOrderDetail> {
+class _CustomOrderDetailState extends State<CustomOrderDetail> {
   @override
   Widget build(BuildContext context) {
-    latestContext = context;
+    customContext = context;
     return Scaffold(
       backgroundColor: pagesBackground,
-      appBar: getAppbar(true, context, 'Current Order', false, true),
+      appBar: getAppbar(true, context, 'Custom Orders', false, true),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: double.infinity,
@@ -66,7 +66,7 @@ class _LatestOrderDetailState extends State<LatestOrderDetail> {
                 ],
               ),
               FutureBuilder(
-                future: latestOrderDetail(context),
+                future: customOrderDetail(context),
                 builder: ((context, snap) {
                   if (snap.hasData) {
                     return snap.data;
@@ -98,12 +98,11 @@ class _LatestOrderDetailState extends State<LatestOrderDetail> {
   }
 }
 
-Future<Widget> latestOrderDetail(BuildContext context) async {
+Future<Widget> customOrderDetail(BuildContext context) async {
   var response = await http.get(Uri.parse("$apiURL/user/latestOrder"),
       headers: {'Authorization': 'Bearer $loginToken'});
   if (json.decode(response.body)['status'] == 200) {
     Map data = json.decode(response.body)['order'];
-
     return Column(
       children: [
         Container(
@@ -181,11 +180,12 @@ Future<Widget> latestOrderDetail(BuildContext context) async {
                     TableRow(
                       children: [
                         Container(
-                            margin: EdgeInsets.all(10),
-                            child: Text(
-                              "Assigned",
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            )),
+                          margin: EdgeInsets.all(10),
+                          child: Text(
+                            "Assigned",
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          ),
+                        ),
                         Container(
                           margin: EdgeInsets.all(10),
                           child: Text(
