@@ -78,7 +78,6 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                       height: 5,
                       width: 40,
                       decoration: BoxDecoration(
-                        color: Colors.grey,
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
@@ -107,7 +106,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                   children: [
                     Text(
                       'Name',
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                      style: TextStyle(fontSize: 14),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -133,8 +132,6 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                                left: 15, bottom: 11, top: 11, right: 15),
                             hintText: ""),
                       ),
                     ),
@@ -143,7 +140,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                     ),
                     Text(
                       'Company',
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                      style: TextStyle(fontSize: 14),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -169,8 +166,6 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                                left: 15, bottom: 11, top: 11, right: 15),
                             hintText: ""),
                       ),
                     ),
@@ -179,7 +174,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                     ),
                     Text(
                       'Address',
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                      style: TextStyle(fontSize: 14),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -205,8 +200,6 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                                left: 15, bottom: 11, top: 11, right: 15),
                             hintText: ""),
                       ),
                     ),
@@ -215,7 +208,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                     ),
                     Text(
                       'City',
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                      style: TextStyle(fontSize: 14),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -241,8 +234,6 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                                left: 15, bottom: 11, top: 11, right: 15),
                             hintText: ""),
                       ),
                     ),
@@ -251,7 +242,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                     ),
                     Text(
                       'Country',
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                      style: TextStyle(fontSize: 14),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -277,8 +268,6 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                                left: 15, bottom: 11, top: 11, right: 15),
                             hintText: ""),
                       ),
                     ),
@@ -287,7 +276,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                     ),
                     Text(
                       'Postal Code',
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                      style: TextStyle(fontSize: 14),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -313,8 +302,6 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                                left: 15, bottom: 11, top: 11, right: 15),
                             hintText: ""),
                       ),
                     ),
@@ -323,7 +310,9 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                     ),
                     Text(
                       'Phone',
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -349,8 +338,6 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(
-                                left: 15, bottom: 11, top: 11, right: 15),
                             hintText: ""),
                       ),
                     ),
@@ -359,45 +346,55 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                     ),
                     Text(
                       'Location (Coordinates)',
-                      style: TextStyle(color: Colors.grey, fontSize: 14),
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
                     ),
                     lat != null && lng != null
                         ? Container(
                             margin: EdgeInsets.all(25),
                             child: Table(
                               children: [
-                                TableRow(children: [
-                                  Container(
-                                      margin: EdgeInsets.all(10),
-                                      child: Text(
-                                        "Latitude:",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16),
-                                      )),
-                                  Container(
+                                TableRow(
+                                  children: [
+                                    Container(
+                                        margin: EdgeInsets.all(10),
+                                        child: Text(
+                                          "Latitude:",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16),
+                                        )),
+                                    Container(
                                       margin: EdgeInsets.all(10),
                                       child: Text(
                                         "$lat",
                                         style: TextStyle(fontSize: 16),
-                                      ))
-                                ]),
-                                TableRow(children: [
-                                  Container(
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                TableRow(
+                                  children: [
+                                    Container(
                                       margin: EdgeInsets.all(10),
                                       child: Text(
                                         "Latitude:",
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16),
-                                      )),
-                                  Container(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
                                       margin: EdgeInsets.all(10),
                                       child: Text(
                                         "$lng",
                                         style: TextStyle(fontSize: 16),
-                                      ))
-                                ]),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ],
                             ),
                           )
@@ -407,16 +404,13 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                       height: 350,
                       alignment: Alignment.center,
                       width: double.infinity,
-
-                      // padding: EdgeInsets.all(10),
                       margin: EdgeInsets.only(top: 15, bottom: 15),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(17),
                       ),
-
                       child: PlacePicker(
-                        apiKey: 'AIzaSyCuyriY7QVqaX6WZrKR-9fI-QfHgjei7nE',
+                        apiKey: googleApiKey,
                         initialPosition: lock,
                         useCurrentLocation: false,
                         selectInitialPosition: false,
@@ -441,44 +435,49 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                         },
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        http.post(Uri.parse("$apiURL/user/addBillingAddress"),
-                            headers: {
-                              'Authorization': 'Bearer $loginToken'
-                            },
-                            body: {
-                              "name": "$name",
-                              "company": "$company",
-                              "address": "$address",
-                              "city": "$city",
-                              "country": "$country",
-                              "postal_code": "$postalCode",
-                              "phone": "$phone",
-                              "lat": "$lat",
-                              "lng": "$lng"
-                            }).then((response) {
-                          print(response.body);
-                          if (json.decode(response.body)['Status'] == 200) {
-                            Navigator.pop(context);
-                            showAlert(
-                                context: context,
-                                title: "Susscess",
-                                body: "Address added successfully");
-                          }
-                        });
-                      },
-                      child: Container(
-                        height: 60,
-                        margin: EdgeInsets.only(top: 60),
-                        padding: EdgeInsets.all(10),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(255, 199, 0, 100),
-                          borderRadius: BorderRadius.circular(10),
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      height: 50,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          http.post(Uri.parse("$apiURL/user/addBillingAddress"),
+                              headers: {
+                                'Authorization': 'Bearer $loginToken'
+                              },
+                              body: {
+                                "name": "$name",
+                                "company": "$company",
+                                "address": "$address",
+                                "city": "$city",
+                                "country": "$country",
+                                "postal_code": "$postalCode",
+                                "phone": "$phone",
+                                "lat": "$lat",
+                                "lng": "$lng"
+                              }).then((response) {
+                            print(response.body);
+                            if (json.decode(response.body)['Status'] == 200) {
+                              Navigator.pop(context);
+                              showAlert(
+                                  context: context,
+                                  title: "Susscess",
+                                  body: "Address added successfully");
+                            }
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(15.0),
+                          ),
+                          primary: themePrimaryColor,
                         ),
-                        child: Center(
-                          child: Text('Submit'),
+                        child: Text(
+                          "Submit",
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.grey[800],
+                          ),
                         ),
                       ),
                     ),

@@ -155,8 +155,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      LatestOrderDetail()),
+                                builder: (BuildContext context) =>
+                                    LatestOrderDetail(),
+                              ),
                             );
                           },
                           leading: Column(
