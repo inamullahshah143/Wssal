@@ -39,7 +39,10 @@ class _AllShopsState extends State<AllShops> {
               if (snap.hasData) {
                 return snap.data;
               } else if (snap.hasError) {
-                return Text("No Record Found");
+                return Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Center(child: Text("No Record Found")),
+                );
               } else {
                 return Padding(
                   padding: const EdgeInsets.all(20.0),

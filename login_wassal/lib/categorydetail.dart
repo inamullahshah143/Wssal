@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'Cart.dart';
@@ -31,6 +32,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
   double appbarHeight;
   final Map categoryBlock;
   bool dragButton;
+  bool haveSliderData;
   bool haveFeaturedData;
   bool haveFreeDeliveryData;
   bool haveNearByData;
@@ -2450,6 +2452,49 @@ class _CategoryDetailState extends State<CategoryDetail> {
     }
   }
 
+  Future<Widget> showAds() async {
+    var response = await http.get(
+      (Uri.parse("$apiURL/categorySlider/${categoryBlock['id']}")),
+    );
+    var data = json.decode(response.body);
+    if (data['status'] == 200) {
+      List slides = json.decode(response.body)['data'];
+      List x = [];
+      slides.forEach((element) {
+        x.add(
+          Image.network(imageURL + '/${element['slider']}'),
+        );
+        return Container(
+          margin: EdgeInsets.all(10),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              height: 200.0,
+              width: MediaQuery.of(context).size.width,
+              child: Carousel(
+                boxFit: BoxFit.cover,
+                autoplay: true,
+                animationCurve: Curves.fastOutSlowIn,
+                animationDuration: Duration(milliseconds: 1000),
+                dotSize: 6.0,
+                dotIncreasedColor: Colors.white,
+                dotBgColor: Colors.transparent,
+                dotPosition: DotPosition.bottomCenter,
+                dotVerticalPadding: 5.0,
+                showIndicator: true,
+                indicatorBgPadding: 5.0,
+                images: x,
+              ),
+            ),
+          ),
+        );
+      });
+    } else {
+      return Center(child: Text("No Ads found"));
+    }
+    return Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     latestContext = context;
@@ -2826,63 +2871,58 @@ class _CategoryDetailState extends State<CategoryDetail> {
                             children: [
                               Column(
                                 children: [
-                                  Container(
-                                    margin: EdgeInsets.all(10),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: Container(
-                                        height: 200.0,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        child: Carousel(
-                                          boxFit: BoxFit.cover,
-                                          autoplay: true,
-                                          animationCurve: Curves.fastOutSlowIn,
-                                          animationDuration:
-                                              Duration(milliseconds: 1000),
-                                          dotSize: 6.0,
-                                          dotIncreasedColor: Colors.white,
-                                          dotBgColor: Colors.transparent,
-                                          dotPosition: DotPosition.bottomCenter,
-                                          dotVerticalPadding: 5.0,
-                                          showIndicator: true,
-                                          indicatorBgPadding: 5.0,
-                                          images: [
-                                            AssetImage(
-                                                'assets/sliderImage.png'),
-                                            AssetImage(
-                                                'assets/sliderImage.png'),
-                                            AssetImage(
-                                                'assets/sliderImage.png'),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
+                                  FutureBuilder(
+                                    future: showAds(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveSliderData = true;
+                                            },
+                                          ),
+                                        );
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveSliderData = true;
+                                            },
+                                          ),
+                                        );
+                                        return Text('${snap.error}');
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
                                   ),
                                   foodData(),
                                   FutureBuilder(
                                     future: promotedShops(),
                                     builder: ((context, snap) {
                                       if (snap.hasData) {
-                                        // SchedulerBinding.instance
-                                        //     .addPostFrameCallback(
-                                        //   (_) => setState(
-                                        //     () {
-                                        //       havePromotedShopData = true;
-                                        //     },
-                                        //   ),
-                                        // );
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              havePromotedShopData = true;
+                                            },
+                                          ),
+                                        );
 
                                         return snap.data;
                                       } else if (snap.hasError) {
-                                        // SchedulerBinding.instance
-                                        //     .addPostFrameCallback(
-                                        //   (_) => setState(
-                                        //     () {
-                                        //       havePromotedShopData = true;
-                                        //     },
-                                        //   ),
-                                        // );
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              havePromotedShopData = true;
+                                            },
+                                          ),
+                                        );
                                         return Text('${snap.hasError}');
                                       } else {
                                         return Container();
@@ -2893,24 +2933,24 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                     future: featuredProduct(),
                                     builder: ((context, snap) {
                                       if (snap.hasData) {
-                                        // SchedulerBinding.instance
-                                        //     .addPostFrameCallback(
-                                        //   (_) => setState(
-                                        //     () {
-                                        //       haveFeaturedData = true;
-                                        //     },
-                                        //   ),
-                                        // );
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveFeaturedData = true;
+                                            },
+                                          ),
+                                        );
                                         return snap.data;
                                       } else if (snap.hasError) {
-                                        // SchedulerBinding.instance
-                                        //     .addPostFrameCallback(
-                                        //   (_) => setState(
-                                        //     () {
-                                        //       haveFeaturedData = true;
-                                        //     },
-                                        //   ),
-                                        // );
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveFeaturedData = true;
+                                            },
+                                          ),
+                                        );
                                         return Text('${snap.hasError}');
                                       } else {
                                         return Container();
@@ -2921,25 +2961,25 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                     future: topSellingProduct(),
                                     builder: ((context, snap) {
                                       if (snap.hasData) {
-                                        // SchedulerBinding.instance
-                                        //     .addPostFrameCallback(
-                                        //   (_) => setState(
-                                        //     () {
-                                        //       haveTopSellingData = true;
-                                        //     },
-                                        //   ),
-                                        // );
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveTopSellingData = true;
+                                            },
+                                          ),
+                                        );
 
                                         return snap.data;
                                       } else if (snap.hasError) {
-                                        // SchedulerBinding.instance
-                                        //     .addPostFrameCallback(
-                                        //   (_) => setState(
-                                        //     () {
-                                        //       haveTopSellingData = true;
-                                        //     },
-                                        //   ),
-                                        // );
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveTopSellingData = true;
+                                            },
+                                          ),
+                                        );
                                         return Text('${snap.hasError}');
                                       } else {
                                         return Container();
@@ -2950,24 +2990,24 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                     future: topSeller(),
                                     builder: ((context, snap) {
                                       if (snap.hasData) {
-                                        // SchedulerBinding.instance
-                                        //     .addPostFrameCallback(
-                                        //   (_) => setState(
-                                        //     () {
-                                        //       haveTopSellerData = true;
-                                        //     },
-                                        //   ),
-                                        // );
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveTopSellerData = true;
+                                            },
+                                          ),
+                                        );
                                         return snap.data;
                                       } else if (snap.hasError) {
-                                        // SchedulerBinding.instance
-                                        //     .addPostFrameCallback(
-                                        //   (_) => setState(
-                                        //     () {
-                                        //       haveTopSellerData = true;
-                                        //     },
-                                        //   ),
-                                        // );
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveTopSellerData = true;
+                                            },
+                                          ),
+                                        );
                                         return Text('${snap.hasError}');
                                       } else {
                                         return Container();
@@ -2978,25 +3018,25 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                     future: nearBy(),
                                     builder: ((context, snap) {
                                       if (snap.hasData) {
-                                        // SchedulerBinding.instance
-                                        //     .addPostFrameCallback(
-                                        //   (_) => setState(
-                                        //     () {
-                                        //       haveNearByData = true;
-                                        //     },
-                                        //   ),
-                                        // );
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveNearByData = true;
+                                            },
+                                          ),
+                                        );
 
                                         return snap.data;
                                       } else if (snap.hasError) {
-                                        // SchedulerBinding.instance
-                                        //     .addPostFrameCallback(
-                                        //   (_) => setState(
-                                        //     () {
-                                        //       haveNearByData = true;
-                                        //     },
-                                        //   ),
-                                        // );
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveNearByData = true;
+                                            },
+                                          ),
+                                        );
                                         return Text('${snap.error}');
                                       } else {
                                         return Container();
@@ -3007,24 +3047,24 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                     future: freeDelivery(),
                                     builder: ((context, snap) {
                                       if (snap.hasData) {
-                                        // SchedulerBinding.instance
-                                        //     .addPostFrameCallback(
-                                        //   (_) => setState(
-                                        //     () {
-                                        //       haveFreeDeliveryData = true;
-                                        //     },
-                                        //   ),
-                                        // );
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveFreeDeliveryData = true;
+                                            },
+                                          ),
+                                        );
                                         return snap.data;
                                       } else if (snap.hasError) {
-                                        // SchedulerBinding.instance
-                                        //     .addPostFrameCallback(
-                                        //   (_) => setState(
-                                        //     () {
-                                        //       haveFreeDeliveryData = true;
-                                        //     },
-                                        //   ),
-                                        // );
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveFreeDeliveryData = true;
+                                            },
+                                          ),
+                                        );
                                         return Text('${snap.hasError}');
                                       } else {
                                         return Container();
@@ -3033,28 +3073,29 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                   ),
                                 ],
                               ),
-                              // havePromotedShopData == false &&
-                              //         haveFeaturedData == false &&
-                              //         haveTopSellingData == false &&
-                              //         haveTopSellerData == false &&
-                              //         haveNearByData == false &&
-                              //         haveFreeDeliveryData == false
-                              //     ? Center(
-                              //         child: Padding(
-                              //           padding: EdgeInsets.all(8.0),
-                              //           child: Container(
-                              //             child: CircularProgressIndicator(
-                              //               strokeWidth: 2,
-                              //               backgroundColor: Colors.red,
-                              //               valueColor:
-                              //                   AlwaysStoppedAnimation<Color>(
-                              //                 Colors.yellow,
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       )
-                              //     : Container(),
+                              haveSliderData == false &&
+                                      havePromotedShopData == false &&
+                                      haveFeaturedData == false &&
+                                      haveTopSellingData == false &&
+                                      haveTopSellerData == false &&
+                                      haveNearByData == false &&
+                                      haveFreeDeliveryData == false
+                                  ? Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Container(
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            backgroundColor: Colors.red,
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              Colors.yellow,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : Container(),
                             ],
                           )
                         : Column(

@@ -32,10 +32,12 @@ class _CustomDeliveryState extends State<CustomDelivery> {
   TextEditingController destinationController = TextEditingController();
   Set<Marker> _markers = {};
   Set<Polyline> _polyLines = {};
+  AppState appStates = AppState();
   @override
   void initState() {
     isDriverFound = false;
     driverNotFound = false;
+    position = appStates.initialPosition;
     super.initState();
   }
 
@@ -52,7 +54,6 @@ class _CustomDeliveryState extends State<CustomDelivery> {
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context);
     setState(() {
-      position = appState.initialPosition;
       locationController = appState.locationController;
       destinationController = appState.destinationController;
       _markers = appState.markers;
@@ -149,9 +150,6 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                 apiKey: googleApiKey,
                                 controller: locationController,
                                 onSelected: (value) async {
-                                  _markers.clear();
-                                  _polyLines.clear();
-                                  destinationController.text = '';
                                   List<Placemark> placemark = await Geolocator()
                                       .placemarkFromAddress(value.toString());
                                   double latitude =
@@ -161,6 +159,10 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                   setState(() {
                                     position = LatLng(latitude, longitude);
                                   });
+
+                                  _markers.clear();
+                                  _polyLines.clear();
+                                  destinationController.text = '';
                                 },
                                 inputDecoration: InputDecoration(
                                   border: InputBorder.none,
@@ -231,18 +233,16 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                       pickLocationPlacemark[0]
                                           .position
                                           .latitude;
-                                  pLat =
-                                      pickLocationPlacemark[0]
-                                          .position
-                                          .latitude;
+                                  pLat = pickLocationPlacemark[0]
+                                      .position
+                                      .latitude;
                                   double pickLocationLongitude =
                                       pickLocationPlacemark[0]
                                           .position
                                           .longitude;
-                                  pLng =
-                                      pickLocationPlacemark[0]
-                                          .position
-                                          .longitude;
+                                  pLng = pickLocationPlacemark[0]
+                                      .position
+                                      .longitude;
                                   List<Placemark> dropoffLocationPlacemark =
                                       await Geolocator().placemarkFromAddress(
                                           appState.destinationController.text);
@@ -250,18 +250,16 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                       dropoffLocationPlacemark[0]
                                           .position
                                           .latitude;
-                                  dLat =
-                                      dropoffLocationPlacemark[0]
-                                          .position
-                                          .latitude;
+                                  dLat = dropoffLocationPlacemark[0]
+                                      .position
+                                      .latitude;
                                   double dropoffLocationLongitude =
                                       dropoffLocationPlacemark[0]
                                           .position
                                           .longitude;
-                                  dLng =
-                                      dropoffLocationPlacemark[0]
-                                          .position
-                                          .longitude;
+                                  dLng = dropoffLocationPlacemark[0]
+                                      .position
+                                      .longitude;
 
                                   var response = await http.post(
                                       Uri.parse("$apiURL/finddriver"),
@@ -274,9 +272,9 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                       headers: {
                                         'Authorization': 'Bearer $loginToken',
                                       });
-                        Clipboard.setData(ClipboardData(
-                            text:
-                                "PickLat: $pickLocationLatitude || PickLng: $pickLocationLongitude"));
+                                  Clipboard.setData(ClipboardData(
+                                      text:
+                                          "PickLat: $pickLocationLatitude || PickLng: $pickLocationLongitude"));
                                   print(response.body);
                                   _googleMapsServices
                                       .getDistance(
@@ -301,7 +299,9 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                       }
                                       price = (data['perkilometeramount'] *
                                               double.parse(
-                                                distance.replaceAll(" km", "").replaceAll(",", ""),
+                                                distance
+                                                    .replaceAll(" km", "")
+                                                    .replaceAll(",", ""),
                                               ))
                                           .toString();
                                     });
@@ -535,7 +535,10 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                         width: double.infinity,
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            Navigator.of(context).pop();
+                                            setState(() {
+                                              isDriverFound = false;
+                                              driverNotFound = false;
+                                            });
                                             _markers.clear();
                                             _polyLines.clear();
                                             locationController.text = '';
