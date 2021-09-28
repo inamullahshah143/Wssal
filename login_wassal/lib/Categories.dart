@@ -369,21 +369,23 @@ class _MainCategoriesState extends State<MainCategories> {
                   );
                 } else {
                   showAlert(
-                      context: context,
-                      title: "Login Required",
-                      cancelable: true,
-                      actions: [
-                        AlertAction(
-                            text: "ok",
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoginPage(),
-                                ),
-                              );
-                            }),
-                      ]);
+                    context: context,
+                    title: "Login Required",
+                    cancelable: true,
+                    actions: [
+                      AlertAction(
+                        text: "ok",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  );
                 }
               },
               child: Container(
