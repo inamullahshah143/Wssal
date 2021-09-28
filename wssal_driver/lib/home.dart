@@ -86,11 +86,18 @@ class _HomeState extends State<Home> {
               )
             ],
             bottom: const TabBar(
-            labelColor: Color.fromRGBO(255, 199, 0, 1),
-            labelStyle: TextStyle(color: Color.fromRGBO(255, 199, 0, 1), fontSize: 16, fontWeight: FontWeight.w600),
+              labelColor: Color.fromRGBO(255, 199, 0, 1),
+              labelStyle: TextStyle(
+                  color: Color.fromRGBO(255, 199, 0, 1),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600),
               tabs: [
-                Tab(text: "Regular Orders", ),
-                Tab(text: "Custom Orders", ),
+                Tab(
+                  text: "Regular Orders",
+                ),
+                Tab(
+                  text: "Custom Orders",
+                ),
               ],
             ),
           ),
@@ -266,7 +273,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-   Future<Widget> buildDriverCustomOrders() async {
+  Future<Widget> buildDriverCustomOrders() async {
     List<Widget> x = [];
     try {
       var url = 'https://wassldev.einnovention.tech/api/drivercustomorder';
@@ -276,8 +283,7 @@ class _HomeState extends State<Home> {
       List data = json.decode(response.body)['data'];
       if (data.length > 0) {
         data.forEach((element) {
-          x.add(
-              InkWell(
+          x.add(InkWell(
             onTap: () {
               Navigator.push(
                   context,
@@ -290,49 +296,30 @@ class _HomeState extends State<Home> {
                   borderRadius: BorderRadius.circular(9),
                   border: Border.all(color: Colors.black, width: 0.5)),
               child: ListTile(
-                title: Column(
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(right: 5),
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '\#${element['customorder']['order_no']}',
-                            style: TextStyle(fontSize: 15, color: Colors.black),
-                          ),
-                        )),
-                    RichText(
-                      text: TextSpan(children: [
-                        WidgetSpan(
-                          child: Text(
-                              "${DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.parse(element['created_at']))}",
-                              // '${DateTime.parse(element['created_at'].toString())}',
-                              style: TextStyle(
-                                // fontSize: 15,
-                                color: Color.fromRGBO(182, 189, 200, 1),
-                              )),
-                        ),
-                      ]),
+                leading: Container(
+                  alignment: Alignment.centerLeft,
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(
+                      image: AssetImage('assets/driver.jpg'),
+                      fit: BoxFit.contain,
                     ),
-                  ],
+                  ),
+                ),
+                title: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    '\#${element['customorder']['order_no']}',
+                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  ),
                 ),
                 subtitle: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                          image: AssetImage('assets/driver.jpg'),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
                     Text(
-                      '${element['payment_method']}',
+                      '${element['customorder']['payment_method']}',
                       style: TextStyle(
                         // fontSize: 15,
                         color: Colors.black,
@@ -340,12 +327,38 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                trailing: RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                      text: 'View Details',
-                      style: TextStyle(color: Color.fromRGBO(255, 199, 0, 1)))
-                ])),
+                trailing: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(5),
+                      child: InkWell(
+                        onTap: () {
+                          http
+                              .get("$apiURL/drivercustomorder/${element['id']}")
+                              .then((response) {
+                                // if () {
+                                  
+                                // }
+                              });
+                        },
+                        child: Text('Accept Order',
+                            style: TextStyle(
+                                color: Color.fromRGBO(255, 199, 0, 1),
+                                decoration: TextDecoration.underline)),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(5),
+                      child: Text(
+                        'LE ${element['customorder']['deliveryfeec']}',
+                        style: TextStyle(
+                          // fontSize: 15,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ));
