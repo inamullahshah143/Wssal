@@ -33,6 +33,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
   final Map categoryBlock;
   bool dragButton;
   bool haveSliderData;
+  bool haveSubCategoryData;
   bool haveFeaturedData;
   bool haveFreeDeliveryData;
   bool haveNearByData;
@@ -75,11 +76,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
     _priceRange = 2;
     _radioValue = 'Recomended';
     havePromotedShopData = false;
+    haveSliderData = false;
     haveFeaturedData = false;
     haveTopSellingData = false;
     haveTopSellerData = false;
     haveNearByData = false;
     haveFreeDeliveryData = false;
+    haveSubCategoryData = false;
     super.initState();
   }
 
@@ -365,7 +368,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
         });
   }
 
-  Widget foodData() {
+  Future<Widget> foodData() async {
     List data = categoryBlock['children'];
     if (data.isNotEmpty) {
       List<Widget> x = [];
@@ -472,7 +475,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       );
     } else {
-      return Center(child: Text("No Sub-Categories Available"));
+      return Container();
     }
   }
 
@@ -2459,10 +2462,16 @@ class _CategoryDetailState extends State<CategoryDetail> {
     var data = json.decode(response.body);
     if (data['status'] == 200) {
       List slides = json.decode(response.body)['data'];
-      List x = [];
+      List<Widget> x = [];
       slides.forEach((element) {
         x.add(
-          Image.network(imageURL + '/${element['slider']}'),
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(imageURL + '/${element['slider']}'),
+              ),
+            ),
+          ),
         );
         return Container(
           margin: EdgeInsets.all(10),
@@ -2872,6 +2881,34 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               Column(
                                 children: [
                                   FutureBuilder(
+                                    future: foodData(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveSubCategoryData = true;
+                                            },
+                                          ),
+                                        );
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveSubCategoryData = true;
+                                            },
+                                          ),
+                                        );
+                                        return Text('${snap.error}');
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
                                     future: showAds(),
                                     builder: ((context, snap) {
                                       if (snap.hasData) {
@@ -2899,7 +2936,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                       }
                                     }),
                                   ),
-                                  foodData(),
                                   FutureBuilder(
                                     future: promotedShops(),
                                     builder: ((context, snap) {
@@ -3074,6 +3110,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                 ],
                               ),
                               haveSliderData == false &&
+                                      haveSubCategoryData == false &&
                                       havePromotedShopData == false &&
                                       haveFeaturedData == false &&
                                       haveTopSellingData == false &&

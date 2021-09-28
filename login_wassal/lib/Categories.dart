@@ -96,7 +96,7 @@ class _MainCategoriesState extends State<MainCategories> {
                         child: Padding(
                           padding: EdgeInsets.all(10.0),
                           child: CircularProgressIndicator(
-                            strokeWidth: 1,
+                            strokeWidth: 2,
                             backgroundColor: Colors.red,
                             valueColor:
                                 AlwaysStoppedAnimation<Color>(Colors.yellow),

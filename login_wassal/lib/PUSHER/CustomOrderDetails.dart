@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../const.dart';
@@ -9,6 +10,7 @@ class CustomOrderDetail extends StatefulWidget {
 }
 
 class _CustomOrderDetailState extends State<CustomOrderDetail> {
+  TabController _tabController;
   @override
   Widget build(BuildContext context) {
     customContext = context;
@@ -31,8 +33,8 @@ class _CustomOrderDetailState extends State<CustomOrderDetail> {
             ),
           ],
         ),
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+        child: DefaultTabController(
+          length: 2,
           child: Column(
             children: [
               Row(
@@ -64,30 +66,57 @@ class _CustomOrderDetailState extends State<CustomOrderDetail> {
                   ),
                 ],
               ),
-              FutureBuilder(
-                future: customOrderDetail(context),
-                builder: ((context, snap) {
-                  if (snap.hasData) {
-                    return snap.data;
-                  } else if (snap.hasError) {
-                    return Text("${snap.error}");
-                  } else {
-                    return Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Center(
-                        child: Container(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 1,
-                            backgroundColor: Colors.red,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.yellow,
-                            ),
-                          ),
-                        ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: TabBar(
+                  labelColor: themeSecondaryColor,
+                  unselectedLabelColor: Colors.grey[500],
+                  controller: _tabController,
+                  indicatorColor: themeSecondaryColor,
+                  tabs: [
+                    Tab(
+                      text: 'All Orders',
+                    ),
+                    Tab(
+                      text: 'Active Orders',
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      FutureBuilder(
+                        future: customOrderDetail(context),
+                        builder: ((context, snap) {
+                          if (snap.hasData) {
+                            return snap.data;
+                          } else if (snap.hasError) {
+                            return Text("${snap.error}");
+                          } else {
+                            return Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Center(
+                                child: Container(
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 1,
+                                    backgroundColor: Colors.red,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.yellow,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                        }),
                       ),
-                    );
-                  }
-                }),
+                      Container(),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
@@ -108,73 +137,7 @@ Future<Widget> customOrderDetail(BuildContext context) async {
         Card(
           child: ListTile(
             onTap: () {
-              showDialog(
-                context: context,
-                builder: (_) => AlertDialog(
-                  title: Text('Order No'),
-                  content: Container(
-                    height: MediaQuery.of(context).size.height / 2,
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Pickup Location:'),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(''),
-                        ),
-                        Text('Dropoff Location:'),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(''),
-                        ),
-                        Text('Distance'),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(''),
-                        ),
-                        Text('Estimated Time:'),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(''),
-                        ),
-                        Text('Estimated Price:'),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(''),
-                        ),
-                        Text('Driver Name'),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(''),
-                        ),
-                        Text('Vehicle ID'),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(''),
-                        ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.phone_in_talk),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.message_outlined),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
+              getOrderDetails(context, element['id']);
             },
             title: Container(
               width: MediaQuery.of(context).size.width / 1.25,
@@ -208,15 +171,99 @@ Future<Widget> customOrderDetail(BuildContext context) async {
         ),
       );
     });
-    return Column(children: x);
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Column(children: x),
+    );
   } else {
-    return Center(child: Text("Order Not Found"));
+    return Center(
+      child: Text('No Order Found'),
+    );
   }
 }
 
-String getStatus(Map statuss) {
+getOrderDetails(BuildContext context, int id) async {
+  var response = await http.get(Uri.parse("$apiURL/customorder/$id"),
+      headers: {'Authorization': 'Bearer $loginToken'});
+  var data = json.decode(response.body)['data'];
+  if (json.decode(response.body)['message'] == 'Order Found Sucessfully!') {
+    return showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('Order No: ${data['order_no']}'),
+        content: Container(
+          height: MediaQuery.of(context).size.height / 2,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Pickup Location:'),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('${data['pick_loc']}'),
+              ),
+              Text('Dropoff Location:'),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('${data['drop_loc']}'),
+              ),
+              Text('Distance'),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('${data['est_distance']}'),
+              ),
+              Text('Estimated Time:'),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('${data['est_time']}'),
+              ),
+              Text('Estimated Price:'),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('${data['deliveryfeec']}'),
+              ),
+              Text('Driver Name'),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('${data['custome_order_driver']['user']['name']}'),
+              ),
+              Text('Vehicle ID'),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                    '${data['custome_order_driver']['user']['driver_vehicle']['plate_number']}'),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      FlutterPhoneDirectCaller.callNumber(
+                          '${data['custome_order_driver']['user']['phone']}');
+                    },
+                    icon: Icon(Icons.phone),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      sms('',
+                          ['${data['custome_order_driver']['user']['phone']}']);
+                    },
+                    icon: Icon(Icons.message_outlined),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+String getStatus(Map status) {
   String currentStatus = "pending";
-  statuss.forEach((key, value) {
+  status.forEach((key, value) {
     if (value != null) {
       currentStatus = "$key";
     }
