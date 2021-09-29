@@ -47,7 +47,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
   String selectedCategory;
   Color selectedColor = Color.fromRGBO(222, 61, 48, 0.25);
   String sortByChoice;
-  Timer timer;
   Color unselectedColor = Color.fromRGBO(244, 245, 247, 1);
   int _isSelectedIndex = -1;
   double _maxValue;
@@ -56,12 +55,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
   String _radioValue;
   final _scrollController = ScrollController();
   TabController _tabController;
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
 
   @override
   void initState() {
@@ -754,13 +747,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                   ),
                                 ],
                               ),
-                              haveSliderData == false &&
-                                      haveSubCategoryData == false &&
-                                      havePromotedShopData == false &&
-                                      haveFeaturedData == false &&
-                                      haveTopSellingData == false &&
-                                      haveTopSellerData == false &&
-                                      haveNearByData == false &&
+                              haveSliderData == false ||
+                                      haveSubCategoryData == false ||
+                                      havePromotedShopData == false ||
+                                      haveFeaturedData == false ||
+                                      haveTopSellingData == false ||
+                                      haveTopSellerData == false ||
+                                      haveNearByData == false ||
                                       haveFreeDeliveryData == false
                                   ? Center(
                                       child: Padding(
@@ -1189,6 +1182,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
     var response = await http
         .get(Uri.parse("$apiURL/FeatureProduct/${categoryBlock['id']}"));
     List<Widget> x = [];
+
     if (json.decode(response.body)['status'] == 200) {
       List data = json.decode(response.body)['data'];
       data.forEach((element) {
