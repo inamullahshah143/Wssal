@@ -65,7 +65,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
   Future<Widget> freeDeliveryFuture;
   @override
   void initState() {
-    _getUserLocation();
     featureProductsFuture = featuredProduct();
     promotedShopsFuture = promotedShops();
     showAdsFuture = showAds();
@@ -2060,12 +2059,12 @@ class _CategoryDetailState extends State<CategoryDetail> {
   }
 
   Future<Widget> nearBy() async {
-    _getUserLocation();
-    print('Hello ${initialLat.toString()},${initialLng.toString()}');
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     var response = await http
         .post(Uri.parse("$apiURL/nearbyshops/${categoryBlock['id']}"), body: {
-      "lat": '31.561920',
-      "long": '74.348080',
+      "lat": '${position.latitude}',
+      "long": '${position.longitude}',
     });
     print(response.body);
     List<Widget> x = [];
@@ -3150,14 +3149,5 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       ),
     );
-  }
-
-  void _getUserLocation() async {
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      initialLat = position.latitude;
-      initialLng = position.latitude;
-    });
   }
 }

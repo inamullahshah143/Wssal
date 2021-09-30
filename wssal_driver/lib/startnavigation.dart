@@ -1,16 +1,14 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:flutter/services.dart' show rootBundle;
+// import 'package:flutter/services.dart' show rootBundle;
 import 'package:pusher/pusher.dart' as push;
-import 'package:wssal_driver/orderDetails.dart';
 
 import 'ChatPage.dart';
 
-String _mapStyle;
+// String _mapStyle;
 
 class DriverMapBuilder extends StatelessWidget {
   final Map orderDetails;
@@ -47,9 +45,9 @@ class _DriverMapState extends State<DriverMap> {
 
   @override
   void initState() {
-    rootBundle.loadString('assets/style.txt').then((string) {
-      _mapStyle = string;
-    });
+    // rootBundle.loadString('assets/style.txt').then((string) {
+    //   _mapStyle = string;
+    // });
     setMarkerImages();
     super.initState();
   }
@@ -174,19 +172,19 @@ class _DriverMapState extends State<DriverMap> {
   Future<LocationData> getLocation() async {
     Location location = Location();
     location.getLocation().then((value) {
-      push.Pusher(
-        '1266741',
-        '75277f8cc7ab6202152a',
-        '5722578c3b137a34832c',
-        push.PusherOptions(cluster: 'ap2'),
-      ).trigger(
-          ["${orderDetails['order_no']}"],
-          "${orderDetails['order_no']}",
-          json.encode({
-            "data": "Driver Location",
-            "lat": value.latitude,
-            "lng": value.longitude
-          })).then((value) {});
+      //   push.Pusher(
+      //     '1266741',
+      //     '75277f8cc7ab6202152a',
+      //     '5722578c3b137a34832c',
+      //     push.PusherOptions(cluster: 'ap2'),
+      //   ).trigger(
+      //       ["${orderDetails['order_no']}"],
+      //       "${orderDetails['order_no']}",
+      //       json.encode({
+      //         "data": "Driver Location",
+      //         "lat": value.latitude,
+      //         "lng": value.longitude
+      //       })).then((value) {});
     });
 
     return location.getLocation();
@@ -202,19 +200,20 @@ class _DriverMapState extends State<DriverMap> {
         '5722578c3b137a34832c',
         push.PusherOptions(cluster: 'ap2'),
       ).trigger(
-          ["${orderDetails['order_no']}"],
-          "${orderDetails['order_no']}",
-          json.encode({
-            "data": "Driver Location",
-            "lat": cLoc.latitude,
-            "lng": cLoc.longitude
-          })).then((value) {});
-      markerAdd(LatLng(cLoc.latitude, cLoc.longitude));
+        ["${orderDetails['order_no']}"],
+        "${orderDetails['order_no']}",
+        // json.encode({
+        //   "data": "Driver Location",
+        //   "lat": cLoc.latitude,
+        //   "lng": cLoc.longitude
+        // })).then((value) {});
+        markerAdd(
+          LatLng(cLoc.latitude, cLoc.longitude),
+        ),
+      );
 
-        mapController.animateCamera(CameraUpdate.newCameraPosition(
-            CameraPosition(
-                target: LatLng(cLoc.latitude, cLoc.longitude), zoom: 16)));
-  
+      mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+          target: LatLng(cLoc.latitude, cLoc.longitude), zoom: 16)));
     });
   }
 

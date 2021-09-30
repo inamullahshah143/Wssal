@@ -6,13 +6,11 @@ import 'package:flutter_alert/flutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'account/LogIn.dart';
-import 'account/driverProfile.dart';
 import 'function.dart';
 import 'home.dart';
 import 'dart:convert';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
@@ -28,11 +26,11 @@ class SplashScreen extends StatefulWidget {
 }
 
 class SplashScreenState extends State<SplashScreen> {
-    FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
   void initState() {
     getLogs();
-        getToken();
+    getToken();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
         showAlert(
@@ -44,6 +42,7 @@ class SplashScreenState extends State<SplashScreen> {
     super.initState();
     startTime();
   }
+
   getToken() {
     _firebaseMessaging.getToken().then((token) {
       setState(() {
@@ -52,6 +51,7 @@ class SplashScreenState extends State<SplashScreen> {
       print("FCM TOKEN: $token");
     });
   }
+
   getLogs() async {
     logs = false;
     SharedPreferences mypref = await SharedPreferences.getInstance();
@@ -65,11 +65,12 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     latestContext = context;
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: initScreen(context),
     );
   }
@@ -96,10 +97,10 @@ class SplashScreenState extends State<SplashScreen> {
           builder: (BuildContext context) => LoginPage(),
         ),
       );
-    //   Navigator.pushReplacement(
-    //   context,
-    //   MaterialPageRoute(builder: (BuildContext context) => DriverProfile()),
-    // );
+      //   Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (BuildContext context) => DriverProfile()),
+      // );
     }
     // Navigator.pushReplacement(
     //   context,
@@ -133,7 +134,7 @@ class SplashScreenState extends State<SplashScreen> {
 
   initScreen(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(246, 205, 63, 1),
+      backgroundColor: Colors.white,
       body: Center(
         child: Container(
           child: Image.asset("assets/Logo_wssal.png"),
@@ -142,8 +143,6 @@ class SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-
-
 
 void main() {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
