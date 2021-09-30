@@ -56,11 +56,12 @@ class _CategoryDetailState extends State<CategoryDetail> {
   final _scrollController = ScrollController();
   TabController _tabController;
 
-   Future<Widget> featureProductsFuture;
-
+  Future<Widget> featureProductsFuture;
+  Future<Widget> promotedShopsFuture;
   @override
   void initState() {
     featureProductsFuture = featuredProduct();
+    promotedShopsFuture = promotedShops();
     appbarHeight = 60.0;
     dragButton = false;
     searchClickBtn = true;
@@ -530,43 +531,35 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                   //     }
                                   //   }),
                                   // ),
-                                  // FutureBuilder(
-                                  //   future: promotedShops(),
-                                  //   builder: ((context, snap) {
-                                  //     if (snap.hasData) {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             havePromotedShopData = true;
-                                  //           },
-                                  //         ),
-                                  //       );
+                                  FutureBuilder(
+                                    future: promotedShopsFuture,
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              havePromotedShopData = true;
+                                            },
+                                          ),
+                                        );
 
-                                  //       return snap.data;
-                                  //     } else if (snap.hasError) {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             havePromotedShopData = true;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return Text('${snap.error}');
-                                  //     } else {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             havePromotedShopData = false;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return Container();
-                                  //     }
-                                  //   }),
-                                  // ),
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              havePromotedShopData = true;
+                                            },
+                                          ),
+                                        );
+                                        return Text('${snap.error}');
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
                                   FutureBuilder(
                                     future: featureProductsFuture,
                                     builder: ((context, snap) {
@@ -591,7 +584,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                         );
                                         return Text('${snap.error}');
                                       } else {
-                                       
                                         return Container();
                                       }
                                     }),
@@ -744,13 +736,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                 ],
                               ),
                               // haveSliderData == false ||
-                                      // haveSubCategoryData == false ||
-                                      // havePromotedShopData == false ||
-                                      haveFeaturedData == false 
-                                      // haveTopSellingData == false ||
-                                      // haveTopSellerData == false ||
-                                      // haveNearByData == false ||
-                                      // haveFreeDeliveryData == false
+                              // haveSubCategoryData == false ||
+                              // havePromotedShopData == false ||
+                              haveFeaturedData == false
+                                  // haveTopSellingData == false ||
+                                  // haveTopSellerData == false ||
+                                  // haveNearByData == false ||
+                                  // haveFreeDeliveryData == false
                                   ? Center(
                                       child: Padding(
                                         padding: EdgeInsets.all(8.0),
@@ -1178,7 +1170,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
     var response = await http
         .get(Uri.parse("$apiURL/FeatureProduct/${categoryBlock['id']}"));
     List<Widget> x = [];
-print(response.body);
+    print(response.body);
     if (response.statusCode == 200) {
       List data = json.decode(response.body)['data'];
       data.forEach((element) {
@@ -1386,59 +1378,61 @@ print(response.body);
       });
     }
     if (x.isNotEmpty) {
-  return Container(
-    width: MediaQuery.of(context).size.width,
-    height: 325,
-    margin: EdgeInsets.all(10),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.all(
-        Radius.circular(20),
-      ),
-      boxShadow: <BoxShadow>[
-        BoxShadow(
-          color: Colors.grey[300],
-          blurRadius: 3.0,
-          offset: Offset(0.0, 0.5),
-        ),
-      ],
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-          child: Text(
-            'Featured',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: 325,
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey[300],
+              blurRadius: 3.0,
+              offset: Offset(0.0, 0.5),
             ),
-          ),
+          ],
         ),
-        Divider(),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          physics: BouncingScrollPhysics(),
-          child: Row(
-            children: x,
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+              child: Text(
+                'Featured',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            Divider(),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
+              child: Row(
+                children: x,
+              ),
+            ),
+          ],
         ),
-      ],
-    ),
-  );
-}else{
-  Text("No Record Found");
-}
+      );
+    } else {
+      Text("No Record Found");
+    }
   }
 
   Future<Widget> promotedShops() async {
     var response = await http
         .get(Uri.parse("$apiURL/promotedShops/${categoryBlock['id']}"));
-    List<Widget> x = [];
-    if (json.decode(response.body)['status'] == 200 &&
+    print(response.body);
+   
+    if (response.statusCode == 200 &&
         json.decode(response.body)['data'] != null) {
+           List<Widget> x = [];
       List data = json.decode(response.body)['data'];
       data.forEach((element) {
         x.add(
@@ -1644,8 +1638,7 @@ print(response.body);
           ),
         );
       });
-    }
-    return Container(
+        return Container(
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -1689,6 +1682,10 @@ print(response.body);
         ],
       ),
     );
+    }else{
+      return Text("No Record Found");
+    }
+  
   }
 
   Future<Widget> topSellingProduct() async {
