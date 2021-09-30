@@ -96,7 +96,7 @@ class _MainCategoriesState extends State<MainCategories> {
                         child: Padding(
                           padding: EdgeInsets.all(10.0),
                           child: CircularProgressIndicator(
-                            strokeWidth: 1,
+                            strokeWidth: 2,
                             backgroundColor: Colors.red,
                             valueColor:
                                 AlwaysStoppedAnimation<Color>(Colors.yellow),
@@ -369,21 +369,23 @@ class _MainCategoriesState extends State<MainCategories> {
                   );
                 } else {
                   showAlert(
-                      context: context,
-                      title: "Login Required",
-                      cancelable: true,
-                      actions: [
-                        AlertAction(
-                            text: "ok",
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoginPage(),
-                                ),
-                              );
-                            }),
-                      ]);
+                    context: context,
+                    title: "Login Required",
+                    cancelable: true,
+                    actions: [
+                      AlertAction(
+                        text: "ok",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  );
                 }
               },
               child: Container(

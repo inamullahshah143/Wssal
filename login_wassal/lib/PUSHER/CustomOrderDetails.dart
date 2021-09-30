@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../const.dart';
@@ -9,6 +10,7 @@ class CustomOrderDetail extends StatefulWidget {
 }
 
 class _CustomOrderDetailState extends State<CustomOrderDetail> {
+  TabController _tabController;
   @override
   Widget build(BuildContext context) {
     customContext = context;
@@ -31,8 +33,8 @@ class _CustomOrderDetailState extends State<CustomOrderDetail> {
             ),
           ],
         ),
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+        child: DefaultTabController(
+          length: 2,
           child: Column(
             children: [
               Row(
@@ -64,30 +66,81 @@ class _CustomOrderDetailState extends State<CustomOrderDetail> {
                   ),
                 ],
               ),
-              FutureBuilder(
-                future: customOrderDetail(context),
-                builder: ((context, snap) {
-                  if (snap.hasData) {
-                    return snap.data;
-                  } else if (snap.hasError) {
-                    return Text("${snap.error}");
-                  } else {
-                    return Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Center(
-                        child: Container(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 1,
-                            backgroundColor: Colors.red,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.yellow,
-                            ),
-                          ),
-                        ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: TabBar(
+                  labelColor: themeSecondaryColor,
+                  unselectedLabelColor: Colors.grey[500],
+                  controller: _tabController,
+                  indicatorColor: themeSecondaryColor,
+                  tabs: [
+                    Tab(
+                      text: 'All Orders',
+                    ),
+                    Tab(
+                      text: 'Active Orders',
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      FutureBuilder(
+                        future: customOrderDetail(context),
+                        builder: ((context, snap) {
+                          if (snap.hasData) {
+                            return snap.data;
+                          } else if (snap.hasError) {
+                            return Text("${snap.error}");
+                          } else {
+                            return Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Center(
+                                child: Container(
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    backgroundColor: Colors.red,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.yellow,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                        }),
                       ),
-                    );
-                  }
-                }),
+                      FutureBuilder(
+                        future: customActiveOrderDetail(context),
+                        builder: ((context, snap) {
+                          if (snap.hasData) {
+                            return snap.data;
+                          } else if (snap.hasError) {
+                            return Text("${snap.error}");
+                          } else {
+                            return Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Center(
+                                child: Container(
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    backgroundColor: Colors.red,
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.yellow,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                        }),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
@@ -108,35 +161,7 @@ Future<Widget> customOrderDetail(BuildContext context) async {
         Card(
           child: ListTile(
             onTap: () {
-              showDialog(
-                context: context,
-                builder: (_) => AlertDialog(
-                  title: Text('Order No'),
-                  content: Container(
-                    child: Column(
-                      children: [
-                        Text('Pickup Location:'),
-                        Text(''),
-                        Text('Dropoff Location:'),
-                        Text(''),
-                        Text('Distance'),
-                        Text(''),
-                        Text('Estimated Time:'),
-                        Text(''),
-                        Text('Estimated Price:'),
-                        Text(''),
-                        Text('Driver Name'),
-                        Text(''),
-                        Text('Vehicle ID'),
-                        Text(''),
-                        Row(
-                          children: [],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
+              getOrderDetails(context, element['id']);
             },
             title: Container(
               width: MediaQuery.of(context).size.width / 1.25,
@@ -170,18 +195,225 @@ Future<Widget> customOrderDetail(BuildContext context) async {
         ),
       );
     });
-    return Column(children: x);
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Column(children: x),
+    );
   } else {
-    return Center(child: Text("Order Not Found"));
+    return Center(
+      child: Text('No Order Found'),
+    );
   }
 }
 
-String getStatus(Map statuss) {
-  String currentStatus = "pending";
-  statuss.forEach((key, value) {
-    if (value != null) {
-      currentStatus = "$key";
-    }
-  });
-  return currentStatus;
+getOrderDetails(BuildContext context, int id) async {
+  var response = await http.get(Uri.parse("$apiURL/customorder/$id"),
+      headers: {'Authorization': 'Bearer $loginToken'});
+  var data = json.decode(response.body)['data'];
+  if (json.decode(response.body)['message'] == 'Order Found Sucessfully!') {
+    return showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('Order No: ${data['order_no']}'),
+        content: Container(
+          height: MediaQuery.of(context).size.height / 2,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Pickup Location:',
+                style: TextStyle(
+                  color: themeSecondaryColor,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('${data['pick_loc']}'),
+              ),
+              Text(
+                'Dropoff Location:',
+                style: TextStyle(
+                  color: themeSecondaryColor,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('${data['drop_loc']}'),
+              ),
+              Text(
+                'Distance',
+                style: TextStyle(
+                  color: themeSecondaryColor,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('${data['est_distance']}'),
+              ),
+              Text(
+                'Estimated Time:',
+                style: TextStyle(
+                  color: themeSecondaryColor,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('${data['est_time']}'),
+              ),
+              Text(
+                'Estimated Price:',
+                style: TextStyle(
+                  color: themeSecondaryColor,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text('${data['deliveryfeec']}'),
+              ),
+              data['status'] == 2
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Driver Name',
+                          style: TextStyle(
+                            color: themeSecondaryColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                              '${data['custome_order_driver']['user']['name']}'),
+                        ),
+                        Text(
+                          'Vehicle ID',
+                          style: TextStyle(
+                            color: themeSecondaryColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                              '${data['custome_order_driver']['user']['driver_vehicle']['plate_number']}'),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                FlutterPhoneDirectCaller.callNumber(
+                                    '${data['custome_order_driver']['user']['phone']}');
+                              },
+                              icon: Icon(Icons.phone),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                sms('', [
+                                  '${data['custome_order_driver']['user']['phone']}'
+                                ]);
+                              },
+                              icon: Icon(Icons.message_outlined),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Order Status',
+                          style: TextStyle(
+                            color: themeSecondaryColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: data['status'] == 0
+                              ? Text('Watting for driver response')
+                              : data['status'] == 1
+                                  ? Text('Completed')
+                                  : Text(''),
+                        ),
+                      ],
+                    ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+Future<Widget> customActiveOrderDetail(BuildContext context) async {
+  var response = await http.get(Uri.parse("$apiURL/customorder"),
+      headers: {'Authorization': 'Bearer $loginToken'});
+  var data = json.decode(response.body)['data'];
+  List<Widget> x = [];
+  if (json.decode(response.body)['message'] == 'Order Found Sucessfully!') {
+    data.forEach((element) async {
+      if (element['status'] == 2) {
+        x.add(
+          Card(
+            child: ListTile(
+              onTap: () {
+                getOrderDetails(context, element['id']);
+              },
+              title: Container(
+                width: MediaQuery.of(context).size.width / 1.25,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Order No. ${element['order_no']}'),
+                    Text(
+                      'Pickup Location: ${element['pick_loc']}',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 12,
+                      ),
+                    ),
+                    Text(
+                      'Dropoff Location: ${element['drop_loc']}',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              trailing: Text('${element['deliveryfeec']}'),
+            ),
+          ),
+        );
+      } else {
+        return Center(
+          child: Text('No Order Found'),
+        );
+      }
+    });
+
+    return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
+      child: Column(children: x),
+    );
+  } else {
+    return Center(
+      child: Text('No Order Found'),
+    );
+  }
 }

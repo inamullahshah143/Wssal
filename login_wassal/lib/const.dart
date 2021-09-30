@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassal_customer/SearchPage.dart';
@@ -168,3 +169,11 @@ int productPriceValue = 0;
 List productExtrasForCart = [];
 List finalProductsForCart = [];
 int finalPriceForCart = 0;
+
+void sms(String message, List<String> recipents) async {
+  String _result = await sendSMS(message: message, recipients: recipents)
+      .catchError((onError) {
+    print(onError);
+  });
+  print(_result);
+}

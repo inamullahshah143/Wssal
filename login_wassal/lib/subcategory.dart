@@ -24,7 +24,7 @@ class _SubcategoryState extends State<Subcategory> {
   Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
-      appBar: getAppbar(true, context, "${subcatBlock['name']}", true, true),
+      appBar: getAppbar(true, context, "${subcatBlock['name']}", false, true),
       backgroundColor: pagesBackground,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -38,13 +38,20 @@ class _SubcategoryState extends State<Subcategory> {
                   } else if (snap.hasError) {
                     return Text("${snap.error}");
                   } else {
-                    return Center(
+                    return Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Center(
                         child: Container(
-                            child: CircularProgressIndicator(
-                                strokeWidth: 10,
-                                backgroundColor: Colors.red,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.yellow))));
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            backgroundColor: Colors.red,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.yellow,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
                   }
                 }),
               )
