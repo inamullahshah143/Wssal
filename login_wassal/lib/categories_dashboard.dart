@@ -10,19 +10,15 @@ import 'const.dart';
 
 class CategoryDashboard extends StatefulWidget {
   final Map categoryBlock;
-  CategoryDashboard(
-      {@required this.categoryBlock, @required this.initialPosition});
-  final LatLng initialPosition;
+  CategoryDashboard({@required this.categoryBlock});
 
   @override
-  _CategoryDashboardState createState() => _CategoryDashboardState(
-      categoryBlock: categoryBlock, initialPosition: initialPosition);
+  _CategoryDashboardState createState() =>
+      _CategoryDashboardState(categoryBlock: categoryBlock);
 }
 
 class _CategoryDashboardState extends State<CategoryDashboard> {
-  _CategoryDashboardState(
-      {@required this.categoryBlock, @required this.initialPosition});
-  final LatLng initialPosition;
+  _CategoryDashboardState({@required this.categoryBlock});
   final Map categoryBlock;
   int bottomIndex;
   @override
@@ -38,7 +34,6 @@ class _CategoryDashboardState extends State<CategoryDashboard> {
       body: bottomIndex == 0
           ? CategoryDetail(
               categoryBlock: categoryBlock,
-              initialPosition: initialPosition,
             )
           : bottomIndex == 1
               ? AllShops()

@@ -14,6 +14,8 @@ class AppState with ChangeNotifier {
   final Set<Polyline> _polyLines = {};
   GoogleMapController _mapController;
   String myLocation;
+  double initialLat;
+  double initialLng;
   GoogleMapsServices _googleMapsServices = GoogleMapsServices();
   TextEditingController locationController = TextEditingController();
   TextEditingController destinationController = TextEditingController();
@@ -38,9 +40,8 @@ class AppState with ChangeNotifier {
     String subThoroughfare = placemark[0].subThoroughfare != ''
         ? '${placemark[0].subThoroughfare}, '
         : '';
-    String thoroughfare = placemark[0].thoroughfare != ''
-        ? '${placemark[0].thoroughfare}, '
-        : '';
+    String thoroughfare =
+        placemark[0].thoroughfare != '' ? '${placemark[0].thoroughfare}, ' : '';
     String subLocality =
         placemark[0].subLocality != null ? '${placemark[0].subLocality}, ' : '';
     String locality =
@@ -53,6 +54,8 @@ class AppState with ChangeNotifier {
     myLocation =
         '${subThoroughfare.toString()}${thoroughfare.toString()}${subLocality.toString()}${locality.toString()}${administrativeArea.toString()}${country.toString()}';
     locationController.text = myLocation;
+    initialLat = _initialPosition.latitude;
+    initialLng = _initialPosition.longitude;
     notifyListeners();
   }
 

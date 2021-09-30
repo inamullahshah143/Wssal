@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'package:flutter_alert/flutter_alert.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:wassal_customer/numberlogin.dart';
@@ -15,10 +13,8 @@ class MainCategories extends StatefulWidget {
 }
 
 class _MainCategoriesState extends State<MainCategories> {
-  LatLng initialPosition;
   @override
   void initState() {
-    getUserLocation();
     super.initState();
   }
 
@@ -134,7 +130,6 @@ class _MainCategoriesState extends State<MainCategories> {
                   MaterialPageRoute(
                     builder: (context) => CategoryDashboard(
                       categoryBlock: element,
-                      initialPosition: initialPosition,
                     ),
                   ),
                 );
@@ -476,13 +471,5 @@ class _MainCategoriesState extends State<MainCategories> {
       }
     }
     return x;
-  }
-
-  void getUserLocation() async {
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      initialPosition = LatLng(position.latitude, position.longitude);
-    });
   }
 }

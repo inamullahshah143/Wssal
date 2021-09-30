@@ -4,31 +4,29 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'Cart.dart';
 import 'Storedetail.dart';
 import 'digit_slider.dart';
+import 'google_map/app_states.dart';
 import 'productDetails.dart';
 import 'subcategory.dart';
 import 'const.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
 
 class CategoryDetail extends StatefulWidget {
-  CategoryDetail(
-      {@required this.categoryBlock, @required this.initialPosition});
-  final LatLng initialPosition;
+  CategoryDetail({@required this.categoryBlock});
+
   final Map categoryBlock;
 
   @override
-  _CategoryDetailState createState() => _CategoryDetailState(
-      categoryBlock: categoryBlock, initialPosition: initialPosition);
+  _CategoryDetailState createState() =>
+      _CategoryDetailState(categoryBlock: categoryBlock);
 }
 
 class _CategoryDetailState extends State<CategoryDetail> {
-  _CategoryDetailState(
-      {@required this.categoryBlock, @required this.initialPosition});
-  final LatLng initialPosition;
+  _CategoryDetailState({@required this.categoryBlock});
   double appbarHeight;
   final Map categoryBlock;
   bool dragButton;
@@ -56,12 +54,25 @@ class _CategoryDetailState extends State<CategoryDetail> {
   final _scrollController = ScrollController();
   TabController _tabController;
 
+  double initialLat;
+  double initialLng;
   Future<Widget> featureProductsFuture;
   Future<Widget> promotedShopsFuture;
+  Future<Widget> showAdsFuture;
+  Future<Widget> topSellingProductFuture;
+  Future<Widget> topSellerFuture;
+  Future<Widget> nearByFuture;
+  Future<Widget> freeDeliveryFuture;
   @override
   void initState() {
+    _getUserLocation();
     featureProductsFuture = featuredProduct();
     promotedShopsFuture = promotedShops();
+    showAdsFuture = showAds();
+    topSellingProductFuture = topSellingProduct();
+    topSellerFuture = topSeller();
+    nearByFuture = nearBy();
+    freeDeliveryFuture = freeDelivery();
     appbarHeight = 60.0;
     dragButton = false;
     searchClickBtn = true;
@@ -459,78 +470,62 @@ class _CategoryDetailState extends State<CategoryDetail> {
                             children: [
                               Column(
                                 children: [
-                                  // FutureBuilder(
-                                  //   future: showAds(),
-                                  //   builder: ((context, snap) {
-                                  //     if (snap.hasData) {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveSliderData = true;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return snap.data;
-                                  //     } else if (snap.hasError) {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveSliderData = true;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return Text('${snap.error}');
-                                  //     } else {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveSliderData = false;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return Container();
-                                  //     }
-                                  //   }),
-                                  // ),
-                                  // FutureBuilder(
-                                  //   future: foodData(),
-                                  //   builder: ((context, snap) {
-                                  //     if (snap.hasData) {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveSubCategoryData = true;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return snap.data;
-                                  //     } else if (snap.hasError) {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveSubCategoryData = true;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return Text("${snap.error}");
-                                  //     } else {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveSubCategoryData = false;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return Container();
-                                  //     }
-                                  //   }),
-                                  // ),
+                                  FutureBuilder(
+                                    future: showAdsFuture,
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveSliderData = true;
+                                            },
+                                          ),
+                                        );
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveSliderData = true;
+                                            },
+                                          ),
+                                        );
+                                        return Text('${snap.error}');
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
+                                    future: foodData(),
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveSubCategoryData = true;
+                                            },
+                                          ),
+                                        );
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveSubCategoryData = true;
+                                            },
+                                          ),
+                                        );
+                                        return Text("${snap.error}");
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
                                   FutureBuilder(
                                     future: promotedShopsFuture,
                                     builder: ((context, snap) {
@@ -588,161 +583,129 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                       }
                                     }),
                                   ),
-                                  // FutureBuilder(
-                                  //   future: topSellingProduct(),
-                                  //   builder: ((context, snap) {
-                                  //     if (snap.hasData) {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveTopSellingData = true;
-                                  //           },
-                                  //         ),
-                                  //       );
+                                  FutureBuilder(
+                                    future: topSellingProductFuture,
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveTopSellingData = true;
+                                            },
+                                          ),
+                                        );
 
-                                  //       return snap.data;
-                                  //     } else if (snap.hasError) {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveTopSellingData = true;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return Text('${snap.error}');
-                                  //     } else {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveTopSellingData = false;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return Container();
-                                  //     }
-                                  //   }),
-                                  // ),
-                                  // FutureBuilder(
-                                  //   future: topSeller(),
-                                  //   builder: ((context, snap) {
-                                  //     if (snap.hasData) {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveTopSellerData = true;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return snap.data;
-                                  //     } else if (snap.hasError) {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveTopSellerData = true;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return Text('${snap.error}');
-                                  //     } else {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveTopSellerData = false;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return Container();
-                                  //     }
-                                  //   }),
-                                  // ),
-                                  // FutureBuilder(
-                                  //   future: nearBy(),
-                                  //   builder: ((context, snap) {
-                                  //     if (snap.hasData) {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveNearByData = true;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return snap.data;
-                                  //     } else if (snap.hasError) {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveNearByData = true;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return Text('${snap.error}');
-                                  //     } else {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveNearByData = false;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return Container();
-                                  //     }
-                                  //   }),
-                                  // ),
-                                  // FutureBuilder(
-                                  //   future: freeDelivery(),
-                                  //   builder: ((context, snap) {
-                                  //     if (snap.hasData) {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveFreeDeliveryData = true;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return snap.data;
-                                  //     } else if (snap.hasError) {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveFreeDeliveryData = true;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return Text('${snap.error}');
-                                  //     } else {
-                                  //       SchedulerBinding.instance
-                                  //           .addPostFrameCallback(
-                                  //         (_) => setState(
-                                  //           () {
-                                  //             haveFreeDeliveryData = false;
-                                  //           },
-                                  //         ),
-                                  //       );
-                                  //       return Container();
-                                  //     }
-                                  //   }),
-                                  // ),
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveTopSellingData = true;
+                                            },
+                                          ),
+                                        );
+                                        return Text('${snap.error}');
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
+                                    future: topSellerFuture,
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveTopSellerData = true;
+                                            },
+                                          ),
+                                        );
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveTopSellerData = true;
+                                            },
+                                          ),
+                                        );
+                                        return Text('${snap.error}');
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
+                                    future: nearByFuture,
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveNearByData = true;
+                                            },
+                                          ),
+                                        );
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveNearByData = true;
+                                            },
+                                          ),
+                                        );
+                                        return Text('${snap.error}');
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
+                                  FutureBuilder(
+                                    future: freeDeliveryFuture,
+                                    builder: ((context, snap) {
+                                      if (snap.hasData) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveFreeDeliveryData = true;
+                                            },
+                                          ),
+                                        );
+                                        return snap.data;
+                                      } else if (snap.hasError) {
+                                        SchedulerBinding.instance
+                                            .addPostFrameCallback(
+                                          (_) => setState(
+                                            () {
+                                              haveFreeDeliveryData = true;
+                                            },
+                                          ),
+                                        );
+                                        return Text('${snap.error}');
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                  ),
                                 ],
                               ),
-                              // haveSliderData == false ||
-                              // haveSubCategoryData == false ||
-                              // havePromotedShopData == false ||
-                              haveFeaturedData == false
-                                  // haveTopSellingData == false ||
-                                  // haveTopSellerData == false ||
-                                  // haveNearByData == false ||
-                                  // haveFreeDeliveryData == false
+                              haveSliderData == false &&
+                                      haveSubCategoryData == false &&
+                                      havePromotedShopData == false &&
+                                      haveFeaturedData == false &&
+                                      haveTopSellingData == false &&
+                                      haveTopSellerData == false &&
+                                      haveNearByData == false &&
+                                      haveFreeDeliveryData == false
                                   ? Center(
                                       child: Padding(
                                         padding: EdgeInsets.all(8.0),
@@ -1170,7 +1133,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
     var response = await http
         .get(Uri.parse("$apiURL/FeatureProduct/${categoryBlock['id']}"));
     List<Widget> x = [];
-    print(response.body);
     if (response.statusCode == 200) {
       List data = json.decode(response.body)['data'];
       data.forEach((element) {
@@ -1377,62 +1339,57 @@ class _CategoryDetailState extends State<CategoryDetail> {
         );
       });
     }
-    if (x.isNotEmpty) {
-      return Container(
-        width: MediaQuery.of(context).size.width,
-        height: 325,
-        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 325,
+      margin: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.grey[300],
+            blurRadius: 3.0,
+            offset: Offset(0.0, 0.5),
           ),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.grey[300],
-              blurRadius: 3.0,
-              offset: Offset(0.0, 0.5),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-              child: Text(
-                'Featured',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+            child: Text(
+              'Featured',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
               ),
             ),
-            Divider(),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
-              child: Row(
-                children: x,
-              ),
+          ),
+          Divider(),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            physics: BouncingScrollPhysics(),
+            child: Row(
+              children: x,
             ),
-          ],
-        ),
-      );
-    } else {
-      Text("No Record Found");
-    }
+          ),
+        ],
+      ),
+    );
   }
 
   Future<Widget> promotedShops() async {
     var response = await http
         .get(Uri.parse("$apiURL/promotedShops/${categoryBlock['id']}"));
-    print(response.body);
-   
+
     if (response.statusCode == 200 &&
         json.decode(response.body)['data'] != null) {
-           List<Widget> x = [];
+      List<Widget> x = [];
       List data = json.decode(response.body)['data'];
       data.forEach((element) {
         x.add(
@@ -1638,60 +1595,62 @@ class _CategoryDetailState extends State<CategoryDetail> {
           ),
         );
       });
-        return Container(
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(20),
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey[300],
+              blurRadius: 3.0,
+              offset: Offset(0.0, 0.5),
+            ),
+          ],
         ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.grey[300],
-            blurRadius: 3.0,
-            offset: Offset(0.0, 0.5),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 10),
-            child: Text(
-              'Promoted Shops',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 10),
+              child: Text(
+                'Promoted Shops',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
-          ),
-          Divider(),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            physics: BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: x,
+            Divider(),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: x,
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
-    }else{
-      return Text("No Record Found");
+          ],
+        ),
+      );
+    } else {
+      return Container();
     }
-  
   }
 
   Future<Widget> topSellingProduct() async {
     var response = await http
         .get(Uri.parse("$apiURL/topSellingProduct/${categoryBlock['id']}"));
     List<Widget> x = [];
+    if (json.decode(response.body)['message'] == 'Record Not Found!') {
+      return Container();
+    }
     if (json.decode(response.body)['status'] == 200) {
       List data = json.decode(response.body)['data'];
       data.forEach((element) {
@@ -1939,59 +1898,62 @@ class _CategoryDetailState extends State<CategoryDetail> {
           ),
         );
       });
-    }
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(20),
-        ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.grey[300],
-            blurRadius: 3.0,
-            offset: Offset(0.0, 0.5),
+
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 10),
-            child: Text(
-              'Top Selling',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey[300],
+              blurRadius: 3.0,
+              offset: Offset(0.0, 0.5),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 10),
+              child: Text(
+                'Top Selling',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
-          ),
-          Divider(),
-          GridView.count(
-            primary: false,
-            padding: const EdgeInsets.all(8),
-            crossAxisSpacing: 10,
-            childAspectRatio: 0.7,
-            crossAxisCount: 2,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            children: x,
-          ),
-        ],
-      ),
-    );
+            Divider(),
+            GridView.count(
+              primary: false,
+              padding: const EdgeInsets.all(8),
+              crossAxisSpacing: 10,
+              childAspectRatio: 0.7,
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: x,
+            ),
+          ],
+        ),
+      );
+    }
+    return Container();
   }
 
   Future<Widget> topSeller() async {
     var response =
         await http.get(Uri.parse("$apiURL/topSeller/${categoryBlock['id']}"));
     List<Widget> x = [];
-    if (json.decode(response.body)['status'] == 200 &&
-        json.decode(response.body)['data'] != null) {
+    if (json.decode(response.body)['message'] == 'Record Not Found!') {
+      return Container();
+    } else if (json.decode(response.body)['status'] == 200) {
       List data = json.decode(response.body)['data'];
       data.forEach((element) {
         x.add(
@@ -2048,59 +2010,64 @@ class _CategoryDetailState extends State<CategoryDetail> {
           ),
         );
       });
-    }
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(20),
+
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey[300],
+              blurRadius: 3.0,
+              offset: Offset(0.0, 0.5),
+            ),
+          ],
         ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.grey[300],
-            blurRadius: 3.0,
-            offset: Offset(0.0, 0.5),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 8),
-            child: Text(
-              'Top Seller',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 8),
+              child: Text(
+                'Top Seller',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
-          ),
-          Divider(),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            physics: BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                children: x,
+            Divider(),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: x,
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    }
+    return Container();
   }
 
   Future<Widget> nearBy() async {
-    var response = await http.post(Uri.parse("$apiURL/nearbyshops"), body: {
-      "lat": '${initialPosition.latitude.toString()}',
-      "long": '${initialPosition.longitude.toString()}',
-      "id": '${categoryBlock['id']}',
+    _getUserLocation();
+    print('Hello ${initialLat.toString()},${initialLng.toString()}');
+    var response = await http
+        .post(Uri.parse("$apiURL/nearbyshops/${categoryBlock['id']}"), body: {
+      "lat": '31.561920',
+      "long": '74.348080',
     });
+    print(response.body);
     List<Widget> x = [];
     if (json.decode(response.body)['status'] == 200) {
       List data = json.decode(response.body)['data'];
@@ -3183,5 +3150,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
         ),
       ),
     );
+  }
+
+  void _getUserLocation() async {
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      initialLat = position.latitude;
+      initialLng = position.latitude;
+    });
   }
 }
