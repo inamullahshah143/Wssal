@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'MyOrders.dart';
 import 'chat.dart';
 import 'home.dart';
 import 'person/personPage.dart';
@@ -47,12 +48,12 @@ BottomNavigationBar getbottomBar(page, context) {
               context, MaterialPageRoute(builder: (context) => Home()));
         } else if (index == 1) {
           Navigator.push(
+              context, MaterialPageRoute(builder: (context) => MyOrder()));
+        }
+         else if (index == 2) {
+          Navigator.push(
               context, MaterialPageRoute(builder: (context) => Person()));
         }
-        //  else if (index == 2) {
-        //   Navigator.push(
-        //       context, MaterialPageRoute(builder: (context) => Person()));
-        // }
       }
     },
     fixedColor: Color.fromRGBO(222, 61, 48, 1),
@@ -61,28 +62,23 @@ BottomNavigationBar getbottomBar(page, context) {
     // selectedItemColor: Color.fromRGBO(111, 82, 148, 1),
     items: [
       BottomNavigationBarItem(
-          icon: Icon(Icons.dashboard_outlined),
+          icon: Icon(Icons.list),
           title: Text(
-            "Dashboard",
+            "Incoming Orders",
             style: TextStyle(color: Colors.black),
           )),
-      // BottomNavigationBarItem(
-      //     icon: Icon(Icons.picture_in_picture_alt_outlined),
-      //     title: Text(
-      //       "Chat",
-      //       style: TextStyle(color: Colors.black),
-      //     )),
+          BottomNavigationBarItem(
+          icon: Icon(Icons.list),
+          title: Text(
+            "My Orders",
+            style: TextStyle(color: Colors.black),
+          )),
       BottomNavigationBarItem(
           icon: Icon(Icons.person),
           title: Text(
             "Profile",
             style: TextStyle(color: Colors.black),
           )),
-
-      //  BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Home")),
-      // BottomNavigationBarItem(
-      //     icon: Icon(Icons.person),
-      //     title: Text(logs != true ? "Login" : "Profile")),
     ],
   );
 }
