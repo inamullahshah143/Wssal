@@ -8,7 +8,6 @@ import 'package:http/http.dart' as http;
 import 'account/LogIn.dart';
 import 'function.dart';
 import 'dart:convert';
-
 import 'dashboard/landing_screen.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {

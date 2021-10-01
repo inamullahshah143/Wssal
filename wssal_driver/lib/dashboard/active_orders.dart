@@ -78,7 +78,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                 child: Column(
                   children: [
                     FutureBuilder(
-                      future: buildDriverAcceptedOrders(),
+                      future: buildDriverRegularOrders(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return snapshot.data;
@@ -105,7 +105,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                 child: Column(
                   children: [
                     FutureBuilder(
-                      future: buildDriverCompletedOrders(),
+                      future: buildDriverCustomOrders(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return snapshot.data;
@@ -134,7 +134,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
     );
   }
 
-  Future<Widget> buildDriverAcceptedOrders() async {
+  Future<Widget> buildDriverRegularOrders() async {
     List<Widget> x = [];
     try {
       var url = 'https://wassldev.einnovention.tech/api/processingorder';
@@ -143,87 +143,95 @@ class _ActiveOrdersState extends State<ActiveOrders> {
       print('buildDriverAcceptedOrders: ${response.body}');
       List data = json.decode(response.body)['data'];
       if (data.length > 0) {
-        data.forEach((element) {
-          x.add(InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => OrderDetails(element)));
-            },
-            child: Container(
-              margin: EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(9),
-                  border: Border.all(color: Colors.black, width: 0.5)),
-              child: ListTile(
-                leading: Container(
-                  alignment: Alignment.centerLeft,
-                  height: 50,
-                  width: 50,
+        data.forEach(
+          (element) {
+            x.add(
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OrderDetails(element),
+                    ),
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                      image: AssetImage('assets/driver.jpg'),
-                      fit: BoxFit.contain,
+                    borderRadius: BorderRadius.circular(9),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 0.5,
                     ),
                   ),
-                ),
-                title: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    '\#${element['customorder']['order_no']}',
-                    style: TextStyle(fontSize: 15, color: Colors.black),
-                  ),
-                ),
-                subtitle: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${element['customorder']['payment_method']}',
-                      style: TextStyle(
-                        // fontSize: 15,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-                trailing: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.all(5),
-                      child: InkWell(
-                        onTap: () {
-                          http
-                              .get("$apiURL/drivercustomorder/${element['id']}")
-                              .then((response) {
-                            // if () {
-
-                            // }
-                          });
-                        },
-                        child: Text('Accept Order',
-                            style: TextStyle(
-                                color: Color.fromRGBO(255, 199, 0, 1),
-                                decoration: TextDecoration.underline)),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(5),
-                      child: Text(
-                        'LE ${element['customorder']['deliveryfeec']}',
-                        style: TextStyle(
-                          // fontSize: 15,
-                          color: Colors.black,
+                  child: ListTile(
+                    leading: Container(
+                      alignment: Alignment.centerLeft,
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                          image: AssetImage('assets/driver.jpg'),
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),
-                  ],
+                    title: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        '\#${element['customorder']['order_no']}',
+                        style: TextStyle(fontSize: 15, color: Colors.black),
+                      ),
+                    ),
+                    subtitle: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${element['customorder']['payment_method']}',
+                          style: TextStyle(
+                            // fontSize: 15,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                    trailing: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.all(5),
+                          child: InkWell(
+                            onTap: () {
+                              http
+                                  .get(
+                                      "$apiURL/drivercustomorder/${element['id']}")
+                                  .then((response) {});
+                            },
+                            child: Text(
+                              'Accept Order',
+                              style: TextStyle(
+                                  color: Color.fromRGBO(255, 199, 0, 1),
+                                  decoration: TextDecoration.underline),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(5),
+                          child: Text(
+                            'LE ${element['customorder']['deliveryfeec']}',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ));
-        });
+            );
+          },
+        );
         return Container(
           padding: EdgeInsets.all(10.0),
           child: ListView(
@@ -247,7 +255,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
     }
   }
 
-  Future<Widget> buildDriverCompletedOrders() async {
+  Future<Widget> buildDriverCustomOrders() async {
     List<Widget> x = [];
     try {
       var url = 'https://wassldev.einnovention.tech/api/completedorder';
@@ -267,8 +275,12 @@ class _ActiveOrdersState extends State<ActiveOrders> {
             child: Container(
               margin: EdgeInsets.all(6),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(9),
-                  border: Border.all(color: Colors.black, width: 0.5)),
+                borderRadius: BorderRadius.circular(9),
+                border: Border.all(
+                  color: Colors.black,
+                  width: 0.5,
+                ),
+              ),
               child: ListTile(
                 leading: Container(
                   alignment: Alignment.centerLeft,
@@ -309,11 +321,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                         onTap: () {
                           http
                               .get("$apiURL/drivercustomorder/${element['id']}")
-                              .then((response) {
-                            // if () {
-
-                            // }
-                          });
+                              .then((response) {});
                         },
                         child: Text('Accept Order',
                             style: TextStyle(
@@ -326,7 +334,6 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                       child: Text(
                         'LE ${element['customorder']['deliveryfeec']}',
                         style: TextStyle(
-                          // fontSize: 15,
                           color: Colors.black,
                         ),
                       ),
