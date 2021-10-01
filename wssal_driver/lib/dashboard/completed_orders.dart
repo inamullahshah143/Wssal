@@ -78,7 +78,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                 child: Column(
                   children: [
                     FutureBuilder(
-                      future: buildDriverCompletedOrders(),
+                      future: buildDriverRegularOrders(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return snapshot.data;
@@ -105,7 +105,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                 child: Column(
                   children: [
                     FutureBuilder(
-                      future: buildDriverCompletedOrders(),
+                      future: buildDriverCustomOrders(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return snapshot.data;
@@ -134,7 +134,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
     );
   }
 
-  Future<Widget> buildDriverAcceptedOrders() async {
+  Future<Widget> buildDriverRegularOrders() async {
     List<Widget> x = [];
     try {
       var url = 'https://wassldev.einnovention.tech/api/processingorder';
@@ -247,10 +247,11 @@ class _CompletedOrdersState extends State<CompletedOrders> {
     }
   }
 
-  Future<Widget> buildDriverCompletedOrders() async {
+  Future<Widget> buildDriverCustomOrders() async {
     List<Widget> x = [];
     try {
-      var url = 'https://wassldev.einnovention.tech/api/completedorder';
+      var url =
+          'https://wassldev.einnovention.tech/api/drivercustomorder/completedorder';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('buildDriverCustomOrders: ${response.body}');
@@ -260,15 +261,18 @@ class _CompletedOrdersState extends State<CompletedOrders> {
           x.add(InkWell(
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => OrderDetails(element)));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OrderDetails(element),
+                ),
+              );
             },
             child: Container(
               margin: EdgeInsets.all(6),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(9),
-                  border: Border.all(color: Colors.black, width: 0.5)),
+                borderRadius: BorderRadius.circular(9),
+                border: Border.all(color: Colors.black, width: 0.5),
+              ),
               child: ListTile(
                 leading: Container(
                   alignment: Alignment.centerLeft,

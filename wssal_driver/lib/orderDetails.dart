@@ -55,8 +55,6 @@ class _OrderDetailsState extends State<OrderDetails> {
               image: AssetImage('assets/app_logo.png'),
             )
           ],
-          // automaticallyImplyLeading: false,
-          // centerTitle: true,
         ),
       ),
       body: SingleChildScrollView(

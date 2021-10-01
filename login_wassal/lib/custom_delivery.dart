@@ -272,23 +272,30 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                       headers: {
                                         'Authorization': 'Bearer $loginToken',
                                       });
-                                  Clipboard.setData(ClipboardData(
+                                  Clipboard.setData(
+                                    ClipboardData(
                                       text:
-                                          "PickLat: $pickLocationLatitude || PickLng: $pickLocationLongitude"));
-                                  print(response.body);
+                                          "PickLat: $pickLocationLatitude || PickLng: $pickLocationLongitude",
+                                    ),
+                                  );
                                   _googleMapsServices
                                       .getDistance(
-                                          LatLng(pickLocationLatitude,
-                                              pickLocationLongitude),
-                                          LatLng(dropoffLocationLatitude,
-                                              dropoffLocationLongitude))
+                                    LatLng(pickLocationLatitude,
+                                        pickLocationLongitude),
+                                    LatLng(
+                                      dropoffLocationLatitude,
+                                      dropoffLocationLongitude,
+                                    ),
+                                  )
                                       .then((value) {
                                     setState(() {
                                       distance = value['distance'].toString();
                                       time = value['time'].toString();
                                       var data =
                                           json.decode(response.body)['data'];
-                                      if (data['drivers'].isNotEmpty) {
+                                      if (json.decode(
+                                              response.body)['message'] !=
+                                          'Record Not Found!') {
                                         setState(() {
                                           isDriverFound = true;
                                         });

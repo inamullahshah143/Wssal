@@ -266,7 +266,7 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                         "pick_lng": "$pickupLongitude",
                         "pick_lat": "$pickupLatitude",
                         "deliveryfeec": "$expectedPrice",
-                        "payment_method": "cashondelivery",
+                        "paymentmethod": "cashondelivery",
                         "pick_loc": "$pickupLocation",
                         "drop_loc": "$dropoffLocation",
                         "est_distance": "$estimatedDistance",
