@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
-import 'package:wssal_driver/account/driverProfile.dart';
 
 import '../function.dart';
 import 'signUp.dart';
@@ -151,7 +150,6 @@ class _LoginPageState extends State<LoginPage> {
                           disabledBorder: InputBorder.none,
                           contentPadding: EdgeInsets.only(top: 17.5),
                           hintText: 'Phone No',
-                         
                           prefixIcon: CountryCodePicker(
                             onChanged: (CountryCode code) {
                               setState(() {
@@ -188,7 +186,7 @@ class _LoginPageState extends State<LoginPage> {
                     shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(15.0),
                     ),
-                primary: themePrimaryColor,
+                    primary: themePrimaryColor,
                   ),
                   child: Text(
                     "Next",
@@ -210,26 +208,21 @@ class _LoginPageState extends State<LoginPage> {
 customerlogin(context) async {
   try {
     var url = 'https://wassldev.einnovention.tech/api/login';
-    var response = await http.post(Uri.parse(url), body: {
-      'phone': '$countryCode$number',
-      'fcm_token':'$fcmToken'
-    }, headers: {
-      'Accept': 'application/json'
-    });
+    var response = await http.post(Uri.parse(url),
+        body: {'phone': '$countryCode$number', 'fcm_token': '$fcmToken'},
+        headers: {'Accept': 'application/json'});
     print('Response body: ${response.body}');
     var data = json.decode(response.body);
     print('$data');
 
-    if  (data['status'] == 200) {
- 
-        Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          Varifyphonenumber(data)),
-                );
-    }
-    else {
+    if (data['status'] == 200) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => Varifyphonenumber(data,true),
+        ),
+      );
+    } else {
       showAlert(
         context: context,
         title: "Account Not Exist",
@@ -250,6 +243,3 @@ customerlogin(context) async {
     );
   }
 }
-
-
-

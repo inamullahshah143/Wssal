@@ -74,41 +74,6 @@ class _ChatState extends State<Chat> {
           // centerTitle: true,
         ),
       ),
-      bottomNavigationBar: getbottomBar(1, context),
-      // body: Container(
-      //   margin: EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
-      //   child: DashChat(
-      //     user: ChatUser(
-      //       name: "wssal_vender",
-      //       uid: "1",
-      //       avatar: "assets/driver.jpg",
-      //     ),
-      //     messages: _messages,
-      //     showAvatarForEveryMessage: true,
-      //     showUserAvatar: true,
-      //     avatarBuilder: (user) {
-      //       return CircleAvatar(
-      //         backgroundImage: AssetImage(user.avatar),
-      //       );
-      //     },
-      //     scrollToBottom: true,
-      //     onSend: (msg) {
-      //       print("msg is sending ....");
-      //       ahmad.Pusher pusher = new ahmad.Pusher(
-      //           "1151290",
-      //           "9ad69659971df101b114",
-      //           "553b9e2a751230487a99",
-      //           ahmad.PusherOptions(cluster: "ap1"));
-      //       Map data = {"data": msg.text, "user": msg.user};
-
-      //       pusher
-      //           .trigger(['Geotv'], 'morning', json.encode(data)).then((value) {
-      //         print("Status : ${value.status}");
-      //         print('msg : ${value.message}');
-      //       });
-      //     },
-      //   ),
-      // ),
     );
   }
 }

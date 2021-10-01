@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'MyOrders.dart';
+import 'wallet/dashboard/my_orders.dart';
 import 'chat.dart';
-import 'home.dart';
+import 'wallet/dashboard/incoming_orders.dart';
 import 'person/personPage.dart';
 
 String timeinterval;
@@ -35,53 +35,7 @@ List users = [
   {"userId": 4, "name": "Hassan", "pic": "assets/hassan.jpg"},
 ];
 
-//  BottomNevigationBar
-BottomNavigationBar getbottomBar(page, context) {
-  return BottomNavigationBar(
-    currentIndex: page,
-    // onTap: _onNavigationBarItemClick,
-    onTap: (index) {
-      if (page == index) {
-      } else {
-        if (index == 0) {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Home()));
-        } else if (index == 1) {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => MyOrder()));
-        }
-         else if (index == 2) {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Person()));
-        }
-      }
-    },
-    fixedColor: Color.fromRGBO(222, 61, 48, 1),
 
-    unselectedItemColor: Color.fromRGBO(193, 199, 208, 1),
-    // selectedItemColor: Color.fromRGBO(111, 82, 148, 1),
-    items: [
-      BottomNavigationBarItem(
-          icon: Icon(Icons.list),
-          title: Text(
-            "Incoming Orders",
-            style: TextStyle(color: Colors.black),
-          )),
-          BottomNavigationBarItem(
-          icon: Icon(Icons.list),
-          title: Text(
-            "My Orders",
-            style: TextStyle(color: Colors.black),
-          )),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          title: Text(
-            "Profile",
-            style: TextStyle(color: Colors.black),
-          )),
-    ],
-  );
-}
 
 List newOrder = [
   {

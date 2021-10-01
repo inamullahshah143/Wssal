@@ -5,19 +5,22 @@ import 'package:flutter_alert/flutter_alert.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wssal_driver/home.dart';
+import 'package:wssal_driver/wallet/dashboard/landing_screen.dart';
 import '../function.dart';
 import 'driverProfile.dart';
 
 class Varifyphonenumber extends StatefulWidget {
   final Map data;
-  Varifyphonenumber(this.data);
+  final bool islogin;
+  Varifyphonenumber(this.data, this.islogin);
   @override
-  _VarifyphonenumberState createState() => _VarifyphonenumberState(this.data);
+  _VarifyphonenumberState createState() =>
+      _VarifyphonenumberState(this.data, this.islogin);
 }
 
 class _VarifyphonenumberState extends State<Varifyphonenumber> {
   final Map data;
+  final bool islogin;
   bool isChecked = false;
   @override
   void initState() {
@@ -25,13 +28,12 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
     isChecked = false;
   }
 
-  _VarifyphonenumberState(this.data);
+  _VarifyphonenumberState(this.data, this.islogin);
 
   String verificationCode;
   @override
   Widget build(BuildContext context) {
     latestContext = context;
-    // double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SingleChildScrollView(
@@ -78,7 +80,10 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                 width: width,
                 alignment: Alignment.center,
                 child: VerificationCode(
-                  textStyle: TextStyle(fontSize: 20.0, color: Colors.red[900]),
+                  textStyle: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.red[900],
+                  ),
                   underlineColor: Colors.amber,
                   keyboardType: TextInputType.number,
                   length: 4,
@@ -86,24 +91,44 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                     if ("${data['data']['otp']}" == "$value") {
                       if (data['status'] == 200 &&
                           data['request_status'] == null) {
-                        showAlert(
-                          context: context,
-                          title: "Create Driver Request",
-                          actions: [
-                            AlertAction(
-                                text: "Ok ",
-                                isDestructiveAction: true,
-                                onPressed: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
+                        if (islogin == true) {
+                          showAlert(
+                            context: context,
+                            title: "Your request as Driver is in progress",
+                            actions: [
+                              AlertAction(
+                                  text: "Ok ",
+                                  isDestructiveAction: true,
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  }),
+                            ],
+                            cancelable: true,
+                          );
+                        } else {
+                          showAlert(
+                            context: context,
+                            title: "Create Driver Request",
+                            actions: [
+                              AlertAction(
+                                  text: "Ok ",
+                                  isDestructiveAction: true,
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            DriverProfile(data['token'])),
-                                  );
-                                }),
-                          ],
-                          cancelable: true,
-                        );
+                                            DriverProfile(
+                                          drivertoken: data['token'],
+                                          phoneNo: phonenumber,
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            ],
+                            cancelable: true,
+                          );
+                        }
                       } else if (data['status'] == 200 &&
                           data['request_status'] == 0) {
                         showAlert(
@@ -136,8 +161,9 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            Home()),
+                                      builder: (BuildContext context) =>
+                                          LandingScreen(),
+                                    ),
                                   );
                                 }),
                           ],
@@ -183,7 +209,10 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  Varifyphonenumber(data)),
+                                  Varifyphonenumber(
+                                    data,
+                                    true,
+                                  )),
                         );
                       }
                     });

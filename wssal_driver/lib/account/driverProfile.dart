@@ -3,23 +3,17 @@ import 'dart:async';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:location/location.dart';
-// import 'package:pattern_formatter/date_formatter.dart';
-import 'package:wssal_driver/account/vehicleProfile.dart';
 import 'package:wssal_driver/function.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
-import 'package:wssal_driver/home.dart';
-
 import 'LogIn.dart';
 
 var len;
-
 var len1;
 
 List<File> photofile = [];
@@ -31,7 +25,6 @@ String vehiclename;
 var vehicleplatenumber;
 var vehiclemodel;
 TextEditingController drivernameController = TextEditingController();
-// TextEditingController driverphoneController = TextEditingController();
 TextEditingController driveridnumberController = TextEditingController();
 TextEditingController driveridexpirydateController = TextEditingController();
 TextEditingController vehiclenameController = TextEditingController();
@@ -39,17 +32,18 @@ TextEditingController vehicleplatenumberController = TextEditingController();
 TextEditingController vehiclemodelController = TextEditingController();
 
 class DriverProfile extends StatefulWidget {
-  // const DriverProfile({ Key? key }) : super(key: key);
   final drivertoken;
-  DriverProfile(this.drivertoken);
-  // drivertoken
+  final String phoneNo;
+  DriverProfile({@required this.drivertoken, @required this.phoneNo});
   @override
-  _DriverProfileState createState() => _DriverProfileState(drivertoken);
+  _DriverProfileState createState() =>
+      _DriverProfileState(drivertoken: drivertoken, phoneNo: phoneNo);
 }
 
 class _DriverProfileState extends State<DriverProfile> {
   final drivertoken;
-  _DriverProfileState(this.drivertoken);
+  final String phoneNo;
+  _DriverProfileState({@required this.drivertoken, @required this.phoneNo});
   final _formKey = GlobalKey<FormState>();
   DateTime date1;
   var latitude1;
@@ -90,42 +84,42 @@ class _DriverProfileState extends State<DriverProfile> {
   Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 180),
-                child: Align(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 25),
+                  child: Align(
                     alignment: Alignment.center,
                     child: Text(
                       'Driver Profile ',
                       style: TextStyle(
-                          color: Color.fromRGBO(128, 136, 142, 1),
-                          fontSize: 22),
-                    )),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 10),
-                child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Your phone number +201003456789',
-                      style: TextStyle(
-                          color: Color.fromRGBO(149, 159, 175, 1),
-                          fontSize: 16),
-                    )),
-              ),
-              Container(
+                          color: Color.fromRGBO(128, 136, 142, 1), fontSize: 22),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 10),
+                  child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Your phone number ${phoneNo}',
+                        style: TextStyle(
+                            color: Color.fromRGBO(149, 159, 175, 1),
+                            fontSize: 16),
+                      )),
+                ),
+                Container(
                   margin: EdgeInsets.only(top: 15, left: 15, right: 15),
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(244, 245, 247, 1),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   padding: EdgeInsets.only(left: 10),
-                  height: 50,
                   width: width,
                   child: TextFormField(
                     controller: drivernameController,
@@ -145,118 +139,56 @@ class _DriverProfileState extends State<DriverProfile> {
                       enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
-                      // icon: Icon(
-                      //   Icons.calendar_today_outlined,
-                      //   color: Color.fromRGBO(193, 199, 208, 1),
-                      // ),
-                      labelText: 'Full Name',
-                      labelStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          // color: Color.fromRGBO(195, 153, 141, 1)
-                          color: Color.fromRGBO(182, 189, 200, 1)),
-                    ),
-                  )),
-
-              Container(
-                margin: EdgeInsets.only(top: 15, left: 15, right: 15),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(244, 245, 247, 1),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                height: 50,
-                width: width,
-                padding: EdgeInsets.only(left: 10),
-                child: DateTimePickerFormField(
-                  inputType: InputType.date,
-                  format: DateFormat("dd-MM-yyyy"),
-                  initialDate: DateTime(2019, 1, 1),
-                  editable: false,
-                  decoration: InputDecoration.collapsed(
-                    hintText: 'Id Expiry date',
-                    hintStyle: TextStyle(
+                      hintText: 'Full Name',
+                      hintStyle: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        // color: Color.fromRGBO(195, 153, 141, 1)
-                        color: Color.fromRGBO(182, 189, 200, 1)),
-                    // hasFloatingPlaceholder: false
+                        color: Color.fromRGBO(182, 189, 200, 1),
+                      ),
+                    ),
                   ),
-                  onChanged: (dt) {
-                    // setState(() => date = dt);
-                    setState(() {
-                      idexpiry = dt;
-                      print('Selected date: $idexpiry');
-                    });
-
-                    // print('Selected date: $date1');
-                  },
                 ),
-              ), // TextField(
-              //   keyboardType: TextInputType.number,
-              //   inputFormatters: [
-              //     DateInputFormatter(),
-              //   ],
-              // ),
-              //             Container(
-              //                 margin: EdgeInsets.only(top: 15, left: 15, right: 15),
-              //                 decoration: BoxDecoration(
-              //                   color: Color.fromRGBO(244, 245, 247, 1),
-              //                   borderRadius: BorderRadius.circular(15),
-              //                 ),
-              //                 height: 50,
-              //                 width: width,
-              //                 child: TextFormField(
-              //                   controller: driverphoneController,
-              //                   validator: (value) {
-              //                     if (value.isEmpty) {
-              //                       return "This field is required";
-              //                     } else {
-              //                       return null;
-              //                     }
-              //                   },
-              //                   //                   String drivername;
-              //                   // var phone;
-              //                   // var idnumber;
-              //                   // var idexpiry;
-              //                   // String vehiclename;
-              //                   //  var vehicleplatenumber;
-              //                   //  var vehiclemodel;
-              // //   TextEditingController drivernameController = TextEditingController();
-              // // TextEditingController driverphoneController = TextEditingController();
-              // // TextEditingController driveridnumberController = TextEditingController();
-              // // TextEditingController driveridexpirydateController = TextEditingController();
-              // // TextEditingController vehiclenameController = TextEditingController();
-              // // TextEditingController vehicleplatenumberController = TextEditingController();
-              // // TextEditingController vehiclemodelController = TextEditingController();
-              //                   onChanged: (value) {
-              //                     phone = value;
-              //                   },
-              //                   // onFieldSubmitted: (value) {
-              //                   //   print(value);
-              //                   //   setState(() {
-              //                   //     addressList.add(value);
-              //                   //   });
-              //                   //   addressController.clear();
-              //                   // },
-              //                   decoration: InputDecoration(
-              //                       border: InputBorder.none,
-              //                       focusedBorder: InputBorder.none,
-              //                       enabledBorder: InputBorder.none,
-              //                       errorBorder: InputBorder.none,
-              //                       disabledBorder: InputBorder.none,
-              //                       // icon: Icon(
-              //                       //   Icons.calendar_today_outlined,
-              //                       //   color: Color.fromRGBO(193, 199, 208, 1),
-              //                       // ),
-              //                       labelText: '     Phone'),
-              //                 )),
-              Container(
+                Container(
                   margin: EdgeInsets.only(top: 15, left: 15, right: 15),
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(244, 245, 247, 1),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  height: 50,
+                  width: width,
+                  padding: EdgeInsets.only(left: 10),
+                  child: DateTimePickerFormField(
+                    inputType: InputType.date,
+                    format: DateFormat("dd-MM-yyyy"),
+                    initialDate: DateTime(2019, 1, 1),
+                    editable: false,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      contentPadding: EdgeInsets.only(top: 17.5),
+                      hintText: 'ID Card Expiry Date',
+                      hintStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromRGBO(182, 189, 200, 1),
+                      ),
+                    ),
+                    onChanged: (dt) {
+                      setState(() {
+                        idexpiry = dt;
+                        print('Selected date: $idexpiry');
+                      });
+                    },
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(244, 245, 247, 1),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   width: width,
                   padding: EdgeInsets.only(left: 10),
                   child: TextFormField(
@@ -279,81 +211,21 @@ class _DriverProfileState extends State<DriverProfile> {
                       enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
-                      labelText: 'Id Number',
-                      labelStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          // color: Color.fromRGBO(195, 153, 141, 1)
-                          color: Color.fromRGBO(182, 189, 200, 1)),
+                      hintText: 'ID Card Number',
+                      hintStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromRGBO(182, 189, 200, 1),
+                      ),
                     ),
-                  )),
-              // Container(
-              //     margin: EdgeInsets.only(top: 15, left: 15, right: 15),
-              //     decoration: BoxDecoration(
-              //       color: Color.fromRGBO(244, 245, 247, 1),
-              //       borderRadius: BorderRadius.circular(15),
-              //     ),
-              //     height: 50,
-              //     width: width,
-              //     padding: EdgeInsets.only(left: 10),
-              //     child: TextFormField(
-              //       controller: driveridexpirydateController,
-              //       validator: (value) {
-              //         if (value.isEmpty) {
-              //           return "This field is required";
-              //         } else {
-              //           return null;
-              //         }
-              //       },
-              //       //                   String drivername;
-              //       // var phone;
-              //       // var idnumber;
-              //       // var idexpiry;
-              //       // String vehiclename;
-              //       //  var vehicleplatenumber;
-              //       //  var vehiclemodel;
-              //       //   TextEditingController drivernameController = TextEditingController();
-              //       // TextEditingController driverphoneController = TextEditingController();
-              //       // TextEditingController driveridnumberController = TextEditingController();
-              //       // TextEditingController driveridexpirydateController = TextEditingController();
-              //       // TextEditingController vehiclenameController = TextEditingController();
-              //       // TextEditingController vehicleplatenumberController = TextEditingController();
-              //       // TextEditingController vehiclemodelController = TextEditingController();
-              //       onChanged: (value) {
-              //         idexpiry = value;
-              //       },
-              //       // onFieldSubmitted: (value) {
-              //       //   print(value);
-              //       //   setState(() {
-              //       //     addressList.add(value);
-              //       //   });
-              //       //   addressController.clear();
-              //       // },
-              //       decoration: InputDecoration(
-              //         border: InputBorder.none,
-              //         focusedBorder: InputBorder.none,
-              //         enabledBorder: InputBorder.none,
-              //         errorBorder: InputBorder.none,
-              //         disabledBorder: InputBorder.none,
-              //         // icon: Icon(
-              //         //   Icons.calendar_today_outlined,
-              //         //   color: Color.fromRGBO(193, 199, 208, 1),
-              //         // ),
-              //         labelText: 'Id Expiry date',
-              //         labelStyle: TextStyle(
-              //             fontSize: 16,
-              //             fontWeight: FontWeight.w600,
-              //             // color: Color.fromRGBO(195, 153, 141, 1)
-              //             color: Color.fromRGBO(182, 189, 200, 1)),
-              //       ),
-              //     )),
-              Container(
+                  ),
+                ),
+                Container(
                   margin: EdgeInsets.only(top: 15, left: 15, right: 15),
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(244, 245, 247, 1),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  height: 50,
                   width: width,
                   padding: EdgeInsets.only(left: 10),
                   child: TextFormField(
@@ -365,455 +237,364 @@ class _DriverProfileState extends State<DriverProfile> {
                         return null;
                       }
                     },
-                    //                   String drivername;
-                    // var phone;
-                    // var idnumber;
-                    // var idexpiry;
-                    // String vehiclename;
-                    //  var vehicleplatenumber;
-                    //  var vehiclemodel;
-                    //   TextEditingController drivernameController = TextEditingController();
-                    // TextEditingController driverphoneController = TextEditingController();
-                    // TextEditingController driveridnumberController = TextEditingController();
-                    // TextEditingController driveridexpirydateController = TextEditingController();
-                    // TextEditingController vehiclenameController = TextEditingController();
-                    // TextEditingController vehicleplatenumberController = TextEditingController();
-                    // TextEditingController vehiclemodelController = TextEditingController();
-                    onChanged: (value) {
-                      vehicleplatenumber = value;
-                    },
-                    // onFieldSubmitted: (value) {
-                    //   print(value);
-                    //   setState(() {
-                    //     addressList.add(value);
-                    //   });
-                    //   addressController.clear();
-                    // },
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
-                      labelText: 'vehicle plate number',
-                      labelStyle: TextStyle(
+                      hintText: 'Vehicle Plate Number',
+                      hintStyle: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Color.fromRGBO(182, 189, 200, 1)),
                     ),
-                  )),
-              Container(
-                margin: EdgeInsets.only(top: 15, left: 15, right: 15),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(244, 245, 247, 1),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                height: 50,
-                width: width,
-                padding: EdgeInsets.only(left: 10),
-                child: DateTimePickerFormField(
-                  inputType: InputType.date,
-                  format: DateFormat("dd-MM-yyyy"),
-                  initialDate: DateTime(2019, 1, 1),
-                  editable: false,
-                  decoration: InputDecoration.collapsed(
-                    hintText: 'vehicle model',
-                    hintStyle: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        // color: Color.fromRGBO(195, 153, 141, 1)
-                        color: Color.fromRGBO(182, 189, 200, 1)),
-                    // hasFloatingPlaceholder: false
                   ),
-                  onChanged: (dt) {
-                    // setState(() => date = dt);
-                    setState(() {
-                      vehiclemodel = dt;
-                      print('Selected date: $vehiclemodel');
-                    });
-
-                    // print('Selected date: $date1');
-                  },
                 ),
-                // child: TextFormField(
-                //   controller: vehiclemodelController,
-                //   validator: (value) {
-                //     if (value.isEmpty) {
-                //       return "This field is required";
-                //     } else {
-                //       return null;
-                //     }
-                //   },
-                //   onChanged: (value) {
-                //     vehiclemodel = value;
-                //   },
-                //   decoration: InputDecoration(
-                //     border: InputBorder.none,
-                //     focusedBorder: InputBorder.none,
-                //     enabledBorder: InputBorder.none,
-                //     errorBorder: InputBorder.none,
-                //     disabledBorder: InputBorder.none,
-                //     labelText: 'vehicle model',
-                //     labelStyle: TextStyle(
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.w600,
-                //         color: Color.fromRGBO(182, 189, 200, 1)),
-                //   ),
-                // )
-              ),
-              Container(
+                Container(
                   margin: EdgeInsets.only(top: 15, left: 15, right: 15),
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(244, 245, 247, 1),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  height: 50,
                   width: width,
                   padding: EdgeInsets.only(left: 10),
-                  child: TextFormField(
-                    controller: vehiclenameController,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return "This field is required";
-                      } else {
-                        return null;
-                      }
-                    },
-                    //                   String drivername;
-                    // var phone;
-                    // var idnumber;
-                    // var idexpiry;
-                    // String vehiclename;
-                    //  var vehicleplatenumber;
-                    //  var vehiclemodel;
-                    //   TextEditingController drivernameController = TextEditingController();
-                    // TextEditingController driverphoneController = TextEditingController();
-                    // TextEditingController driveridnumberController = TextEditingController();
-                    // TextEditingController driveridexpirydateController = TextEditingController();
-                    // TextEditingController vehiclenameController = TextEditingController();
-                    // TextEditingController vehicleplatenumberController = TextEditingController();
-                    // TextEditingController vehiclemodelController = TextEditingController();
-                    onChanged: (value) {
-                      vehiclename = value;
-                    },
-                    // onFieldSubmitted: (value) {
-                    //   print(value);
-                    //   setState(() {
-                    //     addressList.add(value);
-                    //   });
-                    //   addressController.clear();
-                    // },
+                  child: DateTimePickerFormField(
+                    inputType: InputType.date,
+                    format: DateFormat("dd-MM-yyyy"),
+                    initialDate: DateTime(2019, 1, 1),
+                    editable: false,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
-                      // icon: Icon(
-                      //   Icons.calendar_today_outlined,
-                      //   color: Color.fromRGBO(193, 199, 208, 1),
-                      // ),
-                      labelText: 'vehicle name',
-                      labelStyle: TextStyle(
+                      contentPadding: EdgeInsets.only(top: 17.5),
+                      hintText: 'Vehicle Model',
+                      hintStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromRGBO(182, 189, 200, 1),
+                      ),
+                    ),
+                    onChanged: (dt) {
+                      setState(() {
+                        vehiclemodel = dt;
+                        print('Selected date: $vehiclemodel');
+                      });
+                    },
+                  ),
+                ),
+                Container(
+                    margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(244, 245, 247, 1),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    width: width,
+                    padding: EdgeInsets.only(left: 10),
+                    child: TextFormField(
+                      controller: vehiclenameController,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "This field is required";
+                        } else {
+                          return null;
+                        }
+                      },
+                      onChanged: (value) {
+                        vehiclename = value;
+                      },
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        hintText: 'Vehicle Name',
+                        hintStyle: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
-                          // color: Color.fromRGBO(195, 153, 141, 1)
-                          color: Color.fromRGBO(182, 189, 200, 1)),
-                    ),
-                  )),
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    idCardPicfile = [];
-                  });
-                  FilePicker.platform
-                      .pickFiles(allowMultiple: true)
-                      .then((value) {
-                    value.files.forEach((element) async {
-                      idCardPicfile.add(File(element.path));
-                      setState(() {
-                        len = idCardPicfile.length;
-                        print('$len');
-                      });
-                    });
-                  });
-                  // _showPicker2(context);
-                },
-                child: Container(
-                  margin: EdgeInsets.only(top: 25, left: 15, right: 15),
-                  decoration: BoxDecoration(
-                    color: Colors.yellow,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  height: 130,
-                  width: width,
-                  child: len != null
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(244, 245, 247, 1),
-                            // color: Colors.yellow,
-                            borderRadius: BorderRadius.circular(15),
-                            // image: Image.file(file)
-                          ),
-                          height: 130,
-                          width: width,
-                          child: Align(
-                              alignment: Alignment.center,
-                              child: Text('You have Selected $len Files')),
-                          // child: Image.file(
-                          //   _image1,
-                          //   fit: BoxFit.cover,
-                          // ),
-                        )
-                      : Container(
-                          padding: EdgeInsets.only(top: 5, bottom: 5),
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(244, 245, 247, 1),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          height: 130,
-                          width: width,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                'Select Files',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(182, 189, 200, 1),
-                                    fontSize: 16),
-                              ),
-                              Icon(Icons.camera_alt_sharp,
-                                  size: 30,
-                                  color: Color.fromRGBO(182, 189, 200, 1)),
-                            ],
-                          ),
+                          color: Color.fromRGBO(182, 189, 200, 1),
                         ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    photofile = [];
-                  });
-                  FilePicker.platform
-                      .pickFiles(allowMultiple: true)
-                      .then((value) {
-                    value.files.forEach((element) async {
-                      photofile.add(File(element.path));
-                      setState(() {
-                        len1 = photofile.length;
-                        print('$len1');
-                      });
-                    });
-                  });
-                  // _showPicker2(context);
-                },
-                child: Container(
-                  margin: EdgeInsets.only(top: 25, left: 15, right: 15),
-                  decoration: BoxDecoration(
-                    color: Colors.yellow,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  height: 130,
-                  width: width,
-                  child: len1 != null
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(244, 245, 247, 1),
-                            // color: Colors.yellow,
-                            borderRadius: BorderRadius.circular(15),
-                            // image: Image.file(file)
-                          ),
-                          height: 130,
-                          width: width,
-                          child: Align(
-                              alignment: Alignment.center,
-                              child: Text('You have Selected $len1 Files')),
-                          // child: Image.file(
-                          //   _image1,
-                          //   fit: BoxFit.cover,
-                          // ),
-                        )
-                      : Container(
-                          padding: EdgeInsets.only(top: 5, bottom: 5),
-                          decoration: BoxDecoration(
-                            color: Color.fromRGBO(244, 245, 247, 1),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          height: 130,
-                          width: width,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                'Select Driver Picture',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(182, 189, 200, 1),
-                                    fontSize: 16),
-                              ),
-                              Icon(Icons.camera_alt_sharp,
-                                  size: 30,
-                                  color: Color.fromRGBO(182, 189, 200, 1)),
-                            ],
-                          ),
-                        ),
-                ),
-              ),
-              Container(
-                child: Divider(),
-              ),
-              Text(
-                'Address (Coordinates)',
-                style: TextStyle(color: Colors.grey, fontSize: 14),
-              ),
-              lat != null && lng != null
-                  ? Container(
-                      margin: EdgeInsets.all(25),
-                      child: Table(
-                        children: [
-                          TableRow(children: [
-                            Container(
-                                margin: EdgeInsets.all(10),
-                                child: Text(
-                                  "Latitude:",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16),
-                                )),
-                            Container(
-                                margin: EdgeInsets.all(10),
-                                child: Text(
-                                  "$lat",
-                                  style: TextStyle(fontSize: 16),
-                                ))
-                          ]),
-                          TableRow(children: [
-                            Container(
-                                margin: EdgeInsets.all(10),
-                                child: Text(
-                                  "Latitude:",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16),
-                                )),
-                            Container(
-                                margin: EdgeInsets.all(10),
-                                child: Text(
-                                  "$lng",
-                                  style: TextStyle(fontSize: 16),
-                                ))
-                          ]),
-                        ],
                       ),
-                    )
-                  : Container(),
-              Container(
-                clipBehavior: Clip.hardEdge,
-                height: 350,
-                alignment: Alignment.center,
-                width: double.infinity,
-
-                // padding: EdgeInsets.all(10),
-                margin: EdgeInsets.only(top: 15, bottom: 15),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(17),
-                ),
-
-                child: PlacePicker(
-                  apiKey: 'AIzaSyAMp8UY-G3eUJeinsx6uwK-j0lXFYB_KWo',
-                  initialPosition: lock,
-                  useCurrentLocation: false,
-                  selectInitialPosition: false,
-                  usePlaceDetailSearch: true,
-                  forceSearchOnZoomChanged: true,
-                  automaticallyImplyAppBarLeading: false,
-                  onPlacePicked: (result) {
+                    )),
+                InkWell(
+                  onTap: () {
                     setState(() {
-                      lock = LatLng(result.geometry.location.lat,
-                          result.geometry.location.lng);
-                      lat = result.geometry.location.lat.toString();
-                      lng = result.geometry.location.lng.toString();
+                      idCardPicfile = [];
+                    });
+                    FilePicker.platform
+                        .pickFiles(allowMultiple: true)
+                        .then((value) {
+                      value.files.forEach((element) async {
+                        idCardPicfile.add(File(element.path));
+                        setState(() {
+                          len = idCardPicfile.length;
+                          print('$len');
+                        });
+                      });
                     });
                   },
-                  pinBuilder: (context, state) {
-                    if (state == PinState.Idle) {
-                      return Icon(Icons.location_on, color: Colors.red);
-                    } else {
-                      return Icon(Icons.location_on_outlined,
-                          color: Colors.red);
+                  child: Container(
+                    margin: EdgeInsets.only(top: 25, left: 15, right: 15),
+                    decoration: BoxDecoration(
+                      color: Colors.yellow,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    height: 130,
+                    width: width,
+                    child: len != null
+                        ? Container(
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(244, 245, 247, 1),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            height: 130,
+                            width: width,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text('You have Selected $len Files'),
+                            ),
+                          )
+                        : Container(
+                            padding: EdgeInsets.only(top: 5, bottom: 5),
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(244, 245, 247, 1),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            height: 130,
+                            width: width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  'Select Files',
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(182, 189, 200, 1),
+                                      fontSize: 16),
+                                ),
+                                Icon(Icons.camera_alt_sharp,
+                                    size: 30,
+                                    color: Color.fromRGBO(182, 189, 200, 1)),
+                              ],
+                            ),
+                          ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      photofile = [];
+                    });
+                    FilePicker.platform
+                        .pickFiles(allowMultiple: true)
+                        .then((value) {
+                      value.files.forEach((element) async {
+                        photofile.add(File(element.path));
+                        setState(() {
+                          len1 = photofile.length;
+                          print('$len1');
+                        });
+                      });
+                    });
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(top: 25, left: 15, right: 15),
+                    decoration: BoxDecoration(
+                      color: Colors.yellow,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    height: 130,
+                    width: width,
+                    child: len1 != null
+                        ? Container(
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(244, 245, 247, 1),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            height: 130,
+                            width: width,
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text('You have Selected $len1 Files'),
+                            ),
+                          )
+                        : Container(
+                            padding: EdgeInsets.only(top: 5, bottom: 5),
+                            decoration: BoxDecoration(
+                              color: Color.fromRGBO(244, 245, 247, 1),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            height: 130,
+                            width: width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  'Select Driver Picture',
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(182, 189, 200, 1),
+                                      fontSize: 16),
+                                ),
+                                Icon(Icons.camera_alt_sharp,
+                                    size: 30,
+                                    color: Color.fromRGBO(182, 189, 200, 1)),
+                              ],
+                            ),
+                          ),
+                  ),
+                ),
+                Container(
+                  child: Divider(),
+                ),
+                Text(
+                  'Address (Coordinates)',
+                  style: TextStyle(color: Colors.grey, fontSize: 14),
+                ),
+                lat != null && lng != null
+                    ? Container(
+                        margin: EdgeInsets.all(25),
+                        child: Table(
+                          children: [
+                            TableRow(
+                              children: [
+                                Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: Text(
+                                      "Latitude:",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16),
+                                    )),
+                                Container(
+                                  margin: EdgeInsets.all(10),
+                                  child: Text(
+                                    "$lat",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            TableRow(children: [
+                              Container(
+                                  margin: EdgeInsets.all(10),
+                                  child: Text(
+                                    "Latitude:",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 16),
+                                  )),
+                              Container(
+                                  margin: EdgeInsets.all(10),
+                                  child: Text(
+                                    "$lng",
+                                    style: TextStyle(fontSize: 16),
+                                  ))
+                            ]),
+                          ],
+                        ),
+                      )
+                    : Container(),
+                Container(
+                  clipBehavior: Clip.hardEdge,
+                  height: 350,
+                  alignment: Alignment.center,
+                  width: double.infinity,
+                  margin: EdgeInsets.only(top: 15, bottom: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(17),
+                  ),
+                  child: PlacePicker(
+                    apiKey: 'AIzaSyAMp8UY-G3eUJeinsx6uwK-j0lXFYB_KWo',
+                    initialPosition: lock,
+                    useCurrentLocation: false,
+                    selectInitialPosition: false,
+                    usePlaceDetailSearch: true,
+                    forceSearchOnZoomChanged: true,
+                    automaticallyImplyAppBarLeading: false,
+                    onPlacePicked: (result) {
+                      setState(() {
+                        lock = LatLng(result.geometry.location.lat,
+                            result.geometry.location.lng);
+                        lat = result.geometry.location.lat.toString();
+                        lng = result.geometry.location.lng.toString();
+                      });
+                    },
+                    pinBuilder: (context, state) {
+                      if (state == PinState.Idle) {
+                        return Icon(Icons.location_on, color: Colors.red);
+                      } else {
+                        return Icon(Icons.location_on_outlined,
+                            color: Colors.red);
+                      }
+                    },
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    print({
+                      "name": '$drivername',
+                      "id_number": "$idnumber",
+                      'id_expiry': "$idexpiry",
+                      'vehicle_name': "$vehiclename",
+                      'plate_number': "$vehicleplatenumber",
+                      'modal': "$vehiclemodel",
+                      'vehicle_latitude': '$lat',
+                      'vehicle_longitude': '$lng',
+                      'photo': photofile,
+                      'id_picture': idCardPicfile,
+                    });
+                    if (_formKey.currentState.validate()) {
+                      if (photofile.isEmpty) {
+                        final _snackBar =
+                            SnackBar(content: Text('Photo of Driver is missing'));
+                        ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                      } else if (idCardPicfile.isEmpty) {
+                        final _snackBar = SnackBar(
+                            content: Text('ID_Card of Driver is missing'));
+                        ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                      } else if (lat == null && lng == null) {
+                        final _snackBar = SnackBar(
+                            content:
+                                Text('Please Select Vehicle Location from Map'));
+                        ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                      } else {
+                        print('Ahmad');
+                        showAlert(
+                          context: context,
+                          title: "Driver Request is creating please wait",
+                          actions: [
+                            AlertAction(
+                                text: "Ok",
+                                isDestructiveAction: true,
+                                onPressed: () {
+                                  addDriverRequest(context);
+                                }),
+                          ],
+                          cancelable: true,
+                        );
+                      }
                     }
                   },
-                ),
-              ),
-              InkWell(
-                onTap: () async {
-                  print({
-                    "name": '$drivername',
-                    "id_number": "$idnumber",
-                    'id_expiry': "$idexpiry",
-                    'vehicle_name': "$vehiclename",
-                    'plate_number': "$vehicleplatenumber",
-                    'modal': "$vehiclemodel",
-                    'vehicle_latitude': '$lat',
-                    'vehicle_longitude': '$lng',
-                    'photo': photofile,
-                    'id_picture': idCardPicfile,
-                  });
-                  //                   var vehiclelatitude;
-                  // var vehiclelongitude;
-                  if (_formKey.currentState.validate()) {
-                    if (photofile.isEmpty) {
-                      final _snackBar =
-                          SnackBar(content: Text('Photo of Driver is missing'));
-                      ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                    } else if (idCardPicfile.isEmpty) {
-                      final _snackBar = SnackBar(
-                          content: Text('ID_Card of Driver is missing'));
-                      ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                    } else if (lat == null && lng == null) {
-                      final _snackBar = SnackBar(
-                          content:
-                              Text('Please Select Vehicle Location from Map'));
-                      ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                    } else {
-                      print('Ahmad');
-                      showAlert(
-                        context: context,
-                        title: "Driver Request is creating please wait",
-                        actions: [
-                          AlertAction(
-                              text: "Ok",
-                              isDestructiveAction: true,
-                              onPressed: () {
-                                // Navigator.pushReplacement(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (BuildContext context) =>
-                                //           Varifyphonenumber(phonenumber)),
-                                // );
-                                addDriverRequest(context);
-                              }),
-                        ],
-                        cancelable: true,
-                      );
-                    }
-                  }
-                },
-                child: Container(
-                  margin:
-                      EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 20),
-                  height: 50,
-                  width: width,
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(255, 199, 0, 1),
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Align(
+                  child: Container(
+                    margin:
+                        EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 20),
+                    height: 50,
+                    width: width,
+                    decoration: BoxDecoration(
+                        color: Color.fromRGBO(255, 199, 0, 1),
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Align(
                       alignment: Alignment.center,
-                      child: Text('Create Account')),
+                      child: Text('Create Account'),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -898,16 +679,7 @@ class _DriverProfileState extends State<DriverProfile> {
             title: "Driver Not Created",
             actions: [
               AlertAction(
-                  text: "Ok ",
-                  isDestructiveAction: true,
-                  onPressed: () {
-                    // Navigator.pushReplacement(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (BuildContext context) => Home(),
-                    //   ),
-                    // );
-                  }),
+                  text: "Ok ", isDestructiveAction: true, onPressed: () {}),
             ],
             cancelable: true,
           );

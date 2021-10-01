@@ -4,29 +4,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:switcher_button/switcher_button.dart';
 import 'package:wssal_driver/account/LogIn.dart';
-import 'package:wssal_driver/main.dart';
-import 'package:wssal_driver/person/paymentInformation.dart';
 import 'package:wssal_driver/person/personInformation.dart';
 import 'package:wssal_driver/wallet/driverwoilet.dart';
 import '../function.dart';
 
-
-
-
 class Person extends StatefulWidget {
-  // const Person({ Key? key }) : super(key: key);
-
   @override
   _PersonState createState() => _PersonState();
 }
 
 class _PersonState extends State<Person> {
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
-      
-      bottomNavigationBar: getbottomBar(1, context),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
@@ -36,25 +27,23 @@ class _PersonState extends State<Person> {
               height: 100,
               width: width,
               color: Colors.white,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Text('Profile',
-              style: TextStyle(
-                fontSize: 30
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Text(
+                  'Profile',
+                  style: TextStyle(fontSize: 30),
+                ),
               ),
-              ),
-            ),
             ),
             Container(
               color: Colors.white,
               width: width,
               child: Column(
-                
                 children: [
                   Divider(
                     color: Colors.grey,
                     thickness: 0.3,
-                    ),
+                  ),
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     height: 100,
@@ -196,8 +185,6 @@ class _PersonState extends State<Person> {
                       ),
                     ),
                   ),
-                
-                
                 ],
               ),
             ),
@@ -235,9 +222,7 @@ class _PersonState extends State<Person> {
                               FontAwesomeIcons.bell,
                               size: 20,
                             ),
-                            onPressed: () {
-                             
-                            },
+                            onPressed: () {},
                           ),
                           title: Text('Notification'),
                           subtitle: Text(
@@ -258,7 +243,6 @@ class _PersonState extends State<Person> {
                             },
                           )),
                     ),
-                   
                   ],
                 )),
             Container(

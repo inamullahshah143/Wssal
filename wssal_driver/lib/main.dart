@@ -7,8 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'account/LogIn.dart';
 import 'function.dart';
-import 'home.dart';
 import 'dart:convert';
+
+import 'wallet/dashboard/landing_screen.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -86,7 +87,7 @@ class SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (BuildContext context) => Home(),
+          builder: (BuildContext context) => LandingScreen(),
         ),
       );
       // getProfile() ;
@@ -121,7 +122,7 @@ class SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (BuildContext context) => Home(),
+            builder: (BuildContext context) => LandingScreen(),
           ),
         );
       } else {
@@ -150,7 +151,24 @@ void main() {
   Firebase.initializeApp().then((value) => {
         runApp(MaterialApp(
           debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: themePrimaryColor,
+          ),
           home: SplashScreen(),
         )),
       });
 }
+
+Map<int, Color> colorMap = {
+  50: Color.fromRGBO(254, 197, 0, .1),
+  100: Color.fromRGBO(254, 197, 0, .2),
+  200: Color.fromRGBO(254, 197, 0, .3),
+  300: Color.fromRGBO(254, 197, 0, .4),
+  400: Color.fromRGBO(254, 197, 0, .5),
+  500: Color.fromRGBO(254, 197, 0, .6),
+  600: Color.fromRGBO(254, 197, 0, .7),
+  700: Color.fromRGBO(254, 197, 0, .8),
+  800: Color.fromRGBO(254, 197, 0, .9),
+  900: Color.fromRGBO(254, 197, 0, 1),
+};
+MaterialColor themePrimaryColor = MaterialColor(0xFFFEC500, colorMap);

@@ -1,24 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
-import 'package:location/location.dart';
-import 'account/displayprofile.dart';
-import 'account/driverProfile.dart';
-import 'function.dart';
-import 'orderDetails.dart';
-import 'orderHistory.dart';
+import '../../function.dart';
+import '../../orderDetails.dart';
 
-class MyOrder extends StatefulWidget {
-  // const MyOrder({ Key? key }) : super(key: key);
-
+class CompletedOrders extends StatefulWidget {
   @override
-  _MyOrderState createState() => _MyOrderState();
+  _CompletedOrdersState createState() => _CompletedOrdersState();
 }
 
-class _MyOrderState extends State<MyOrder> {
+class _CompletedOrdersState extends State<CompletedOrders> {
   @override
   void initState() {
     super.initState();
@@ -28,108 +20,118 @@ class _MyOrderState extends State<MyOrder> {
   Widget build(BuildContext context) {
     latestContext = context;
     return DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          backgroundColor: Color.fromRGBO(244, 245, 247, 1),
-          appBar: AppBar(
-            iconTheme: IconThemeData(
-              color: Colors.black, //change your color here
-            ),
-            backgroundColor: Colors.white,
-            elevation: 0,
-            title: Text(
-              "My Order",
-              style: TextStyle(color: Colors.black),
-            ),
-            actions: [
-              Image(
-                image: AssetImage('assets/app_logo.png'),
-              )
-            ],
-            bottom: const TabBar(
-              labelColor: Color.fromRGBO(255, 199, 0, 1),
-              labelStyle: TextStyle(
-                  color: Color.fromRGBO(255, 199, 0, 1),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600),
-              tabs: [
-                Tab(
-                  text: "Accepted Order",
-                ),
-                Tab(
-                  text: "Completed Orders",
-                ),
-              ],
-            ),
+      length: 2,
+      child: Scaffold(
+        backgroundColor: Color.fromRGBO(244, 245, 247, 1),
+        appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Colors.black, //change your color here
           ),
-          bottomNavigationBar: getbottomBar(0, context),
-          body: TabBarView(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: Text(
+            "Completed Orders",
+            style: TextStyle(color: Colors.black),
+          ),
+          actions: [
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Image(
+                image: AssetImage('assets/app_logo.png'),
+              ),
+            )
+          ],
+          bottom: const TabBar(
+            labelColor: Color.fromRGBO(222, 61, 48, 1),
+            unselectedLabelColor: Color.fromRGBO(50, 50, 50, 1),
+            indicatorColor: Color.fromRGBO(222, 61, 48, 1),
+            tabs: [
+              Tab(
+                text: "Regular Orders",
+              ),
+              Tab(
+                text: "Custom Orders",
+              ),
+            ],
+          ),
+        ),
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: double.infinity,
+          margin: EdgeInsets.all(10.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.25),
+                spreadRadius: 0,
+                blurRadius: 2,
+                offset: Offset(0, 0), // changes position of shadow
+              ),
+            ],
+          ),
+          child: TabBarView(
             children: [
               SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Container(
-                    margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9),
-                      color: Colors.white,
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    FutureBuilder(
+                      future: buildDriverCompletedOrders(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return snapshot.data;
+                        } else if (snapshot.hasError) {
+                          return Padding(
+                            padding: EdgeInsets.only(top: 10.0),
+                            child: Center(child: Text("${snapshot.error}")),
+                          );
+                        } else {
+                          return Padding(
+                            padding: EdgeInsets.only(top: 10.0),
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+                      },
                     ),
-                    child: Container(
-                      margin: EdgeInsets.only(
-                        top: 10,
-                      ),
-                      child: Column(
-                        children: [
-                          FutureBuilder(
-                            future: buildDriverAcceptedOrders(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return snapshot.data;
-                              } else if (snapshot.hasError) {
-                                return Center(child: Text("${snapshot.error}"));
-                              } else {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  )),
+                  ],
+                ),
+              ),
               SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Container(
-                    margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9),
-                      color: Colors.white,
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    FutureBuilder(
+                      future: buildDriverCompletedOrders(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return snapshot.data;
+                        } else if (snapshot.hasError) {
+                          return Padding(
+                            padding: EdgeInsets.only(top: 10.0),
+                            child: Center(child: Text("${snapshot.error}")),
+                          );
+                        } else {
+                          return Padding(
+                            padding: EdgeInsets.only(top: 10.0),
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+                      },
                     ),
-                    child: Container(
-                      margin: EdgeInsets.only(
-                        top: 10,
-                      ),
-                      child: Column(
-                        children: [
-                          FutureBuilder(
-                            future: buildDriverCompletedOrders(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return snapshot.data;
-                              } else if (snapshot.hasError) {
-                                return Center(child: Text("${snapshot.error}"));
-                              } else {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ))
+                  ],
+                ),
+              ),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Future<Widget> buildDriverAcceptedOrders() async {
@@ -140,7 +142,7 @@ class _MyOrderState extends State<MyOrder> {
           headers: {'Authorization': 'Bearer $stringValue'});
       print('buildDriverAcceptedOrders: ${response.body}');
       List data = json.decode(response.body)['data'];
-if (data.length > 0) {
+      if (data.length > 0) {
         data.forEach((element) {
           x.add(InkWell(
             onTap: () {
@@ -195,10 +197,10 @@ if (data.length > 0) {
                           http
                               .get("$apiURL/drivercustomorder/${element['id']}")
                               .then((response) {
-                                // if () {
-                                  
-                                // }
-                              });
+                            // if () {
+
+                            // }
+                          });
                         },
                         child: Text('Accept Order',
                             style: TextStyle(
@@ -223,6 +225,7 @@ if (data.length > 0) {
           ));
         });
         return Container(
+          padding: EdgeInsets.all(10.0),
           child: ListView(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
@@ -231,10 +234,16 @@ if (data.length > 0) {
           ),
         );
       } else {
-        return Text("No Orders Available");
+        return Padding(
+          padding: EdgeInsets.only(top: 10.0),
+          child: Text("No Orders Available"),
+        );
       }
     } catch (e) {
-      return Text('No Orders Availabe');
+      return Padding(
+        padding: EdgeInsets.only(top: 10.0),
+        child: Text('No Orders Availabe'),
+      );
     }
   }
 
@@ -301,10 +310,10 @@ if (data.length > 0) {
                           http
                               .get("$apiURL/drivercustomorder/${element['id']}")
                               .then((response) {
-                                // if () {
-                                  
-                                // }
-                              });
+                            // if () {
+
+                            // }
+                          });
                         },
                         child: Text('Accept Order',
                             style: TextStyle(
@@ -329,6 +338,7 @@ if (data.length > 0) {
           ));
         });
         return Container(
+          padding: EdgeInsets.all(10.0),
           child: ListView(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
@@ -337,10 +347,16 @@ if (data.length > 0) {
           ),
         );
       } else {
-        return Text("No Orders Available");
+        return Padding(
+          padding: EdgeInsets.only(top: 10.0),
+          child: Text("No Orders Available"),
+        );
       }
     } catch (e) {
-      return Text('No Orders Availabe');
+      return Padding(
+        padding: EdgeInsets.only(top: 10.0),
+        child: Text('No Orders Availabe'),
+      );
     }
   }
 }

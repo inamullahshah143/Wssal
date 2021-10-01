@@ -1,9 +1,8 @@
-// import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:wssal_driver/function.dart';
 import 'dart:io';
 
-import 'package:wssal_driver/home.dart';
+import 'package:wssal_driver/wallet/dashboard/landing_screen.dart';
 
 File _image;
 File _image1;
@@ -18,7 +17,7 @@ class VehicleProfile extends StatefulWidget {
 class _VehicleProfileState extends State<VehicleProfile> {
   String _chosenValue;
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
       body: SingleChildScrollView(
@@ -364,7 +363,6 @@ class _VehicleProfileState extends State<VehicleProfile> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 content: Stack(
-                                  overflow: Overflow.visible,
                                   children: <Widget>[
                                     Positioned(
                                       left: 100.0,
@@ -415,7 +413,7 @@ class _VehicleProfileState extends State<VehicleProfile> {
                                                   MaterialPageRoute(
                                                       builder: (BuildContext
                                                               context) =>
-                                                          Home()),
+                                                          LandingScreen()),
                                                 );
                                               },
                                             ),

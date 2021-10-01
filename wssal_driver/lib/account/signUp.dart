@@ -6,7 +6,6 @@ import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
 import 'package:wssal_driver/account/LogIn.dart';
 import 'package:wssal_driver/account/verifyNumber.dart';
-import 'package:wssal_driver/main.dart';
 
 import '../function.dart';
 
@@ -261,7 +260,7 @@ signUp(context) async {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-          builder: (BuildContext context) => Varifyphonenumber(data)),
+          builder: (BuildContext context) => Varifyphonenumber(data, false)),
     );
   } else {
     showAlert(
