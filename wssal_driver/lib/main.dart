@@ -9,7 +9,7 @@ import 'account/LogIn.dart';
 import 'function.dart';
 import 'dart:convert';
 
-import 'wallet/dashboard/landing_screen.dart';
+import 'dashboard/landing_screen.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,

@@ -5,7 +5,7 @@ import 'package:flutter_alert/flutter_alert.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wssal_driver/wallet/dashboard/landing_screen.dart';
+import 'package:wssal_driver/dashboard/landing_screen.dart';
 import '../function.dart';
 import 'driverProfile.dart';
 

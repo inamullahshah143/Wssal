@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wssal_driver/function.dart';
 import 'dart:io';
 
-import 'package:wssal_driver/wallet/dashboard/landing_screen.dart';
+import 'package:wssal_driver/dashboard/landing_screen.dart';
 
 File _image;
 File _image1;

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'wallet/dashboard/my_orders.dart';
-import 'chat.dart';
-import 'wallet/dashboard/incoming_orders.dart';
-import 'person/personPage.dart';
-
 String timeinterval;
 double width;
 double height;
