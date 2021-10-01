@@ -7,8 +7,6 @@ import '../../function.dart';
 import '../../orderDetails.dart';
 
 class IncomingOrders extends StatefulWidget {
-  // const IncomingOrders({ Key? key }) : super(key: key);
-
   @override
   _IncomingOrdersState createState() => _IncomingOrdersState();
 }
@@ -16,45 +14,6 @@ class IncomingOrders extends StatefulWidget {
 class _IncomingOrdersState extends State<IncomingOrders> {
   @override
   void initState() {
-    // Location().getLocation().then((value) {
-    //   http.post(Uri.parse("$apiURL/user/addBillingAddress"), headers: {
-    //     'Authorization': 'Bearer $stringValue'
-    //   }, body: {
-    //     "lat": "${value.latitude}",
-    //     "lng": "${value.longitude}",
-    //     "name": "name",
-    //     "company": "company",
-    //     "address": "address",
-    //     "city": "city",
-    //     "country": "country",
-    //     "postal_code": "1234",
-    //     "phone": "4321",
-    //   }).then((response) {
-    //     print("Location Send: Bearer ${response.body}");
-
-    //     print("Location Send: Bearer $stringValue");
-    //   });
-    // });
-    // Timer.periodic(Duration(minutes: 3), (timer) {
-    //   Location().getLocation().then((value) {
-    //     http.post(Uri.parse("$apiURL/user/addBillingAddress"), headers: {
-    //       'Authorization': 'Bearer $stringValue'
-    //     }, body: {
-    //       "lat": "${value.latitude}",
-    //       "lng": "${value.longitude}",
-    //       "name": "name",
-    //       "company": "company",
-    //       "address": "address",
-    //       "city": "city",
-    //       "country": "country",
-    //       "postal_code": "1234",
-    //       "phone": "4321",
-    //     }).then((response) {
-    //       print("Location Send: Bearer ${response.body}");
-    //       print("Location Send: Bearer $stringValue");
-    //     });
-    //   });
-    // });
     super.initState();
   }
 
@@ -67,7 +26,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
         backgroundColor: Color.fromRGBO(244, 245, 247, 1),
         appBar: AppBar(
           iconTheme: IconThemeData(
-            color: Colors.black, //change your color here
+            color: Colors.black,
           ),
           backgroundColor: Colors.white,
           elevation: 0,
@@ -109,7 +68,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                 color: Colors.grey.withOpacity(0.25),
                 spreadRadius: 0,
                 blurRadius: 2,
-                offset: Offset(0, 0), // changes position of shadow
+                offset: Offset(0, 0),
               ),
             ],
           ),
@@ -191,15 +150,18 @@ class _IncomingOrdersState extends State<IncomingOrders> {
               InkWell(
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => OrderDetails(element)));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OrderDetails(element),
+                    ),
+                  );
                 },
                 child: Container(
                   margin: EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9),
-                      border: Border.all(color: Colors.black, width: 0.5)),
+                    borderRadius: BorderRadius.circular(9),
+                    border: Border.all(color: Colors.black, width: 0.5),
+                  ),
                   child: ListTile(
                     title: Column(
                       children: [
@@ -254,9 +216,11 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                              text: 'View Details',
-                              style: TextStyle(
-                                  color: Color.fromRGBO(255, 199, 0, 1)))
+                            text: 'View Details',
+                            style: TextStyle(
+                              color: Color.fromRGBO(255, 199, 0, 1),
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -278,13 +242,13 @@ class _IncomingOrdersState extends State<IncomingOrders> {
       } else {
         return Padding(
           padding: EdgeInsets.only(top: 10.0),
-          child: Text("No Orders Available"),
+          child: Text("No Incoming Orders Available"),
         );
       }
     } catch (e) {
       return Padding(
         padding: EdgeInsets.only(top: 10.0),
-        child: Text('No Orders Availabe'),
+        child: Text('No Incoming Orders Availabe'),
       );
     }
   }
