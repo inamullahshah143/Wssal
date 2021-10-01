@@ -7,7 +7,6 @@ import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../functions.dart';
-import '../home.dart';
 import 'displayCategory.dart';
 
 class AddCategory extends StatefulWidget {

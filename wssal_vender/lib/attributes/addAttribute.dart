@@ -207,9 +207,7 @@ class _AddAttributeState extends State<AddAttribute> {
             TableRow(children: [
               Container(
                   margin: EdgeInsets.all(10),
-                  child: RaisedButton(
-                    textColor: Colors.white,
-                    color: Color.fromRGBO(240, 173, 78, 1),
+                  child: ElevatedButton(
                     child: Text('Edit'),
                     onPressed: () {
                       _scrollController.animateTo(0,
@@ -223,9 +221,7 @@ class _AddAttributeState extends State<AddAttribute> {
                   )),
               Container(
                   margin: EdgeInsets.all(10),
-                  child: RaisedButton(
-                    color: Color.fromRGBO(215, 89, 70, 1),
-                    textColor: Colors.white,
+                  child: ElevatedButton(
                     child: Text('Delete'),
                     onPressed: () {
                       setState(() {
@@ -323,7 +319,7 @@ class _AddAttributeState extends State<AddAttribute> {
                   ),
                 )),
           ),
-          RaisedButton(
+          ElevatedButton(
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 if (listIndex != null) {
@@ -357,8 +353,6 @@ class _AddAttributeState extends State<AddAttribute> {
               });
             },
             child: Text(listIndex == null ? "Add" : 'Edit'),
-            textColor: Colors.black,
-            color: Colors.white,
           )
         ],
       ),

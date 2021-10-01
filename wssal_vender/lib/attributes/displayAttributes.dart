@@ -106,7 +106,7 @@ class _DisplayAttributesState extends State<DisplayAttributes> {
           headers: {'Authorization': 'Bearer $stringValue'});
       print('response = ${response.body}');
       if (json.decode(response.body)['status'] == 200) {
-      List data = json.decode(response.body)['data'];
+        List data = json.decode(response.body)['data'];
 
         data.forEach((element) {
           attributes.add(Container(
@@ -139,9 +139,7 @@ class _DisplayAttributesState extends State<DisplayAttributes> {
                             children: [
                               Container(
                                   margin: EdgeInsets.all(10),
-                                  child: RaisedButton(
-                                    textColor: Colors.white,
-                                    color: Color.fromRGBO(240, 173, 78, 1),
+                                  child: ElevatedButton(
                                     child: Text('Edit'),
                                     onPressed: () {
                                       print(element);
@@ -153,9 +151,7 @@ class _DisplayAttributesState extends State<DisplayAttributes> {
                                     },
                                   )),
                               Container(
-                                  child: RaisedButton(
-                                color: Color.fromRGBO(215, 89, 70, 1),
-                                textColor: Colors.white,
+                                  child: ElevatedButton(
                                 child: Text('Delete'),
                                 onPressed: () {
                                   AttriId = element['id'];

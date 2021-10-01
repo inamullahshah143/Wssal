@@ -12,7 +12,6 @@ class LocationEnable extends StatefulWidget {
 
 class _LocationEnableState extends State<LocationEnable> {
   Location location = new Location();
-  LocationData _locationData;
   @override
     Widget build(BuildContext context) {
     latestContext = context;

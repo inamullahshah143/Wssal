@@ -1,13 +1,10 @@
-import 'dart:async';
+
 import 'dart:convert';
 import 'dart:io';
-import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../functions.dart';
-import '../home.dart';
 import 'displayCategory.dart';
 
 class UpdateCategory extends StatefulWidget {

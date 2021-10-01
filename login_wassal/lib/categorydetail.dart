@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 import 'Cart.dart';
 import 'Storedetail.dart';
 import 'digit_slider.dart';
-import 'google_map/app_states.dart';
 import 'productDetails.dart';
 import 'subcategory.dart';
 import 'const.dart';

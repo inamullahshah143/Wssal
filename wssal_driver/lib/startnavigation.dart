@@ -1,9 +1,7 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-// import 'package:flutter/services.dart' show rootBundle;
 import 'package:pusher/pusher.dart' as push;
 
 import 'ChatPage.dart';
@@ -137,7 +135,7 @@ class _DriverMapState extends State<DriverMap> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            RaisedButton(
+                            ElevatedButton(
                               onPressed: () {
                                 setState(() {
                                   pinPillPosition = 1000;

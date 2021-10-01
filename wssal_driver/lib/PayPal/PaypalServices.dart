@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert' as convert;
 import 'package:http_auth/http_auth.dart';
-import 'package:wssal_driver/wallet/driverwoilet.dart';
 
 import '../function.dart';
 
@@ -99,18 +98,18 @@ class PaypalServices {
           });
 
       if (response.statusCode == 200) {
-        final body = convert.jsonDecode(response.body);
-       
-Map data = json.decode(response.body);
- Clipboard.setData(ClipboardData(text: jsonEncode(data)));
+        Map data = json.decode(response.body);
+        Clipboard.setData(ClipboardData(text: jsonEncode(data)));
         print("Hello PayPal Response: ${jsonEncode(data)}");
         http.post(
             Uri.parse(
                 ("https://wassldev.einnovention.tech/api/paypal/success")),
             body: jsonEncode(data),
-            headers: {'Authorization': 'Bearer $stringValue', "content-type": "application/json",}).then((value) {
+            headers: {
+              'Authorization': 'Bearer $stringValue',
+              "content-type": "application/json",
+            }).then((value) {
           print("paypalSuccess: ${value.body}");
-         
         });
         return json.decode(response.body).toString();
       }

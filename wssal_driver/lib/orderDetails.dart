@@ -1,12 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:wssal_driver/startnavigation.dart';
-import 'Map.dart';
 import 'function.dart';
 
 class OrderDetails extends StatefulWidget {
@@ -21,7 +18,6 @@ class _OrderDetailsState extends State<OrderDetails> {
   final Map orderDetail;
   _OrderDetailsState(this.orderDetail);
   BitmapDescriptor busIcon;
-  Set<Marker> _markers = Set<Marker>();
   Timer timer;
   var latitude;
   var longitude;
@@ -104,7 +100,6 @@ class _OrderDetailsState extends State<OrderDetails> {
   }
 
   Future<Widget> buildOrdersDetails() async {
-    List<Widget> x = [];
     var url =
         'https://wassldev.einnovention.tech/api/driver/driverOrderDetail/${orderDetail['id']}';
     var response = await http
@@ -202,7 +197,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                       ),
                       Container(
                           margin: EdgeInsets.all(10),
-                          child: RaisedButton(
+                          child: ElevatedButton(
                             onPressed: () {
                               Navigator.push(
                                   context,

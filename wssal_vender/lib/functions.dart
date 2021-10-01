@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wssal_vender/profile.dart';
-import 'package:wssal_vender/shops/displayShop.dart';
-
 import 'product/allProduct.dart';
-import 'chat.dart';
 import 'home.dart';
 import 'orders.dart';
 

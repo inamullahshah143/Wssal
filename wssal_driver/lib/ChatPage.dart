@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:pusher/pusher.dart' as push;
 import 'package:pusher_websocket_flutter/pusher.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+// ignore: must_be_immutable
 class ChatPage extends StatefulWidget {
   final Map orderDetails;
   ChatPage({this.orderDetails});
@@ -83,6 +83,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 }
 
+// ignore: must_be_immutable
 class MessageTile extends StatefulWidget {
   String name;
   final Event data;

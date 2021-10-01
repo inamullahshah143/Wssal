@@ -85,9 +85,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                     )),
                          Container(
                               margin: EdgeInsets.all(10),
-                              child: RaisedButton(
-                                color: Color.fromRGBO(215, 89, 70, 1),
-                                textColor: Colors.white,
+                              child: ElevatedButton(
                                 child: Text('WithDraw'),
                                 onPressed: () {
                                 buildDeposit();
