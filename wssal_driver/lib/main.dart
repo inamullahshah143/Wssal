@@ -134,10 +134,12 @@ class SplashScreenState extends State<SplashScreen> {
 
   initScreen(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Container(
-          child: Image.asset("assets/Logo_wssal.png"),
+      body: Container(
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/splash.jpg'), fit: BoxFit.cover),
         ),
       ),
     );

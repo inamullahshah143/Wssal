@@ -148,26 +148,13 @@ class SplashScreenState extends State<SplashScreen> {
 
   initScreen(BuildContext context) {
     latestContext = context;
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         height: height,
         width: width,
-        color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              child: Image.asset(
-                "assets/Logo_wssal.png",
-                height: height / 6,
-                width: width / 3,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ],
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/splash.png'), fit: BoxFit.cover),
         ),
       ),
     );

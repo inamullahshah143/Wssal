@@ -88,17 +88,15 @@ class _SplashScreenState extends State<SplashScreen> {
           storedName = x;
           storedNumber = z;
           logs = true;
-          Timer(Duration(seconds: 3), () {
+          Timer(Duration(seconds: 5), () {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                    builder: (_) => MainDashboard()),
+                MaterialPageRoute(builder: (_) => MainDashboard()),
                 (Route<dynamic> route) => false);
           });
         } else {
-          Timer(Duration(seconds: 3), () {
+          Timer(Duration(seconds: 5), () {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                    builder: (_) => MainDashboard()),
+                MaterialPageRoute(builder: (_) => MainDashboard()),
                 (Route<dynamic> route) => false);
           });
         }
@@ -124,24 +122,11 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         height: height,
         width: width,
-        color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              child: Image.asset(
-                "assets/Logo_wssal.png",
-                height: height / 6,
-                width: width / 3,
-                fit: BoxFit.fill,
-              ),
-            ),
-          ],
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/giphy.gif'), fit: BoxFit.cover),
         ),
       ),
     );
   }
-
-  
 }
