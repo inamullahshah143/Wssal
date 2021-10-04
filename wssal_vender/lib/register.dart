@@ -1,12 +1,9 @@
 import 'dart:convert';
-import 'dart:convert';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
-import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'login_page.dart';
-import 'store_profile.dart';
 import 'verifynumber.dart';
 import 'functions.dart';
 
@@ -257,12 +254,11 @@ signUp(context) async {
   var data = json.decode(response.body);
   print('$data');
   if (data['status'] == 200) {
- Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          Varifyphonenumber(data)),
-                );
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+          builder: (BuildContext context) => Varifyphonenumber(data)),
+    );
   } else {
     showAlert(
       context: context,

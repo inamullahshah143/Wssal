@@ -4,8 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:switcher_button/switcher_button.dart';
 import 'package:wssal_vender/functions.dart';
-import 'package:wssal_vender/paymentInformation.dart';
-import 'package:wssal_vender/register.dart';
 import 'package:wssal_vender/storeInformation.dart';
 import 'package:wssal_vender/wallet/venderWoilet.dart';
 
@@ -42,7 +40,7 @@ class _ProfileState extends State<Profile> {
           // centerTitle: true,
         ),
       ),
-      bottomNavigationBar: getbottomBar(4, context),
+      // bottomNavigationBar: getbottomBar(4, context),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(

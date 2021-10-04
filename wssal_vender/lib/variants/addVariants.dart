@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
-import 'package:flutter_switch/flutter_switch.dart';
-import 'package:flutter_tags/flutter_tags.dart';
 
 import '../functions.dart';
 import 'displayVariants.dart';
@@ -80,8 +77,8 @@ class _AddVariantsState extends State<AddVariants> {
 //                     ),
 //                     Align(
 //                       alignment: Alignment.centerLeft,
-                     
-//                       child: 
+
+//                       child:
 //                         FlutterSwitch(
 //                           width: 50.0,
 //                           height: 25.0,
@@ -108,7 +105,7 @@ class _AddVariantsState extends State<AddVariants> {
 //                             });
 //                           },
 //                         ),
-               
+
 //                     ),
 //                   ],
 //                 ),
@@ -169,7 +166,7 @@ class _AddVariantsState extends State<AddVariants> {
 //                         disabledBorder: InputBorder.none,
 //                         hintText: '     Variant Price'),
 //                   )),
-           
+
 //               Container(
 //                 width: 400,
 //                 decoration: BoxDecoration(
@@ -267,14 +264,14 @@ class _AddVariantsState extends State<AddVariants> {
 //                   // tagi= json.encode(_tagitems);
 //                   // print('tagi = $tagi');
 //                   // _tagitems.forEach((element) {});
-                  
+
 //                   for (var i = 0; i < _tagitems.length; i++) {
 //                     if (i==0) {
 //                       asd = asd + _tagitems[i];
 //                     }else{
 //                       asd =  asd + ',' + _tagitems[i];
-//                     } 
-                  
+//                     }
+
 //                   }
 //                   print('asd = $asd');
 //                   print('select attribute = $feture');
@@ -321,7 +318,6 @@ class _AddVariantsState extends State<AddVariants> {
 //     );
 //   }
 
-
 // addvariantss() async {
 //     try {
 //       var url =
@@ -339,7 +335,7 @@ class _AddVariantsState extends State<AddVariants> {
 //         "title": "$variantsName",
 //         "value": "$asd",
 //         'selectstatus': '$feture',
-//           'price':'$variantsPrice'   
+//           'price':'$variantsPrice'
 //       });
 //       print('Response body: ${response.body}');
 //       var data = json.decode(response.body);
@@ -387,19 +383,14 @@ class _AddVariantsState extends State<AddVariants> {
 //     }
 //   }
 
-
-
-
-
-
 // }
- TextEditingController priceController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
   TextEditingController valueController = TextEditingController();
   List variation = [];
   final _formKey = GlobalKey<FormState>();
   String title;
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
       //  appBar: AppBar(
@@ -521,21 +512,15 @@ class _AddVariantsState extends State<AddVariants> {
                 margin: EdgeInsets.all(15),
                 width: width,
                 height: 50,
-               
                 decoration: BoxDecoration(
-                   color: Colors.yellow,
-                  borderRadius: BorderRadius.circular(5)
-                ),
+                    color: Colors.yellow,
+                    borderRadius: BorderRadius.circular(5)),
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('Add Variant',
-                  
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold
+                  child: Text(
+                    'Add Variant',
+                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
                   ),
-                  ),
-
                 ),
               ),
             )
@@ -551,7 +536,7 @@ class _AddVariantsState extends State<AddVariants> {
       x.add(Container(
         margin: EdgeInsets.all(20),
         child: Table(
-                border: TableBorder.all(),
+          border: TableBorder.all(),
           children: [
             TableRow(children: [
               Container(
@@ -580,9 +565,7 @@ class _AddVariantsState extends State<AddVariants> {
             TableRow(children: [
               Container(
                   margin: EdgeInsets.all(10),
-                  child: RaisedButton(
-                          textColor: Colors.white,
-                    color: Color.fromRGBO(240, 173, 78, 1),
+                  child: ElevatedButton(
                     child: Text('Edit'),
                     onPressed: () {
                       addVariations('${variation[i]['value']}',
@@ -591,9 +574,7 @@ class _AddVariantsState extends State<AddVariants> {
                   )),
               Container(
                   margin: EdgeInsets.all(10),
-                  child: RaisedButton(
-                     color: Color.fromRGBO(215, 89, 70, 1),
-                    textColor: Colors.white,
+                  child: ElevatedButton(
                     child: Text('Delete'),
                     onPressed: () {
                       setState(() {
@@ -613,7 +594,6 @@ class _AddVariantsState extends State<AddVariants> {
 
   addVariations(String varValue, String varPrice, int listIndex) {
     return Stack(
-      overflow: Overflow.visible,
       children: <Widget>[
         // Positioned(
         //   right: -40.0,
@@ -703,13 +683,12 @@ class _AddVariantsState extends State<AddVariants> {
                       ),
                     )),
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
                     if (listIndex != null) {
                       setState(() {
                         variation.removeAt(listIndex);
-                    
 
                         variation.add({
                           "value": "$varValue",
@@ -727,15 +706,12 @@ class _AddVariantsState extends State<AddVariants> {
                       priceController.clear();
                       valueController.clear();
                     });
-                 
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('All Fields Required')));
                   }
                 },
                 child: Text("Done"),
-                textColor: Colors.black,
-                color: Colors.white,
               )
             ],
           ),

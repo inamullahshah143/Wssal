@@ -1,21 +1,17 @@
 import 'dart:convert';
-import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:wssal_vender/register.dart';
-import 'package:wssal_vender/store_profile.dart';
 import 'package:wssal_vender/verifynumber.dart';
 import 'functions.dart';
 import 'package:http/http.dart' as http;
-
 
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
-
 
 String countryCode = '+20';
 String number;
@@ -179,7 +175,6 @@ class _LoginPageState extends State<LoginPage> {
                 height: 50,
                 width: width,
                 child: ElevatedButton(
-                  
                   onPressed: () {
                     print('$countryCode$number');
                     phonenumber = "$countryCode$number";
@@ -187,11 +182,10 @@ class _LoginPageState extends State<LoginPage> {
                     login(context);
                   },
                   style: ElevatedButton.styleFrom(
-                  
                     shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(15.0),
                     ),
-                primary: themePrimaryColor,
+                    primary: themePrimaryColor,
                   ),
                   child: Text(
                     "Next",
@@ -215,7 +209,7 @@ login(context) async {
     var url = 'https://wassldev.einnovention.tech/api/login';
     var response = await http.post(Uri.parse(url), body: {
       'phone': '$countryCode$number',
-      'fcm_token':'$ffccmmTTookkeenn'
+      'fcm_token': '$ffccmmTTookkeenn'
     }, headers: {
       'Accept': 'application/json'
     });
@@ -225,14 +219,11 @@ login(context) async {
     print('$data');
 
     if (data['status'] == 200) {
- 
       Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          Varifyphonenumber(data)),
-                );
-      
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => Varifyphonenumber(data)),
+      );
     } else {
       showAlert(
         context: context,

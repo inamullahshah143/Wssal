@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:wssal_vender/PayPal/PaypalPayment.dart';
@@ -79,7 +78,8 @@ class _DriverWoiletState extends State<DriverWoilet> {
                         ),
                       )),
                   Container(
-                    margin: EdgeInsets.only(top:20,bottom: 20,left: 20,right: 20),
+                    margin: EdgeInsets.only(
+                        top: 20, bottom: 20, left: 20, right: 20),
                     padding: EdgeInsets.all(6),
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey, width: 0.5)),
@@ -134,9 +134,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                       children: [
                         Container(
                             margin: EdgeInsets.all(10),
-                            child: RaisedButton(
-                              textColor: Colors.white,
-                              color: Color.fromRGBO(240, 173, 78, 1),
+                            child: ElevatedButton(
                               child: Text('Deposit'),
                               onPressed: () {
                                 String depositValue = "";
@@ -145,7 +143,6 @@ class _DriverWoiletState extends State<DriverWoilet> {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         content: Stack(
-                                          overflow: Overflow.visible,
                                           children: <Widget>[
                                             Positioned(
                                               right: -40.0,
@@ -190,7 +187,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                                                     padding:
                                                         const EdgeInsets.all(
                                                             8.0),
-                                                    child: RaisedButton(
+                                                    child: ElevatedButton(
                                                       child: Text("Submit"),
                                                       onPressed: () {
                                                         if (_formKey
@@ -231,9 +228,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                             )),
                         Container(
                             margin: EdgeInsets.all(10),
-                            child: RaisedButton(
-                              color: Color.fromRGBO(215, 89, 70, 1),
-                              textColor: Colors.white,
+                            child: ElevatedButton(
                               child: Text('WithDraw'),
                               onPressed: () {
                                 Navigator.pushReplacement(
@@ -284,20 +279,16 @@ class _DriverWoiletState extends State<DriverWoilet> {
           data.forEach((element) {
             x.add(Container(
                 margin: EdgeInsets.only(left: 20, top: 15, right: 20),
-                          padding: EdgeInsets.only(left:10,right:10,bottom: 6,top: 6),
+                padding:
+                    EdgeInsets.only(left: 10, right: 10, bottom: 6, top: 6),
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                  
-                  )
-                ),
+                    border: Border.all(
+                  color: Colors.black,
+                )),
                 child: Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(
-                        top: 15,
-                        bottom: 15
-                      ),
+                      margin: EdgeInsets.only(top: 15, bottom: 15),
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(

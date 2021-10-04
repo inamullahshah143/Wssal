@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:wssal_vender/functions.dart';
 import 'package:wssal_vender/product/productDetailsPage.dart';
 import 'package:wssal_vender/product/updateProduct.dart';
@@ -55,8 +54,9 @@ class _ProductsGridCardState extends State<ProductsGridCard> {
               minVerticalPadding: 4.0,
               leading: ClipRRect(
                 borderRadius: BorderRadius.circular(9.0),
-                child: Image.network(
-                    productData['images'].isNotEmpty?'$picBaseURL${productData['images'][0]['path']}':""),
+                child: Image.network(productData['images'].isNotEmpty
+                    ? '$picBaseURL${productData['images'][0]['path']}'
+                    : ""),
               ),
               // leading:       Container(
               //         width: 60,
@@ -126,51 +126,51 @@ class _ProductsGridCardState extends State<ProductsGridCard> {
   List<Widget> buildImage(List descs) {
     List<Widget> x = [];
     if (descs.isNotEmpty) {
-  for (final b in descs) {
-    x.add(Stack(children: [
-      Container(
-        height: 100,
-        width: 100,
-        margin: EdgeInsets.only(left: 5),
-        decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-                image: NetworkImage('$picBaseURL${b['path']}'),
-                fit: BoxFit.contain)),
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          InkWell(
-            onTap: () {
-              print('picId = ${b['id']}');
-              picId = b['id'];
-              showAlert(
-                context: context,
-                title: "Do You Really want to  Deleted Image",
-                actions: [
-                  AlertAction(
-                      text: "Yes",
-                      isDestructiveAction: true,
-                      onPressed: () {
-                        deleteImage();
-                      }),
-                ],
-                cancelable: true,
-              );
-            },
-            child: Icon(
-              Icons.cancel,
-              size: 30,
-              color: Colors.red,
-            ),
+      for (final b in descs) {
+        x.add(Stack(children: [
+          Container(
+            height: 100,
+            width: 100,
+            margin: EdgeInsets.only(left: 5),
+            decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                    image: NetworkImage('$picBaseURL${b['path']}'),
+                    fit: BoxFit.contain)),
           ),
-        ],
-      ),
-    ]));
-  }
-}
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                onTap: () {
+                  print('picId = ${b['id']}');
+                  picId = b['id'];
+                  showAlert(
+                    context: context,
+                    title: "Do You Really want to  Deleted Image",
+                    actions: [
+                      AlertAction(
+                          text: "Yes",
+                          isDestructiveAction: true,
+                          onPressed: () {
+                            deleteImage();
+                          }),
+                    ],
+                    cancelable: true,
+                  );
+                },
+                child: Icon(
+                  Icons.cancel,
+                  size: 30,
+                  color: Colors.red,
+                ),
+              ),
+            ],
+          ),
+        ]));
+      }
+    }
     return x;
   }
 

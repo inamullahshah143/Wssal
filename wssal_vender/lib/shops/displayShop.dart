@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
 import 'package:wssal_vender/attributes/displayAttributes.dart';
 import 'package:wssal_vender/shops/updateShop.dart';
@@ -120,7 +119,7 @@ class _ShopDisplayState extends State<ShopDisplay> {
           child: Text('Add New Shop'),
         ),
       ),
-      bottomNavigationBar: getbottomBar(0, context),
+      // bottomNavigationBar: getbottomBar(0, context),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
@@ -292,9 +291,7 @@ class _ShopDisplayState extends State<ShopDisplay> {
                     ),
                     Container(
                         margin: EdgeInsets.all(10),
-                        child: RaisedButton(
-                          textColor: Colors.white,
-                          color: Color.fromRGBO(240, 173, 78, 1),
+                        child: ElevatedButton(
                           child: Text('Edit'),
                           onPressed: () {
                             print(element);

@@ -1,11 +1,7 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:wssal_vender/functions.dart';
-
-import 'map.dart';
 
 class Test2 extends StatefulWidget {
   @override
@@ -44,7 +40,7 @@ class _Test2State extends State<Test2> {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: RaisedButton(
+        child: ElevatedButton(
           onPressed: () {
             //        Navigator.pushReplacement(
             //   context,

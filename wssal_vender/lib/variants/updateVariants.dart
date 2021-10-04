@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter_switch/flutter_switch.dart';
-import 'package:flutter_tags/flutter_tags.dart';
 
 import '../functions.dart';
 import 'displayVariants.dart';
@@ -231,9 +229,7 @@ class _UpdateVariantsState extends State<UpdateVariants> {
             TableRow(children: [
               Container(
                   margin: EdgeInsets.all(10),
-                  child: RaisedButton(
-                    textColor: Colors.white,
-                    color: Color.fromRGBO(240, 173, 78, 1),
+                  child: ElevatedButton(
                     child: Text('Edit'),
                     onPressed: () {
                       _scrollController.animateTo(0,
@@ -247,9 +243,7 @@ class _UpdateVariantsState extends State<UpdateVariants> {
                   )),
               Container(
                   margin: EdgeInsets.all(10),
-                  child: RaisedButton(
-                    color: Color.fromRGBO(215, 89, 70, 1),
-                    textColor: Colors.white,
+                  child: ElevatedButton(
                     child: Text('Delete'),
                     onPressed: () {
                       setState(() {
@@ -347,7 +341,7 @@ class _UpdateVariantsState extends State<UpdateVariants> {
                   ),
                 )),
           ),
-          RaisedButton(
+          ElevatedButton(
             onPressed: () {
               if (_formKey.currentState.validate()) {
                 if (listIndex != null) {
@@ -381,8 +375,6 @@ class _UpdateVariantsState extends State<UpdateVariants> {
               });
             },
             child: Text(listIndex == null ? "Add" : 'Edit'),
-            textColor: Colors.black,
-            color: Colors.white,
           )
         ],
       ),

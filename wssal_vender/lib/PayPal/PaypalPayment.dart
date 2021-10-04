@@ -66,7 +66,7 @@ class PaypalPaymentState extends State<PaypalPayment> {
             },
           ),
         );
-        _scaffoldKey.currentState.showSnackBar(snackBar);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     });
   }
@@ -141,11 +141,11 @@ class PaypalPaymentState extends State<PaypalPayment> {
                     .executePayment(executeUrl, payerID, accessToken, context)
                     .then((id) {
                   widget.onFinish(id);
-                   Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (BuildContext context) => DriverWoilet(),
-            ),
-          );
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => DriverWoilet(),
+                    ),
+                  );
                 });
               } else {
                 Navigator.of(context).pop();

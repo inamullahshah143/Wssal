@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:convert';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -76,7 +75,7 @@ class _TestFileState extends State<TestFile> {
               )),
           addVariations(null, null, null),
           showVariations(),
-          RaisedButton(
+          ElevatedButton(
             child: Text('Add Variants'),
             onPressed: () {
               print("variation = $variation");
@@ -123,7 +122,7 @@ class _TestFileState extends State<TestFile> {
             TableRow(children: [
               Container(
                   margin: EdgeInsets.all(5),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     child: Text('Edit'),
                     onPressed: () {
                       addVariations('${variation[i]['value']}',
@@ -132,7 +131,7 @@ class _TestFileState extends State<TestFile> {
                   )),
               Container(
                   margin: EdgeInsets.all(5),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     child: Text('Delete'),
                     onPressed: () {
                       setState(() {
@@ -282,7 +281,6 @@ class _TestFileState extends State<TestFile> {
   // }
   addVariations(String varValue, String varPrice, int listIndex) {
     return Stack(
-      overflow: Overflow.visible,
       children: <Widget>[
         Positioned(
           right: -40.0,
@@ -370,7 +368,7 @@ class _TestFileState extends State<TestFile> {
                       ),
                     )),
               ),
-              RaisedButton(
+              ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
                     if (listIndex != null) {
@@ -404,8 +402,6 @@ class _TestFileState extends State<TestFile> {
                   }
                 },
                 child: Text("Done"),
-                textColor: Colors.black,
-                color: Colors.white,
               )
             ],
           ),

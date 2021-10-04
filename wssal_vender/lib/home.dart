@@ -1,18 +1,8 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:wssal_vender/functions.dart';
-import 'package:wssal_vender/rejectedRequest.dart';
-import 'package:wssal_vender/store_profile.dart';
-import 'package:wssal_vender/testfile.dart';
-import 'package:wssal_vender/variants/addVariants.dart';
 import 'package:wssal_vender/variants/displayVariants.dart';
-
-import 'product/addProduct.dart';
-import 'approveRequest.dart';
 import 'attributes/displayAttributes.dart';
-import 'category/displayCategory.dart';
 
 class BarChartModel {
   String month;
@@ -154,7 +144,7 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      bottomNavigationBar: getbottomBar(0, context),
+      // bottomNavigationBar: getbottomBar(0, context),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
@@ -167,8 +157,6 @@ class _HomeState extends State<Home> {
               ),
               child: Column(
                 children: [
-                
-               
                   Container(
                     margin: EdgeInsets.only(left: 15, top: 20, right: 15),
                     child: Row(
@@ -592,7 +580,6 @@ class _BarChartGraphState extends State<BarChartGraph> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _barChartList = [
       BarChartModel(month: "Oct"),

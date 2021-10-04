@@ -1,16 +1,13 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
-import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
-import 'home.dart';
 import 'functions.dart';
 import 'login_page.dart';
 

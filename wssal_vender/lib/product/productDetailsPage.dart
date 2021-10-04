@@ -163,9 +163,7 @@ class _ProductDetailsDetailsState extends State<ProductDetailsDetails> {
                   children: [
                     Container(
                         margin: EdgeInsets.all(10),
-                        child: RaisedButton(
-                          textColor: Colors.white,
-                          color: Color.fromRGBO(255, 199, 0, 1),
+                        child: ElevatedButton(
                           child: Text('Edit'),
                           onPressed: () {
                             print('productData = $productData');
@@ -177,9 +175,7 @@ class _ProductDetailsDetailsState extends State<ProductDetailsDetails> {
                           },
                         )),
                     Container(
-                        child: RaisedButton(
-                      color: Color.fromRGBO(222, 61, 48, 1),
-                      textColor: Colors.white,
+                        child: ElevatedButton(
                       child: Text('Delete'),
                       onPressed: () {
                         // AttriId = element['id'];

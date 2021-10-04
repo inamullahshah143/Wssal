@@ -1,10 +1,8 @@
 import 'dart:convert';
 
-import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:wssal_vender/functions.dart';
 import 'package:wssal_vender/functions.dart';
 import 'package:http/http.dart' as http;
 
@@ -99,7 +97,7 @@ class _OrderDetailsState extends State<OrderDetails> {
           // centerTitle: true,
         ),
       ),
-      bottomNavigationBar: getbottomBar(2, context),
+      // bottomNavigationBar: getbottomBar(2, context),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
@@ -142,11 +140,9 @@ class _OrderDetailsState extends State<OrderDetails> {
     List data = json.decode(response.body)['data'];
 
     if (data.length > 0) {
-     
-      
       x.add(Column(
         children: [
-            Container(
+          Container(
             margin: EdgeInsets.all(5),
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
@@ -180,21 +176,19 @@ class _OrderDetailsState extends State<OrderDetails> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 10,left: 10),
+            margin: EdgeInsets.only(top: 10, left: 10),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text('Product Details',
-              style: TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.bold
-              ),
+              child: Text(
+                'Product Details',
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
               ),
             ),
           ),
           buildOrdersDetail2(data[1]),
         ],
       ));
-       x.add(buildOrdersDetail1(data[0]));
+      x.add(buildOrdersDetail1(data[0]));
       //  x.add(
 
       //   InkWell(
@@ -249,35 +243,35 @@ class _OrderDetailsState extends State<OrderDetails> {
         children: [
           // Container(
           //     margin: EdgeInsets.all(5), child: Text("${dataa['order_no']}")),
-        //  Container(
-        //       margin: EdgeInsets.only(left: 10,right: 10),
-        //       child: Divider(
-        //         thickness: 0.3,
-        //         color: Colors.black,
-        //       ),
-        //     ),
+          //  Container(
+          //       margin: EdgeInsets.only(left: 10,right: 10),
+          //       child: Divider(
+          //         thickness: 0.3,
+          //         color: Colors.black,
+          //       ),
+          //     ),
           Container(
               // margin: EdgeInsets.all(5),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Total Price',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  Text(
-                    '${dataa['grand_total']}',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ],
-              )),
-              Container(
-              margin: EdgeInsets.only(left: 10,right: 10),
-              child: Divider(
-                thickness: 0.3,
-                color: Colors.black,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Total Price',
+                style: TextStyle(fontSize: 15),
               ),
+              Text(
+                '${dataa['grand_total']}',
+                style: TextStyle(fontSize: 15),
+              ),
+            ],
+          )),
+          Container(
+            margin: EdgeInsets.only(left: 10, right: 10),
+            child: Divider(
+              thickness: 0.3,
+              color: Colors.black,
             ),
+          ),
           Container(
             margin: EdgeInsets.all(5),
             child: Row(
@@ -295,13 +289,13 @@ class _OrderDetailsState extends State<OrderDetails> {
               ],
             ),
           ),
-           Container(
-              margin: EdgeInsets.only(left: 10,right: 10),
-              child: Divider(
-                thickness: 0.3,
-                color: Colors.black,
-              ),
+          Container(
+            margin: EdgeInsets.only(left: 10, right: 10),
+            child: Divider(
+              thickness: 0.3,
+              color: Colors.black,
             ),
+          ),
           Container(
             margin: EdgeInsets.all(5),
             child: Row(
@@ -319,16 +313,15 @@ class _OrderDetailsState extends State<OrderDetails> {
               ],
             ),
           ),
-          
- 
+
           // buildcustomer(dataa['customer']),
-           Container(
-              margin: EdgeInsets.only(left: 10,right: 10),
-              child: Divider(
-                thickness: 0.3,
-                color: Colors.black,
-              ),
+          Container(
+            margin: EdgeInsets.only(left: 10, right: 10),
+            child: Divider(
+              thickness: 0.3,
+              color: Colors.black,
             ),
+          ),
           Container(
             height: 500,
             child: Column(
@@ -622,65 +615,59 @@ class _OrderDetailsState extends State<OrderDetails> {
   Widget buildOrdersDetail2(List dataa) {
     List<Widget> y = [];
     for (var x in dataa) {
-      y.add(
-        Container(
-           margin: EdgeInsets.all(10),
-        child: Column(
-          
-          children: [
+      y.add(Container(
+          margin: EdgeInsets.all(10),
+          child: Column(
+            children: [
               Container(
-                margin: EdgeInsets.only(top: 10,bottom: 10),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text("\# ${x['order_no']}",
-                style: TextStyle(
-                  
-                  fontWeight: FontWeight.bold,
-                  fontSize: 19
+                  margin: EdgeInsets.only(top: 10, bottom: 10),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "\# ${x['order_no']}",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                    ),
+                  )),
+              ListTile(
+                  leading: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        image: DecorationImage(
+                            image: AssetImage('assets/Logo_wssal.png'),
+                            fit: BoxFit.contain)),
+                  ),
+                  title: Text('${x['quantity']}\X ${x['product_name']}'),
+                  trailing: Text('${x['product_price']}')),
+              Container(
+                margin: EdgeInsets.only(left: 10, right: 10),
+                child: Divider(
+                  thickness: 0.3,
+                  color: Colors.black,
                 ),
+              ),
+              Container(
+                margin:
+                    EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Price'),
+                    Text('${x['product_price']}'),
+                  ],
                 ),
-              )),
-           
-          
-            ListTile(
-            leading: Container(
-              height: 40,
-              width: 40,
-               decoration: BoxDecoration(
-                      color: Colors.white,
-                      image: DecorationImage(
-                          image: AssetImage('assets/Logo_wssal.png'),
-                          fit: BoxFit.contain)),
-            ),
-            title: Text('${x['quantity']}\X ${x['product_name']}'),
-            trailing: Text('${x['product_price']}')
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 10,right: 10),
-              child: Divider(
-                thickness: 0.3,
-                color: Colors.black,
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 10,right: 10,top: 10,bottom: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Price'),
-                  Text('${x['product_price']}'),
-                ],
+              Container(
+                margin: EdgeInsets.only(left: 10, right: 10),
+                child: Divider(
+                  thickness: 0.3,
+                  color: Colors.black,
+                ),
               ),
-            ),
-             Container(
-              margin: EdgeInsets.only(left: 10,right: 10),
-              child: Divider(
-                thickness: 0.3,
-                color: Colors.black,
-              ),
-            ),
-          ],
-        )));
+            ],
+          )));
     }
     return Column(
       children: y,
@@ -884,9 +871,7 @@ class _MyDialogState extends State<MyDialog> {
                   // ],
 
                   Container(
-                      child: RaisedButton(
-                    color: Color.fromRGBO(215, 89, 70, 1),
-                    textColor: Colors.white,
+                      child: ElevatedButton(
                     child: Text('Assign Order'),
                     onPressed: () {
                       driverId = element['id'];

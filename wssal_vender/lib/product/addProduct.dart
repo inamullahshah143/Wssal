@@ -7,7 +7,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_alert/flutter_alert.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:wssal_vender/functions.dart';
 import 'package:http/http.dart' as http;
@@ -85,7 +84,7 @@ class _AddProductState extends State<AddProduct> {
             // centerTitle: true,
           ),
         ),
-        bottomNavigationBar: getbottomBar(1, context),
+        // bottomNavigationBar: getbottomBar(1, context),
         body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Container(

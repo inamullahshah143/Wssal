@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
-import 'package:wssal_vender/addBankAccount.dart';
 import 'package:wssal_vender/variants/updateVariants.dart';
 
 import '../functions.dart';
@@ -108,8 +107,8 @@ class _DisplayVariantsState extends State<DisplayVariants> {
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('Variants: ${response.body}');
-            if (json.decode(response.body)['status'] == 200) {
-      List data = json.decode(response.body)['data'];
+      if (json.decode(response.body)['status'] == 200) {
+        List data = json.decode(response.body)['data'];
 
         data.forEach((element) {
           variants.add(Container(
@@ -146,9 +145,7 @@ class _DisplayVariantsState extends State<DisplayVariants> {
                             children: [
                               Container(
                                   margin: EdgeInsets.all(10),
-                                  child: RaisedButton(
-                                    textColor: Colors.white,
-                                    color: Color.fromRGBO(240, 173, 78, 1),
+                                  child: ElevatedButton(
                                     child: Text('Edit'),
                                     onPressed: () {
                                       Navigator.pushReplacement(
@@ -161,9 +158,7 @@ class _DisplayVariantsState extends State<DisplayVariants> {
                                     },
                                   )),
                               Container(
-                                  child: RaisedButton(
-                                color: Color.fromRGBO(215, 89, 70, 1),
-                                textColor: Colors.white,
+                                  child: ElevatedButton(
                                 child: Text('Delete'),
                                 onPressed: () {
                                   variId = element['id'];
@@ -201,6 +196,7 @@ class _DisplayVariantsState extends State<DisplayVariants> {
       } else {
         return Text("No Variants Available");
       }
+    // ignore: unused_catch_clause
     } on Exception catch (e) {
       return Text(
         'No Variants Available',
