@@ -124,7 +124,9 @@ class _SplashScreenState extends State<SplashScreen> {
         width: width,
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/giphy.gif'), fit: BoxFit.cover),
+            image: AssetImage('assets/giphy.gif'),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

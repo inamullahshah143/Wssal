@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../function.dart';
 import '../../orderDetails.dart';
+import '../regularOrderDetails.dart';
 
 class IncomingOrders extends StatefulWidget {
   @override
@@ -138,91 +139,80 @@ class _IncomingOrdersState extends State<IncomingOrders> {
   Future<Widget> buildDriverRegularOrders() async {
     List<Widget> x = [];
     try {
-      var url = 'https://wassldev.einnovention.tech/api/drivercustomorder';
+      var url = 'https://wassldev.einnovention.tech/api/driver/driverOrders';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('buildDriverRegularOrders: ${response.body}');
       List data = json.decode(response.body)['data'];
-      if (data.length > 0) {
+      if (json.decode(response.body)['status'] == 200) {
+        print('data: ${data}');
         data.forEach(
           (element) {
             x.add(
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => OrderDetails(element),
+              Container(
+                margin: EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(9),
+                  border: Border.all(color: Colors.black, width: 0.5),
+                ),
+                child: ListTile(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            RegularOrderDetails(element['id']),
+                      ),
+                    );
+                  },
+                  leading: Container(
+                    alignment: Alignment.centerLeft,
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      image: DecorationImage(
+                        image: AssetImage('assets/delivery.png'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9),
-                    border: Border.all(color: Colors.black, width: 0.5),
                   ),
-                  child: ListTile(
-                    title: Column(
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(right: 5),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                '\#${element['order_no']}',
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.black),
-                              ),
-                            )),
-                        RichText(
-                          text: TextSpan(children: [
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 5),
+                        child: Text(
+                          '\#${element['order_no']}',
+                          style: TextStyle(fontSize: 15, color: Colors.black),
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
                             WidgetSpan(
                               child: Text(
-                                  "${DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.parse(element['created_at']))}",
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(182, 189, 200, 1),
-                                  )),
+                                "${DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.parse(element['created_at']))}",
+                                style: TextStyle(
+                                  color: Color.fromRGBO(182, 189, 200, 1),
+                                ),
+                              ),
                             ),
-                          ]),
+                          ],
                         ),
-                      ],
-                    ),
-                    subtitle: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(
-                              image: AssetImage('assets/driver.jpg'),
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          '${element['payment_method']}',
-                          style: TextStyle(
-                            // fontSize: 15,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                    trailing: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'View Details',
-                            style: TextStyle(
-                              color: Color.fromRGBO(255, 199, 0, 1),
-                            ),
-                          )
-                        ],
                       ),
+                    ],
+                  ),
+                  subtitle: Text(
+                    '${element['payment_method']}',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                  trailing: Text(
+                    'View Details',
+                    style: TextStyle(
+                      color: Color.fromRGBO(222, 61, 48, 1),
                     ),
                   ),
                 ),
@@ -248,7 +238,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
     } catch (e) {
       return Padding(
         padding: EdgeInsets.only(top: 10.0),
-        child: Text('No Incoming Orders Availabe'),
+        child: Text(e),
       );
     }
   }
@@ -286,17 +276,19 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                       height: 50,
                       width: 50,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(50),
                         image: DecorationImage(
-                          image: AssetImage('assets/driver.jpg'),
-                          fit: BoxFit.contain,
+                          image: NetworkImage(imageURL +
+                              '/' +
+                              element['customer_order']['orderuser']['avatar']),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
                     title: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        '\#${element['customorder']['order_no']}',
+                        '\#${element['customer_order']['order_no']}',
                         style: TextStyle(fontSize: 15, color: Colors.black),
                       ),
                     ),
@@ -304,7 +296,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          '${element['customorder']['payment_method']}',
+                          '${element['customer_order']['payment_method']}',
                           style: TextStyle(
                             // fontSize: 15,
                             color: Colors.black,
@@ -323,18 +315,19 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                                       "$apiURL/drivercustomorder/${element['id']}")
                                   .then((response) {});
                             },
-                            child: Text('Accept Order',
-                                style: TextStyle(
-                                    color: Color.fromRGBO(255, 199, 0, 1),
-                                    decoration: TextDecoration.underline)),
+                            child: Text(
+                              'Accept Order',
+                              style: TextStyle(
+                                  color: Color.fromRGBO(222, 61, 48, 1),
+                                  decoration: TextDecoration.underline),
+                            ),
                           ),
                         ),
                         Container(
                           margin: EdgeInsets.all(5),
                           child: Text(
-                            'LE ${element['customorder']['deliveryfeec']}',
+                            'LE ${element['customer_order']['deliveryfeec']}',
                             style: TextStyle(
-                              // fontSize: 15,
                               color: Colors.black,
                             ),
                           ),
