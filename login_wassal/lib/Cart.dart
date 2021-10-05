@@ -58,50 +58,58 @@ class _CartPageState extends State<CartPage> {
                 if (finalProductsForCart.isNotEmpty) {
                   if (finalProductsForCart.first['shop_open_close'] == "1") {
                     showAlert(
-                        context: context,
-                        title: "Payment Method",
-                        actions: [
-                          AlertAction(
-                              text: "Deliver to current address",
-                              onPressed: () {
-                                showAlert(
-                                    context: context,
-                                    title: "Payment Method",
-                                    actions: [
-                                      AlertAction(
-                                          text: "Cash on delivery",
-                                          onPressed: () {
-                                            cartCheckout(
-                                                context, "cash_on_delivery");
-                                          }),
-                                      AlertAction(
-                                          text: "Pay from wallet",
-                                          onPressed: () {
-                                            cartCheckout(context,
-                                                "direct_wallet_payment");
-                                          }),
-                                    ]);
-                              }),
-                          AlertAction(
-                              text: "Deliver to different address",
-                              onPressed: () {
-                                showAlert(
-                                    context: context,
-                                    body: "Add address in profile",
-                                    actions: [
-                                      AlertAction(
-                                          text: "ok",
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ProfilePage()),
-                                            );
-                                          })
-                                    ]);
-                              }),
-                        ]);
+                      context: context,
+                      title: "Payment Method",
+                      actions: [
+                        AlertAction(
+                          text: "Deliver to current address",
+                          onPressed: () {
+                            //Add Delivery address first
+                            
+                            showAlert(
+                              context: context,
+                              title: "Payment Method",
+                              actions: [
+                                AlertAction(
+                                  text: "Cash on delivery",
+                                  onPressed: () {
+                                    cartCheckout(context, "cash_on_delivery");
+                                  },
+                                ),
+                                AlertAction(
+                                  text: "Pay from wallet",
+                                  onPressed: () {
+                                    cartCheckout(
+                                        context, "direct_wallet_payment");
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                        AlertAction(
+                          text: "Deliver to different address",
+                          onPressed: () {
+                            showAlert(
+                              context: context,
+                              body: "Add address in profile",
+                              actions: [
+                                AlertAction(
+                                  text: "ok",
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProfilePage()),
+                                    );
+                                  },
+                                )
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    );
 
                     print(
                         "HelloFinalCartValue: ${json.encode(cartFinalPrice)}");

@@ -51,6 +51,8 @@ dependencies:
   webview_flutter:
   timeago:
   google_maps_place_picker:
+  geolocator:
+  geocoding:
 
   file_picker:
   dio:

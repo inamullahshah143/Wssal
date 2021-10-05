@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:dio/dio.dart';
@@ -98,7 +99,8 @@ class _DriverProfileState extends State<DriverProfile> {
                     child: Text(
                       'Driver Profile ',
                       style: TextStyle(
-                          color: Color.fromRGBO(128, 136, 142, 1), fontSize: 22),
+                          color: Color.fromRGBO(128, 136, 142, 1),
+                          fontSize: 22),
                     ),
                   ),
                 ),
@@ -477,22 +479,29 @@ class _DriverProfileState extends State<DriverProfile> {
                                 ),
                               ],
                             ),
-                            TableRow(children: [
-                              Container(
+                            TableRow(
+                              children: [
+                                Container(
                                   margin: EdgeInsets.all(10),
                                   child: Text(
                                     "Latitude:",
                                     style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16),
-                                  )),
-                              Container(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                                Container(
                                   margin: EdgeInsets.all(10),
                                   child: Text(
                                     "$lng",
-                                    style: TextStyle(fontSize: 16),
-                                  ))
-                            ]),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ],
                         ),
                       )
@@ -542,15 +551,17 @@ class _DriverProfileState extends State<DriverProfile> {
                       'vehicle_name': "$vehiclename",
                       'plate_number': "$vehicleplatenumber",
                       'modal': "$vehiclemodel",
-                      'vehicle_latitude': '$lat',
-                      'vehicle_longitude': '$lng',
+                      'vehicle_latitude':
+                          '${roundDouble(double.parse(lat), 4)}',
+                      'vehicle_longitude':
+                          '${roundDouble(double.parse(lng), 4)}',
                       'photo': photofile,
                       'id_picture': idCardPicfile,
                     });
                     if (_formKey.currentState.validate()) {
                       if (photofile.isEmpty) {
-                        final _snackBar =
-                            SnackBar(content: Text('Photo of Driver is missing'));
+                        final _snackBar = SnackBar(
+                            content: Text('Photo of Driver is missing'));
                         ScaffoldMessenger.of(context).showSnackBar(_snackBar);
                       } else if (idCardPicfile.isEmpty) {
                         final _snackBar = SnackBar(
@@ -558,8 +569,8 @@ class _DriverProfileState extends State<DriverProfile> {
                         ScaffoldMessenger.of(context).showSnackBar(_snackBar);
                       } else if (lat == null && lng == null) {
                         final _snackBar = SnackBar(
-                            content:
-                                Text('Please Select Vehicle Location from Map'));
+                            content: Text(
+                                'Please Select Vehicle Location from Map'));
                         ScaffoldMessenger.of(context).showSnackBar(_snackBar);
                       } else {
                         print('Ahmad');
@@ -580,8 +591,8 @@ class _DriverProfileState extends State<DriverProfile> {
                     }
                   },
                   child: Container(
-                    margin:
-                        EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 20),
+                    margin: EdgeInsets.only(
+                        left: 20, right: 20, top: 15, bottom: 20),
                     height: 50,
                     width: width,
                     decoration: BoxDecoration(
@@ -693,5 +704,10 @@ class _DriverProfileState extends State<DriverProfile> {
         }
       }
     });
+  }
+
+  double roundDouble(double value, int places) {
+    double mod = pow(10.0, places);
+    return ((value * mod).round().toDouble() / mod);
   }
 }

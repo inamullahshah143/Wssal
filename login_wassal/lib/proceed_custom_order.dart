@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -389,10 +390,10 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                       http.post("$apiURL/customorder", headers: {
                         'Authorization': 'Bearer $loginToken',
                       }, body: {
-                        "drop_lng": "$dropoffLongitude",
-                        "drop_lat": "$dropoffLatitude",
-                        "pick_lng": "$pickupLongitude",
-                        "pick_lat": "$pickupLatitude",
+                        "drop_lng": "${roundDouble(dropoffLongitude, 4)}",
+                        "drop_lat": "${roundDouble(dropoffLatitude, 4)}",
+                        "pick_lng": "${roundDouble(pickupLongitude, 4)}",
+                        "pick_lat": "${roundDouble(pickupLatitude, 4)}",
                         "deliveryfeec": "$expectedPrice",
                         "payment_method": "walletpayment",
                         "pick_loc": "$pickupLocation",
@@ -400,9 +401,6 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                         "est_distance": "$estimatedDistance",
                         "est_time": "$estimatedTime",
                       }).then((response) {
-                        Clipboard.setData(ClipboardData(
-                            text:
-                                "PickLat: $pickupLatitude || PickLng: $pickupLongitude"));
                         print("Custom Delivery: ${response.body}");
                         String trackingID =
                             jsonDecode(response.body)['data']['order_no'];
@@ -471,5 +469,10 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
         ],
       ),
     );
+  }
+
+  double roundDouble(double value, int places) {
+    double mod = pow(10.0, places);
+    return ((value * mod).round().toDouble() / mod);
   }
 }

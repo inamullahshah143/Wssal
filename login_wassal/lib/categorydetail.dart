@@ -993,7 +993,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                     imageURL +
                                         '/' +
                                         '${categoryBlock['children'][index]['thumbnail']}',
-                                    fit: BoxFit.fill),
+                                    fit: BoxFit.fill,),
                               ),
                             ),
                             Padding(
@@ -1258,10 +1258,10 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
-                                      color: Colors.grey),
+                                      color: Colors.grey,),
                                 ),
                               ),
-                            )),
+                            ),),
                           ],
                         ),
                       ),

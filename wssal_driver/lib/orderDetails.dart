@@ -83,29 +83,11 @@ class _OrderDetailsState extends State<OrderDetails> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(100),
-                      ),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          imageURL +
-                              '/' +
-                              orderDetail['customer_order']['orderuser']
-                                  ['avatar'],
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       '${orderDetail['customer_order']['orderuser']['name']}',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 18),
                     ),
                   ),
                   Text(

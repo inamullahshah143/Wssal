@@ -137,135 +137,12 @@ class _ActiveOrdersState extends State<ActiveOrders> {
   Future<Widget> buildDriverRegularOrders() async {
     List<Widget> x = [];
     try {
-      var url = 'https://wassldev.einnovention.tech/api/processingorder';
-      var response = await http.get(Uri.parse(url),
-          headers: {'Authorization': 'Bearer $stringValue'});
-      print('buildDriverAcceptedOrders: ${response.body}');
-      List data = json.decode(response.body)['data'];
-      if (data.length > 0) {
-        data.forEach(
-          (element) {
-            x.add(
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => OrderDetails(element),
-                    ),
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9),
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 0.5,
-                    ),
-                  ),
-                  child: ListTile(
-                    onTap: (){},
-                    leading: Container(
-                      alignment: Alignment.centerLeft,
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                          image: AssetImage('assets/driver.jpg'),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                    title: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        '\#${element['customorder']['order_no']}',
-                        style: TextStyle(fontSize: 15, color: Colors.black),
-                      ),
-                    ),
-                    subtitle: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${element['customorder']['payment_method']}',
-                          style: TextStyle(
-                            // fontSize: 15,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                    trailing: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(5),
-                          child: InkWell(
-                            onTap: () {
-                              http
-                                  .get(
-                                      "$apiURL/drivercustomorder/${element['id']}")
-                                  .then((response) {});
-                            },
-                            child: Text(
-                              'Accept Order',
-                              style: TextStyle(
-                                  color: Color.fromRGBO(255, 199, 0, 1),
-                                  decoration: TextDecoration.underline),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.all(5),
-                          child: Text(
-                            'LE ${element['customorder']['deliveryfeec']}',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-        return Container(
-          padding: EdgeInsets.all(10.0),
-          child: ListView(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            children: x,
-          ),
-        );
-      } else {
-        return Padding(
-          padding: EdgeInsets.only(top: 10.0),
-          child: Text("No Orders Available"),
-        );
-      }
-    } catch (e) {
-      return Padding(
-        padding: EdgeInsets.only(top: 10.0),
-        child: Text('No Orders Availabe'),
-      );
-    }
-  }
-
-  Future<Widget> buildDriverCustomOrders() async {
-    List<Widget> x = [];
-    try {
-      var url = 'https://wassldev.einnovention.tech/api/drivercustomorder';
+      var url = 'https://wassldev.einnovention.tech/api/driver/acceptedOrders';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('Active Orders: ${response.body}');
       var data = json.decode(response.body)['data'];
-      if (json.decode(response.body)['message'] == 'Order Found Sucessfully!' &&
-          data['customer_order']['status'] == 1) {
+      if (json.decode(response.body)['status'] == 200) {
         data.forEach(
           (element) {
             x.add(
@@ -292,9 +169,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
                         image: DecorationImage(
-                          image: NetworkImage(imageURL +
-                              '/' +
-                              element['customer_order']['orderuser']['avatar']),
+                          image: AssetImage('assets/delivery.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -302,7 +177,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                     title: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        '\#${element['customer_order']['order_no']}',
+                        '\#${element['order_no']}',
                         style: TextStyle(fontSize: 15, color: Colors.black),
                       ),
                     ),
@@ -310,7 +185,102 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          '${element['customer_order']['payment_method']}',
+                          '${element['payment_method']}',
+                          style: TextStyle(
+                            // fontSize: 15,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                    trailing: Text(
+                      'LE ${element['grand_total']}',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+        return Container(
+          padding: EdgeInsets.all(10.0),
+          child: ListView(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            children: x,
+          ),
+        );
+      } else {
+        return Padding(
+          padding: EdgeInsets.only(top: 10.0),
+          child: Text("No Orders Available"),
+        );
+      }
+    } catch (e) {
+      return Padding(
+        padding: EdgeInsets.only(top: 10.0),
+        child: Text(e),
+      );
+    }
+  }
+
+  Future<Widget> buildDriverCustomOrders() async {
+    List<Widget> x = [];
+    try {
+      var url = 'https://wassldev.einnovention.tech/api/processingorder';
+      var response = await http.get(Uri.parse(url),
+          headers: {'Authorization': 'Bearer $stringValue'});
+      print('Custom Active Orders: ${response.body}');
+      var data = json.decode(response.body)['data'];
+      if (json.decode(response.body)['message'] ==
+          'processing Order  Found Sucessfully!') {
+        data.forEach(
+          (element) {
+            x.add(
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OrderDetails(element),
+                    ),
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(9),
+                    border: Border.all(color: Colors.black, width: 0.5),
+                  ),
+                  child: ListTile(
+                    leading: Container(
+                      alignment: Alignment.centerLeft,
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        image: DecorationImage(
+                          image: AssetImage('assets/delivery.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    title: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        '\#${element['order_no']}',
+                        style: TextStyle(fontSize: 15, color: Colors.black),
+                      ),
+                    ),
+                    subtitle: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${element['payment_method']}',
                           style: TextStyle(
                             // fontSize: 15,
                             color: Colors.black,
@@ -340,7 +310,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                         Container(
                           margin: EdgeInsets.all(5),
                           child: Text(
-                            'LE ${element['customer_order']['deliveryfeec']}',
+                            'LE ${element['grand_total']}',
                             style: TextStyle(
                               color: Colors.black,
                             ),
@@ -372,7 +342,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
     } catch (e) {
       return Padding(
         padding: EdgeInsets.only(top: 10.0),
-        child: Text('No Orders Availabe'),
+        child: Text(e),
       );
     }
   }

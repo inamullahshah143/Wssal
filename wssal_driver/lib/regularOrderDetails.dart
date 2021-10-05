@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'function.dart';
 
 class RegularOrderDetails extends StatefulWidget {
@@ -17,22 +17,6 @@ class RegularOrderDetails extends StatefulWidget {
 class _RegularOrderDetailsState extends State<RegularOrderDetails> {
   final int orderID;
   _RegularOrderDetailsState(this.orderID);
-  BitmapDescriptor busIcon;
-  Timer timer;
-  var latitude;
-  var longitude;
-  var datetime;
-  @override
-  void initState() {
-    super.initState();
-
-    // _getlocation();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,24 +95,14 @@ class _RegularOrderDetailsState extends State<RegularOrderDetails> {
         .get(Uri.parse(url), headers: {'Authorization': 'Bearer $stringValue'});
     print('buildProductsResponse: ${response.body}');
     var data = json.decode(response.body)['data'];
+    List<Placemark> placemark = await Geolocator().placemarkFromCoordinates(
+      double.parse(data['ordered_products'][0]['products']['shop']['latitude']),
+      double.parse(
+          data['ordered_products'][0]['products']['shop']['longitude']),
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          width: 100,
-          height: 100,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(100),
-            ),
-            image: DecorationImage(
-              image: NetworkImage(
-                '',
-              ),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
@@ -221,7 +195,7 @@ class _RegularOrderDetailsState extends State<RegularOrderDetails> {
                   Container(
                     margin: EdgeInsets.all(10),
                     child: Text(
-                      '',
+                      '${placemark[0].thoroughfare} ${placemark[0].subLocality} ${placemark[0].locality} ${placemark[0].administrativeArea} ${placemark[0].country}',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
@@ -269,9 +243,14 @@ class _RegularOrderDetailsState extends State<RegularOrderDetails> {
               TableRow(
                 children: [
                   Container(
-                      margin: EdgeInsets.all(10),
-                      child: Text("Order Status",
-                          style: TextStyle(fontWeight: FontWeight.w500))),
+                    margin: EdgeInsets.all(10),
+                    child: Text(
+                      "Order Status",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
                   Container(
                     margin: EdgeInsets.all(10),
                     child: Text("${getStatus({
@@ -296,10 +275,13 @@ class _RegularOrderDetailsState extends State<RegularOrderDetails> {
                     height: 50,
                     width: width,
                     child: ElevatedButton(
-                      onPressed: () {
-                        http
-                            .get("$apiURL/drivercustomorder/${data['id']}")
-                            .then((response) {});
+                      onPressed: () async {
+                        var response = await http.post(
+                            Uri.parse(
+                                '$apiURL/vendor/driverResponse/${data['id']}'),
+                            body: {"status": '1'},
+                            headers: {'Authorization': 'Bearer $stringValue'});
+                        print(response.body);
                       },
                       child: Text('Accept Order'),
                     ),
@@ -309,10 +291,13 @@ class _RegularOrderDetailsState extends State<RegularOrderDetails> {
                     height: 50,
                     width: width,
                     child: ElevatedButton(
-                      onPressed: () {
-                        http
-                            .get("$apiURL/drivercustomorder/${data['id']}")
-                            .then((response) {});
+                      onPressed: () async {
+                        var response = await http.post(
+                            Uri.parse(
+                                '$apiURL/vendor/driverResponse/${data['id']}'),
+                            body: {"status": '0'},
+                            headers: {'Authorization': 'Bearer $stringValue'});
+                        print(response.body);
                       },
                       child: Text('Reject Order'),
                     ),

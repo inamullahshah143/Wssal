@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -214,10 +215,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                     context: context,
                                     isScrollControlled: true,
                                     builder: (context) => AddUpdateBilling(
-                                        data:
-                                            json.decode(response.body)['data'],
-                                        location: LatLng(location.latitude,
-                                            location.longitude)),
+                                      data: json.decode(response.body)['data'],
+                                      location: LatLng(
+                                        roundDouble(location.latitude, 4),
+                                        roundDouble(location.longitude, 4),
+                                      ),
+                                    ),
                                   );
                                 });
                               }
@@ -467,5 +470,10 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
+  }
+
+  double roundDouble(double value, int places) {
+    double mod = pow(10.0, places);
+    return ((value * mod).round().toDouble() / mod);
   }
 }

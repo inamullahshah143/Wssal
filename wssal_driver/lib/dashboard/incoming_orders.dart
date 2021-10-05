@@ -250,10 +250,10 @@ class _IncomingOrdersState extends State<IncomingOrders> {
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('Incoming Orders: ${response.body}');
-      List data = json.decode(response.body)['data'];
-      if (data.length > 0) {
+      var data = json.decode(response.body)['data'];
+      if (json.decode(response.body)['message'] == 'Order Found Sucessfully!') {
         data.forEach(
-          (element) {
+          (element) async {
             x.add(
               InkWell(
                 onTap: () {
@@ -278,9 +278,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
                         image: DecorationImage(
-                          image: NetworkImage(imageURL +
-                              '/' +
-                              element['customer_order']['orderuser']['avatar']),
+                          image: AssetImage('assets/delivery.png'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -312,7 +310,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                             onTap: () {
                               http
                                   .get(
-                                      "$apiURL/drivercustomorder/${element['id']}")
+                                      "$apiURL/drivercustomorder/${element['customorder_id']}")
                                   .then((response) {});
                             },
                             child: Text(
@@ -358,7 +356,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
     } catch (e) {
       return Padding(
         padding: EdgeInsets.only(top: 10.0),
-        child: Text('No Orders Availabe'),
+        child: Text(e),
       );
     }
   }
