@@ -990,10 +990,11 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image.network(
-                                    imageURL +
-                                        '/' +
-                                        '${categoryBlock['children'][index]['thumbnail']}',
-                                    fit: BoxFit.fill,),
+                                  imageURL +
+                                      '/' +
+                                      '${categoryBlock['children'][index]['thumbnail']}',
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                             ),
                             Padding(
@@ -1249,19 +1250,21 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               ),
                             ),
                             WidgetSpan(
-                                child: Container(
-                              margin: EdgeInsets.only(left: 5, right: 5),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  "${element['shop']['tags']}",
-                                  style: TextStyle(
+                              child: Container(
+                                margin: EdgeInsets.only(left: 5, right: 5),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Text(
+                                    "${element['shop']['tags']}",
+                                    style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
-                                      color: Colors.grey,),
+                                      color: Colors.grey,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),),
+                            ),
                           ],
                         ),
                       ),
@@ -3109,44 +3112,48 @@ class _CategoryDetailState extends State<CategoryDetail> {
     var response = await http.get(
       (Uri.parse("$apiURL/categorySlider/${categoryBlock['id']}")),
     );
-    List<Widget> x = [];
+
     if (json.decode(response.body)['status'] == 200) {
+      List<Widget> x = [];
       var data = json.decode(response.body)['data'];
+
       data.forEach((element) {
         x.add(
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(imageURL + '/${element['data']}'),
+                image: NetworkImage(imageURL + '/$element'),
               ),
             ),
           ),
         );
       });
-    }
-    return Container(
-      margin: EdgeInsets.all(10),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          height: 200.0,
-          width: MediaQuery.of(context).size.width,
-          child: Carousel(
-            boxFit: BoxFit.cover,
-            autoplay: true,
-            animationCurve: Curves.fastOutSlowIn,
-            animationDuration: Duration(milliseconds: 1000),
-            dotSize: 6.0,
-            dotIncreasedColor: Colors.white,
-            dotBgColor: Colors.transparent,
-            dotPosition: DotPosition.bottomCenter,
-            dotVerticalPadding: 5.0,
-            showIndicator: true,
-            indicatorBgPadding: 5.0,
-            images: x,
+      return Container(
+        margin: EdgeInsets.all(10),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            height: 150.0,
+            width: MediaQuery.of(context).size.width,
+            child: Carousel(
+              boxFit: BoxFit.cover,
+              autoplay: true,
+              animationCurve: Curves.fastOutSlowIn,
+              animationDuration: Duration(milliseconds: 1000),
+              dotSize: 6.0,
+              dotIncreasedColor: Colors.white,
+              dotBgColor: Colors.transparent,
+              dotPosition: DotPosition.bottomCenter,
+              dotVerticalPadding: 5.0,
+              showIndicator: true,
+              indicatorBgPadding: 5.0,
+              images: x,
+            ),
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      return Container();
+    }
   }
 }
