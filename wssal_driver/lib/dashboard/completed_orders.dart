@@ -250,8 +250,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
   Future<Widget> buildDriverCustomOrders() async {
     List<Widget> x = [];
     try {
-      var url =
-          'https://wassldev.einnovention.tech/api/completedorder';
+      var url = 'https://wassldev.einnovention.tech/api/driver/deliveredOrders';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('buildDriverCustomOrders: ${response.body}');

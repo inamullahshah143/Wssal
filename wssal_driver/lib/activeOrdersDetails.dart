@@ -3,17 +3,18 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'function.dart';
 
-class OrderDetails extends StatefulWidget {
+class ActiveOrderDetails extends StatefulWidget {
   final Map orderDetail;
-  OrderDetails(this.orderDetail);
+  ActiveOrderDetails(this.orderDetail);
 
   @override
-  _OrderDetailsState createState() => _OrderDetailsState(orderDetail);
+  _ActiveOrderDetailsState createState() =>
+      _ActiveOrderDetailsState(orderDetail);
 }
 
-class _OrderDetailsState extends State<OrderDetails> {
+class _ActiveOrderDetailsState extends State<ActiveOrderDetails> {
   final Map orderDetail;
-  _OrderDetailsState(this.orderDetail);
+  _ActiveOrderDetailsState(this.orderDetail);
   @override
   Widget build(BuildContext context) {
     latestContext = context;
@@ -64,15 +65,6 @@ class _OrderDetailsState extends State<OrderDetails> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      '${orderDetail['customer_order']['orderuser']['name']}',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                  Text(
-                      '${orderDetail['customer_order']['orderuser']['phone']}'),
                   Container(
                     padding: EdgeInsets.all(10),
                     margin: EdgeInsets.all(10),
@@ -94,7 +86,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             Container(
                               margin: EdgeInsets.all(10),
                               child: Text(
-                                "${orderDetail['customer_order']['order_no']}",
+                                "${orderDetail['order_no']}",
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
@@ -113,7 +105,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             Container(
                               margin: EdgeInsets.all(10),
                               child: Text(
-                                "${orderDetail['customer_order']['deliveryfeec']}",
+                                "${orderDetail['grand_total']}",
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
@@ -134,15 +126,13 @@ class _OrderDetailsState extends State<OrderDetails> {
                             Container(
                               margin: EdgeInsets.all(10),
                               child: Text(
-                                orderDetail['customer_order']
-                                            ['payment_method'] ==
-                                        'cashondelivery'
+                                orderDetail['payment_method'] ==
+                                        'cash_on_delivery'
                                     ? 'Cash On Delivery'
-                                    : orderDetail['customer_order']
-                                                ['payment_method'] ==
-                                            'walletpayment'
+                                    : orderDetail['payment_method'] ==
+                                            'wallet_payment'
                                         ? 'Wallet Payment'
-                                        : '${orderDetail['customer_order']['payment_method']}',
+                                        : '${orderDetail['payment_method']}',
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),

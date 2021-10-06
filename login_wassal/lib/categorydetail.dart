@@ -3117,7 +3117,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(imageURL + '/${element['slider']}'),
+                image: NetworkImage(imageURL + '/${element['data']}'),
               ),
             ),
           ),

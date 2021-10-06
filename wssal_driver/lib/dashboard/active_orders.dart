@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../function.dart';
 import '../../orderDetails.dart';
+import '../activeOrdersDetails.dart';
 
 class ActiveOrders extends StatefulWidget {
   @override
@@ -143,6 +144,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
       print('Active Orders: ${response.body}');
       var data = json.decode(response.body)['data'];
       if (json.decode(response.body)['status'] == 200) {
+        print(data);
         data.forEach(
           (element) {
             x.add(
@@ -151,7 +153,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => OrderDetails(element),
+                      builder: (context) => ActiveOrderDetails(element),
                     ),
                   );
                 },
