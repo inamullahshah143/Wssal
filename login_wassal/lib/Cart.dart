@@ -65,7 +65,7 @@ class _CartPageState extends State<CartPage> {
                           text: "Deliver to current address",
                           onPressed: () {
                             //Add Delivery address first
-                            
+
                             showAlert(
                               context: context,
                               title: "Payment Method",
@@ -193,13 +193,6 @@ class _CartPageState extends State<CartPage> {
       "grand_total": "$cartFinalPrice",
       "payment_method": "$method",
       "productData": json.encode(finalProductsForCart),
-      "billing_name": "Obaid",
-      "billing_company": "Einnovention",
-      "billing_address": "Barkat Market Central Plaza",
-      "billing_city": "Lahore",
-      "billing_country": "Pakistan",
-      "billing_postal_code": "54000",
-      "billing_phone": "+923074174328",
     }, headers: {
       "Accept": "application/json",
       'Authorization': 'Bearer $loginToken',

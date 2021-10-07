@@ -3,7 +3,7 @@ import 'package:flutter_alert/flutter_alert.dart';
 import 'package:wassal_customer/PUSHER/CustomOrderDetails.dart';
 import 'package:wassal_customer/numberlogin.dart';
 import 'Profile.dart';
-import 'Stores.dart';
+import 'categories_shop.dart';
 import 'categorydetail.dart';
 import 'const.dart';
 
@@ -35,7 +35,9 @@ class _CategoryDashboardState extends State<CategoryDashboard> {
               categoryBlock: categoryBlock,
             )
           : bottomIndex == 1
-              ? AllShops()
+              ? AllCategoriesShops(
+                  categoryBlock: categoryBlock,
+                )
               : bottomIndex == 2
                   ? CustomOrderDetail()
                   : bottomIndex == 3
