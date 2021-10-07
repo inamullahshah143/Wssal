@@ -53,6 +53,8 @@ dependencies:
   google_maps_place_picker:
   geolocator:
   geocoding:
+  adobe_xd:
+  flutter_svg:
 
   file_picker:
   dio:

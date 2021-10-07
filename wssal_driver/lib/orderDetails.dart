@@ -94,7 +94,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             Container(
                               margin: EdgeInsets.all(10),
                               child: Text(
-                                "${orderDetail['customer_order']['order_no']}",
+                                "${orderDetail['sacustomer_order']['order_no']}",
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
