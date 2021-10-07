@@ -153,7 +153,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ActiveOrderDetails(element),
+                      builder: (context) => OrderDetails(element),
                     ),
                   );
                 },
@@ -274,7 +274,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                     title: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        '\#${element['order_no']}',
+                        '\#${element['customer_order']['order_no']}',
                         style: TextStyle(fontSize: 15, color: Colors.black),
                       ),
                     ),
@@ -282,7 +282,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          '${element['payment_method']}',
+                          '${element['customer_order']['payment_method']}',
                           style: TextStyle(
                             // fontSize: 15,
                             color: Colors.black,
@@ -312,7 +312,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                         Container(
                           margin: EdgeInsets.all(5),
                           child: Text(
-                            'LE ${element['grand_total']}',
+                            'LE ${element['customer_order']['deliveryfeec']}',
                             style: TextStyle(
                               color: Colors.black,
                             ),
