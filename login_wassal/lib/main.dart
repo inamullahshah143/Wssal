@@ -73,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
   getLogs() {
     SharedPreferences.getInstance().then((prefs) {
       if (prefs.getBool("showSlider") != true) {
-        Timer(Duration(seconds: 3), () {
+        Timer(Duration(seconds: 8), () {
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (_) => SplashScreenSlider()));
         });
@@ -88,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
           storedName = x;
           storedNumber = z;
           logs = true;
-          Timer(Duration(seconds: 5), () {
+          Timer(Duration(seconds: 8), () {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (_) => MainDashboard()),
                 (Route<dynamic> route) => false);
@@ -124,7 +124,7 @@ class _SplashScreenState extends State<SplashScreen> {
         width: width,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/giphy.gif'),
+            image: AssetImage('assets/splash.gif'),
             fit: BoxFit.cover,
           ),
         ),

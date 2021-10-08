@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../function.dart';
 import '../../orderDetails.dart';
-import '../activeOrdersDetails.dart';
-
 class ActiveOrders extends StatefulWidget {
   @override
   _ActiveOrdersState createState() => _ActiveOrdersState();
