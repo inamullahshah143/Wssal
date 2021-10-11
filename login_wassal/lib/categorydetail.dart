@@ -2076,20 +2076,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
         x.add(
           InkWell(
             onTap: () {
-              http
-                  .get((Uri.parse("$apiURL/productDetail/${element['id']}")))
-                  .then((value) {
-                if (value.statusCode == 200) {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) {
-                      return ProductDetails(d: json.decode(value.body)['data']);
-                    },
-                  );
-                }
-              });
+             showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return StoreDetail(storeBlock: element);
+                  },
+                );
             },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0),
@@ -2293,7 +2287,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
             child: Text(
-              'Near By',
+              'Nearby',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,

@@ -8,9 +8,9 @@ import 'ChatPage.dart';
 
 // String _mapStyle;
 
-class DriverMapBuilder extends StatelessWidget {
+class RegularOrderNavigationBuilder extends StatelessWidget {
   final Map orderDetails;
-  DriverMapBuilder({@required this.orderDetails});
+  RegularOrderNavigationBuilder({@required this.orderDetails});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,21 +18,21 @@ class DriverMapBuilder extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: DriverMap(orderDetails: orderDetails),
+      home: RegularOrderNavigation(orderDetails: orderDetails),
     );
   }
 }
 
-class DriverMap extends StatefulWidget {
+class RegularOrderNavigation extends StatefulWidget {
   final Map orderDetails;
-  DriverMap({@required this.orderDetails});
+  RegularOrderNavigation({@required this.orderDetails});
   @override
-  _DriverMapState createState() => _DriverMapState(orderDetails: orderDetails);
+  _RegularOrderNavigationState createState() => _RegularOrderNavigationState(orderDetails: orderDetails);
 }
 
-class _DriverMapState extends State<DriverMap> {
+class _RegularOrderNavigationState extends State<RegularOrderNavigation> {
   final Map orderDetails;
-  _DriverMapState({@required this.orderDetails});
+  _RegularOrderNavigationState({@required this.orderDetails});
   GoogleMapController mapController;
   BitmapDescriptor deliveryIcon;
   BitmapDescriptor shopIcon;
@@ -210,8 +210,8 @@ class _DriverMapState extends State<DriverMap> {
         ),
       );
 
-      mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-          target: LatLng(cLoc.latitude, cLoc.longitude), zoom: 16)));
+      // mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      //     target: LatLng(cLoc.latitude, cLoc.longitude), zoom: 16)));
     });
   }
 

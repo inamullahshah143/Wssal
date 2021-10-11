@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
@@ -100,7 +99,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                                   text: "Ok ",
                                   isDestructiveAction: true,
                                   onPressed: () {
-                                    Navigator.of(context).pop();
+                                   
                                   }),
                             ],
                             cancelable: true,

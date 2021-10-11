@@ -1,19 +1,24 @@
+import 'dart:convert';
 import 'dart:ui';
+import 'package:flutter/services.dart';
+import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'function.dart';
+import 'package:wssal_driver/Customstartnavigation.dart';
+import '../function.dart';
 
-class OrderDetails extends StatefulWidget {
+class CustomActiveOrderDetails extends StatefulWidget {
   final Map orderDetail;
-  OrderDetails(this.orderDetail);
+  CustomActiveOrderDetails(this.orderDetail);
 
   @override
-  _OrderDetailsState createState() => _OrderDetailsState(orderDetail);
+  _CustomActiveOrderDetailsState createState() =>
+      _CustomActiveOrderDetailsState(orderDetail);
 }
 
-class _OrderDetailsState extends State<OrderDetails> {
+class _CustomActiveOrderDetailsState extends State<CustomActiveOrderDetails> {
   final Map orderDetail;
-  _OrderDetailsState(this.orderDetail);
+  _CustomActiveOrderDetailsState(this.orderDetail);
   @override
   Widget build(BuildContext context) {
     latestContext = context;
@@ -26,7 +31,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          "Orders Details",
+          "Custom Active Order Details",
           style: TextStyle(color: Colors.black),
         ),
         actions: [
@@ -94,7 +99,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                             Container(
                               margin: EdgeInsets.all(10),
                               child: Text(
-                                "${orderDetail['sacustomer_order']['order_no']}",
+                                "${orderDetail['customer_order']['order_no']}",
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                               ),
@@ -206,60 +211,49 @@ class _OrderDetailsState extends State<OrderDetails> {
                             ),
                           ],
                         ),
-                        TableRow(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.all(10),
-                              child: Text(
-                                "Order Status",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.all(10),
-                              child: Text(
-                                orderDetail['customer_order']['status'] == 0
-                                    ? 'No Driver Assigned'
-                                    : 'Driver Already Assigned',
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),
-                  orderDetail['customer_order']['status'] == 0
-                      ? Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10),
-                          height: 50,
-                          width: width,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              var url =
-                                  '$apiURL/drivercustomorder/${orderDetail['id']}';
-                              http.get(Uri.parse(url), headers: {
-                                'Authorization': 'Bearer $stringValue'
-                              }).then((response) {
-                                print(response.body);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Order has been assigned to you',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    duration: Duration(seconds: 3),
-                                  ),
-                                );
-                                Navigator.of(context).pop();
-                                setState(() {});
-                              });
-                            },
-                            child: Text('Accept Order'),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    height: 50,
+                    width: width,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        var url =
+                            '$apiURL/completorder/${orderDetail['customer_order']['id']}';
+                        http.get(Uri.parse(url), headers: {
+                          'Authorization': 'Bearer $stringValue'
+                        }).then((response) {
+                          print(response.body);
+                          if (json.decode(response.body)['message'] ==
+                              "payment added to your wallet !" || json.decode(response.body)['message'] ==
+                              "Order already completed && payment transfer to you !") {
+                                showAlert(context: context, title: "Order Delivered");
+                           
+                          }
+                        });
+                      },
+                      child: Text('Deliver Order'),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    height: 50,
+                    width: width,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CustomOrderNavigationBuilder(
+                                orderDetails: orderDetail),
                           ),
-                        )
-                      : Container(),
+                        );
+                      },
+                      child: Text('Start Navigation'),
+                    ),
+                  )
                 ],
               ),
             ),

@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:wssal_driver/IncomingOrdersDetails/CustomOrderDetails.dart';
+import 'package:wssal_driver/IncomingOrdersDetails/regularOrderDetails.dart';
 import '../../function.dart';
-import '../../orderDetails.dart';
-import '../regularOrderDetails.dart';
 
 class IncomingOrders extends StatefulWidget {
   @override
@@ -211,7 +211,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                     ),
                   ),
                   trailing: Text(
-                    'View Details',
+                    '${element['delivery_charges']}',
                     style: TextStyle(
                       color: Color.fromRGBO(222, 61, 48, 1),
                     ),
@@ -261,7 +261,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => OrderDetails(element),
+                      builder: (context) => CustomIncomingOrderDetails(element),
                     ),
                   );
                 },
@@ -305,23 +305,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                     ),
                     trailing: Column(
                       children: [
-                        Container(
-                          margin: EdgeInsets.all(5),
-                          child: InkWell(
-                            onTap: () {
-                              http
-                                  .get(
-                                      "$apiURL/drivercustomorder/${element['customorder_id']}")
-                                  .then((response) {});
-                            },
-                            child: Text(
-                              'Accept Order',
-                              style: TextStyle(
-                                  color: Color.fromRGBO(222, 61, 48, 1),
-                                  decoration: TextDecoration.underline),
-                            ),
-                          ),
-                        ),
+                      
                         Container(
                           margin: EdgeInsets.all(5),
                           child: Text(

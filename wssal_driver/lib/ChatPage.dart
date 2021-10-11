@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pusher_websocket_flutter/pusher.dart';
 import 'package:timeago/timeago.dart' as timeago;
-
+import 'package:pusher/pusher.dart' as push;
 // ignore: must_be_immutable
 class ChatPage extends StatefulWidget {
   final Map orderDetails;
@@ -32,14 +32,14 @@ class _ChatPageState extends State<ChatPage> {
               child: TextFormField(
                 decoration: InputDecoration(labelText: "Enter message"),
                 onFieldSubmitted: (value) {
-                  // push.PusherOptions options =
-                  //     new push.PusherOptions(encrypted: true, cluster: "ap2");
-                  // push.Pusher pusher = new push.Pusher('1266741',
-                  //     '75277f8cc7ab6202152a', '5722578c3b137a34832c', options);
-                  // pusher.trigger(
-                  //     ["${orderDetails['order_no']}Chat"],
-                  //     "${orderDetails['order_no']}Chat",
-                  //     "$value,$DateTime.now(),Driver"),
+                  push.PusherOptions options =
+                      new push.PusherOptions(encrypted: true, cluster: "ap2");
+                  push.Pusher pusher = new push.Pusher('1266741',
+                      '75277f8cc7ab6202152a', '5722578c3b137a34832c', options);
+                  pusher.trigger(
+                      ["${orderDetails['order_no']}Chat"],
+                      "${orderDetails['order_no']}Chat",
+                      "$value,$DateTime.now(),Driver");
                 },
               ),
             ),

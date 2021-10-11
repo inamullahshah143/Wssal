@@ -65,26 +65,88 @@ class _CartPageState extends State<CartPage> {
                           text: "Deliver to current address",
                           onPressed: () {
                             //Add Delivery address first
-                            
-                            showAlert(
-                              context: context,
-                              title: "Payment Method",
-                              actions: [
-                                AlertAction(
-                                  text: "Cash on delivery",
-                                  onPressed: () {
-                                    cartCheckout(context, "cash_on_delivery");
-                                  },
-                                ),
-                                AlertAction(
-                                  text: "Pay from wallet",
-                                  onPressed: () {
-                                    cartCheckout(
-                                        context, "direct_wallet_payment");
-                                  },
-                                ),
-                              ],
-                            );
+                            http.get("$apiURL/user/checkingAddress", headers: {
+                              'Authorization': 'Bearer $loginToken',
+                            }).then((response) {
+                              if (json.decode(response.body)['status'] == 200) {
+                                Map data = json.decode(response.body);
+                                showAlert(
+                                  context: context,
+                                  title: "Payment Method",
+                                  actions: [
+                                    AlertAction(
+                                      text: "Cash on delivery",
+                                      onPressed: () {
+                                        http
+                                            .post(
+                                                "https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${finalProductsForCart.first['shop_lat']}%2C${finalProductsForCart.first['shop_lng']}&origins=${data['data']['billing_address']['lat']}%2C${data['data']['billing_address']['lng']}&key=AIzaSyCB-GsSjkYZlAUBB07PROe0zkEqcANHiOQ")
+                                            .then((googleApi) {
+                                          print(googleApi.body);
+                                          var delivery = double.parse(json
+                                              .decode(googleApi.body)['rows'][0]
+                                                  ['elements'][0]['distance']
+                                                  ['text']
+                                              .toString()
+                                              .replaceAll(" km", "")
+                                              .replaceAll(",", ""));
+                                          delivery =
+                                              delivery * data['km_charges'];
+                                          print(delivery);
+                                          cartCheckout(
+                                              context,
+                                              "cash_on_delivery",
+                                              delivery);
+                                        });
+                                      },
+                                    ),
+                                    AlertAction(
+                                      text: "Pay from wallet",
+                                      onPressed: () {
+                                        http
+                                            .post(
+                                                "https://maps.googleapis.com/maps/api/distancematrix/json?destinations=${finalProductsForCart.first['shop_lat']}%2C${finalProductsForCart.first['shop_lng']}&origins=${data['data']['billing_address']['lat']}%2C${data['data']['billing_address']['lng']}&key=AIzaSyCB-GsSjkYZlAUBB07PROe0zkEqcANHiOQ")
+                                            .then((googleApi) {
+                                          print(googleApi.body);
+                                          var delivery = double.parse(json
+                                              .decode(googleApi.body)['rows'][0]
+                                                  ['elements'][0]['distance']
+                                                  ['text']
+                                              .toString()
+                                              .replaceAll(" km", "")
+                                              .replaceAll(",", ""));
+                                              delivery =
+                                              delivery * data['km_charges'];
+                                          print(delivery);
+                                          cartCheckout(
+                                              context,
+                                              "direct_wallet_payment",
+                                              delivery);
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                showAlert(
+                                  context: context,
+                                  body: "Add address in profile",
+                                  cancelable: true,
+                                  actions: [
+                                    AlertAction(
+                                      text: "ok",
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProfilePage()),
+                                        );
+                                      },
+                                    )
+                                  ],
+                                );
+                              }
+                            });
                           },
                         ),
                         AlertAction(
@@ -187,19 +249,13 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  cartCheckout(context, method) async {
+  cartCheckout(context, method, delivery) async {
     var url = "$apiURL/user/punchOrder";
     var response = await http.post(Uri.parse(url), body: {
-      "grand_total": "$cartFinalPrice",
+      "grand_total": "${cartFinalPrice + delivery}",
+      "delivery_charges": "$delivery",
       "payment_method": "$method",
       "productData": json.encode(finalProductsForCart),
-      "billing_name": "Obaid",
-      "billing_company": "Einnovention",
-      "billing_address": "Barkat Market Central Plaza",
-      "billing_city": "Lahore",
-      "billing_country": "Pakistan",
-      "billing_postal_code": "54000",
-      "billing_phone": "+923074174328",
     }, headers: {
       "Accept": "application/json",
       'Authorization': 'Bearer $loginToken',
@@ -219,6 +275,11 @@ class _CartPageState extends State<CartPage> {
           context: context,
           title: "Error",
           body: "No drivers available right now.Try again later");
+    } else if (data['status'] == 400) {
+      showAlert(
+          context: context,
+          title: "Error",
+          body: "Add delivery address in profile");
     } else {
       showAlert(
           context: context, title: "Error", body: "Not Enough Funds in wallet");

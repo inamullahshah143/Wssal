@@ -2,8 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:wssal_driver/IncomingOrdersDetails/CustomOrderDetails.dart';
+import 'package:wssal_driver/IncomingOrdersDetails/regularOrderDetails.dart';
 import '../../function.dart';
-import '../../orderDetails.dart';
 
 class CompletedOrders extends StatefulWidget {
   @override
@@ -137,19 +138,19 @@ class _CompletedOrdersState extends State<CompletedOrders> {
   Future<Widget> buildDriverRegularOrders() async {
     List<Widget> x = [];
     try {
-      var url = 'https://wassldev.einnovention.tech/api/processingorder';
+      var url = 'https://wassldev.einnovention.tech/api/driver/deliveredOrders';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('buildDriverAcceptedOrders: ${response.body}');
       List data = json.decode(response.body)['data'];
-      if (data.length > 0) {
+      if (data.isNotEmpty) {
         data.forEach((element) {
           x.add(InkWell(
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => OrderDetails(element)));
+                      builder: (context) => RegularOrderDetails(element['id'])));
             },
             child: Container(
               margin: EdgeInsets.all(6),
@@ -172,7 +173,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                 title: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    '\#${element['customorder']['order_no']}',
+                    '\#${element['order_no']}',
                     style: TextStyle(fontSize: 15, color: Colors.black),
                   ),
                 ),
@@ -180,7 +181,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      '${element['customorder']['payment_method']}',
+                      '${element['payment_method']}',
                       style: TextStyle(
                         // fontSize: 15,
                         color: Colors.black,
@@ -188,38 +189,14 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                     ),
                   ],
                 ),
-                trailing: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.all(5),
-                      child: InkWell(
-                        onTap: () {
-                          http
-                              .get("$apiURL/drivercustomorder/${element['id']}")
-                              .then((response) {
-                            // if () {
-
-                            // }
-                          });
-                        },
-                        child: Text('Accept Order',
-                            style: TextStyle(
-                                color: Color.fromRGBO(255, 199, 0, 1),
-                                decoration: TextDecoration.underline)),
+                trailing:  Text(
+                      '${element['delivery_charges']}',
+                      style: TextStyle(
+                        // fontSize: 15,
+                        color: Colors.black,
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.all(5),
-                      child: Text(
-                        'LE ${element['customorder']['deliveryfeec']}',
-                        style: TextStyle(
-                          // fontSize: 15,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                
               ),
             ),
           ));
@@ -240,6 +217,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
         );
       }
     } catch (e) {
+      print("HelloE: ${e}");
       return Padding(
         padding: EdgeInsets.only(top: 10.0),
         child: Text('No Orders Availabe'),
@@ -250,19 +228,19 @@ class _CompletedOrdersState extends State<CompletedOrders> {
   Future<Widget> buildDriverCustomOrders() async {
     List<Widget> x = [];
     try {
-      var url = 'https://wassldev.einnovention.tech/api/driver/deliveredOrders';
+      var url = 'https://wassldev.einnovention.tech/api/completedorder';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('buildDriverCustomOrders: ${response.body}');
       List data = json.decode(response.body)['data'];
-      if (data.length > 0) {
+      if (json.decode(response.body)['message'] == "Completed Order Found Sucessfully!") {
         data.forEach((element) {
           x.add(InkWell(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => OrderDetails(element),
+                  builder: (context) => CustomIncomingOrderDetails(element),
                 ),
               );
             },
@@ -288,7 +266,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                 title: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    '\#${element['customorder']['order_no']}',
+                    '\#${element['customer_order']['order_no']}',
                     style: TextStyle(fontSize: 15, color: Colors.black),
                   ),
                 ),
@@ -296,7 +274,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      '${element['customorder']['payment_method']}',
+                      '${element['customer_order']['payment_method']}',
                       style: TextStyle(
                         // fontSize: 15,
                         color: Colors.black,
@@ -308,26 +286,8 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                   children: [
                     Container(
                       margin: EdgeInsets.all(5),
-                      child: InkWell(
-                        onTap: () {
-                          http
-                              .get("$apiURL/drivercustomorder/${element['id']}")
-                              .then((response) {
-                            // if () {
-
-                            // }
-                          });
-                        },
-                        child: Text('Accept Order',
-                            style: TextStyle(
-                                color: Color.fromRGBO(255, 199, 0, 1),
-                                decoration: TextDecoration.underline)),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(5),
                       child: Text(
-                        'LE ${element['customorder']['deliveryfeec']}',
+                        'LE ${element['customer_order']['deliveryfeec']}',
                         style: TextStyle(
                           // fontSize: 15,
                           color: Colors.black,
@@ -358,7 +318,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
     } catch (e) {
       return Padding(
         padding: EdgeInsets.only(top: 10.0),
-        child: Text('No Orders Availabe'),
+        child: Text('$e'),
       );
     }
   }

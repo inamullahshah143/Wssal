@@ -178,6 +178,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                           "${d['user']['shop']['id']}") {
                     finalProductsForCart.add({
                       "shop_id": "${d['user']['shop']['id']}",
+                      "shop_lat": "${d['user']['shop']['latitude']}",
+                      "shop_lng": "${d['user']['shop']['longitude']}",
                       "shop_open_close": "${d['user']['shop']['open_close']}",
                       "product_id": "${d['id']}",
                       "product_image":
@@ -204,7 +206,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                               finalProductsForCart = [];
                               finalProductsForCart.add({
                                 "shop_id": "${d['user']['shop']['id']}",
-                                "shop_open_close": "${d['user']['shop']['open_close']}",
+                                "shop_lat": "${d['user']['shop']['latitude']}",
+                                "shop_lng": "${d['user']['shop']['longitude']}",
+                                "shop_open_close":
+                                    "${d['user']['shop']['open_close']}",
                                 "product_id": "${d['id']}",
                                 "product_image": imageURL +
                                     '/' +

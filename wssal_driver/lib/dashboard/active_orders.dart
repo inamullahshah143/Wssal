@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:wssal_driver/ActiveOrdersDetails/CustomActiveOrderDetails.dart';
+import 'package:wssal_driver/ActiveOrdersDetails/regularActiveOrderDetails.dart';
+import 'package:wssal_driver/IncomingOrdersDetails/CustomOrderDetails.dart';
+import 'package:wssal_driver/IncomingOrdersDetails/regularOrderDetails.dart';
 import '../../function.dart';
-import '../../orderDetails.dart';
-import '../activeOrdersDetails.dart';
 
 class ActiveOrders extends StatefulWidget {
   @override
@@ -153,7 +155,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => OrderDetails(element),
+                      builder: (context) => RegularActiveOrderDetails(element['id']),
                     ),
                   );
                 },
@@ -196,7 +198,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                       ],
                     ),
                     trailing: Text(
-                      'LE ${element['grand_total']}',
+                      'LE ${element['delivery_charges']}',
                       style: TextStyle(
                         color: Colors.black,
                       ),
@@ -239,7 +241,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
       print('Custom Active Orders: ${response.body}');
       var data = json.decode(response.body)['data'];
       if (json.decode(response.body)['message'] ==
-          'processing Order  Found Sucessfully!') {
+          'Completed Order  Found Sucessfully!') {
         data.forEach(
           (element) {
             x.add(
@@ -248,7 +250,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => OrderDetails(element),
+                      builder: (context) => CustomActiveOrderDetails(element),
                     ),
                   );
                 },
@@ -292,23 +294,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                     ),
                     trailing: Column(
                       children: [
-                        Container(
-                          margin: EdgeInsets.all(5),
-                          child: InkWell(
-                            onTap: () {
-                              http
-                                  .get(
-                                      "$apiURL/drivercustomorder/${element['id']}")
-                                  .then((response) {});
-                            },
-                            child: Text(
-                              'Accept Order',
-                              style: TextStyle(
-                                  color: Color.fromRGBO(222, 61, 48, 1),
-                                  decoration: TextDecoration.underline),
-                            ),
-                          ),
-                        ),
+                      
                         Container(
                           margin: EdgeInsets.all(5),
                           child: Text(

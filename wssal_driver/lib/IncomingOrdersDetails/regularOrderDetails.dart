@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
+import 'package:flutter_alert/flutter_alert.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'function.dart';
+import '../function.dart';
 
 class RegularOrderDetails extends StatefulWidget {
   final int orderID;
@@ -30,7 +31,7 @@ class _RegularOrderDetailsState extends State<RegularOrderDetails> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          "Orders Details",
+          "Regular Orders Details",
           style: TextStyle(color: Colors.black),
         ),
         actions: [
@@ -163,6 +164,25 @@ class _RegularOrderDetailsState extends State<RegularOrderDetails> {
                   Container(
                     margin: EdgeInsets.all(10),
                     child: Text(
+                      "Delivery Fee",
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: Text(
+                      "${data['delivery_charges']}",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: Text(
                       "Payment Method",
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
@@ -214,7 +234,8 @@ class _RegularOrderDetailsState extends State<RegularOrderDetails> {
                   Container(
                     margin: EdgeInsets.all(10),
                     child: Text(
-                      '${data['user']['address']['address'] + ', ' + data['user']['address']['city'] + ', ' + data['user']['address']['country']}',
+                      "${data['user']['address']['address']} ${data['user']['address']['city']} ${data['user']['address']['country']}",
+                      // '${data['user']['address']['address'] + ', ' + "data['user']['address']['city']" + ', ' + data['user']['address']['country']}',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
@@ -282,24 +303,17 @@ class _RegularOrderDetailsState extends State<RegularOrderDetails> {
                             body: {"status": '1'},
                             headers: {'Authorization': 'Bearer $stringValue'});
                         print(response.body);
+                        if (jsonDecode(response.body)['message'] ==
+                            "Kindly deliver your current order!") {
+                          showAlert(
+                              context: context,
+                              title: "Kindly deliver your current order!");
+                        } else if (jsonDecode(response.body)['message'] ==
+                            "Successfully updated! & Order amount has deducted from your wallet") {
+                          showAlert(context: context, title: "Order Accepted!");
+                        }
                       },
                       child: Text('Accept Order'),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    height: 50,
-                    width: width,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        var response = await http.post(
-                            Uri.parse(
-                                '$apiURL/vendor/driverResponse/${data['id']}'),
-                            body: {"status": '0'},
-                            headers: {'Authorization': 'Bearer $stringValue'});
-                        print(response.body);
-                      },
-                      child: Text('Reject Order'),
                     ),
                   ),
                 ],
