@@ -7,7 +7,6 @@ import 'package:wssal_driver/ActiveOrdersDetails/regularActiveOrderDetails.dart'
 import 'package:wssal_driver/IncomingOrdersDetails/CustomOrderDetails.dart';
 import 'package:wssal_driver/IncomingOrdersDetails/regularOrderDetails.dart';
 import '../../function.dart';
-
 class ActiveOrders extends StatefulWidget {
   @override
   _ActiveOrdersState createState() => _ActiveOrdersState();

@@ -18,7 +18,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool status = true;
-  bool _status = false;
+  // bool _status = false;
 
   @override
   Widget build(BuildContext context) {
@@ -107,24 +107,24 @@ class _ProfilePageState extends State<ProfilePage> {
                     padding: EdgeInsets.all(15),
                     child: Column(
                       children: [
-                        ListTile(
-                          onTap: () {},
-                          leading: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.person_rounded,
-                                color: Colors.grey,
-                              )
-                            ],
-                          ),
-                          title: Text('Account Information'),
-                          trailing: Icon(Icons.arrow_forward_ios_rounded),
-                          subtitle: Text('Change your Account information'),
-                        ),
-                        Divider(
-                          height: 1,
-                        ),
+                        // ListTile(
+                        //   onTap: () {},
+                        //   leading: Column(
+                        //     mainAxisAlignment: MainAxisAlignment.center,
+                        //     children: [
+                        //       Icon(
+                        //         Icons.person_rounded,
+                        //         color: Colors.grey,
+                        //       )
+                        //     ],
+                        //   ),
+                        //   title: Text('Account Information'),
+                        //   trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        //   subtitle: Text('Change your Account information'),
+                        // ),
+                        // Divider(
+                        //   height: 1,
+                        // ),
                         ListTile(
                           onTap: () {
                             Navigator.push(
@@ -239,210 +239,210 @@ class _ProfilePageState extends State<ProfilePage> {
                           trailing: Icon(Icons.arrow_forward_ios_rounded),
                           subtitle: Text('Change your Delivery Locations'),
                         ),
-                        Divider(
-                          height: 1,
-                        ),
-                        ListTile(
-                          onTap: () {},
-                          leading: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.receipt_long_rounded,
-                                color: Colors.grey,
-                              ),
-                            ],
-                          ),
-                          title: Text('Billing Information'),
-                          trailing: Icon(Icons.arrow_forward_ios_rounded),
-                          subtitle: Text('Set your billing info'),
-                        ),
-                        Divider(
-                          height: 1,
-                        ),
-                        ListTile(
-                          leading: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                ' @',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey),
-                              ),
-                            ],
-                          ),
-                          title: Text('Invite your friends'),
-                          trailing: Icon(Icons.arrow_forward_ios_rounded),
-                          subtitle: Text('Get \$5 for each invitation!'),
-                        ),
+                        // Divider(
+                        //   height: 1,
+                        // ),
+                        // ListTile(
+                        //   onTap: () {},
+                        //   leading: Column(
+                        //     mainAxisAlignment: MainAxisAlignment.center,
+                        //     children: [
+                        //       Icon(
+                        //         Icons.receipt_long_rounded,
+                        //         color: Colors.grey,
+                        //       ),
+                        //     ],
+                        //   ),
+                        //   title: Text('Billing Information'),
+                        //   trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        //   subtitle: Text('Set your billing info'),
+                        // ),
+                        // Divider(
+                        //   height: 1,
+                        // ),
+                        // ListTile(
+                        //   leading: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.center,
+                        //     mainAxisAlignment: MainAxisAlignment.center,
+                        //     children: [
+                        //       Text(
+                        //         ' @',
+                        //         style: TextStyle(
+                        //             fontSize: 18,
+                        //             fontWeight: FontWeight.bold,
+                        //             color: Colors.grey),
+                        //       ),
+                        //     ],
+                        //   ),
+                        //   title: Text('Invite your friends'),
+                        //   trailing: Icon(Icons.arrow_forward_ios_rounded),
+                        //   subtitle: Text('Get \$5 for each invitation!'),
+                        // ),
                       ],
                     ),
                   )
                 ],
               ),
             ),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.25),
-                    spreadRadius: 0,
-                    blurRadius: 5,
-                    offset: Offset(0, 0), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    padding: EdgeInsets.all(20),
-                    child: Text(
-                      'Notifications',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w100,
-                          fontSize: 16),
-                    ),
-                  ),
-                  Divider(),
-                  Container(
-                    padding: EdgeInsets.all(15),
-                    child: Column(
-                      children: [
-                        ListTile(
-                          leading: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.notifications_rounded,
-                                color: Colors.grey,
-                              )
-                            ],
-                          ),
-                          title: Text('Notifications'),
-                          trailing: CupertinoSwitch(
-                            activeColor: Colors.red,
-                            value: status,
-                            onChanged: (value) {
-                              setState(() {
-                                status = value;
-                              });
-                            },
-                          ),
-                          // Icon(Icons.arrow_forward_ios_rounded),
-                          subtitle: Text('You will recieve daily updates'),
-                        ),
-                        Divider(
-                          height: 1,
-                        ),
-                        ListTile(
-                          leading: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.notifications_rounded,
-                                color: Colors.grey,
-                              )
-                            ],
-                          ),
-                          title: Text('Promotional Notifications'),
-                          trailing: CupertinoSwitch(
-                            activeColor: Colors.red,
-                            value: _status,
-                            onChanged: (value1) {
-                              setState(() {
-                                _status = value1;
-                              });
-                            },
-                          ),
-                          subtitle: Text('Get notified when promotions'),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.25),
-                    spreadRadius: 0,
-                    blurRadius: 5,
-                    offset: Offset(0, 0), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    alignment: Alignment.topLeft,
-                    padding: EdgeInsets.all(20),
-                    child: Text(
-                      'More',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w100,
-                          fontSize: 16),
-                    ),
-                  ),
-                  Divider(),
-                  Container(
-                    padding: EdgeInsets.all(15),
-                    child: Column(
-                      children: [
-                        ListTile(
-                          leading: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.star_rounded,
-                                color: Colors.grey,
-                              )
-                            ],
-                          ),
-                          title: Text('Rate us'),
-                          trailing: Icon(Icons.arrow_forward_ios_rounded),
-                          subtitle: Text('You will recieve daily updates'),
-                        ),
-                        Divider(
-                          height: 1,
-                        ),
-                        ListTile(
-                          leading: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.file_copy_rounded,
-                                color: Colors.grey,
-                              )
-                            ],
-                          ),
-                          title: Text('FAQ'),
-                          trailing: Icon(Icons.arrow_forward_ios_rounded),
-                          subtitle: Text('Frequently Asked Questions'),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
+            // Container(
+            //   width: double.infinity,
+            //   margin: EdgeInsets.all(10),
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     borderRadius: BorderRadius.circular(20),
+            //     boxShadow: [
+            //       BoxShadow(
+            //         color: Colors.grey.withOpacity(0.25),
+            //         spreadRadius: 0,
+            //         blurRadius: 5,
+            //         offset: Offset(0, 0), // changes position of shadow
+            //       ),
+            //     ],
+            //   ),
+            //   child: Column(
+            //     children: [
+            //       Container(
+            //         alignment: Alignment.topLeft,
+            //         padding: EdgeInsets.all(20),
+            //         child: Text(
+            //           'Notifications',
+            //           style: TextStyle(
+            //               color: Colors.black,
+            //               fontWeight: FontWeight.w100,
+            //               fontSize: 16),
+            //         ),
+            //       ),
+            //       Divider(),
+            //       Container(
+            //         padding: EdgeInsets.all(15),
+            //         child: Column(
+            //           children: [
+            //             ListTile(
+            //               leading: Column(
+            //                 mainAxisAlignment: MainAxisAlignment.center,
+            //                 children: [
+            //                   Icon(
+            //                     Icons.notifications_rounded,
+            //                     color: Colors.grey,
+            //                   )
+            //                 ],
+            //               ),
+            //               title: Text('Notifications'),
+            //               trailing: CupertinoSwitch(
+            //                 activeColor: Colors.red,
+            //                 value: status,
+            //                 onChanged: (value) {
+            //                   setState(() {
+            //                     status = value;
+            //                   });
+            //                 },
+            //               ),
+            //               // Icon(Icons.arrow_forward_ios_rounded),
+            //               subtitle: Text('You will recieve daily updates'),
+            //             ),
+            //             Divider(
+            //               height: 1,
+            //             ),
+            //             ListTile(
+            //               leading: Column(
+            //                 mainAxisAlignment: MainAxisAlignment.center,
+            //                 crossAxisAlignment: CrossAxisAlignment.center,
+            //                 children: [
+            //                   Icon(
+            //                     Icons.notifications_rounded,
+            //                     color: Colors.grey,
+            //                   )
+            //                 ],
+            //               ),
+            //               title: Text('Promotional Notifications'),
+            //               trailing: CupertinoSwitch(
+            //                 activeColor: Colors.red,
+            //                 value: _status,
+            //                 onChanged: (value1) {
+            //                   setState(() {
+            //                     _status = value1;
+            //                   });
+            //                 },
+            //               ),
+            //               subtitle: Text('Get notified when promotions'),
+            //             ),
+            //           ],
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // ),
+            // Container(
+            //   width: double.infinity,
+            //   margin: EdgeInsets.all(10),
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     borderRadius: BorderRadius.circular(20),
+            //     boxShadow: [
+            //       BoxShadow(
+            //         color: Colors.grey.withOpacity(0.25),
+            //         spreadRadius: 0,
+            //         blurRadius: 5,
+            //         offset: Offset(0, 0), // changes position of shadow
+            //       ),
+            //     ],
+            //   ),
+            //   child: Column(
+            //     children: [
+            //       Container(
+            //         alignment: Alignment.topLeft,
+            //         padding: EdgeInsets.all(20),
+            //         child: Text(
+            //           'More',
+            //           style: TextStyle(
+            //               color: Colors.black,
+            //               fontWeight: FontWeight.w100,
+            //               fontSize: 16),
+            //         ),
+            //       ),
+            //       Divider(),
+            //       Container(
+            //         padding: EdgeInsets.all(15),
+            //         child: Column(
+            //           children: [
+            //             ListTile(
+            //               leading: Column(
+            //                 mainAxisAlignment: MainAxisAlignment.center,
+            //                 children: [
+            //                   Icon(
+            //                     Icons.star_rounded,
+            //                     color: Colors.grey,
+            //                   )
+            //                 ],
+            //               ),
+            //               title: Text('Rate us'),
+            //               trailing: Icon(Icons.arrow_forward_ios_rounded),
+            //               subtitle: Text('You will recieve daily updates'),
+            //             ),
+            //             Divider(
+            //               height: 1,
+            //             ),
+            //             ListTile(
+            //               leading: Column(
+            //                 mainAxisAlignment: MainAxisAlignment.center,
+            //                 crossAxisAlignment: CrossAxisAlignment.center,
+            //                 children: [
+            //                   Icon(
+            //                     Icons.file_copy_rounded,
+            //                     color: Colors.grey,
+            //                   )
+            //                 ],
+            //               ),
+            //               title: Text('FAQ'),
+            //               trailing: Icon(Icons.arrow_forward_ios_rounded),
+            //               subtitle: Text('Frequently Asked Questions'),
+            //             ),
+            //           ],
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // ),
             Container(
               margin: EdgeInsets.all(10),
               height: 50,

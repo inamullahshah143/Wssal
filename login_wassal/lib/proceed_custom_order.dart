@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:http/http.dart' as http;
 
@@ -273,9 +271,6 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                         "est_distance": "$estimatedDistance",
                         "est_time": "$estimatedTime",
                       }).then((response) {
-                        Clipboard.setData(ClipboardData(
-                            text:
-                                "PickLat: $pickupLatitude || PickLng: $pickupLongitude"));
                         print("Custom Delivery: ${response.body}");
                         String trackingID =
                             jsonDecode(response.body)['data'];
@@ -310,6 +305,7 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                                       padding: EdgeInsets.all(10),
                                       child: Text(
                                         'Your Order Tracing id is: ${trackingID.toString()}',
+                                        textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 20,
                                         ),
@@ -403,7 +399,7 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                       }).then((response) {
                         print("Custom Delivery: ${response.body}");
                         String trackingID =
-                            jsonDecode(response.body)['data']['order_no'];
+                            jsonDecode(response.body)['data'].toString();
                         Navigator.of(context).pop();
                         Navigator.of(context).pop();
                         Navigator.of(context).pop();
@@ -435,6 +431,7 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                                       padding: EdgeInsets.all(10),
                                       child: Text(
                                         'Your Order Tracing id is: ${trackingID.toString()}',
+                                        textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 20,
                                         ),

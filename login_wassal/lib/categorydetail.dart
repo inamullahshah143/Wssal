@@ -3117,6 +3117,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(imageURL + '/$element'),
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -3127,13 +3128,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Container(
-            height: 150.0,
+            height: 200.0,
             width: MediaQuery.of(context).size.width,
             child: Carousel(
               boxFit: BoxFit.cover,
               autoplay: true,
               animationCurve: Curves.fastOutSlowIn,
               animationDuration: Duration(milliseconds: 1000),
+              autoplayDuration: Duration(seconds: 10),
               dotSize: 6.0,
               dotIncreasedColor: Colors.white,
               dotBgColor: Colors.transparent,
