@@ -10,15 +10,17 @@ Color headingColor = Color.fromRGBO(122, 134, 154, 1);
 Color themePrimaryColor = Color.fromRGBO(254, 197, 0, 1);
 // var accessToken;
 var stringValue;
+String storedName = "";
+String storedNumber = "";
 bool logs = false;
 String phonenumber;
 var userid;
 var namee;
 var picture;
-var picBaseURL = 'https://wassldev.einnovention.tech/storage/';
-String imageURL = 'https://wassldev.einnovention.tech/storage';
-String apiURL = 'https://wassldev.einnovention.tech/api';
-String domainUrl = 'https://wassldev.einnovention.tech';
+var picBaseURL = 'https://einnovention.co.uk/wassl/public/storage/';
+String imageURL = 'https://einnovention.co.uk/wassl/public/storage';
+String apiURL = 'https://einnovention.co.uk/wassl/public/api';
+String domainUrl = 'https://einnovention.co.uk/wassl/public';
 
 BuildContext latestContext;
 String fcmToken = "";
@@ -29,8 +31,6 @@ List users = [
   {"userId": 3, "name": "Kashif", "pic": "assets/kashif.jpg"},
   {"userId": 4, "name": "Hassan", "pic": "assets/hassan.jpg"},
 ];
-
-
 
 List newOrder = [
   {
@@ -76,7 +76,7 @@ List newOrder = [
     "orderquantity": "4",
     "picklatlong": LatLng(31.5010, 74.3216),
     "droplatlong": LatLng(31.4929, 74.3280),
-      'products': [
+    'products': [
       {
         "productid": 1,
         "producttitle": "double patty burger",
@@ -112,7 +112,7 @@ List newOrder = [
     "orderquantity": "1",
     "picklatlong": LatLng(31.5010, 74.3216),
     "droplatlong": LatLng(31.4929, 74.3280),
-      'products': [
+    'products': [
       {
         "productid": 1,
         "producttitle": "double patty burger",
@@ -148,7 +148,7 @@ List newOrder = [
     "orderquantity": "1",
     "picklatlong": LatLng(31.5010, 74.3216),
     "droplatlong": LatLng(31.4929, 74.3280),
-      'products': [
+    'products': [
       {
         "productid": 1,
         "producttitle": "double patty burger",
@@ -184,7 +184,7 @@ List newOrder = [
     "orderquantity": "1",
     "picklatlong": LatLng(31.5010, 74.3216),
     "droplatlong": LatLng(31.4929, 74.3280),
-      'products': [
+    'products': [
       {
         "productid": 1,
         "producttitle": "double patty burger",
@@ -220,7 +220,7 @@ List newOrder = [
     "orderquantity": "1",
     "picklatlong": LatLng(31.5010, 74.3216),
     "droplatlong": LatLng(31.4929, 74.3280),
-      'products': [
+    'products': [
       {
         "productid": 1,
         "producttitle": "double patty burger",
@@ -256,9 +256,6 @@ List newOrder = [
     }
   },
 ];
-
-
-
 
 List completedOrder = [
   {
@@ -304,7 +301,7 @@ List completedOrder = [
     "orderquantity": "4",
     "picklatlong": LatLng(31.5010, 74.3216),
     "droplatlong": LatLng(31.4929, 74.3280),
-      'products': [
+    'products': [
       {
         "productid": 1,
         "producttitle": "double patty burger",
@@ -340,7 +337,7 @@ List completedOrder = [
     "orderquantity": "1",
     "picklatlong": LatLng(31.5010, 74.3216),
     "droplatlong": LatLng(31.4929, 74.3280),
-      'products': [
+    'products': [
       {
         "productid": 1,
         "producttitle": "double patty burger",
@@ -376,7 +373,7 @@ List completedOrder = [
     "orderquantity": "1",
     "picklatlong": LatLng(31.5010, 74.3216),
     "droplatlong": LatLng(31.4929, 74.3280),
-      'products': [
+    'products': [
       {
         "productid": 1,
         "producttitle": "double patty burger",
@@ -412,7 +409,7 @@ List completedOrder = [
     "orderquantity": "1",
     "picklatlong": LatLng(31.5010, 74.3216),
     "droplatlong": LatLng(31.4929, 74.3280),
-      'products': [
+    'products': [
       {
         "productid": 1,
         "producttitle": "double patty burger",
@@ -448,7 +445,7 @@ List completedOrder = [
     "orderquantity": "1",
     "picklatlong": LatLng(31.5010, 74.3216),
     "droplatlong": LatLng(31.4929, 74.3280),
-      'products': [
+    'products': [
       {
         "productid": 1,
         "producttitle": "double patty burger",

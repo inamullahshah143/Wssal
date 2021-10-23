@@ -246,7 +246,7 @@ class _CreateAccountState extends State<CreateAccount> {
 }
 
 signUp(context) async {
-  var url = 'https://wassldev.einnovention.tech/api/register';
+  var url = 'https://einnovention.co.uk/wassl/public/api/register';
   var response = await http.post(Uri.parse(url), body: {
     'name': '$name',
     'fcm_token': '$fcmToken',
@@ -260,7 +260,7 @@ signUp(context) async {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-          builder: (BuildContext context) => Varifyphonenumber(data, false)),
+          builder: (BuildContext context) => Varifyphonenumber(data)),
     );
   } else {
     showAlert(

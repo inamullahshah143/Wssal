@@ -84,44 +84,44 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                   keyboardType: TextInputType.number,
                   length: 4,
                   onCompleted: (String value) async {
-                     print("Value: $value = Data: ${data['data']['otp']}");
-                      if ("${data['data']['otp']}" == "$value") {
-                        if (data['status'] == 200 &&
-                        data['request_status'] == null) {
-                      showAlert(
-                        context: context,
-                        title: "Create Vender Request",
-                        actions: [
-                          AlertAction(
-                              text: "Ok",
-                              isDestructiveAction: true,
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          StoreProfile(data['token'])),
-                                );
-                              }),
-                        ],
-                        cancelable: true,
-                      );
-                    } else if (data['status'] == 200 &&
-                        data['request_status'] == 0) {
-                      showAlert(
-                        context: context,
-                        title: "Your Request As Vender Rejected ",
-                        actions: [
-                          AlertAction(
-                              text: "Ok ",
-                              isDestructiveAction: true,
-                              onPressed: () {}),
-                        ],
-                        cancelable: true,
-                      );
-                    } else if (data['status'] == 200 &&
-                        data['request_status'] == 1) {
-                     stringValue = data['token'];
+                    print("Value: $value = Data: ${data['data']['otp']}");
+                    if ("${data['data']['otp']}" == "$value") {
+                      if (data['status'] == 200 &&
+                          data['request_status'] == null) {
+                        showAlert(
+                          context: context,
+                          title: "Create Vender Request",
+                          actions: [
+                            AlertAction(
+                                text: "Ok",
+                                isDestructiveAction: true,
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            StoreProfile(data['token'])),
+                                  );
+                                }),
+                          ],
+                          cancelable: true,
+                        );
+                      } else if (data['status'] == 200 &&
+                          data['request_status'] == 0) {
+                        showAlert(
+                          context: context,
+                          title: "Your Request As Vender Rejected ",
+                          actions: [
+                            AlertAction(
+                                text: "Ok ",
+                                isDestructiveAction: true,
+                                onPressed: () {}),
+                          ],
+                          cancelable: true,
+                        );
+                      } else if (data['status'] == 200 &&
+                          data['request_status'] == 1) {
+                        stringValue = data['token'];
                         SharedPreferences mypref =
                             await SharedPreferences.getInstance();
                         mypref.setString('abs', '$stringValue');
@@ -145,14 +145,13 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                           ],
                           cancelable: true,
                         );
-                    }
-                      } else {
-                        showAlert(
-                            context: context,
-                            title: "Error",
-                            body: "Incorrect OTP");
                       }
-                    
+                    } else {
+                      showAlert(
+                          context: context,
+                          title: "Error",
+                          body: "Incorrect OTP");
+                    }
                   },
                   onEditing: (bool value) {
                     // setState(() {
@@ -172,7 +171,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                   onPressed: () {
                     http.post(
                         Uri.parse(
-                            "https://wassldev.einnovention.tech/api/login"),
+                            "https://einnovention.co.uk/wassl/public/api/login"),
                         body: {
                           "phone": "${data['data']['phone']}",
                           "fcm_token": "$ffccmmTTookkeenn",

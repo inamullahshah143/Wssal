@@ -206,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
 
 login(context) async {
   try {
-    var url = 'https://wassldev.einnovention.tech/api/login';
+    var url = 'https://einnovention.co.uk/wassl/public/api/login';
     var response = await http.post(Uri.parse(url), body: {
       'phone': '$countryCode$number',
       'fcm_token': '$ffccmmTTookkeenn'

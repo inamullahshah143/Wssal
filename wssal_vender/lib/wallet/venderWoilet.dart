@@ -254,7 +254,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
   Future<List<Widget>> buildWoiletRequest() async {
     try {
       List<Widget> x = [];
-      var url = 'https://wassldev.einnovention.tech/api/withdrawindex';
+      var url = 'https://einnovention.co.uk/wassl/public/api/withdrawindex';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
 
@@ -362,7 +362,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
   Future<Widget> buildDriverDepositRequest() async {
     try {
       List<Widget> x = [];
-      var url = 'https://wassldev.einnovention.tech/api/wallet';
+      var url = 'https://einnovention.co.uk/wassl/public/api/wallet';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('buildProductsResponse: ${response.body}');

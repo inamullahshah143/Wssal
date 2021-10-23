@@ -176,7 +176,7 @@ class _ProductsGridCardState extends State<ProductsGridCard> {
 
   deleteProduct() async {
     var url =
-        'https://wassldev.einnovention.tech/api/vendor/products/$productId';
+        'https://einnovention.co.uk/wassl/public/api/vendor/products/$productId';
     var response = await http.delete(Uri.parse(url),
         headers: {'Authorization': 'Bearer $stringValue'});
     print('Response body: ${response.body}');
@@ -283,7 +283,8 @@ class _ProductsGridCardState extends State<ProductsGridCard> {
   }
 
   deleteImage() async {
-    var url = 'https://wassldev.einnovention.tech/api/vendor/deleteimg/$picId';
+    var url =
+        'https://einnovention.co.uk/wassl/public/api/vendor/deleteimg/$picId';
     var response = await http.delete(Uri.parse(url),
         headers: {'Authorization': 'Bearer $stringValue'});
     print('Response body: ${response.body}');
@@ -323,7 +324,8 @@ class _ProductsGridCardState extends State<ProductsGridCard> {
   }
 
   editProducts() async {
-    var url = 'https://wassldev.einnovention.tech/api/vendor/edit/$productId';
+    var url =
+        'https://einnovention.co.uk/wassl/public/api/vendor/edit/$productId';
     var response = await http
         .get(Uri.parse(url), headers: {'Authorization': 'Bearer $stringValue'});
     // print('buildProductsResponse: ${response.body}');

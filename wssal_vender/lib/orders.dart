@@ -51,8 +51,8 @@ class _OrdersState extends State<Orders> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(children: [
-                Container(
-                     width: width,
+                  Container(
+                    width: width,
                     margin: EdgeInsets.only(
                       top: 15,
                     ),
@@ -81,7 +81,7 @@ class _OrdersState extends State<Orders> {
   // Future<Widget> buildOrders() async {
   //   List<Widget> x = [];
   //   try {
-  //     var url = 'https://wassldev.einnovention.tech/api/vendor/orders';
+  //     var url = 'https://einnovention.co.uk/wassl/public/api/vendor/orders';
   //     var response = await http.get(Uri.parse(url),
   //         headers: {'Authorization': 'Bearer $stringValue'});
   //     print('buildProductsResponse: ${response.body}');
@@ -391,265 +391,261 @@ class _OrdersState extends State<Orders> {
   //     );
   //   }
   // }
-  
+
   Future<Widget> buildOrders() async {
     List<Widget> x = [];
     try {
-      var url = 'https://wassldev.einnovention.tech/api/vendor/orders';
+      var url = 'https://einnovention.co.uk/wassl/public/api/vendor/orders';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('buildProductsResponse: ${response.body}');
       List data = json.decode(response.body)['data'];
-    if (data==null) {
-      return Text('No Orders Yet');
-      
-    }
-    else{
+      if (data == null) {
+        return Text('No Orders Yet');
+      } else {
         if (data.length > 0) {
-        data.forEach((element) {
-          x.add(InkWell(
-              onTap: () {
-                print('id = ${element['id']}');
-                print('element agla = ${element['order']}');
-                //  Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //           builder: (BuildContext context) =>
-                //                OrderDetails(element['id'],element)),
-                //     );
-                if (element['order']['cancelled'] == null &&
-                    element['order']['delivered'] == null) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            OrderDetails(element['order_id'], element)),
-                  );
-                } else if (element['order']['cancelled'] == null &&
-                    element['order']['delivered'] != null) {
-                  showAlert(
-                    context: context,
-                    title: "Orders Completed",
-                    actions: [
-                      AlertAction(
-                          text: "Ok ",
-                          isDestructiveAction: true,
-                          onPressed: () {}),
-                    ],
-                    cancelable: true,
-                  );
-                } else if (element['order']['cancelled'] != null &&
-                    element['order']['delivered'] != null) {
-                  showAlert(
-                    context: context,
-                    title: "Orders Completed",
-                    actions: [
-                      AlertAction(
-                          text: "Ok ",
-                          isDestructiveAction: true,
-                          onPressed: () {}),
-                    ],
-                    cancelable: true,
-                  );
-                } else {
-                  showAlert(
-                    context: context,
-                    title: "Orders Cancelled",
-                    actions: [
-                      AlertAction(
-                          text: "Ok ",
-                          isDestructiveAction: true,
-                          onPressed: () {}),
-                    ],
-                    cancelable: true,
-                  );
-                }
-              },
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        child: Text(
-                          '\#${element['order_no']}',
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(
-                            left: 15, right: 15, top: 5, bottom: 5),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              if (element['order']['delivered'] != null &&
-                                  element['order']['cancelled'] != null) ...[
-                                Container(
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text('Delivered'),
-                                  ),
-                                )
-                              ] else if (element['order']['delivered'] ==
-                                      null &&
-                                  element['order']['cancelled'] != null) ...[
-                                Container(
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text('Cancelled'),
-                                  ),
-                                )
-                              ] else if (element['order']['delivered'] !=
-                                  null) ...[
-                                Container(
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text('delivered'),
-                                  ),
-                                )
-                              ] else if (element['order']['delivered'] ==
-                                      null &&
-                                  element['order']['cancelled'] != null) ...[
-                                Container(
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text('Cancelled'),
-                                  ),
-                                )
-                              ] else if (element['order']
-                                      ['shipping'] !=
-                                  null) ...[
-                                Container(
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text('shipping'),
-                                  ),
-                                )
-                              ] else if (element['order']
-                                      ['packing'] !=
-                                  null) ...[
-                                Container(
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text('packing'),
-                                  ),
-                                )
-                              ] else if (element['order']['process'] !=
-                                  null) ...[
-                                Container(
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text('process'),
-                                  ),
-                                )
-                              ] else if (element['order']['pending'] !=
-                                  null) ...[
-                                Container(
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text('pending'),
-                                  ),
-                                )
-                              ] else ...[
-                                Container(
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                    color: Colors.yellow,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text('Waiting'),
-                                  ),
-                                )
-                              ]
-                            ]),
-                      )
-                    ],
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 5, bottom: 5),
-                    child: Row(
+          data.forEach((element) {
+            x.add(InkWell(
+                onTap: () {
+                  print('id = ${element['id']}');
+                  print('element agla = ${element['order']}');
+                  //  Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (BuildContext context) =>
+                  //                OrderDetails(element['id'],element)),
+                  //     );
+                  if (element['order']['cancelled'] == null &&
+                      element['order']['delivered'] == null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              OrderDetails(element['order_id'], element)),
+                    );
+                  } else if (element['order']['cancelled'] == null &&
+                      element['order']['delivered'] != null) {
+                    showAlert(
+                      context: context,
+                      title: "Orders Completed",
+                      actions: [
+                        AlertAction(
+                            text: "Ok ",
+                            isDestructiveAction: true,
+                            onPressed: () {}),
+                      ],
+                      cancelable: true,
+                    );
+                  } else if (element['order']['cancelled'] != null &&
+                      element['order']['delivered'] != null) {
+                    showAlert(
+                      context: context,
+                      title: "Orders Completed",
+                      actions: [
+                        AlertAction(
+                            text: "Ok ",
+                            isDestructiveAction: true,
+                            onPressed: () {}),
+                      ],
+                      cancelable: true,
+                    );
+                  } else {
+                    showAlert(
+                      context: context,
+                      title: "Orders Cancelled",
+                      actions: [
+                        AlertAction(
+                            text: "Ok ",
+                            isDestructiveAction: true,
+                            onPressed: () {}),
+                      ],
+                      cancelable: true,
+                    );
+                  }
+                },
+                child: Column(
+                  children: [
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text(
-                          '${element['created_at'].toString().split('T')[1]}',
-                          style: TextStyle(fontSize: 15),
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          child: Text(
+                            '\#${element['order_no']}',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
                         ),
-                        Text(
-                          '${element['created_at'].toString().split('T')[0]}',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        Text(
-                          '${element['product_name']}',
-                          style: TextStyle(fontSize: 15),
-                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                              left: 15, right: 15, top: 5, bottom: 5),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                if (element['order']['delivered'] != null &&
+                                    element['order']['cancelled'] != null) ...[
+                                  Container(
+                                    padding: EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text('Delivered'),
+                                    ),
+                                  )
+                                ] else if (element['order']['delivered'] ==
+                                        null &&
+                                    element['order']['cancelled'] != null) ...[
+                                  Container(
+                                    padding: EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text('Cancelled'),
+                                    ),
+                                  )
+                                ] else if (element['order']['delivered'] !=
+                                    null) ...[
+                                  Container(
+                                    padding: EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text('delivered'),
+                                    ),
+                                  )
+                                ] else if (element['order']['delivered'] ==
+                                        null &&
+                                    element['order']['cancelled'] != null) ...[
+                                  Container(
+                                    padding: EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text('Cancelled'),
+                                    ),
+                                  )
+                                ] else if (element['order']['shipping'] !=
+                                    null) ...[
+                                  Container(
+                                    padding: EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text('shipping'),
+                                    ),
+                                  )
+                                ] else if (element['order']['packing'] !=
+                                    null) ...[
+                                  Container(
+                                    padding: EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text('packing'),
+                                    ),
+                                  )
+                                ] else if (element['order']['process'] !=
+                                    null) ...[
+                                  Container(
+                                    padding: EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text('process'),
+                                    ),
+                                  )
+                                ] else if (element['order']['pending'] !=
+                                    null) ...[
+                                  Container(
+                                    padding: EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text('pending'),
+                                    ),
+                                  )
+                                ] else ...[
+                                  Container(
+                                    padding: EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.yellow,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text('Waiting'),
+                                    ),
+                                  )
+                                ]
+                              ]),
+                        )
                       ],
                     ),
-                  ),
-                  Divider(
-                    thickness: 1,
-                    color: Colors.black,
-                  )
-                ],
-              )));
-        });
-        return Container(
-          child: ListView(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            children: x,
-          ),
-        );
-      } else {
-        return Text("No Orders ");
+                    Container(
+                      margin: EdgeInsets.only(top: 5, bottom: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            '${element['created_at'].toString().split('T')[1]}',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          Text(
+                            '${element['created_at'].toString().split('T')[0]}',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          Text(
+                            '${element['product_name']}',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Divider(
+                      thickness: 1,
+                      color: Colors.black,
+                    )
+                  ],
+                )));
+          });
+          return Container(
+            child: ListView(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              children: x,
+            ),
+          );
+        } else {
+          return Text("No Orders ");
+        }
       }
-    }
     } catch (e) {
       return Text(e);
     }

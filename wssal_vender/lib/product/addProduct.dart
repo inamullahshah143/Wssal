@@ -751,7 +751,7 @@ class _AddProductState extends State<AddProduct> {
     setState(() {
       aSCategorie = [];
     });
-    var url = 'https://wassldev.einnovention.tech/api/vendor/categories';
+    var url = 'https://einnovention.co.uk/wassl/public/api/vendor/categories';
     var response = await http
         .get(Uri.parse(url), headers: {'Authorization': 'Bearer $stringValue'});
     print('Category: ${response.body}');
@@ -786,7 +786,7 @@ class _AddProductState extends State<AddProduct> {
     setState(() {
       aSVariants = [];
     });
-    var url = 'https://wassldev.einnovention.tech/api/vendor/varients';
+    var url = 'https://einnovention.co.uk/wassl/public/api/vendor/varients';
     var response = await http
         .get(Uri.parse(url), headers: {'Authorization': 'Bearer $stringValue'});
     print('Variants: ${response.body}');
@@ -827,7 +827,7 @@ class _AddProductState extends State<AddProduct> {
     setState(() {
       aSAttributes = [];
     });
-    var url = 'https://wassldev.einnovention.tech/api/vendor/attributes';
+    var url = 'https://einnovention.co.uk/wassl/public/api/vendor/attributes';
     var response = await http
         .get(Uri.parse(url), headers: {'Authorization': 'Bearer $stringValue'});
     print('Variants: ${response.body}');
@@ -885,7 +885,7 @@ class _AddProductState extends State<AddProduct> {
           "attribute_product": "$attributesid",
           "variation_product": "$variantsid",
           "image": x,
-          "free_delivery": freeDelivery?"1":"0"
+          "free_delivery": freeDelivery ? "1" : "0"
         });
 
         Dio dio = Dio();
@@ -903,11 +903,11 @@ class _AddProductState extends State<AddProduct> {
           "attribute_product": "$attributesid",
           "variation_product": "$variantsid",
           "image": x,
-          "free_delivery": freeDelivery?"1":"0"
+          "free_delivery": freeDelivery ? "1" : "0"
         });
         var response = await dio.post(
-            // https://wassldev.einnovention.tech/api/vendor/products
-            "https://wassldev.einnovention.tech/api/vendor/products",
+            // https://einnovention.co.uk/wassl/public/api/vendor/products
+            "https://einnovention.co.uk/wassl/public/api/vendor/products",
             data: formData);
         Clipboard.setData(ClipboardData(text: "$response"));
         print("Become Vender: $response");

@@ -49,7 +49,7 @@ class PaypalServices {
       final body = convert.jsonDecode(response.body);
 
       // http.post(
-      //     Uri.parse("https://wassldev.einnovention.tech/api/paypal/success"),
+      //     Uri.parse("https://einnovention.co.uk/wassl/public/api/paypal/success"),
       //     body: response.body,
       //     headers: {
       //       "Authorization": "Bearer 5|0uBtc6iyAKXCNZC2EQUW3bIU8dSGhYJbFor7EFXy"
@@ -100,17 +100,19 @@ class PaypalServices {
       if (response.statusCode == 200) {
         // ignore: unused_local_variable
         final body = convert.jsonDecode(response.body);
-       
-Map data = json.decode(response.body);
- Clipboard.setData(ClipboardData(text: jsonEncode(data)));
+
+        Map data = json.decode(response.body);
+        Clipboard.setData(ClipboardData(text: jsonEncode(data)));
         print("Hello PayPal Response: ${jsonEncode(data)}");
         http.post(
             Uri.parse(
-                ("https://wassldev.einnovention.tech/api/paypal/success")),
+                ("https://einnovention.co.uk/wassl/public/api/paypal/success")),
             body: jsonEncode(data),
-            headers: {'Authorization': 'Bearer $stringValue', "content-type": "application/json",}).then((value) {
+            headers: {
+              'Authorization': 'Bearer $stringValue',
+              "content-type": "application/json",
+            }).then((value) {
           print("paypalSuccess: ${value.body}");
-         
         });
         return json.decode(response.body).toString();
       }

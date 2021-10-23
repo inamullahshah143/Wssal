@@ -266,7 +266,7 @@ class _ProductDetailsDetailsState extends State<ProductDetailsDetails> {
 
   deleteProduct() async {
     var url =
-        'https://wassldev.einnovention.tech/api/vendor/products/$productId';
+        'https://einnovention.co.uk/wassl/public/api/vendor/products/$productId';
     var response = await http.delete(Uri.parse(url),
         headers: {'Authorization': 'Bearer $stringValue'});
     print('Response body: ${response.body}');
@@ -305,7 +305,7 @@ class _ProductDetailsDetailsState extends State<ProductDetailsDetails> {
   deleteImage() async {
     // https://wassl.test/api/deleteProductImage/6
     var url =
-        'https://wassldev.einnovention.tech/api/deleteProductImage/$picId';
+        'https://einnovention.co.uk/wassl/public/api/deleteProductImage/$picId';
     var response = await http
         .get(Uri.parse(url), headers: {'Authorization': 'Bearer $stringValue'});
     print('Response body: ${response.body}');

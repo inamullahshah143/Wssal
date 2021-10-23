@@ -94,7 +94,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 (Route<dynamic> route) => false);
           });
         } else {
-          Timer(Duration(seconds: 5), () {
+          Timer(Duration(seconds: 10), () {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (_) => MainDashboard()),
                 (Route<dynamic> route) => false);

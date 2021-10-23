@@ -382,7 +382,7 @@ class _UpdateAttributesState extends State<UpdateAttributes> {
   editattribute() async {
     try {
       var url =
-          'https://wassldev.einnovention.tech/api/vendor/attributes/$attributeId';
+          'https://einnovention.co.uk/wassl/public/api/vendor/attributes/$attributeId';
       var response = await http.put(
         Uri.parse(url),
         body: {

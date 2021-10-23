@@ -18,6 +18,7 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
+  final _formKey = GlobalKey<FormState>();
   bool isChecked = false;
   @override
   void initState() {
@@ -36,206 +37,218 @@ class _CreateAccountState extends State<CreateAccount> {
       child: Scaffold(
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              Container(
-                height: 300,
-                width: width,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: ExactAssetImage("assets/Illustration4.png"),
-                    fit: BoxFit.fill,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Container(
+                  height: 300,
+                  width: width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: ExactAssetImage("assets/Illustration4.png"),
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 20),
-                child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Hello! Create Account',
-                      style: TextStyle(
-                          color: Color.fromRGBO(128, 136, 142, 1),
-                          fontSize: 25),
-                    )),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Already have an account?  ',
-                      style: TextStyle(color: Color.fromRGBO(180, 186, 198, 1)),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => LoginPage()),
-                        );
-                      },
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: Align(
+                      alignment: Alignment.center,
                       child: Text(
-                        'Sign in',
+                        'Hello! Create Account',
                         style: TextStyle(
-                            fontSize: 14,
-                            color: Color.fromRGBO(222, 53, 11, 1)),
-                      ),
-                    ),
-                  ],
+                            color: Color.fromRGBO(128, 136, 142, 1),
+                            fontSize: 25),
+                      )),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 12.5, horizontal: 25.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(244, 245, 247, 1),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  // margin: EdgeInsets.only(left: 30),
-                  height: 50,
-                  width: width,
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'please enter your full name';
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.name,
-                    style: TextStyle(
-                      fontSize: 14.0,
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        name = value;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Your Name',
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      contentPadding: EdgeInsets.only(left: 15.0),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
-                child: Container(
-                  width: width,
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(244, 245, 247, 1),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                Container(
+                  margin: EdgeInsets.only(top: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.all(12.5),
-                        child: Text(
-                          "Phone Number",
-                          style: TextStyle(color: Colors.grey, fontSize: 14.0),
-                        ),
+                      Text(
+                        'Already have an account?  ',
+                        style:
+                            TextStyle(color: Color.fromRGBO(180, 186, 198, 1)),
                       ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'please enter your valid phone no.';
-                          }
-                          return null;
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) => LoginPage()),
+                          );
                         },
-                        keyboardType: TextInputType.phone,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            number = value;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          counterText: "",
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          errorBorder: InputBorder.none,
-                          disabledBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.only(top: 17.5),
-                          hintText: 'Phone No',
-                          prefixIcon: CountryCodePicker(
-                            onChanged: (CountryCode code) {
-                              setState(() {
-                                countryCode = code.dialCode;
-                              });
-                            },
-                            initialSelection: 'EG',
-                            favorite: ['+20', 'EG'],
-                            hideMainText: false,
-                            showCountryOnly: false,
-                            showOnlyCountryWhenClosed: false,
-                            flagDecoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                          ),
+                        child: Text(
+                          'Sign in',
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Color.fromRGBO(222, 53, 11, 1)),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              ListTile(
-                leading: Checkbox(
-                  value: isChecked,
-                  onChanged: (value) {
-                    setState(() {
-                      isChecked = value;
-                    });
-                  },
-                ),
-                title: RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                    text: 'By creating an account, you agree to our',
-                    style: TextStyle(color: Color.fromRGBO(180, 186, 198, 1)),
-                  ),
-                  TextSpan(
-                    text: ' Term and Conditions',
-                    style: TextStyle(color: Color.fromRGBO(222, 53, 11, 1)),
-                  ),
-                ])),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12.5, horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(244, 245, 247, 1),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    // margin: EdgeInsets.only(left: 30),
                     height: 50,
                     width: width,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        signUp(context);
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'please enter your full name';
+                        } else {
+                          return null;
+                        }
                       },
-                      style: ElevatedButton.styleFrom(
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(15.0),
-                        ),
-                        primary: themePrimaryColor,
+                      keyboardType: TextInputType.name,
+                      style: TextStyle(
+                        fontSize: 14.0,
                       ),
-                      child: Text(
-                        "Sign Up",
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: Colors.grey[800],
-                        ),
+                      onChanged: (value) {
+                        setState(() {
+                          name = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Your Name',
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.only(left: 15.0),
                       ),
-                    )),
-              ),
-            ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 15.0, horizontal: 25.0),
+                  child: Container(
+                    width: width,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(244, 245, 247, 1),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(12.5),
+                          child: Text(
+                            "Phone Number",
+                            style:
+                                TextStyle(color: Colors.grey, fontSize: 14.0),
+                          ),
+                        ),
+                        TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'please enter your valid phone no.';
+                            } else {
+                              return null;
+                            }
+                          },
+                          keyboardType: TextInputType.phone,
+                          style: TextStyle(
+                            fontSize: 14.0,
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              number = value;
+                            });
+                          },
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterText: "",
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            contentPadding: EdgeInsets.only(top: 17.5),
+                            hintText: 'Phone No',
+                            prefixIcon: CountryCodePicker(
+                              onChanged: (CountryCode code) {
+                                setState(() {
+                                  countryCode = code.dialCode;
+                                });
+                              },
+                              initialSelection: 'EG',
+                              favorite: ['+20', 'EG'],
+                              hideMainText: false,
+                              showCountryOnly: false,
+                              showOnlyCountryWhenClosed: false,
+                              flagDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: Checkbox(
+                    value: isChecked,
+                    onChanged: (value) {
+                      setState(() {
+                        isChecked = value;
+                      });
+                    },
+                  ),
+                  title: RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                      text: 'By creating an account, you agree to our',
+                      style: TextStyle(color: Color.fromRGBO(180, 186, 198, 1)),
+                    ),
+                    TextSpan(
+                      text: ' Term and Conditions',
+                      style: TextStyle(color: Color.fromRGBO(222, 53, 11, 1)),
+                    ),
+                  ])),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      height: 50,
+                      width: width,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState.validate()) {
+                            signUp(context);
+                          } else {
+                            print("ERROR");
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(15.0),
+                          ),
+                          primary: themePrimaryColor,
+                        ),
+                        child: Text(
+                          "Sign Up",
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                      )),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -249,7 +262,7 @@ signUp(context) async {
     'fcm_token': '$fcmToken',
     'phone': '$countryCode$number',
   });
-  var url = 'https://wassldev.einnovention.tech/api/register';
+  var url = 'https://einnovention.co.uk/wassl/public/api/register';
   var response = await http.post(Uri.parse(url), body: {
     'name': '$name',
     'fcm_token': '$fcmToken',

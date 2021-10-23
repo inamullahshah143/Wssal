@@ -125,7 +125,7 @@ class _AllProductState extends State<AllProduct> {
   Future<Widget> buildProducts() async {
     List<Widget> x = [];
     try {
-      var url = 'https://wassldev.einnovention.tech/api/vendor/products';
+      var url = 'https://einnovention.co.uk/wassl/public/api/vendor/products';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('buildProductsResponse: ${response.body}');

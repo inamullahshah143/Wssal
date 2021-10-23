@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:wassal_customer/PUSHER/LatestOrderDetail.dart';
+import 'package:wassal_customer/design_pages/profile/AccountInfo.dart';
 import 'package:wassal_customer/wallet/venderWoilet.dart';
 import 'PUSHER/CustomOrderDetails.dart';
 import 'const.dart';
@@ -107,24 +108,30 @@ class _ProfilePageState extends State<ProfilePage> {
                     padding: EdgeInsets.all(15),
                     child: Column(
                       children: [
-                        // ListTile(
-                        //   onTap: () {},
-                        //   leading: Column(
-                        //     mainAxisAlignment: MainAxisAlignment.center,
-                        //     children: [
-                        //       Icon(
-                        //         Icons.person_rounded,
-                        //         color: Colors.grey,
-                        //       )
-                        //     ],
-                        //   ),
-                        //   title: Text('Account Information'),
-                        //   trailing: Icon(Icons.arrow_forward_ios_rounded),
-                        //   subtitle: Text('Change your Account information'),
-                        // ),
-                        // Divider(
-                        //   height: 1,
-                        // ),
+                        ListTile(
+                          onTap: () {
+                             showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    builder: (context) => AccountInfo(),
+                                  );
+                          },
+                          leading: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.person_rounded,
+                                color: Colors.grey,
+                              )
+                            ],
+                          ),
+                          title: Text('Account Information'),
+                          trailing: Icon(Icons.arrow_forward_ios_rounded),
+                          subtitle: Text('Change your Account information'),
+                        ),
+                        Divider(
+                          height: 1,
+                        ),
                         ListTile(
                           onTap: () {
                             Navigator.push(

@@ -779,7 +779,7 @@ class _UpdateProductState extends State<UpdateProduct> {
     setState(() {
       aSCategorie = [];
     });
-    var url = 'https://wassldev.einnovention.tech/api/vendor/categories';
+    var url = 'https://einnovention.co.uk/wassl/public/api/vendor/categories';
     var response = await http
         .get(Uri.parse(url), headers: {'Authorization': 'Bearer $stringValue'});
     print('Category: ${response.body}');
@@ -814,7 +814,7 @@ class _UpdateProductState extends State<UpdateProduct> {
     setState(() {
       aSVariants = [];
     });
-    var url = 'https://wassldev.einnovention.tech/api/vendor/varients';
+    var url = 'https://einnovention.co.uk/wassl/public/api/vendor/varients';
     var response = await http
         .get(Uri.parse(url), headers: {'Authorization': 'Bearer $stringValue'});
     print('Variants: ${response.body}');
@@ -855,8 +855,8 @@ class _UpdateProductState extends State<UpdateProduct> {
     setState(() {
       aSAttributes = [];
     });
-    // https://wassldev.einnovention.tech/api/vendor/attributes
-    var url = 'https://wassldev.einnovention.tech/api/vendor/attributes';
+    // https://einnovention.co.uk/wassl/public/api/vendor/attributes
+    var url = 'https://einnovention.co.uk/wassl/public/api/vendor/attributes';
     var response = await http
         .get(Uri.parse(url), headers: {'Authorization': 'Bearer $stringValue'});
     print('Variants: ${response.body}');
@@ -936,7 +936,7 @@ class _UpdateProductState extends State<UpdateProduct> {
         });
         var response = await dio.post(
             // https://wassl.einnovention.tech/api/vendor/products/1
-            "https://wassldev.einnovention.tech/api/vendor/products/$pID",
+            "https://einnovention.co.uk/wassl/public/api/vendor/products/$pID",
             data: formData);
         print("Update product: $response");
 

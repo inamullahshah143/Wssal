@@ -3,6 +3,7 @@ import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:wassal_customer/numberlogin.dart';
+import 'No Internet/noInternetConnection.dart';
 import 'categories_dashboard.dart';
 import 'const.dart';
 import 'custom_delivery.dart';
@@ -111,234 +112,107 @@ class _MainCategoriesState extends State<MainCategories> {
   }
 
   Future<Widget> mainCategories(BuildContext context) async {
-    var response = await http.get(Uri.parse("$apiURL/category"));
-    if (json.decode(response.body)['status'] == 200) {
-      List data = json.decode(response.body)['data'];
-      List<Widget> x = [];
-      data.forEach((element) {
+    try {
+      var response = await http.get(Uri.parse("$apiURL/category"));
+      if (json.decode(response.body)['status'] == 200) {
+        List data = json.decode(response.body)['data'];
+        List<Widget> x = [];
+        data.forEach((element) {
+          x.add(
+            Container(
+              margin: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                color: Color.fromRGBO(244, 245, 247, 1),
+              ),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CategoryDashboard(
+                        categoryBlock: element,
+                      ),
+                    ),
+                  );
+                },
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 300.0,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                              imageURL + '/' + element['thumbnail']),
+                          fit: BoxFit.cover,
+                        ),
+                        color: Colors.grey.shade100,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 0,
+                            blurRadius: 5,
+                            offset: Offset(0, 1), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        height: 100.0,
+                        width: 300.0,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Color.fromRGBO(255, 255, 255, 0),
+                              Color.fromRGBO(25, 25, 25, 1),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(7.5),
+                          ),
+                        ),
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  element['name'].toUpperCase(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                RichText(
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  text: TextSpan(
+                                    text: '',
+                                    children: subCategory(element['children']),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+
         x.add(
-          Container(
-            margin: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              color: Color.fromRGBO(244, 245, 247, 1),
-            ),
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CategoryDashboard(
-                      categoryBlock: element,
-                    ),
-                  ),
-                );
-              },
-              child: Stack(
-                children: [
-                  Container(
-                    width: 300.0,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image:
-                            NetworkImage(imageURL + '/' + element['thumbnail']),
-                        fit: BoxFit.cover,
-                      ),
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 0,
-                          blurRadius: 5,
-                          offset: Offset(0, 1), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 100.0,
-                      width: 300.0,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color.fromRGBO(255, 255, 255, 0),
-                            Color.fromRGBO(25, 25, 25, 1),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.vertical(
-                          bottom: Radius.circular(7.5),
-                        ),
-                      ),
-                      child: Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                element['name'].toUpperCase(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              RichText(
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                text: TextSpan(
-                                  text: '',
-                                  children: subCategory(element['children']),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      });
-
-      x.add(
-        Container(
-          margin: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            color: Color.fromRGBO(244, 245, 247, 1),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 0,
-                blurRadius: 5,
-                offset: Offset(0, 1),
-              ),
-            ],
-          ),
-          child: InkWell(
-            onTap: () {
-              if (logs == true) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CustomDelivery(),
-                  ),
-                );
-              } else {
-                showAlert(
-                    context: context,
-                    title: "Login Required",
-                    cancelable: true,
-                    actions: [
-                      AlertAction(
-                          text: "ok",
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginPage(),
-                              ),
-                            );
-                          }),
-                    ]);
-              }
-            },
-            child: Container(
-              height: 300,
-              child: Stack(
-                children: [
-                  Container(
-                    height: 350,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      image: DecorationImage(
-                        image: NetworkImage(
-                            'https://www.cannabisbusinesstimes.com/fileuploads/image/2019/06/20/Delivery-Adobe_Stock-Credit-boophuket-Resized.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 100.0,
-                      width: 300.0,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color.fromRGBO(255, 255, 255, 0),
-                            Color.fromRGBO(25, 25, 25, 1),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.vertical(
-                          bottom: Radius.circular(7.5),
-                        ),
-                      ),
-                      child: Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Delivery',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Text(
-                                'From Point to Point',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
-
-      return GridView(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: (2),
-          childAspectRatio: 1.1,
-        ),
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        children: x,
-      );
-    } else {
-      return GridView(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: (2),
-          childAspectRatio: 1.1,
-        ),
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        children: [
           Container(
             margin: EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -364,23 +238,21 @@ class _MainCategoriesState extends State<MainCategories> {
                   );
                 } else {
                   showAlert(
-                    context: context,
-                    title: "Login Required",
-                    cancelable: true,
-                    actions: [
-                      AlertAction(
-                        text: "ok",
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  );
+                      context: context,
+                      title: "Login Required",
+                      cancelable: true,
+                      actions: [
+                        AlertAction(
+                            text: "ok",
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoginPage(),
+                                ),
+                              );
+                            }),
+                      ]);
                 }
               },
               child: Container(
@@ -391,15 +263,12 @@ class _MainCategoriesState extends State<MainCategories> {
                       height: 350,
                       decoration: BoxDecoration(
                         color: Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image(
-                          fit: BoxFit.fill,
+                        image: DecorationImage(
                           image: NetworkImage(
                               'https://www.cannabisbusinesstimes.com/fileuploads/image/2019/06/20/Delivery-Adobe_Stock-Credit-boophuket-Resized.jpg'),
+                          fit: BoxFit.cover,
                         ),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                     ),
                     Align(
@@ -452,8 +321,146 @@ class _MainCategoriesState extends State<MainCategories> {
               ),
             ),
           ),
-        ],
-      );
+        );
+
+        return GridView(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: (2),
+            childAspectRatio: 1.1,
+          ),
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          children: x,
+        );
+      } else {
+        return GridView(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: (2),
+            childAspectRatio: 1.1,
+          ),
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            Container(
+              margin: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                color: Color.fromRGBO(244, 245, 247, 1),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 0,
+                    blurRadius: 5,
+                    offset: Offset(0, 1),
+                  ),
+                ],
+              ),
+              child: InkWell(
+                onTap: () {
+                  if (logs == true) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CustomDelivery(),
+                      ),
+                    );
+                  } else {
+                    showAlert(
+                      context: context,
+                      title: "Login Required",
+                      cancelable: true,
+                      actions: [
+                        AlertAction(
+                          text: "ok",
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  }
+                },
+                child: Container(
+                  height: 300,
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 350,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(
+                                'https://www.cannabisbusinesstimes.com/fileuploads/image/2019/06/20/Delivery-Adobe_Stock-Credit-boophuket-Resized.jpg'),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          height: 100.0,
+                          width: 300.0,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color.fromRGBO(255, 255, 255, 0),
+                                Color.fromRGBO(25, 25, 25, 1),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(7.5),
+                            ),
+                          ),
+                          child: Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Delivery',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    'From Point to Point',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      }
+    } catch (e) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) =>
+              NoInternetConnectionScreen(className: MainCategories())));
     }
   }
 

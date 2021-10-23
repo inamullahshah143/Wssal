@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:wssal_driver/IncomingOrdersDetails/CustomOrderDetails.dart';
 import 'package:wssal_driver/IncomingOrdersDetails/regularOrderDetails.dart';
-import '../../function.dart';
+import '../function.dart';
 
 class CompletedOrders extends StatefulWidget {
   @override
@@ -138,7 +138,8 @@ class _CompletedOrdersState extends State<CompletedOrders> {
   Future<Widget> buildDriverRegularOrders() async {
     List<Widget> x = [];
     try {
-      var url = 'https://wassldev.einnovention.tech/api/driver/deliveredOrders';
+      var url =
+          'https://einnovention.co.uk/wassl/public/api/driver/deliveredOrders';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('buildDriverAcceptedOrders: ${response.body}');
@@ -150,7 +151,8 @@ class _CompletedOrdersState extends State<CompletedOrders> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => RegularOrderDetails(element['id'])));
+                      builder: (context) =>
+                          RegularOrderDetails(element['id'])));
             },
             child: Container(
               margin: EdgeInsets.all(6),
@@ -189,14 +191,13 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                     ),
                   ],
                 ),
-                trailing:  Text(
-                      '${element['delivery_charges']}',
-                      style: TextStyle(
-                        // fontSize: 15,
-                        color: Colors.black,
-                      ),
-                    ),
-                
+                trailing: Text(
+                  '${element['delivery_charges']}',
+                  style: TextStyle(
+                    // fontSize: 15,
+                    color: Colors.black,
+                  ),
+                ),
               ),
             ),
           ));
@@ -228,12 +229,13 @@ class _CompletedOrdersState extends State<CompletedOrders> {
   Future<Widget> buildDriverCustomOrders() async {
     List<Widget> x = [];
     try {
-      var url = 'https://wassldev.einnovention.tech/api/completedorder';
+      var url = 'https://einnovention.co.uk/wassl/public/api/completedorder';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('buildDriverCustomOrders: ${response.body}');
       List data = json.decode(response.body)['data'];
-      if (json.decode(response.body)['message'] == "Completed Order Found Sucessfully!") {
+      if (json.decode(response.body)['message'] ==
+          "Completed Order Found Sucessfully!") {
         data.forEach((element) {
           x.add(InkWell(
             onTap: () {

@@ -117,7 +117,7 @@ class _StoreInformationState extends State<StoreInformation> {
 
   Future<Widget> buildProfile() async {
     try {
-      var url = 'https://wassldev.einnovention.tech/api/vendor/profile';
+      var url = 'https://einnovention.co.uk/wassl/public/api/vendor/profile';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('buildProductsResponse: ${response.body}');
@@ -377,4 +377,3 @@ class _StoreInformationState extends State<StoreInformation> {
     }
   }
 }
-

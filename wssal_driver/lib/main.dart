@@ -56,10 +56,14 @@ class SplashScreenState extends State<SplashScreen> {
     logs = false;
     SharedPreferences mypref = await SharedPreferences.getInstance();
     var y = mypref.getString('abs');
+     var x = mypref.getString('name');
+        var z = mypref.getString('number');
     // print("$logs");
     print(" Abs = $y");
     if (y != null) {
       stringValue = y;
+      storedName = x;
+      storedNumber = z;
       logs = true;
     }
   }

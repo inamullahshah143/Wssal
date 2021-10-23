@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:wassal_customer/No%20Internet/noInternetConnection.dart';
 import '../const.dart';
 import 'MapNavigation.dart';
 
@@ -99,130 +100,137 @@ class _LatestOrderDetailState extends State<LatestOrderDetail> {
 }
 
 Future<Widget> latestOrderDetail(BuildContext context) async {
-  var response = await http.get(Uri.parse("$apiURL/user/latestOrder"),
-      headers: {'Authorization': 'Bearer $loginToken'});
-  if (json.decode(response.body)['status'] == 200) {
-    Map data = json.decode(response.body)['order'];
-
-    return Column(
-      children: [
-        Container(
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            color: Color.fromRGBO(244, 245, 247, 1),
+  try {
+    var response = await http.get(Uri.parse("$apiURL/user/latestOrder"),
+        headers: {'Authorization': 'Bearer $loginToken'});
+    if (json.decode(response.body)['status'] == 200) {
+      Map data = json.decode(response.body)['order'];
+    
+      return Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(10),
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              color: Color.fromRGBO(244, 245, 247, 1),
+            ),
+            child: Table(
+              children: [
+                TableRow(children: [
+                  Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text(
+                        "Order No",
+                        style: TextStyle(fontWeight: FontWeight.w500),
+                      )),
+                  Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text("${data['order_no']}")),
+                ]),
+                TableRow(children: [
+                  Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text("Grand Total",
+                          style: TextStyle(fontWeight: FontWeight.w500))),
+                  Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text("${data['grand_total']}")),
+                ]),
+                TableRow(children: [
+                  Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text("Payment Method",
+                          style: TextStyle(fontWeight: FontWeight.w500))),
+                  Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text("${data['payment_method']}")),
+                ]),
+                TableRow(children: [
+                  Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text("Order Status",
+                          style: TextStyle(fontWeight: FontWeight.w500))),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: Text("${getStatus({
+                          "pending": data['pending'],
+                          "process": data['process'],
+                          "packing": data['packing'],
+                          "shipping": data['shipping'],
+                          "delivered": data['delivered'],
+                          "cancelled": data['cancelled'],
+                        })}"),
+                  ),
+                ]),
+              ],
+            ),
           ),
-          child: Table(
-            children: [
-              TableRow(children: [
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text(
-                      "Order No",
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    )),
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text("${data['order_no']}")),
-              ]),
-              TableRow(children: [
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text("Grand Total",
-                        style: TextStyle(fontWeight: FontWeight.w500))),
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text("${data['grand_total']}")),
-              ]),
-              TableRow(children: [
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text("Payment Method",
-                        style: TextStyle(fontWeight: FontWeight.w500))),
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text("${data['payment_method']}")),
-              ]),
-              TableRow(children: [
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text("Order Status",
-                        style: TextStyle(fontWeight: FontWeight.w500))),
-                Container(
+          data['driver_id'] == null
+              ? Container(
+                  margin: EdgeInsets.all(25),
+                  child: Text("No Driver Assigned"),
+                )
+              : Container(
+                  padding: EdgeInsets.all(10),
                   margin: EdgeInsets.all(10),
-                  child: Text("${getStatus({
-                        "pending": data['pending'],
-                        "process": data['process'],
-                        "packing": data['packing'],
-                        "shipping": data['shipping'],
-                        "delivered": data['delivered'],
-                        "cancelled": data['cancelled'],
-                      })}"),
-                ),
-              ]),
-            ],
-          ),
-        ),
-        data['driver_id'] == null
-            ? Container(
-                margin: EdgeInsets.all(25),
-                child: Text("No Driver Assigned"),
-              )
-            : Container(
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                  color: Color.fromRGBO(244, 245, 247, 1),
-                ),
-                child: Table(
-                  children: [
-                    TableRow(
-                      children: [
-                        Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    color: Color.fromRGBO(244, 245, 247, 1),
+                  ),
+                  child: Table(
+                    children: [
+                      TableRow(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(10),
+                              child: Text(
+                                "Assigned",
+                                style: TextStyle(fontWeight: FontWeight.w500),
+                              )),
+                          Container(
                             margin: EdgeInsets.all(10),
                             child: Text(
-                              "Assigned",
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            )),
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          child: Text(
-                            "${data['driver']['name']}",
+                              "${data['driver']['name']}",
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    TableRow(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(10),
-                        ),
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      ParentMap(orderDetails: data),
-                                ),
-                              );
-                            },
-                            child: Text("Track Order"),
+                        ],
+                      ),
+                      TableRow(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(10),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          Container(
+                            margin: EdgeInsets.all(10),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        ParentMap(orderDetails: data),
+                                  ),
+                                );
+                              },
+                              child: Text("Track Order"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-      ],
-    );
-  } else {
-    return Center(child: Text("Order Not Found"));
+        ],
+      );
+    } else {
+      return Center(child: Text("Order Not Found"));
+    }
+  } on Exception catch (e) {
+     Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) => NoInternetConnectionScreen(
+                className: LatestOrderDetail(),
+              )));
   }
 }
 

@@ -13,28 +13,27 @@ class PaymentInformation extends StatefulWidget {
 
 class _PaymentInformationState extends State<PaymentInformation> {
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
-backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
-                    Container(
-                // margin: EdgeInsets.only(top: 100),
-                height: 100,
-                width: width,
-                color: Colors.white,
+            Container(
+              // margin: EdgeInsets.only(top: 100),
+              height: 100,
+              width: width,
+              color: Colors.white,
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: Text('Payment Information',
-                style: TextStyle(
-                  fontSize: 30
-                ),
+                child: Text(
+                  'Payment Information',
+                  style: TextStyle(fontSize: 30),
                 ),
               ),
-              ),
+            ),
             Container(
                 margin: EdgeInsets.only(top: 25, left: 15, right: 15),
                 decoration: BoxDecoration(
@@ -145,18 +144,17 @@ backgroundColor: Colors.white,
                   ),
                   WidgetSpan(
                       child: InkWell(
-                        onTap: (){
-                          Navigator.push(
+                    onTap: () {
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => AddBankAccount()));
-
-                        },
-                        child: Text(
-                                          ' new bank account details',
-                                          style: TextStyle(color: Colors.red),
-                                        ),
-                      ))
+                    },
+                    child: Text(
+                      ' new bank account details',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ))
                 ]))),
             Container(
                 //  alignment: Alignment.centerLeft,
@@ -188,67 +186,61 @@ backgroundColor: Colors.white,
                     ),
                   ],
                 )),
-                        InkWell(
-                      onTap: () {
-                      
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(top: 35, left: 15, right: 15,bottom: 25),
-                        decoration: BoxDecoration(
-                          // color: Color.fromRGBO(244, 245, 247, 1),
-                          color: Colors.yellow[300],
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        height: 50,
-                        width: width,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Request Bank Transfer ',
-                            style: TextStyle(color: Colors.black45),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text('OR'),
-                      ),
-                              InkWell(
-                      onTap: () {
-                      
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(top: 25, left: 15, right: 15,bottom: 15),
-                        decoration: BoxDecoration(
-                          // color: Color.fromRGBO(244, 245, 247, 1),
-                          color: Colors.yellow[300],
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        height: 50,
-                        width: width,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Request a CASH ',
-                            style: TextStyle(
-                              color: Colors.black45),
-                          ),
-                        ),
-                      ),
-                    ),
-                     Align(
-                      alignment: Alignment.center,
-                      child: Text('Cash Payment Could take up to 24 Hours to be ready',
-                       style: TextStyle(
-                         fontSize: 12,
-                              color: Colors.black)
-                      ),
-                      ),
+            
+            InkWell(
+              onTap: () {},
+              child: Container(
+                margin:
+                    EdgeInsets.only(top: 35, left: 15, right: 15, bottom: 25),
+                decoration: BoxDecoration(
+                  // color: Color.fromRGBO(244, 245, 247, 1),
+                  color: Colors.yellow[300],
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                height: 50,
+                width: width,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Request Bank Transfer ',
+                    style: TextStyle(color: Colors.black45),
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Text('OR'),
+            ),
+            InkWell(
+              onTap: () {},
+              child: Container(
+                margin:
+                    EdgeInsets.only(top: 25, left: 15, right: 15, bottom: 15),
+                decoration: BoxDecoration(
+                  // color: Color.fromRGBO(244, 245, 247, 1),
+                  color: Colors.yellow[300],
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                height: 50,
+                width: width,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Request a CASH ',
+                    style: TextStyle(color: Colors.black45),
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Text('Cash Payment Could take up to 24 Hours to be ready',
+                  style: TextStyle(fontSize: 12, color: Colors.black)),
+            ),
           ],
         ),
       ),
-      
     );
   }
 }

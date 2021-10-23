@@ -207,7 +207,7 @@ class _LoginPageState extends State<LoginPage> {
 
 customerlogin(context) async {
   try {
-    var url = 'https://wassldev.einnovention.tech/api/login';
+    var url = 'https://einnovention.co.uk/wassl/public/api/login';
     var response = await http.post(Uri.parse(url),
         body: {'phone': '$countryCode$number', 'fcm_token': '$fcmToken'},
         headers: {'Accept': 'application/json'});
@@ -219,7 +219,7 @@ customerlogin(context) async {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (BuildContext context) => Varifyphonenumber(data,true),
+          builder: (BuildContext context) => Varifyphonenumber(data),
         ),
       );
     } else {

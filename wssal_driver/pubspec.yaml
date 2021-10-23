@@ -50,8 +50,8 @@ dependencies:
   http_auth:
   webview_flutter:
   timeago:
-  google_maps_place_picker:
-  geolocator:
+  google_maps_place_picker: ^1.0.1
+  geolocator: ^6.0.0+4
   geocoding:
   adobe_xd:
   flutter_svg:
@@ -67,7 +67,8 @@ dev_dependencies:
   flutter_launcher_icons:
 
 flutter_icons:
-  image_path: "assets/app_logo.png" 
+  image_path_android: "assets/playstore.png"
+  image_path_ios: "assets/appstore.png" 
   android: true
   ios: true
 
