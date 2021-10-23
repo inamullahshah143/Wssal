@@ -6,7 +6,7 @@ import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'const.dart';
-import 'dashboard.dart';
+import 'enter_address.dart';
 
 class Varifyphonenumber extends StatefulWidget {
   final Map data;
@@ -107,7 +107,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          MainDashboard()),
+                                          EnterAddress()),
                                   (Route<dynamic> route) => false,
                                 );
                               }),
