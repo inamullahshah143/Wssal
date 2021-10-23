@@ -722,7 +722,7 @@ class _AddVariantsState extends State<AddVariants> {
 
   addattribute() async {
     try {
-      var url = 'https://wassldev.einnovention.tech/api/vendor/varients';
+      var url = 'https://einnovention.co.uk/wassl/public/api/vendor/varients';
       var response = await http.post(
         Uri.parse(url),
         body: {

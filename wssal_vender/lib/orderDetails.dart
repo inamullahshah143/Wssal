@@ -133,7 +133,7 @@ class _OrderDetailsState extends State<OrderDetails> {
   Future<Widget> buildOrdersDetails() async {
     List<Widget> x = [];
     var url =
-        'https://wassldev.einnovention.tech/api/vendor/orderDetail/$productIdd';
+        'https://einnovention.co.uk/wassl/public/api/vendor/orderDetail/$productIdd';
     var response = await http
         .get(Uri.parse(url), headers: {'Authorization': 'Bearer $stringValue'});
     print('buildProductsResponse: ${response.body}');
@@ -142,7 +142,6 @@ class _OrderDetailsState extends State<OrderDetails> {
     if (data.length > 0) {
       x.add(Column(
         children: [
-          
           Container(
             margin: EdgeInsets.only(top: 10, left: 10),
             child: Align(
@@ -412,7 +411,7 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   buildOrderStatus(String ele) async {
     var url =
-        'https://wassldev.einnovention.tech/api/vendor/updateOrderStatus/$idd';
+        'https://einnovention.co.uk/wassl/public/api/vendor/updateOrderStatus/$idd';
     var response = await http.post(Uri.parse(url), body: {
       'status': '$ele',
     }, headers: {
@@ -642,7 +641,3 @@ class _OrderDetailsState extends State<OrderDetails> {
     );
   }
 }
-
-
- 
- 

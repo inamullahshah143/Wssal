@@ -10,16 +10,15 @@ import 'driverProfile.dart';
 
 class Varifyphonenumber extends StatefulWidget {
   final Map data;
-  final bool islogin;
-  Varifyphonenumber(this.data, this.islogin);
+  // final bool islogin;
+  Varifyphonenumber(this.data);
   @override
-  _VarifyphonenumberState createState() =>
-      _VarifyphonenumberState(this.data, this.islogin);
+  _VarifyphonenumberState createState() => _VarifyphonenumberState(this.data);
 }
 
 class _VarifyphonenumberState extends State<Varifyphonenumber> {
   final Map data;
-  final bool islogin;
+  // final bool islogin;
   bool isChecked = false;
   @override
   void initState() {
@@ -27,7 +26,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
     isChecked = false;
   }
 
-  _VarifyphonenumberState(this.data, this.islogin);
+  _VarifyphonenumberState(this.data);
 
   String verificationCode;
   @override
@@ -90,44 +89,28 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                     if ("${data['data']['otp']}" == "$value") {
                       if (data['status'] == 200 &&
                           data['request_status'] == null) {
-                        if (islogin == true) {
-                          showAlert(
-                            context: context,
-                            title: "Your request as Driver is in progress",
-                            actions: [
-                              AlertAction(
-                                  text: "Ok ",
-                                  isDestructiveAction: true,
-                                  onPressed: () {
-                                   
-                                  }),
-                            ],
-                            cancelable: true,
-                          );
-                        } else {
-                          showAlert(
-                            context: context,
-                            title: "Create Driver Request",
-                            actions: [
-                              AlertAction(
-                                  text: "Ok ",
-                                  isDestructiveAction: true,
-                                  onPressed: () {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            DriverProfile(
-                                          drivertoken: data['token'],
-                                          phoneNo: phonenumber,
-                                        ),
+                        showAlert(
+                          context: context,
+                          title: "Create Driver Request",
+                          actions: [
+                            AlertAction(
+                                text: "Ok ",
+                                isDestructiveAction: true,
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          DriverProfile(
+                                        drivertoken: data['token'],
+                                        phoneNo: phonenumber,
                                       ),
-                                    );
-                                  }),
-                            ],
-                            cancelable: true,
-                          );
-                        }
+                                    ),
+                                  );
+                                }),
+                          ],
+                          cancelable: true,
+                        );
                       } else if (data['status'] == 200 &&
                           data['request_status'] == 0) {
                         showAlert(
@@ -144,10 +127,13 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                       } else if (data['status'] == 200 &&
                           data['request_status'] == 1) {
                         stringValue = data['token'];
-
+                        storedName = data['data']['name'];
+                      storedNumber = data['data']['phone'];
                         SharedPreferences mypref =
                             await SharedPreferences.getInstance();
                         mypref.setString('abs', '$stringValue');
+                         mypref.setString('name', '$storedName');
+                      mypref.setString('number', '$storedNumber');
 
                         showAlert(
                           context: context,
@@ -194,7 +180,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                   onPressed: () {
                     http.post(
                         Uri.parse(
-                            "https://wassldev.einnovention.tech/api/login"),
+                            "https://einnovention.co.uk/wassl/public/api/login"),
                         body: {
                           "phone": "${data['data']['phone']}",
                           "fcm_token": "$fcmToken",
@@ -208,10 +194,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  Varifyphonenumber(
-                                    data,
-                                    true,
-                                  )),
+                                  Varifyphonenumber(data)),
                         );
                       }
                     });

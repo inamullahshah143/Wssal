@@ -103,7 +103,7 @@ class _DisplayVariantsState extends State<DisplayVariants> {
     List<Widget> variants = [];
 
     try {
-      var url = 'https://wassldev.einnovention.tech/api/vendor/varients';
+      var url = 'https://einnovention.co.uk/wassl/public/api/vendor/varients';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('Variants: ${response.body}');
@@ -196,7 +196,7 @@ class _DisplayVariantsState extends State<DisplayVariants> {
       } else {
         return Text("No Variants Available");
       }
-    // ignore: unused_catch_clause
+      // ignore: unused_catch_clause
     } on Exception catch (e) {
       return Text(
         'No Variants Available',
@@ -250,7 +250,7 @@ class _DisplayVariantsState extends State<DisplayVariants> {
   deleteVariants() async {
     try {
       var url =
-          'https://wassldev.einnovention.tech/api/vendor/varients/$variId';
+          'https://einnovention.co.uk/wassl/public/api/vendor/varients/$variId';
       var response = await http.delete(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('Response body: ${response.body}');

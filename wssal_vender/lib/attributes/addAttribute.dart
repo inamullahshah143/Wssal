@@ -361,7 +361,7 @@ class _AddAttributeState extends State<AddAttribute> {
 
   addattribute() async {
     try {
-      var url = 'https://wassldev.einnovention.tech/api/vendor/attributes';
+      var url = 'https://einnovention.co.uk/wassl/public/api/vendor/attributes';
       var response = await http.post(
         Uri.parse(url),
         body: {

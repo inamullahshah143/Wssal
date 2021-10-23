@@ -94,16 +94,16 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
 
   Future<Widget> buildOrdersDetails() async {
     var url =
-        'https://wassldev.einnovention.tech/api/driver/driverOrderDetail/${orderID}';
+        'https://einnovention.co.uk/wassl/public/api/driver/driverOrderDetail/${orderID}';
     var response = await http
         .get(Uri.parse(url), headers: {'Authorization': 'Bearer $stringValue'});
     print('buildProductsResponse: ${response.body}');
     var data = json.decode(response.body)['data'];
-    List<Placemark> placemark = await Geolocator().placemarkFromCoordinates(
-      double.parse(data['ordered_products'][0]['products']['shop']['latitude']),
-      double.parse(
-          data['ordered_products'][0]['products']['shop']['longitude']),
-    );
+    // List<Placemark> placemark = await Geolocator().placemarkFromCoordinates(
+    //   double.parse(data['ordered_products'][0]['products']['shop']['latitude']),
+    //   double.parse(
+    //       data['ordered_products'][0]['products']['shop']['longitude']),
+    // );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -218,7 +218,8 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
                   Container(
                     margin: EdgeInsets.all(10),
                     child: Text(
-                      '${placemark[0].thoroughfare} ${placemark[0].subLocality} ${placemark[0].locality} ${placemark[0].administrativeArea} ${placemark[0].country}',
+                      "",
+                      // '${placemark[0].thoroughfare} ${placemark[0].subLocality} ${placemark[0].locality} ${placemark[0].administrativeArea} ${placemark[0].country}',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
@@ -284,13 +285,13 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
                   Container(
                     margin: EdgeInsets.all(10),
                     child: Text("${getStatus({
-                          "pending": data['pending'],
-                          "process": data['process'],
-                          "packing": data['packing'],
-                          "shipping": data['shipping'],
-                          "delivered": data['delivered'],
-                          "cancelled": data['cancelled'],
-                        })}"),
+                      "pending": data['pending'],
+                      "process": data['process'],
+                      "packing": data['packing'],
+                      "shipping": data['shipping'],
+                      "delivered": data['delivered'],
+                      "cancelled": data['cancelled'],
+                    })}"),
                   ),
                 ],
               ),
@@ -326,12 +327,10 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
                       Uri.parse('$apiURL/driver/delivereOrder/${data['id']}'),
                       headers: {'Authorization': 'Bearer $stringValue'});
                   print(response.body);
-                   if (jsonDecode(response.body)['message'] ==
-                            "You have delivered order") {
-                          showAlert(
-                              context: context,
-                              title: "Order Delivered!");
-                        } 
+                  if (jsonDecode(response.body)['message'] ==
+                      "You have delivered order") {
+                    showAlert(context: context, title: "Order Delivered!");
+                  }
                 },
                 child: Text('Deliver Order'),
               ),

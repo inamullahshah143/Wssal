@@ -141,8 +141,8 @@ class _DriverProfileState extends State<DriverProfile> {
                       enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
-                      hintText: 'Full Name',
-                      hintStyle: TextStyle(
+                      labelText: 'Full Name',
+                      labelStyle: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Color.fromRGBO(182, 189, 200, 1),
@@ -170,8 +170,8 @@ class _DriverProfileState extends State<DriverProfile> {
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
                       contentPadding: EdgeInsets.only(top: 17.5),
-                      hintText: 'ID Card Expiry Date',
-                      hintStyle: TextStyle(
+                      labelText: 'ID Card Expiry Date',
+                      labelStyle: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Color.fromRGBO(182, 189, 200, 1),
@@ -213,8 +213,8 @@ class _DriverProfileState extends State<DriverProfile> {
                       enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
-                      hintText: 'ID Card Number',
-                      hintStyle: TextStyle(
+                      labelText: 'ID Card Number',
+                      labelStyle: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Color.fromRGBO(182, 189, 200, 1),
@@ -231,6 +231,9 @@ class _DriverProfileState extends State<DriverProfile> {
                   width: width,
                   padding: EdgeInsets.only(left: 10),
                   child: TextFormField(
+                    onChanged: (value) {
+                      vehicleplatenumber = value;
+                    },
                     controller: vehicleplatenumberController,
                     validator: (value) {
                       if (value.isEmpty) {
@@ -245,8 +248,8 @@ class _DriverProfileState extends State<DriverProfile> {
                       enabledBorder: InputBorder.none,
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
-                      hintText: 'Vehicle Plate Number',
-                      hintStyle: TextStyle(
+                      labelText: 'Vehicle Plate Number',
+                      labelStyle: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Color.fromRGBO(182, 189, 200, 1)),
@@ -273,8 +276,8 @@ class _DriverProfileState extends State<DriverProfile> {
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
                       contentPadding: EdgeInsets.only(top: 17.5),
-                      hintText: 'Vehicle Model',
-                      hintStyle: TextStyle(
+                      labelText: 'Vehicle Model',
+                      labelStyle: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Color.fromRGBO(182, 189, 200, 1),
@@ -314,8 +317,8 @@ class _DriverProfileState extends State<DriverProfile> {
                         enabledBorder: InputBorder.none,
                         errorBorder: InputBorder.none,
                         disabledBorder: InputBorder.none,
-                        hintText: 'Vehicle Name',
-                        hintStyle: TextStyle(
+                        labelText: 'Vehicle Name',
+                        labelStyle: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Color.fromRGBO(182, 189, 200, 1),
@@ -657,7 +660,7 @@ class _DriverProfileState extends State<DriverProfile> {
           "token": 'Bearer $drivertoken'
         });
         var response = await dio.post(
-            "https://wassldev.einnovention.tech/api/user/driverRequest",
+            "https://einnovention.co.uk/wassl/public/api/user/driverRequest",
             data: formData);
         print("Become Driver: $response");
 

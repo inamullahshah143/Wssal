@@ -40,9 +40,9 @@ String selectedLocation = '';
 bool locationChange = true;
 double cureentLat;
 double cureentLng;
-String imageURL = 'https://wassldev.einnovention.tech/storage';
-String apiURL = 'https://wassldev.einnovention.tech/api';
-String domainUrl = 'https://wassldev.einnovention.tech';
+String imageURL = 'https://einnovention.co.uk/wassl/public/storage';
+String apiURL = 'https://einnovention.co.uk/wassl/public/api';
+String domainUrl = 'https://einnovention.co.uk/wassl/public';
 
 logoutFunction({@required context}) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();

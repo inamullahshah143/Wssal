@@ -101,7 +101,7 @@ class _DisplayAttributesState extends State<DisplayAttributes> {
   Future<Widget> getAttribute() async {
     List<Widget> attributes = [];
     try {
-      var url = 'https://wassldev.einnovention.tech/api/vendor/attributes';
+      var url = 'https://einnovention.co.uk/wassl/public/api/vendor/attributes';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('response = ${response.body}');
@@ -230,7 +230,7 @@ class _DisplayAttributesState extends State<DisplayAttributes> {
   deleteAttribute() async {
     try {
       var url =
-          'https://wassldev.einnovention.tech/api/vendor/attributes/$AttriId';
+          'https://einnovention.co.uk/wassl/public/api/vendor/attributes/$AttriId';
       var response = await http.delete(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('Response body: ${response.body}');

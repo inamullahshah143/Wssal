@@ -7,6 +7,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'Cart.dart';
+import 'No Internet/noInternetConnection.dart';
 import 'Storedetail.dart';
 import 'digit_slider.dart';
 import 'productDetails.dart';
@@ -899,8 +900,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                 fontSize: 14,
               ),
             ),
-            leading:
-                Icon(Icons.access_time_filled_rounded, color: Colors.grey[600]),
+            leading: Icon(Icons.lock_clock, color: Colors.grey[600]),
             trailing: Radio(
               activeColor: themeSecondaryColor,
               value: 'Fast Delivery',
@@ -2076,14 +2076,14 @@ class _CategoryDetailState extends State<CategoryDetail> {
         x.add(
           InkWell(
             onTap: () {
-             showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) {
-                    return StoreDetail(storeBlock: element);
-                  },
-                );
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (context) {
+                  return StoreDetail(storeBlock: element);
+                },
+              );
             },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0),
@@ -2263,48 +2263,52 @@ class _CategoryDetailState extends State<CategoryDetail> {
         );
       });
     }
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 325,
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(20),
-        ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.grey[300],
-            blurRadius: 3.0,
-            offset: Offset(0.0, 0.5),
+    if (x.isNotEmpty) {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: 325,
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-            child: Text(
-              'Nearby',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey[300],
+              blurRadius: 3.0,
+              offset: Offset(0.0, 0.5),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+              child: Text(
+                'Nearby',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
-          ),
-          Divider(),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            physics: BouncingScrollPhysics(),
-            child: Row(
-              children: x,
+            Divider(),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
+              child: Row(
+                children: x,
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   Future<Widget> freeDelivery() async {
@@ -2546,50 +2550,54 @@ class _CategoryDetailState extends State<CategoryDetail> {
         );
       });
     }
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(20),
-        ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Colors.grey[300],
-            blurRadius: 3.0,
-            offset: Offset(0.0, 0.5),
+    if (x.isNotEmpty) {
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 10),
-            child: Text(
-              'Free Delivery',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.grey[300],
+              blurRadius: 3.0,
+              offset: Offset(0.0, 0.5),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 10),
+              child: Text(
+                'Free Delivery',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
-          ),
-          Divider(),
-          GridView.count(
-            primary: false,
-            padding: const EdgeInsets.all(8),
-            crossAxisSpacing: 10,
-            childAspectRatio: 0.7,
-            crossAxisCount: 2,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            children: x,
-          ),
-        ],
-      ),
-    );
+            Divider(),
+            GridView.count(
+              primary: false,
+              padding: const EdgeInsets.all(8),
+              crossAxisSpacing: 10,
+              childAspectRatio: 0.7,
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: x,
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   Future<Widget> buildProducts(BuildContext context) async {
@@ -3103,53 +3111,60 @@ class _CategoryDetailState extends State<CategoryDetail> {
   }
 
   Future<Widget> showAds() async {
-    var response = await http.get(
-      (Uri.parse("$apiURL/categorySlider/${categoryBlock['id']}")),
-    );
+    try {
+      var response = await http.get(
+        (Uri.parse("$apiURL/categorySlider/${categoryBlock['id']}")),
+      );
 
-    if (json.decode(response.body)['status'] == 200) {
-      List<Widget> x = [];
-      var data = json.decode(response.body)['data'];
+      if (json.decode(response.body)['status'] == 200) {
+        List<Widget> x = [];
+        var data = json.decode(response.body)['data'];
 
-      data.forEach((element) {
-        x.add(
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(imageURL + '/$element'),
-                fit: BoxFit.cover,
+        data.forEach((element) {
+          x.add(
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(imageURL + '/$element'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          );
+        });
+        return Container(
+          margin: EdgeInsets.all(10),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              height: 200.0,
+              width: MediaQuery.of(context).size.width,
+              child: Carousel(
+                boxFit: BoxFit.cover,
+                autoplay: true,
+                animationCurve: Curves.fastOutSlowIn,
+                animationDuration: Duration(milliseconds: 1000),
+                autoplayDuration: Duration(seconds: 10),
+                dotSize: 6.0,
+                dotIncreasedColor: Colors.white,
+                dotBgColor: Colors.transparent,
+                dotPosition: DotPosition.bottomCenter,
+                dotVerticalPadding: 5.0,
+                showIndicator: true,
+                indicatorBgPadding: 5.0,
+                images: x,
               ),
             ),
           ),
         );
-      });
-      return Container(
-        margin: EdgeInsets.all(10),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            height: 200.0,
-            width: MediaQuery.of(context).size.width,
-            child: Carousel(
-              boxFit: BoxFit.cover,
-              autoplay: true,
-              animationCurve: Curves.fastOutSlowIn,
-              animationDuration: Duration(milliseconds: 1000),
-              autoplayDuration: Duration(seconds: 10),
-              dotSize: 6.0,
-              dotIncreasedColor: Colors.white,
-              dotBgColor: Colors.transparent,
-              dotPosition: DotPosition.bottomCenter,
-              dotVerticalPadding: 5.0,
-              showIndicator: true,
-              indicatorBgPadding: 5.0,
-              images: x,
-            ),
-          ),
-        ),
-      );
-    } else {
-      return Container();
+      } else {
+        return Container();
+      }
+    } on Exception catch (e) {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) => NoInternetConnectionScreen(
+                className: CategoryDetail(categoryBlock: categoryBlock),
+              )));
     }
   }
 }

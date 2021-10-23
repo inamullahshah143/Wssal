@@ -71,7 +71,7 @@ class _MainDashboardState extends State<MainDashboard> {
           },
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.grid_view_rounded),
+              icon: Icon(Icons.grid_view),
               label: '',
             ),
             BottomNavigationBarItem(

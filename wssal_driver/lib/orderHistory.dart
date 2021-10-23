@@ -236,7 +236,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                       text: TextSpan(
                         children: [
                           WidgetSpan(
-                            child: Icon(Icons.lock_clock_outlined, size: 14),
+                            child: Icon(Icons.access_alarm, size: 14),
                           ),
                           TextSpan(
                               text: "  18 Min",

@@ -56,14 +56,14 @@ class _PersonState extends State<Person> {
                   Container(
                     margin: EdgeInsets.only(top: 10),
                     child: Text(
-                      'Driver Name',
+                      '$storedName',
                       style: TextStyle(color: Colors.black, fontSize: 19),
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 10, bottom: 10),
                     child: Text(
-                      '+2 0100 345 6789',
+                      '$storedNumber',
                       style: TextStyle(color: Colors.black, fontSize: 13),
                     ),
                   ),

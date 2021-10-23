@@ -57,7 +57,7 @@ class _VehicleProfileState extends State<VehicleProfile> {
                 value: _chosenValue,
                 style: TextStyle(color: Colors.grey),
                 items: <Map>[
-                  {'title': 'ODDI', 'icon': Icon(Icons.car_repair_rounded)},
+                  {'title': 'ODDI', 'icon': Icon(Icons.car_repair)},
                   {
                     'title': 't',
                     'icon': Icon(Icons.electric_rickshaw),
@@ -372,7 +372,7 @@ class _VehicleProfileState extends State<VehicleProfile> {
                                           Navigator.of(context).pop();
                                         },
                                         child: CircleAvatar(
-                                          child: Icon(Icons.flutter_dash),
+                                          child: Icon(Icons.dashboard),
                                           backgroundColor: Colors.red,
                                         ),
                                       ),

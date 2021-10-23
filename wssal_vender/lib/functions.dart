@@ -11,8 +11,8 @@ Color headingColor = Color.fromRGBO(122, 134, 154, 1);
 Color themePrimaryColor = Color.fromRGBO(254, 197, 0, 1);
 BuildContext latestContext;
 
-var picBaseURL = 'https://wassldev.einnovention.tech/storage/';
-var apiBaseURL = 'https://wassldev.einnovention.tech/api';
+var picBaseURL = 'https://einnovention.co.uk/wassl/public/storage/';
+var apiBaseURL = 'https://einnovention.co.uk/wassl/public/api';
 
 List appetizer = [
   {

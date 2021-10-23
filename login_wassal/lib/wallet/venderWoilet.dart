@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:wassal_customer/No%20Internet/noInternetConnection.dart';
 import 'package:wassal_customer/PayPal/PaypalPayment.dart';
 import 'package:wassal_customer/PayPal/paypalFuctions.dart';
 import 'package:wassal_customer/wallet/withdrawBallance.dart';
@@ -82,7 +83,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        'Depost Details',
+                        'Deposit Details',
                         style: TextStyle(
                           color: text1color,
                           fontWeight: FontWeight.bold,
@@ -140,7 +141,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
                                         Text(
-                                          'Enter amount to be deposite',
+                                          'Enter amount to be deposited',
                                           style: TextStyle(
                                             color: text1color,
                                             fontWeight: FontWeight.bold,
@@ -164,6 +165,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                                                 return null;
                                               }
                                             },
+                                            maxLength: 6,
                                             keyboardType: TextInputType.number,
                                             textAlign: TextAlign.center,
                                             decoration: InputDecoration(
@@ -270,7 +272,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
   Future<List<Widget>> buildWoiletRequest() async {
     try {
       List<Widget> x = [];
-      var url = 'https://wassldev.einnovention.tech/api/withdrawindex';
+      var url = 'https://einnovention.co.uk/wassl/public/api/withdrawindex';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $loginToken'});
 
@@ -377,7 +379,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
   Future<Widget> buildDriverDepositRequest() async {
     try {
       List<Widget> x = [];
-      var url = 'https://wassldev.einnovention.tech/api/wallet';
+      var url = 'https://einnovention.co.uk/wassl/public/api/wallet';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $loginToken'});
       print('buildProductsResponse: ${response.body}');
@@ -427,7 +429,10 @@ class _DriverWoiletState extends State<DriverWoilet> {
         return Text('NO Data Availabe');
       }
     } catch (e) {
-      return Text('$e');
+   Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) => NoInternetConnectionScreen(
+                className: DriverWoilet(),
+              )));
     }
   }
 }

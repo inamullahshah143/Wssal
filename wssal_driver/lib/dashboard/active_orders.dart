@@ -6,7 +6,8 @@ import 'package:wssal_driver/ActiveOrdersDetails/CustomActiveOrderDetails.dart';
 import 'package:wssal_driver/ActiveOrdersDetails/regularActiveOrderDetails.dart';
 import 'package:wssal_driver/IncomingOrdersDetails/CustomOrderDetails.dart';
 import 'package:wssal_driver/IncomingOrdersDetails/regularOrderDetails.dart';
-import '../../function.dart';
+import '../function.dart';
+
 class ActiveOrders extends StatefulWidget {
   @override
   _ActiveOrdersState createState() => _ActiveOrdersState();
@@ -139,7 +140,8 @@ class _ActiveOrdersState extends State<ActiveOrders> {
   Future<Widget> buildDriverRegularOrders() async {
     List<Widget> x = [];
     try {
-      var url = 'https://wassldev.einnovention.tech/api/driver/acceptedOrders';
+      var url =
+          'https://einnovention.co.uk/wassl/public/api/driver/acceptedOrders';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('Active Orders: ${response.body}');
@@ -154,7 +156,8 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => RegularActiveOrderDetails(element['id']),
+                      builder: (context) =>
+                          RegularActiveOrderDetails(element['id']),
                     ),
                   );
                 },
@@ -234,7 +237,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
   Future<Widget> buildDriverCustomOrders() async {
     List<Widget> x = [];
     try {
-      var url = 'https://wassldev.einnovention.tech/api/processingorder';
+      var url = 'https://einnovention.co.uk/wassl/public/api/processingorder';
       var response = await http.get(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('Custom Active Orders: ${response.body}');
@@ -293,7 +296,6 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                     ),
                     trailing: Column(
                       children: [
-                      
                         Container(
                           margin: EdgeInsets.all(5),
                           child: Text(

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:wassal_customer/No%20Internet/noInternetConnection.dart';
 import '../const.dart';
 
 class CustomOrderDetail extends StatefulWidget {
@@ -151,58 +152,65 @@ class _CustomOrderDetailState extends State<CustomOrderDetail> {
 }
 
 Future<Widget> customOrderDetail(BuildContext context) async {
-  var response = await http.get(Uri.parse("$apiURL/customorder"),
-      headers: {'Authorization': 'Bearer $loginToken'});
-  var data = json.decode(response.body)['data'];
-  List<Widget> x = [];
-  if (json.decode(response.body)['message'] == 'Order Found Sucessfully!') {
-    data.forEach((element) async {
-      x.add(
-        Card(
-          child: ListTile(
-            onTap: () {
-              getOrderDetails(context, element['id']);
-            },
-            title: Container(
-              width: MediaQuery.of(context).size.width / 1.25,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Order No. ${element['order_no']}'),
-                  Text(
-                    'Pickup Location: ${element['pick_loc']}',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 12,
+  try {
+    var response = await http.get(Uri.parse("$apiURL/customorder"),
+        headers: {'Authorization': 'Bearer $loginToken'});
+    var data = json.decode(response.body)['data'];
+    List<Widget> x = [];
+    if (json.decode(response.body)['message'] == 'Order Found Sucessfully!') {
+      data.forEach((element) async {
+        x.add(
+          Card(
+            child: ListTile(
+              onTap: () {
+                getOrderDetails(context, element['id']);
+              },
+              title: Container(
+                width: MediaQuery.of(context).size.width / 1.25,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Order No. ${element['order_no']}'),
+                    Text(
+                      'Pickup Location: ${element['pick_loc']}',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 12,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Dropoff Location: ${element['drop_loc']}',
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 12,
+                    Text(
+                      'Dropoff Location: ${element['drop_loc']}',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 12,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+              trailing: Text('${element['deliveryfeec']}'),
             ),
-            trailing: Text('${element['deliveryfeec']}'),
           ),
-        ),
+        );
+      });
+      return SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(children: x),
       );
-    });
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
-      child: Column(children: x),
-    );
-  } else {
-    return Center(
-      child: Text('No Order Found'),
-    );
+    } else {
+      return Center(
+        child: Text('No Order Found'),
+      );
+    }
+  } on Exception catch (e) {
+     Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) => NoInternetConnectionScreen(
+                className: CustomOrderDetail(),
+              )));
   }
 }
 

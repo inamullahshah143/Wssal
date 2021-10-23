@@ -95,7 +95,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
 
   buildWithdraw() async {
     try {
-      var url = 'https://wassldev.einnovention.tech/api/wallet';
+      var url = 'https://einnovention.co.uk/wassl/public/api/wallet';
       var response = await http.post(
         Uri.parse(url),
         body: {

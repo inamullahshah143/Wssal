@@ -69,10 +69,10 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
     print('email = $email');
     print('phone = $phone');
     print('paypal_email = $paypal_email');
-      // _getlocation();
+    // _getlocation();
     super.initState();
   }
-  
+
   // _getlocation() {
   //   Location location = Location();
   //   location.getLocation().then((value) {
@@ -85,10 +85,11 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
   //     });
   //   });
   // }
- Future<LocationData> getuserLocation() async {
+  Future<LocationData> getuserLocation() async {
     Location location = Location();
     return location.getLocation();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -316,44 +317,44 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                             color: Color.fromRGBO(182, 189, 200, 1)),
                       ),
                     )),
-                    Container(
-                  margin: EdgeInsets.only(top: 15, left: 15, right: 15),
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(244, 245, 247, 1),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  height: 50,
-                  width: width,
-                  padding: EdgeInsets.only(left: 10),
-                  child: TextFormField(
-                    initialValue: '$id_number',
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return "This field is required";
-                      } else if (value.length < 10) {
-                        return "This field must be 10 digit";
-                      } else {
-                        return null;
-                      }
-                    },
-                    onChanged: (value) {
-                      id_number = value;
-                    },
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      hintText: 'Id Number',
-                      hintStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          // color: Color.fromRGBO(195, 153, 141, 1)
-                          color: Color.fromRGBO(182, 189, 200, 1)),
+                Container(
+                    margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(244, 245, 247, 1),
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                  )),
-                  Container(
+                    height: 50,
+                    width: width,
+                    padding: EdgeInsets.only(left: 10),
+                    child: TextFormField(
+                      initialValue: '$id_number',
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "This field is required";
+                        } else if (value.length < 10) {
+                          return "This field must be 10 digit";
+                        } else {
+                          return null;
+                        }
+                      },
+                      onChanged: (value) {
+                        id_number = value;
+                      },
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        hintText: 'Id Number',
+                        hintStyle: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            // color: Color.fromRGBO(195, 153, 141, 1)
+                            color: Color.fromRGBO(182, 189, 200, 1)),
+                      ),
+                    )),
+                Container(
                   margin: EdgeInsets.only(top: 15, left: 15, right: 15),
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(244, 245, 247, 1),
@@ -663,71 +664,68 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                     },
                   ),
                 ),
-     Container(
-                height: height / 4,
-                width: width,
-                margin: EdgeInsets.only(top: 25, left: 25, right: 25),
-                child: FutureBuilder(
-                  future: getuserLocation(),
-                  builder: (context, AsyncSnapshot<LocationData> snapshot) {
-                    if (snapshot.hasData) {
-                      return GoogleMap(
-                        myLocationEnabled: true,
-                        myLocationButtonEnabled: true,
-                        markers: markers,
-                        // mapType: MapType.normal,
-                        // onMapCreated: (GoogleMapController controller) {
+                Container(
+                  height: height / 4,
+                  width: width,
+                  margin: EdgeInsets.only(top: 25, left: 25, right: 25),
+                  child: FutureBuilder(
+                    future: getuserLocation(),
+                    builder: (context, AsyncSnapshot<LocationData> snapshot) {
+                      if (snapshot.hasData) {
+                        return GoogleMap(
+                          myLocationEnabled: true,
+                          myLocationButtonEnabled: true,
+                          markers: markers,
+                          // mapType: MapType.normal,
+                          // onMapCreated: (GoogleMapController controller) {
 
-                        // },
-                        initialCameraPosition: CameraPosition(
-                            target: LatLng(snapshot.data.latitude,
-                                snapshot.data.longitude),
-                            zoom: 15),
-                        onTap: (latlong) {
-                          setState(() {
-                            print("latitude Taped = ${latlong.latitude}");
-                            print("longitude Taped = ${latlong.longitude}");
-                            vehicle_latitude = latlong.latitude;
-                            vehicle_longitude = latlong.longitude;
-                            final _snackBar = SnackBar(
-                                content:
-                                    Text('$vehicle_latitude $vehicle_longitude'));
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(_snackBar);
-                            // markers.add(Marker(
-                            //     markerId: MarkerId("Shopp"),
-                            //     position: LatLng(latitude, longitude)));
-                          });
-                        },
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text(snapshot.error);
-                    } else {
-                      return CircularProgressIndicator(
-                        backgroundColor: Colors.white,
-                      );
-                    }
-                  },
+                          // },
+                          initialCameraPosition: CameraPosition(
+                              target: LatLng(snapshot.data.latitude,
+                                  snapshot.data.longitude),
+                              zoom: 15),
+                          onTap: (latlong) {
+                            setState(() {
+                              print("latitude Taped = ${latlong.latitude}");
+                              print("longitude Taped = ${latlong.longitude}");
+                              vehicle_latitude = latlong.latitude;
+                              vehicle_longitude = latlong.longitude;
+                              final _snackBar = SnackBar(
+                                  content: Text(
+                                      '$vehicle_latitude $vehicle_longitude'));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(_snackBar);
+                              // markers.add(Marker(
+                              //     markerId: MarkerId("Shopp"),
+                              //     position: LatLng(latitude, longitude)));
+                            });
+                          },
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text(snapshot.error);
+                      } else {
+                        return CircularProgressIndicator(
+                          backgroundColor: Colors.white,
+                        );
+                      }
+                    },
+                  ),
                 ),
-              ),
                 InkWell(
-
-    // name = data['name'];
-    // email = data['email'];
-    // phone = data['phone'];
-    // paypal_email = data['paypal_email'];
-    // userId = data['id'];
-    // vehicle_name = data['driver_vehicle']['vehicle_name'];
-    // plate_number = data['driver_vehicle']['plate_number'];
-    // model = data['driver_vehicle']['modal'];
-    // id_number = data['driver_vehicle']['id_number'];
-    // id_expiry = data['driver_vehicle']['id_expiry'];
-    // vehicle_latitude = data['driver_vehicle']['vehicle_latitude'];
-    // vehicle_longitude = data['driver_vehicle']['vehicle_longitude'];
-
+                  // name = data['name'];
+                  // email = data['email'];
+                  // phone = data['phone'];
+                  // paypal_email = data['paypal_email'];
+                  // userId = data['id'];
+                  // vehicle_name = data['driver_vehicle']['vehicle_name'];
+                  // plate_number = data['driver_vehicle']['plate_number'];
+                  // model = data['driver_vehicle']['modal'];
+                  // id_number = data['driver_vehicle']['id_number'];
+                  // id_expiry = data['driver_vehicle']['id_expiry'];
+                  // vehicle_latitude = data['driver_vehicle']['vehicle_latitude'];
+                  // vehicle_longitude = data['driver_vehicle']['vehicle_longitude'];
 
                   onTap: () {
-
                     print({
                       "name": "$name",
                       "email": "$email",
@@ -743,44 +741,40 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                       'vehicle_longitude': '$vehicle_longitude',
                       'vehicle_name': '$vehicle_name',
                       'plate_number': '$plate_number',
-                      });
+                    });
                     if (_formKey.currentState.validate()) {
                       if (avatar.isEmpty) {
                         final _snackBar = SnackBar(
                             content: Text('Avatar of Driver is missing'));
                         ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                      } else if(id_picture.isEmpty){
-                       final _snackBar = SnackBar(
+                      } else if (id_picture.isEmpty) {
+                        final _snackBar = SnackBar(
                             content: Text('Id_Picture of Driver is missing'));
                         ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                      }else if(email == null){
+                      } else if (email == null) {
                         final _snackBar = SnackBar(
-                          content:
-                              Text('Email of Driver id missing'));
-                      ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                      }
-                      else if(paypal_email == null){
+                            content: Text('Email of Driver id missing'));
+                        ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                      } else if (paypal_email == null) {
                         final _snackBar = SnackBar(
-                          content:
-                              Text('Paypal_Email of Driver id missing'));
-                      ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                      } else if(vehicle_latitude  == null){
+                            content: Text('Paypal_Email of Driver id missing'));
+                        ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                      } else if (vehicle_latitude == null) {
                         final _snackBar = SnackBar(
-                          content:
-                              Text('Please Select Vehicle Location from Map'));
-                      ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                      }else if(model == null){
+                            content: Text(
+                                'Please Select Vehicle Location from Map'));
+                        ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                      } else if (model == null) {
                         final _snackBar = SnackBar(
-                          content:
-                              Text('Please Select Vehicle Model Date From Callender'));
-                      ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                      }else if(id_expiry == null){
+                            content: Text(
+                                'Please Select Vehicle Model Date From Callender'));
+                        ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                      } else if (id_expiry == null) {
                         final _snackBar = SnackBar(
-                          content:
-                              Text('Please Select ID_Expiry Date From Callender'));
-                      ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-                      }
-                      else {
+                            content: Text(
+                                'Please Select ID_Expiry Date From Callender'));
+                        ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+                      } else {
                         showAlert(
                           context: context,
                           title: "Your Request is Being Proced ",
@@ -847,13 +841,13 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
           "phone": "$phone",
           'paypal_email': '$paypal_email',
           'password': '$password',
-          'vehicle_name':'$vehicle_name',
-          'plate_number':'$plate_number',
-          'modal':'$model',
-          'id_number':'$id_number',
-          'id_expiry':'$id_expiry',
-          'vehicle_longitude':'$vehicle_latitude',
-          'vehicle_latitude':'$vehicle_latitude',
+          'vehicle_name': '$vehicle_name',
+          'plate_number': '$plate_number',
+          'modal': '$model',
+          'id_number': '$id_number',
+          'id_expiry': '$id_expiry',
+          'vehicle_longitude': '$vehicle_latitude',
+          'vehicle_latitude': '$vehicle_latitude',
           "avatar": x,
           'id_picture': y
         });
@@ -862,24 +856,24 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
         dio.options.headers['Authorization'] = 'Bearer $stringValue';
 
         print({
-         "_method": "PUT",
+          "_method": "PUT",
           "name": "$name",
           "email": "$email",
           "phone": "$phone",
           'paypal_email': '$paypal_email',
           'password': '$password',
-          'vehicle_name':'$vehicle_name',
-          'plate_number':'$plate_number',
-          'modal':'$model',
-          'id_number':'$id_number',
-          'id_expiry':'$id_expiry',
-          'vehicle_longitude':'$vehicle_latitude',
-          'vehicle_latitude':'$vehicle_latitude',
+          'vehicle_name': '$vehicle_name',
+          'plate_number': '$plate_number',
+          'modal': '$model',
+          'id_number': '$id_number',
+          'id_expiry': '$id_expiry',
+          'vehicle_longitude': '$vehicle_latitude',
+          'vehicle_latitude': '$vehicle_latitude',
           "avatar": x,
           'id_picture': y
         });
         var response = await dio.post(
-            "https://wassldev.einnovention.tech/api/driver/profile/$userId",
+            "https://einnovention.co.uk/wassl/public/api/driver/profile/$userId",
             data: formData);
         print("Become Vender: $response");
 

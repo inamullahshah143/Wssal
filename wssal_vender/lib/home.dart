@@ -1,4 +1,3 @@
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:wssal_vender/functions.dart';
 import 'package:wssal_vender/variants/displayVariants.dart';
@@ -8,13 +7,13 @@ class BarChartModel {
   String month;
   String year;
   int financial;
-  final charts.Color color;
+  
 
   BarChartModel({
     this.month,
     this.year,
     this.financial,
-    this.color,
+    
   });
 }
 
@@ -24,43 +23,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final List<BarChartModel> data = [
-    BarChartModel(
-      year: "Sun",
-      financial: 250,
-      color: charts.ColorUtil.fromDartColor(Color(0xFF47505F)),
-    ),
-    BarChartModel(
-      year: "Mon",
-      financial: 300,
-      color: charts.ColorUtil.fromDartColor(Colors.red),
-    ),
-    BarChartModel(
-      year: "Tue",
-      financial: 100,
-      color: charts.ColorUtil.fromDartColor(Colors.green),
-    ),
-    BarChartModel(
-      year: "Wed",
-      financial: 450,
-      color: charts.ColorUtil.fromDartColor(Colors.yellow),
-    ),
-    BarChartModel(
-      year: "Thu",
-      financial: 630,
-      color: charts.ColorUtil.fromDartColor(Colors.lightBlueAccent),
-    ),
-    BarChartModel(
-      year: "Fri",
-      financial: 1000,
-      color: charts.ColorUtil.fromDartColor(Colors.pink),
-    ),
-    BarChartModel(
-      year: "Sat",
-      financial: 400,
-      color: charts.ColorUtil.fromDartColor(Colors.purple),
-    ),
-  ];
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +163,7 @@ class _HomeState extends State<Home> {
                                 RichText(
                                     text: TextSpan(children: [
                                   WidgetSpan(
-                                      child: Icon(Icons.auto_graph_outlined,
+                                      child: Icon(Icons.grading_sharp,
                                           size: 15, color: Colors.blue[200])),
                                   WidgetSpan(
                                       child: Container(
@@ -392,7 +355,7 @@ class _HomeState extends State<Home> {
                         child: RichText(
                           text: TextSpan(children: [
                             WidgetSpan(
-                              child: Icon(Icons.download),
+                              child: Icon(Icons.download_done_outlined),
                             ),
                             WidgetSpan(
                               child: Column(
@@ -506,9 +469,7 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   ),
-                  BarChartGraph(
-                    data: data,
-                  ),
+              
                   // ListView(
                   //   // scrollDirection: Axis.vertical,
 
@@ -566,75 +527,4 @@ class _HomeState extends State<Home> {
   // }
 }
 
-class BarChartGraph extends StatefulWidget {
-  final List<BarChartModel> data;
 
-  const BarChartGraph({Key key, this.data}) : super(key: key);
-
-  @override
-  _BarChartGraphState createState() => _BarChartGraphState();
-}
-
-class _BarChartGraphState extends State<BarChartGraph> {
-  List<BarChartModel> _barChartList;
-
-  @override
-  void initState() {
-    super.initState();
-    _barChartList = [
-      BarChartModel(month: "Oct"),
-      // BarChartModel(month: "Nov"),
-    ];
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    latestContext = context;
-    List<charts.Series<BarChartModel, String>> series = [
-      charts.Series(
-          id: "Financial",
-          data: widget.data,
-          domainFn: (BarChartModel series, _) => series.year,
-          measureFn: (BarChartModel series, _) => series.financial,
-          colorFn: (BarChartModel series, _) => series.color),
-    ];
-
-    return _buildFinancialList(series);
-  }
-
-  Widget _buildFinancialList(series) {
-    return _barChartList != null
-        ? ListView.separated(
-            physics: NeverScrollableScrollPhysics(),
-            separatorBuilder: (context, index) => Divider(
-              color: Colors.white,
-              height: 5,
-            ),
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: _barChartList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                height: MediaQuery.of(context).size.height / 2.3,
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(_barChartList[index].month,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    Expanded(child: charts.BarChart(series, animate: true)),
-                  ],
-                ),
-              );
-            },
-          )
-        : SizedBox();
-  }
-}

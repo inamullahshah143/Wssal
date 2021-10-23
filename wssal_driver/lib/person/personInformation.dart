@@ -78,13 +78,12 @@ class _PersonInformationState extends State<PersonInformation> {
 
   Future<Widget> buildProfile() async {
     try {
-      var url = 'https://wassldev.einnovention.tech/api/driver/profile';
-      var response = await http.get(Uri.parse(url),
-          headers: {
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer $stringValue'
-            });
+      var url = 'https://einnovention.co.uk/wassl/public/api/driver/profile';
+      var response = await http.get(Uri.parse(url), headers: {
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $stringValue'
+      });
       print('buildProductsResponse: ${response.body}');
       var data = json.decode(response.body);
       print('$data');
@@ -271,17 +270,16 @@ class _PersonInformationState extends State<PersonInformation> {
                                 fontSize: 19, fontWeight: FontWeight.bold),
                           )),
                     ),
-
                     Divider(
                       thickness: 0.2,
                       color: Colors.grey,
                     ),
-                     CircleAvatar(
-                radius: 93.0,
-                backgroundImage:
-                    NetworkImage("$picBaseURL${data['data']['driver_vehicle']['id_picture']}"),
-                backgroundColor: Colors.transparent,
-              ),
+                    CircleAvatar(
+                      radius: 93.0,
+                      backgroundImage: NetworkImage(
+                          "$picBaseURL${data['data']['driver_vehicle']['id_picture']}"),
+                      backgroundColor: Colors.transparent,
+                    ),
                     Container(
                       margin: EdgeInsets.only(left: 10, right: 10),
                       child: Row(
@@ -301,7 +299,7 @@ class _PersonInformationState extends State<PersonInformation> {
                         ],
                       ),
                     ),
-                      Divider(
+                    Divider(
                       thickness: 0.2,
                       color: Colors.grey,
                     ),
@@ -324,7 +322,7 @@ class _PersonInformationState extends State<PersonInformation> {
                         ],
                       ),
                     ),
-                      Divider(
+                    Divider(
                       thickness: 0.2,
                       color: Colors.grey,
                     ),
@@ -347,7 +345,7 @@ class _PersonInformationState extends State<PersonInformation> {
                         ],
                       ),
                     ),
-                       Divider(
+                    Divider(
                       thickness: 0.2,
                       color: Colors.grey,
                     ),
@@ -370,7 +368,7 @@ class _PersonInformationState extends State<PersonInformation> {
                         ],
                       ),
                     ),
-                      Divider(
+                    Divider(
                       thickness: 0.2,
                       color: Colors.grey,
                     ),
@@ -393,7 +391,7 @@ class _PersonInformationState extends State<PersonInformation> {
                         ],
                       ),
                     ),
-                       Divider(
+                    Divider(
                       thickness: 0.2,
                       color: Colors.grey,
                     ),

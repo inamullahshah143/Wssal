@@ -384,7 +384,7 @@ class _UpdateVariantsState extends State<UpdateVariants> {
   updatevariantss() async {
     try {
       var url =
-          'https://wassldev.einnovention.tech/api/vendor/varients/$variantsid';
+          'https://einnovention.co.uk/wassl/public/api/vendor/varients/$variantsid';
       var response = await http.put(
         Uri.parse(url),
         body: {

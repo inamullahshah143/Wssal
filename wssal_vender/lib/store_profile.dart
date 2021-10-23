@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -1146,6 +1147,7 @@ class _StoreProfileState extends State<StoreProfile> {
     Timer(Duration(seconds: 1), () async {
       try {
         var formData = FormData.fromMap({
+          "category_id": "1",
           "firstname": "$firstname",
           "lastname": "$lastname",
           "comments": "$comments",
@@ -1159,11 +1161,9 @@ class _StoreProfileState extends State<StoreProfile> {
           'shop_logo': z,
           'tags': _tagitems.toString().replaceAll("[", "").replaceAll("]", ""),
         });
-
-        Dio dio = Dio();
-        dio.options.headers['Authorization'] = 'Bearer $tokenUser';
 
         print({
+          "category_id": "1",
           "firstname": "$firstname",
           "lastname": "$lastname",
           "comments": "$comments",
@@ -1176,13 +1176,17 @@ class _StoreProfileState extends State<StoreProfile> {
           'shop_cover': y,
           'shop_logo': z,
           'tags': _tagitems.toString().replaceAll("[", "").replaceAll("]", ""),
+          'Authorization': 'Bearer $tokenUser'
         });
-        var response =
-            await dio.post("$apiBaseURL/user/request", data: formData);
+        var response = await Dio().post("$apiBaseURL/user/request",
+            data: formData,
+            options: Options(headers: {'Authorization': 'Bearer $tokenUser'}));
+          
         print("Become Vender: $response");
 
         var gg = response.data;
         print('${response.data['message']}');
+       
         if (gg['message'] == 'Request Sent!') {
           print('fgdhdjfkf');
           showAlert(

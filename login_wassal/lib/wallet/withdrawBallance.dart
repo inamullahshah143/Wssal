@@ -13,6 +13,7 @@ class WithdrawRequest extends StatefulWidget {
 }
 
 class _WithdrawRequestState extends State<WithdrawRequest> {
+  bool canPress = true;
   @override
   Widget build(BuildContext context) {
     latestContext = context;
@@ -71,7 +72,12 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                     ),
                     child: Text('WithDraw'),
                     onPressed: () {
-                      buildWithdraw();
+                      if (canPress) {
+                        setState(() {
+                          canPress = false;
+                        });
+                        buildWithdraw();
+                      }
                     },
                   )),
             ],
@@ -83,7 +89,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
 
   buildWithdraw() async {
     try {
-      var url = 'https://wassldev.einnovention.tech/api/wallet';
+      var url = 'https://einnovention.co.uk/wassl/public/api/wallet';
       var response = await http.post(
         Uri.parse(url),
         body: {
@@ -92,10 +98,14 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
         },
         headers: {'Authorization': 'Bearer $loginToken'},
       );
+       setState(() {
+                        canPress = true;
+                      });
       print({
         "balance": "$balance",
         "method": 'paypall',
       });
+
       print('Response body: ${response.body}');
       var data = json.decode(response.body);
       print('$data');
@@ -119,10 +129,20 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
           ],
           cancelable: true,
         );
+      } else if (data['message'] == 'Withdraw Amount is grater than Balance amount !') {
+        showAlert(
+          context: context,
+          title: "Not enough funds in your wallet",
+          actions: [
+            AlertAction(
+                text: "Ok ", isDestructiveAction: true, onPressed: () {}),
+          ],
+          cancelable: true,
+        );
       } else {
         showAlert(
           context: context,
-          title: "Withdraw Request already submited !",
+          title: "One of your withdraw request is already pending.",
           actions: [
             AlertAction(
                 text: "Ok ", isDestructiveAction: true, onPressed: () {}),
