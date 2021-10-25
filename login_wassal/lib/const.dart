@@ -125,25 +125,33 @@ getDashboardAppbar(context, text) {
             fontSize: 14,
           ),
         ),
-        Container(
-          width: MediaQuery.of(context).size.width / 1.25,
-          child: RichText(
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            text: TextSpan(
-              children: [
-                WidgetSpan(
-                  child: Icon(Icons.near_me_rounded, color: themePrimaryColor),
-                ),
-                TextSpan(
-                  text: appState.myLocation,
-                  style: TextStyle(
-                    color: text1color,
-                    fontWeight: FontWeight.w400,
+        RichText(
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          text: TextSpan(
+            children: [
+              WidgetSpan(
+                child: Icon(Icons.near_me_rounded, color: themePrimaryColor),
+              ),
+              WidgetSpan(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width / 2.25,
+                  child: Text(
+                    appState.myLocation,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: text1color,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-              ],
-            ),
+              ),
+              WidgetSpan(
+                child: Icon(Icons.arrow_drop_down, color: themeSecondaryColor),
+              ),
+            ],
           ),
         ),
       ],

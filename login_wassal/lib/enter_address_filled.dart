@@ -26,22 +26,19 @@ class _EnterAddressFilledState extends State<EnterAddressFilled> {
                 // padding: EdgeInsets.all(50),
                 child: const Center(
                   child: Image(
-                    image: AssetImage('assets/images/location_mark.png'),
+                    image: AssetImage('assets/location_mark.png'),
                   ),
                 ),
               ),
               Text(
                 'Find restaurants near you',
-                style:
-                    TextStyle(fontSize: MediaQuery.of(context).size.width / 15),
+                style: TextStyle(fontSize: 20),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Text(
                   'Please enter your location or allow access to your\nlocation to find restaurants near you.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width / 25),
                 ),
               ),
               Container(

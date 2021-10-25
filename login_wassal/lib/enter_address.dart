@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 
-import 'enter_address_filled.dart';
+import 'const.dart';
 
 class EnterAddress extends StatefulWidget {
   const EnterAddress({Key key}) : super(key: key);
@@ -10,101 +14,98 @@ class EnterAddress extends StatefulWidget {
 }
 
 class _EnterAddressState extends State<EnterAddress> {
+  String lat;
+  String lng;
+  PickResult result;
+  LatLng lock;
+  LatLng position;
+  TextEditingController locationController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin:
-                  EdgeInsets.only(top: MediaQuery.of(context).size.height / 8),
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height / 3,
-              // padding: EdgeInsets.all(50),
-              child: const Center(
-                child: Image(
-                  image: AssetImage('assets/images/location_mark.png'),
-                ),
-              ),
-            ),
-            Text(
-              'Find restaurants near you',
-              style:
-                  TextStyle(fontSize: MediaQuery.of(context).size.width / 15),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Text(
-                'Please enter your location or allow access to your\nlocation to find restaurants near you.',
-                textAlign: TextAlign.center,
-                style:
-                    TextStyle(fontSize: MediaQuery.of(context).size.width / 25),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  elevation: 0,
-                  fixedSize: Size(MediaQuery.of(context).size.width - 60, 45),
-                  primary: const Color.fromRGBO(255, 199, 0, 1),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EnterAddressFilled(),
-                    ),
-                  );
-                },
-                child: const Text(
-                  'Use current location',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            ),
-            Container(
-              height: 45,
-              width: MediaQuery.of(context).size.width - 60,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: const Color.fromRGBO(244, 245, 247, 1),
-              ),
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Stack(
-                children: [
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Icon(
-                      Icons.location_on_rounded,
-                      color: Colors.grey,
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 150,
+                  height: 150,
+                  // padding: EdgeInsets.all(50),
+                  child: const Center(
+                    child: Image(
+                      image: AssetImage('assets/location_mark.png'),
                     ),
                   ),
-                  TextFormField(
-                    cursorColor: Colors.black,
-                    decoration: const InputDecoration(
+                ),
+                Text(
+                  'Find restaurants near you',
+                  style: TextStyle(fontSize: 20),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    'Please enter your location or allow access to your\nlocation to find restaurants near you.',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  height: 50,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(15.0),
+                      ),
+                      primary: themePrimaryColor,
+                    ),
+                    child: Text(
+                      "Use current location",
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.grey[800],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: PlacesAutocompleteField(
+                    hint: 'Enter a new address',
+                    apiKey: googleApiKey,
+                    controller: locationController,
+                    onSelected: (value) async {
+                      List<Placemark> placemark = await Geolocator()
+                          .placemarkFromAddress(value.toString());
+                      double latitude = placemark[0].position.latitude;
+                      double longitude = placemark[0].position.longitude;
+                      setState(() {
+                        position = LatLng(latitude, longitude);
+                      });
+                    },
+                    leading: Icon(Icons.location_on,color:Colors.grey),
+                    inputDecoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.grey.withOpacity(0.1),
                       isDense: true,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      contentPadding: EdgeInsets.only(left: 40, top: 15),
-                      hintText: "Enter a new address",
-                      hintStyle: TextStyle(
-                          color: Color.fromRGBO(118, 129, 150, 1),
-                          fontSize: 15),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
                   ),
-                ],
-              ),
-            )
-          ],
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

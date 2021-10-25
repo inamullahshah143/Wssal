@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'Cart.dart';
 import 'No Internet/noInternetConnection.dart';
 import 'Storedetail.dart';
 import 'digit_slider.dart';
+import 'google_map/app_states.dart';
 import 'productDetails.dart';
 import 'subcategory.dart';
 import 'const.dart';
@@ -95,6 +97,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
 
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<AppState>(context);
     latestContext = context;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -151,13 +154,54 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                       ),
                                     ),
                                   ),
-                                  Text(
-                                    "وصل",
-                                    style: TextStyle(
-                                      color: themePrimaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Delivery to',
+                                        style: TextStyle(
+                                          color: themeSecondaryColor,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      RichText(
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        text: TextSpan(
+                                          children: [
+                                            WidgetSpan(
+                                              child: Icon(Icons.near_me_rounded,
+                                                  color: themePrimaryColor),
+                                            ),
+                                            WidgetSpan(
+                                              child: SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    2.25,
+                                                child: Text(
+                                                  appState.myLocation,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                    color: text1color,
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            WidgetSpan(
+                                              child: Icon(Icons.arrow_drop_down,
+                                                  color: themeSecondaryColor),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:wassal_customer/PUSHER/CustomOrderDetails.dart';
 import 'package:wassal_customer/numberlogin.dart';
 import 'Profile.dart';
@@ -40,7 +41,7 @@ class _CategoryDashboardState extends State<CategoryDashboard> {
                 )
               : bottomIndex == 2
                   ? CustomOrderDetail()
-                  : bottomIndex == 3
+                  : bottomIndex == 4
                       ? ProfilePage()
                       : Container(),
       bottomNavigationBar: Container(
@@ -72,7 +73,7 @@ class _CategoryDashboardState extends State<CategoryDashboard> {
             setState(() {
               bottomIndex = index;
             });
-            if (bottomIndex == 2 || bottomIndex == 3) {
+            if (bottomIndex == 2 || bottomIndex == 4) {
               if (logs != true) {
                 setState(() {
                   bottomIndex = 0;
@@ -109,6 +110,10 @@ class _CategoryDashboardState extends State<CategoryDashboard> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.receipt_rounded),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(FontAwesomeIcons.tag,size: 18,),
               label: '',
             ),
             BottomNavigationBarItem(
