@@ -154,7 +154,6 @@ class _LoginPageState extends State<LoginPage> {
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(top: 17.5),
                             hintText: 'Phone No',
                             suffixIcon: tick ? Icon(Icons.done) : null,
                             prefixIcon: CountryCodePicker(

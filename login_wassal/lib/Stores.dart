@@ -99,7 +99,8 @@ Future<Widget> allShops(BuildContext context) async {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Image(
-                            image: NetworkImage(imageURL + '/${element['logo']}'),
+                            image:
+                                NetworkImage(imageURL + '/${element['logo']}'),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -176,24 +177,7 @@ Future<Widget> allShops(BuildContext context) async {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: "Burger",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                        color: Colors.grey),
-                                  ),
-                                  WidgetSpan(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Icon(
-                                        Icons.circle,
-                                        size: 5,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: "Sandwitch",
+                                    text: "${element['tags']}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 12,
@@ -292,9 +276,9 @@ Future<Widget> allShops(BuildContext context) async {
       return Text("No Shops Available");
     }
   } on Exception catch (e) {
-   Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => NoInternetConnectionScreen(
-                className: AllShops(),
-              )));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (_) => NoInternetConnectionScreen(
+              className: AllShops(),
+            )));
   }
 }

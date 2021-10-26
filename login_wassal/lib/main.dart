@@ -36,11 +36,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     latestContext = context;
     return MaterialApp(
+      builder: (context, child) {
+        return MediaQuery(
+          child: child,
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        );
+      },
       supportedLocales: [
         Locale('en', 'US'),
       ],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        textTheme: TextTheme(
+          bodyText1: TextStyle(fontSize: 14.0),
+          bodyText2: TextStyle(fontSize: 12.0),
+          button: TextStyle(fontSize: 12.0),
+        ),
+        fontFamily: 'HelveticaNeueLT',
         primarySwatch: themePrimaryColor,
       ),
       home: SplashScreen(),

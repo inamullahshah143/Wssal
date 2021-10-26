@@ -27,7 +27,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
-      appBar: getAppbar(false, context, 'Profile Page', false, true),
+      appBar: getAppbar(true, context, 'Profile Page', false, true),
       body: SingleChildScrollView(
         child: Column(
           children: [

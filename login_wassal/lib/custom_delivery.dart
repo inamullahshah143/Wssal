@@ -586,7 +586,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
     return Dialog(
       backgroundColor: Colors.white,
       child: Container(
-        height: 150,
+        height: 175.0,
         width: double.infinity,
         padding: EdgeInsets.all(10),
         margin: EdgeInsets.all(10),

@@ -74,7 +74,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
     topSellerFuture = topSeller();
     nearByFuture = nearBy();
     freeDeliveryFuture = freeDelivery();
-    appbarHeight = 60.0;
+    appbarHeight = 75.0;
     dragButton = false;
     searchClickBtn = true;
     isRecomended = false;
@@ -157,13 +157,12 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
                                         'Delivery to',
                                         style: TextStyle(
                                           color: themeSecondaryColor,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14,
                                         ),
                                       ),
                                       RichText(
@@ -188,8 +187,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                   maxLines: 1,
                                                   style: TextStyle(
                                                     color: text1color,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w400,
                                                   ),
                                                 ),
                                               ),
@@ -213,7 +210,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                             setState(() {
                                               searchClickBtn = false;
                                               dragButton = true;
-                                              appbarHeight = 160.0;
+                                              appbarHeight = 175.0;
                                             });
                                           },
                                           icon: Icon(
@@ -245,13 +242,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
                             ],
                           ),
                         ),
-                        appbarHeight >= 160
+                        appbarHeight >= 175
                             ? Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 25.0),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 25.0, vertical: 10.0),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -267,7 +264,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                             child: TextField(
                                               keyboardType: TextInputType.text,
                                               style: TextStyle(
-                                                fontSize: 14.0,
+                                                fontSize: 12.0,
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
@@ -317,8 +314,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                 disabledBorder:
                                                     InputBorder.none,
                                                 prefixIcon: Icon(Icons.search),
-                                                contentPadding:
-                                                    EdgeInsets.only(top: 15.0),
                                               ),
                                             ),
                                           ),
@@ -326,7 +321,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                         IconButton(
                                           onPressed: () {
                                             setState(() {
-                                              appbarHeight = 475;
+                                              appbarHeight = 525;
                                             });
                                           },
                                           icon: Icon(
@@ -337,7 +332,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                       ],
                                     ),
                                   ),
-                                  appbarHeight == 475
+                                  appbarHeight == 525
                                       ? Padding(
                                           padding: EdgeInsets.symmetric(
                                               vertical: 10.0, horizontal: 25),
@@ -369,7 +364,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                   ),
                                                   Container(
                                                     //Add this to give height
-                                                    height: appbarHeight - 275,
+                                                    height: appbarHeight - 300,
                                                     child: TabBarView(
                                                       controller:
                                                           _tabController,
@@ -396,7 +391,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                     child: ElevatedButton(
                                                       onPressed: () {
                                                         setState(() {
-                                                          appbarHeight = 160.0;
+                                                          appbarHeight = 175.0;
                                                           returnedData =
                                                               FutureBuilder(
                                                             future:
@@ -468,7 +463,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                       : Container(),
                                   InkWell(
                                     child: Padding(
-                                      padding: const EdgeInsets.all(25.0),
+                                      padding: const EdgeInsets.all(15.0),
                                       child: Container(
                                         height: 5,
                                         width: 50,
@@ -483,7 +478,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                       setState(() {
                                         searchClickBtn = true;
                                         dragButton = false;
-                                        appbarHeight = 60.0;
+                                        appbarHeight = 75.0;
                                         returnedData = null;
                                       });
                                     },
@@ -1206,7 +1201,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0),
               child: Container(
-                height: 250.0,
                 width: 250.0,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -1227,46 +1221,43 @@ class _CategoryDetailState extends State<CategoryDetail> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 25,
-                            height: 25,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(25),
-                              child: Image.network(
-                                imageURL + '/${element['shop']['logo']}',
-                                fit: BoxFit.cover,
-                              ),
+                    Row(
+                      children: [
+                        Container(
+                          width: 25,
+                          height: 25,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(25),
+                            child: Image.network(
+                              imageURL + '/${element['shop']['logo']}',
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              '${element['shop']['title']}',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey[500],
-                              ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            '${element['shop']['title']}',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey[500],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 4.0),
                       child: Text(
                         '${element['title']}',
                         style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 15.0,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: RichText(
                         overflow: TextOverflow.ellipsis,
                         text: TextSpan(
@@ -1293,89 +1284,83 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                 ),
                               ),
                             ),
-                            WidgetSpan(
-                              child: Container(
-                                margin: EdgeInsets.only(left: 5, right: 5),
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Text(
-                                    "${element['shop']['tags']}",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                            TextSpan(
+                              text: "${element['shop']['tags']}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                  color: Colors.grey),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            padding: EdgeInsets.all(5),
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  WidgetSpan(
+                                    child: Icon(
+                                      Icons.star,
+                                      size: 14,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  TextSpan(text: " "),
+                                  TextSpan(
+                                    text: "${element['average_rating']}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          padding: EdgeInsets.all(5),
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                WidgetSpan(
-                                  child: Icon(
-                                    Icons.star,
-                                    size: 14,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                TextSpan(text: " "),
-                                TextSpan(
-                                  text: "${element['average_rating']}",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.alarm,
+                                color: Colors.grey[500],
+                                size: 16.0,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 5.0),
+                                child: Text('25-35 Min'),
+                              ),
+                            ],
                           ),
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.alarm,
-                              color: Colors.grey[500],
-                              size: 16.0,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 5.0),
-                              child: Text('25-35 Min'),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.delivery_dining,
-                              color: Colors.grey[500],
-                              size: 16.0,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 5.0),
-                              child: Text('3.5 L.E'),
-                            )
-                          ],
-                        ),
-                      ],
-                    )
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.delivery_dining,
+                                color: Colors.grey[500],
+                                size: 16.0,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 5.0),
+                                child: Text('3.5 L.E'),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -1386,7 +1371,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
     }
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 325,
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -2132,7 +2116,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0),
               child: Container(
-                height: 250.0,
                 width: 250.0,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -2186,13 +2169,13 @@ class _CategoryDetailState extends State<CategoryDetail> {
                       child: Text(
                         '${element['title']}',
                         style: TextStyle(
-                          fontSize: 18.0,
+                          fontSize: 15.0,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
                       child: RichText(
                         overflow: TextOverflow.ellipsis,
                         text: TextSpan(
@@ -2218,87 +2201,83 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                 ),
                               ),
                             ),
-                            WidgetSpan(
-                                child: Container(
-                              margin: EdgeInsets.only(left: 5, right: 5),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  "${element['tags']}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                      color: Colors.grey),
-                                ),
-                              ),
-                            )),
+                            TextSpan(
+                              text: "${element['tags']}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                  color: Colors.grey),
+                            ),
                           ],
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            padding: EdgeInsets.all(5),
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  WidgetSpan(
+                                    child: Icon(
+                                      Icons.star,
+                                      size: 14,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  TextSpan(text: " "),
+                                  TextSpan(
+                                    text: "${element['average_rating']}",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          padding: EdgeInsets.all(5),
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                WidgetSpan(
-                                  child: Icon(
-                                    Icons.star,
-                                    size: 14,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                TextSpan(text: " "),
-                                TextSpan(
-                                  text: "${element['average_rating']}",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.alarm,
+                                color: Colors.grey[500],
+                                size: 16.0,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 5.0),
+                                child: Text('25-35 Min'),
+                              ),
+                            ],
                           ),
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.alarm,
-                              color: Colors.grey[500],
-                              size: 16.0,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 5.0),
-                              child: Text('25-35 Min'),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.delivery_dining,
-                              color: Colors.grey[500],
-                              size: 16.0,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 5.0),
-                              child: Text('3.5 L.E'),
-                            )
-                          ],
-                        ),
-                      ],
-                    )
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.delivery_dining,
+                                color: Colors.grey[500],
+                                size: 16.0,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 5.0),
+                                child: Text('3.5 L.E'),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -2310,7 +2289,6 @@ class _CategoryDetailState extends State<CategoryDetail> {
     if (x.isNotEmpty) {
       return Container(
         width: MediaQuery.of(context).size.width,
-        height: 325,
         margin: EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -2514,7 +2492,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               ),
                             ),
                             TextSpan(
-                              text: "Burger",
+                              text: "${element['user']['shop']['tags']}",
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 12,

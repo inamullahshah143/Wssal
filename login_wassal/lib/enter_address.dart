@@ -91,7 +91,7 @@ class _EnterAddressState extends State<EnterAddress> {
                         position = LatLng(latitude, longitude);
                       });
                     },
-                    leading: Icon(Icons.location_on,color:Colors.grey),
+                    leading: Icon(Icons.location_on, color: Colors.grey),
                     inputDecoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.grey.withOpacity(0.1),

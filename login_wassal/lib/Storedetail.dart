@@ -70,15 +70,13 @@ class _StoreDetailState extends State<StoreDetail> {
                   ),
                 ),
                 title: Text("${storeBlock['title']}"),
-                subtitle: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: RichText(
-                    overflow: TextOverflow.ellipsis,
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text:
-                              storeBlock['open_close'] == 1 ? 'Open' : 'Close',
+                subtitle: RichText(
+                  overflow: TextOverflow.ellipsis,
+                  text: TextSpan(
+                    children: [
+                      WidgetSpan(
+                        child: Text(
+                          storeBlock['open_close'] == 1 ? 'Open' : 'Close',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
@@ -87,32 +85,23 @@ class _StoreDetailState extends State<StoreDetail> {
                                 : Colors.red,
                           ),
                         ),
-                        WidgetSpan(
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Icon(
-                              Icons.circle,
-                              size: 5,
+                      ),
+                      WidgetSpan(
+                          child: Container(
+                        margin: EdgeInsets.only(left: 5, right: 5),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Text(
+                            "${storeBlock['tags']}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
                               color: Colors.grey,
                             ),
                           ),
                         ),
-                        WidgetSpan(
-                            child: Container(
-                          margin: EdgeInsets.only(left: 5, right: 5),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Text(
-                              "${storeBlock['tags']}",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                  color: Colors.grey),
-                            ),
-                          ),
-                        )),
-                      ],
-                    ),
+                      )),
+                    ],
                   ),
                 ),
                 trailing: Column(
@@ -150,7 +139,6 @@ class _StoreDetailState extends State<StoreDetail> {
                   ],
                 ),
               ),
-
               FutureBuilder(
                 future: buildProducts(context),
                 builder: ((context, AsyncSnapshot<Widget> snap) {
@@ -160,12 +148,16 @@ class _StoreDetailState extends State<StoreDetail> {
                     return Text("${snap.error}");
                   } else {
                     return Center(
-                        child: Container(
-                            child: CircularProgressIndicator(
-                                strokeWidth: 10,
-                                backgroundColor: Colors.red,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    Colors.yellow))));
+                      child: Container(
+                        child: CircularProgressIndicator(
+                          strokeWidth: 10,
+                          backgroundColor: Colors.red,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.yellow,
+                          ),
+                        ),
+                      ),
+                    );
                   }
                 }),
               )
@@ -218,10 +210,13 @@ class _StoreDetailState extends State<StoreDetail> {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.network(
-                              imageURL +
-                                  '/' +
-                                  '${element['images'][0]['path']}',
-                              fit: BoxFit.fill,
+                              element['images'].isNotEmpty
+                                  ? imageURL +
+                                      '/' +
+                                      '${element['images'][0]['path']}'
+                                  : "https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png",
+                              fit: BoxFit.cover,
+                              height: 125,
                             ),
                           ),
                           Padding(
@@ -282,7 +277,7 @@ class _StoreDetailState extends State<StoreDetail> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 8, top: 5),
+                            padding: const EdgeInsets.only(left: 8),
                             child: Text(
                               "${storeBlock['title']}",
                               style: TextStyle(
@@ -312,13 +307,12 @@ class _StoreDetailState extends State<StoreDetail> {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                              text: storeBlock['open_close'] == 1
-                                  ? 'Open'
-                                  : 'Close',
+                              text:
+                                  element['open_close'] == 1 ? 'Open' : 'Close',
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
-                                color: storeBlock['open_close'] == 1
+                                color: element['open_close'] == 1
                                     ? Colors.green
                                     : Colors.red,
                               ),
@@ -334,7 +328,7 @@ class _StoreDetailState extends State<StoreDetail> {
                               ),
                             ),
                             TextSpan(
-                              text: "Burger",
+                              text: "${element['tags']}",
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 12,
@@ -417,7 +411,7 @@ class _StoreDetailState extends State<StoreDetail> {
         primary: false,
         padding: const EdgeInsets.all(8),
         crossAxisSpacing: 10,
-        childAspectRatio: 0.8,
+        childAspectRatio: 0.7,
         crossAxisCount: 2,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),

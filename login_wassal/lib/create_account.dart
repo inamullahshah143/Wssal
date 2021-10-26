@@ -174,7 +174,6 @@ class _CreateAccountState extends State<CreateAccount> {
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
-                            contentPadding: EdgeInsets.only(top: 17.5),
                             hintText: 'Phone No',
                             prefixIcon: CountryCodePicker(
                               onChanged: (CountryCode code) {
@@ -221,31 +220,32 @@ class _CreateAccountState extends State<CreateAccount> {
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      height: 50,
-                      width: width,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState.validate()) {
-                            signUp(context);
-                          } else {
-                            print("ERROR");
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                          ),
-                          primary: themePrimaryColor,
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    height: 50,
+                    width: width,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState.validate()) {
+                          signUp(context);
+                        } else {
+                          print("ERROR");
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(15.0),
                         ),
-                        child: Text(
-                          "Sign Up",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Colors.grey[800],
-                          ),
+                        primary: themePrimaryColor,
+                      ),
+                      child: Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.grey[800],
                         ),
-                      )),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:wassal_customer/productDetails.dart';
+import 'Cart.dart';
 import 'Storedetail.dart';
 import 'const.dart';
 
@@ -18,54 +19,94 @@ class _SearchPageState extends State<SearchPage> {
     latestContext = context;
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
-      appBar: getAppbar(true, context, 'Categories', false, true),
+      appBar: AppBar(
+        elevation: 1.0,
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(25),
+            bottomRight: Radius.circular(25),
+          ),
+        ),
+        title: Text("Categories"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartPage()),
+              );
+            },
+            icon: Icon(
+              Icons.shopping_cart_outlined,
+            ),
+          ),
+        ],
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(75),
+          child: Container(
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(244, 245, 247, 1),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  spreadRadius: 0,
+                  blurRadius: 0.25,
+                  offset: Offset(0, 0), // changes position of shadow
+                ),
+              ],
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: TextFormField(
+              decoration: InputDecoration(
+                hintText: "Search a keyword",
+                isDense: true,
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                prefixIcon: Icon(Icons.search),
+              ),
+              onFieldSubmitted: (value) {
+                setState(() {
+                  searckKeyword = value;
+                  returnedData = FutureBuilder(
+                    future: searchProduct(context),
+                    builder: ((context, snap) {
+                      if (snap.hasData) {
+                        return snap.data;
+                      } else if (snap.hasError) {
+                        return Text("${snap.error}");
+                      } else {
+                        return Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Center(
+                            child: Container(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 1,
+                                backgroundColor: Colors.red,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.yellow),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    }),
+                  );
+                });
+              },
+            ),
+          ),
+        ),
+      ),
       body: Container(
           margin: EdgeInsets.all(5),
           padding: EdgeInsets.all(5),
           child: SingleChildScrollView(
-            child: Column(children: [
-              Align(
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    hintText: "Search a keyword",
-                    isDense: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                  ),
-                  onFieldSubmitted: (value) {
-                    setState(() {
-                      searckKeyword = value;
-                      returnedData = FutureBuilder(
-                        future: searchProduct(context),
-                        builder: ((context, snap) {
-                          if (snap.hasData) {
-                            return snap.data;
-                          } else if (snap.hasError) {
-                            return Text("${snap.error}");
-                          } else {
-                            return Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Center(
-                                child: Container(
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 1,
-                                    backgroundColor: Colors.red,
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.yellow),
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                        }),
-                      );
-                    });
-                  },
-                ),
-              ),
-              returnedData,
-            ]),
+            child: returnedData,
           )),
     );
   }

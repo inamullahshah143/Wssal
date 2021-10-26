@@ -61,6 +61,7 @@ class _MainCategoriesState extends State<MainCategories> {
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
                               "Hello,",
@@ -70,7 +71,7 @@ class _MainCategoriesState extends State<MainCategories> {
                             Text(
                               "$storedName",
                               style: TextStyle(
-                                  color: Colors.grey.shade700, fontSize: 18.0),
+                                  color: Colors.grey.shade700, fontSize: 16.0),
                             ),
                           ],
                         ),

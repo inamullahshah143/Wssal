@@ -21,7 +21,7 @@ class _AllCategoriesShopsState extends State<AllCategoriesShops> {
     latestContext = context;
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
-      appBar: getAppbar(false, context, "Shops", true, true),
+      appBar: getAppbar(true, context, "Shops", true, true),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: double.infinity,
@@ -181,24 +181,7 @@ class _AllCategoriesShopsState extends State<AllCategoriesShops> {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: "Burger",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                        color: Colors.grey),
-                                  ),
-                                  WidgetSpan(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Icon(
-                                        Icons.circle,
-                                        size: 5,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: "Sandwitch",
+                                    text: "${element['tags']}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 12,

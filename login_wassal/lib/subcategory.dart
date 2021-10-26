@@ -143,7 +143,7 @@ class _SubcategoryState extends State<Subcategory> {
                                                   ),
                                                   TextSpan(
                                                     text:
-                                                        "${element['status']}",
+                                                        "${element['average_rating']}",
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w600,
