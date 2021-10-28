@@ -40,6 +40,7 @@ class _RechargeWalletState extends State<RechargeWallet> {
               child: Text(
                 'Payment Methods',
                 style: TextStyle(
+                    height: 1.5,
                     color: Colors.black,
                     fontWeight: FontWeight.w100,
                     fontSize: 16),
@@ -61,11 +62,13 @@ class _RechargeWalletState extends State<RechargeWallet> {
                   ),
                   Text(
                     'Recharge Wallet',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     'Recharge your wallet balance or transfer and recharge any amount to family or friends easily',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 14, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -119,8 +122,7 @@ class _RechargeWalletState extends State<RechargeWallet> {
                             ),
                           ),
                           height: 350,
-                          child: 
-                          TabBarView(
+                          child: TabBarView(
                             children: [
                               Container(
                                 padding: EdgeInsets.all(20),
@@ -129,7 +131,8 @@ class _RechargeWalletState extends State<RechargeWallet> {
                                   children: [
                                     Text(
                                       'To my Wallet balance',
-                                      style: TextStyle(fontSize: 10),
+                                      style:
+                                          TextStyle(height: 1.5, fontSize: 10),
                                     ),
                                     Container(
                                       padding: EdgeInsets.all(10),
@@ -155,131 +158,131 @@ class _RechargeWalletState extends State<RechargeWallet> {
                                       ),
                                     ),
                                     Row(
-                                      mainAxisAlignment:MainAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Container(
-                                           
                                           margin: EdgeInsets.all(10),
-                                          width: MediaQuery.of(context).size.width/1.5,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1.5,
                                           child: Table(
-
-                                             border: TableBorder(
-                                               
-                                               horizontalInside: BorderSide(width: 1,
-                                               color: Colors.grey.shade400)
-
-                                              
-                                             ),
-                                             // defaultVerticalAlignment:
-                                                 // TableCellVerticalAlignment
-                                                 //     .middle,
-                                             children: <TableRow>[
-                                               TableRow(
-                                                 children: <Widget>[
-                                                   Container(
-                                                     
-                                                     margin: EdgeInsets.all(
-                                                          5),
-                                                     // height: 25,
-                                                     // width: 100,
-                                                     child: Text(
-                                                       'Current Balance',
-                                                       style: TextStyle(
-                                                           fontSize: 12),
-                                                     ),
-                                                   ),
-                                                   Container(
-                                                     alignment: Alignment.centerRight,
-                                                     margin: EdgeInsets.all(
-                                                          5),
-                                                     // height: 25,
-                                                     // width: 80,
-                                                     child: Text(
-                                                       '1350.00 L.E',
-                                                       style: TextStyle(
-                                                           fontSize: 14),
-                                                     ),
-                                                   ),
-                                                 ],
-                                               ),
-                                               TableRow(
-                                                 children: <Widget>[
-                                                   Container(
-                                                     padding: EdgeInsets.all(
-                                                           5),
-                                                     decoration: BoxDecoration(
-                                                       // border: Border(
-                                                       //   top: BorderSide(
-                                                       //       color: Colors.grey),
-                                                       //   bottom: BorderSide(
-                                                       //       color: Colors.grey),
-                                                       // ),
-                                                     ),
-                                                     // height: 35,
-                                                     // width: 100,
-                                                     child: Text(
-                                                       'Recharge Balance',
-                                                       style: TextStyle(
-                                                           fontSize: 12),
-                                                     ),
-                                                   ),
-                                                   Container(
-                                                     alignment: Alignment.centerRight,
-                                                     padding: EdgeInsets.all(
-                                                       5),
-                                                     decoration: BoxDecoration(
-                                                       // border: Border(
-                                                       //   // top: BorderSide(
-                                                       //   //     color: Colors.grey),
-                                                       //   // bottom: BorderSide(
-                                                       //   //     color: Colors.grey),
-                                                       // ),
-                                                     ),
-                                                     // height: 35,
-                                                     // width: 80,
-                                                     child: Text(
-
-                                                       '370.00 L.E',
-                                                       style: TextStyle(
-                                                           fontSize: 14),
-                                                     ),
-                                                   ),
-                                                 ],
-                                               ),
-                                               TableRow(
-                                                 children: <Widget>[
-                                                   Container(
-                                                     padding: EdgeInsets.all(
-                                                           5),
-                                                     // height: 25,
-                                                     // width: 100,
-                                                     child: Text(
-                                                       'Total',
-                                                       style: TextStyle(
-                                                           fontSize: 12,
-                                                           fontWeight:
-                                                               FontWeight.bold),
-                                                     ),
-                                                   ),
-                                                   Container(
-                                                     alignment:Alignment.centerRight,
-                                                     padding: EdgeInsets.all(
-                                                         5),
-                                                     // height: 25,
-                                                     // width: 80,
-                                                     child: Text(
-                                                       '1720.00 L.E',
-                                                       style: TextStyle(
-                                                           fontSize: 14,
-                                                           fontWeight:
-                                                               FontWeight.bold,
-                                                           color: Colors.green),
-                                                     ),
-                                                   ),
-                                                 ],
-                                               ),
-                                             ],
-                                           ),
+                                            border: TableBorder(
+                                                horizontalInside: BorderSide(
+                                                    width: 1,
+                                                    color:
+                                                        Colors.grey.shade400)),
+                                            // defaultVerticalAlignment:
+                                            // TableCellVerticalAlignment
+                                            //     .middle,
+                                            children: <TableRow>[
+                                              TableRow(
+                                                children: <Widget>[
+                                                  Container(
+                                                    margin: EdgeInsets.all(5),
+                                                    // height: 25,
+                                                    // width: 100,
+                                                    child: Text(
+                                                      'Current Balance',
+                                                      style: TextStyle(
+                                                          height: 1.5,
+                                                          fontSize: 12),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    alignment:
+                                                        Alignment.centerRight,
+                                                    margin: EdgeInsets.all(5),
+                                                    // height: 25,
+                                                    // width: 80,
+                                                    child: Text(
+                                                      '1350.00 L.E',
+                                                      style: TextStyle(
+                                                          height: 1.5,
+                                                          fontSize: 14),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              TableRow(
+                                                children: <Widget>[
+                                                  Container(
+                                                    padding: EdgeInsets.all(5),
+                                                    decoration: BoxDecoration(
+                                                        // border: Border(
+                                                        //   top: BorderSide(
+                                                        //       color: Colors.grey),
+                                                        //   bottom: BorderSide(
+                                                        //       color: Colors.grey),
+                                                        // ),
+                                                        ),
+                                                    // height: 35,
+                                                    // width: 100,
+                                                    child: Text(
+                                                      'Recharge Balance',
+                                                      style: TextStyle(
+                                                          height: 1.5,
+                                                          fontSize: 12),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    alignment:
+                                                        Alignment.centerRight,
+                                                    padding: EdgeInsets.all(5),
+                                                    decoration: BoxDecoration(
+                                                        // border: Border(
+                                                        //   // top: BorderSide(
+                                                        //   //     color: Colors.grey),
+                                                        //   // bottom: BorderSide(
+                                                        //   //     color: Colors.grey),
+                                                        // ),
+                                                        ),
+                                                    // height: 35,
+                                                    // width: 80,
+                                                    child: Text(
+                                                      '370.00 L.E',
+                                                      style: TextStyle(
+                                                          height: 1.5,
+                                                          fontSize: 14),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              TableRow(
+                                                children: <Widget>[
+                                                  Container(
+                                                    padding: EdgeInsets.all(5),
+                                                    // height: 25,
+                                                    // width: 100,
+                                                    child: Text(
+                                                      'Total',
+                                                      style: TextStyle(
+                                                          height: 1.5,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    alignment:
+                                                        Alignment.centerRight,
+                                                    padding: EdgeInsets.all(5),
+                                                    // height: 25,
+                                                    // width: 80,
+                                                    child: Text(
+                                                      '1720.00 L.E',
+                                                      style: TextStyle(
+                                                          height: 1.5,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.green),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -289,7 +292,7 @@ class _RechargeWalletState extends State<RechargeWallet> {
                                       padding: EdgeInsets.all(10),
                                       width: double.infinity,
                                       decoration: BoxDecoration(
-                                        color: Color.fromRGBO(255,199,0,100),
+                                        color: Color.fromRGBO(255, 199, 0, 100),
                                         borderRadius: BorderRadius.circular(17),
                                       ),
                                       child: Center(
@@ -306,7 +309,8 @@ class _RechargeWalletState extends State<RechargeWallet> {
                                   children: [
                                     Text(
                                       'Amount',
-                                      style: TextStyle(fontSize: 10),
+                                      style:
+                                          TextStyle(height: 1.5, fontSize: 10),
                                     ),
                                     Container(
                                       padding: EdgeInsets.all(10),
@@ -335,12 +339,15 @@ class _RechargeWalletState extends State<RechargeWallet> {
                                       children: [
                                         Text(
                                           'To Phone Number ',
-                                          style: TextStyle(fontSize: 10),
+                                          style: TextStyle(
+                                              height: 1.5, fontSize: 10),
                                         ),
                                         Text(
                                           '*(Must be a member to receive your amount)',
                                           style: TextStyle(
-                                              fontSize: 10, color: Colors.red),
+                                              height: 1.5,
+                                              fontSize: 10,
+                                              color: Colors.red),
                                         ),
                                       ],
                                     ),
@@ -370,11 +377,12 @@ class _RechargeWalletState extends State<RechargeWallet> {
                                     Text(
                                       'The receiver will receive a SMS immediately after transaction completed successfully.',
                                       style: TextStyle(
-                                          fontSize: 10, color: Colors.grey),
+                                          height: 1.5,
+                                          fontSize: 10,
+                                          color: Colors.grey),
                                     ),
                                     GestureDetector(
-                                      onTap: () => 
-                                      showDialog<String>(
+                                      onTap: () => showDialog<String>(
                                         context: context,
                                         builder: (BuildContext context) =>
                                             AlertDialog(
@@ -422,11 +430,13 @@ class _RechargeWalletState extends State<RechargeWallet> {
                                                     Text(
                                                       'Your payment success',
                                                       style: TextStyle(
+                                                          height: 1.5,
                                                           fontSize: 16),
                                                     ),
                                                     Text(
                                                       'Your new balance has added to your wallet',
                                                       style: TextStyle(
+                                                          height: 1.5,
                                                           fontSize: 12,
                                                           color: Colors.grey),
                                                     ),
@@ -443,6 +453,7 @@ class _RechargeWalletState extends State<RechargeWallet> {
                                                 child: Text(
                                                   'OK',
                                                   style: TextStyle(
+                                                      height: 1.5,
                                                       color: Colors.red),
                                                 ),
                                               ),
@@ -456,7 +467,8 @@ class _RechargeWalletState extends State<RechargeWallet> {
                                         padding: EdgeInsets.all(10),
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                          color: Color.fromRGBO(255,199,0,100),
+                                          color:
+                                              Color.fromRGBO(255, 199, 0, 100),
                                           borderRadius:
                                               BorderRadius.circular(17),
                                         ),

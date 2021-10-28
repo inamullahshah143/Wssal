@@ -1,13 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:wassal_customer/design_pages/user/AddNewItem.dart';
 import 'package:wassal_customer/design_pages/user/popular.dart';
- 
 
 class Delivery extends StatefulWidget {
-  
-
   @override
   _DeliveryState createState() => _DeliveryState();
 }
@@ -22,7 +18,8 @@ class _DeliveryState extends State<Delivery> {
         children: [
           Text(
             'Popular Items',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                height: 1.5, fontSize: 16, fontWeight: FontWeight.bold),
           ),
           Container(
             width: double.infinity,
@@ -63,14 +60,14 @@ class _DeliveryState extends State<Delivery> {
                         Text(
                           'Mocha Cookie Cream',
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(height: 1.5, fontSize: 16),
                         ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               '\$4.99',
-                              style: TextStyle(color: Colors.red),
+                              style: TextStyle(height: 1.5, color: Colors.red),
                             ),
                             Container(
                               margin: EdgeInsets.symmetric(horizontal: 5),
@@ -92,7 +89,8 @@ class _DeliveryState extends State<Delivery> {
           Divider(),
           Text(
             'Our Menu',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                height: 1.5, fontSize: 16, fontWeight: FontWeight.bold),
           ),
           Container(
             width: double.infinity,
@@ -118,7 +116,8 @@ class _DeliveryState extends State<Delivery> {
           ),
           Text(
             'Hot Coffees',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                height: 1.5, fontSize: 16, fontWeight: FontWeight.bold),
           ),
           Container(
             width: double.infinity,
@@ -166,7 +165,8 @@ class _DeliveryState extends State<Delivery> {
                             children: [
                               Text(
                                 '${popular[i]["price"]}',
-                                style: TextStyle(color: Colors.red),
+                                style:
+                                    TextStyle(height: 1.5, color: Colors.red),
                               ),
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 5),
@@ -188,7 +188,8 @@ class _DeliveryState extends State<Delivery> {
           ),
           Text(
             'Frappuccino® Blended Beverages',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                height: 1.5, fontSize: 16, fontWeight: FontWeight.bold),
           ),
           Container(
             width: double.infinity,
@@ -236,7 +237,8 @@ class _DeliveryState extends State<Delivery> {
                             children: [
                               Text(
                                 '${popular[i]["price"]}',
-                                style: TextStyle(color: Colors.red),
+                                style:
+                                    TextStyle(height: 1.5, color: Colors.red),
                               ),
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 5),

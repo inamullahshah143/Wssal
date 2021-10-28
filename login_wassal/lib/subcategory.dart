@@ -145,6 +145,7 @@ class _SubcategoryState extends State<Subcategory> {
                                                     text:
                                                         "${element['average_rating']}",
                                                     style: TextStyle(
+                                                        height: 1.5,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                         fontSize: 14,
@@ -187,6 +188,7 @@ class _SubcategoryState extends State<Subcategory> {
                             child: Text(
                               "${element['categories']['name']}",
                               style: TextStyle(
+                                  height: 1.5,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 11,
                                   color: Colors.grey),
@@ -205,7 +207,9 @@ class _SubcategoryState extends State<Subcategory> {
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 16),
+                                    height: 1.5,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16),
                               ),
                             ),
                           ],
@@ -218,6 +222,7 @@ class _SubcategoryState extends State<Subcategory> {
                             TextSpan(
                               text: "Open",
                               style: TextStyle(
+                                  height: 1.5,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 12,
                                   color: Colors.green),
@@ -235,6 +240,7 @@ class _SubcategoryState extends State<Subcategory> {
                             TextSpan(
                               text: "${element['categories']['name']}",
                               style: TextStyle(
+                                  height: 1.5,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 12,
                                   color: Colors.grey),
@@ -266,6 +272,7 @@ class _SubcategoryState extends State<Subcategory> {
                                   TextSpan(
                                     text: "30-45 min",
                                     style: TextStyle(
+                                        height: 1.5,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 10,
                                         color: Colors.grey),
@@ -294,6 +301,7 @@ class _SubcategoryState extends State<Subcategory> {
                                   TextSpan(
                                     text: "\$ 20",
                                     style: TextStyle(
+                                        height: 1.5,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 10,
                                         color: Colors.grey),

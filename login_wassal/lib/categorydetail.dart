@@ -74,7 +74,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
     topSellerFuture = topSeller();
     nearByFuture = nearBy();
     freeDeliveryFuture = freeDelivery();
-    appbarHeight = 75.0;
+    appbarHeight = 60.0;
     dragButton = false;
     searchClickBtn = true;
     isRecomended = false;
@@ -186,6 +186,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                       TextOverflow.ellipsis,
                                                   maxLines: 1,
                                                   style: TextStyle(
+                                  
                                                     color: text1color,
                                                   ),
                                                 ),
@@ -210,7 +211,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                             setState(() {
                                               searchClickBtn = false;
                                               dragButton = true;
-                                              appbarHeight = 175.0;
+                                              appbarHeight = 160.0;
                                             });
                                           },
                                           icon: Icon(
@@ -242,7 +243,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                             ],
                           ),
                         ),
-                        appbarHeight >= 175
+                        appbarHeight >= 160
                             ? Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
@@ -321,7 +322,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                         IconButton(
                                           onPressed: () {
                                             setState(() {
-                                              appbarHeight = 525;
+                                              appbarHeight = 500;
                                             });
                                           },
                                           icon: Icon(
@@ -332,7 +333,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                       ],
                                     ),
                                   ),
-                                  appbarHeight == 525
+                                  appbarHeight == 500
                                       ? Padding(
                                           padding: EdgeInsets.symmetric(
                                               vertical: 10.0, horizontal: 25),
@@ -364,7 +365,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                   ),
                                                   Container(
                                                     //Add this to give height
-                                                    height: appbarHeight - 300,
+                                                    height: appbarHeight - 275,
                                                     child: TabBarView(
                                                       controller:
                                                           _tabController,
@@ -391,7 +392,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                     child: ElevatedButton(
                                                       onPressed: () {
                                                         setState(() {
-                                                          appbarHeight = 175.0;
+                                                          appbarHeight = 160.0;
                                                           returnedData =
                                                               FutureBuilder(
                                                             future:
@@ -448,6 +449,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                       child: Text(
                                                         "Complete",
                                                         style: TextStyle(
+                                        
                                                           fontSize: 12.0,
                                                           color:
                                                               Colors.grey[800],
@@ -478,7 +480,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                       setState(() {
                                         searchClickBtn = true;
                                         dragButton = false;
-                                        appbarHeight = 75.0;
+                                        appbarHeight = 60.0;
                                         returnedData = null;
                                       });
                                     },
@@ -785,6 +787,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
         Text(
           'Max Delivery Fee',
           style: TextStyle(
+
+
             fontSize: 14,
           ),
         ),
@@ -807,6 +811,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                   leftSuffix: Text(
                     '₤',
                     style: TextStyle(
+    
+    
                       fontSize: 10,
                       color: Colors.grey[500],
                     ),
@@ -814,6 +820,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                   rightSuffix: Text(
                     '₤',
                     style: TextStyle(
+    
+    
                       fontSize: 10,
                       color: Colors.grey[500],
                     ),
@@ -837,6 +845,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
         Text(
           'Price Range',
           style: TextStyle(
+
+
             fontSize: 14,
           ),
         ),
@@ -907,6 +917,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
             title: Text(
               'Recomended',
               style: TextStyle(
+
+
                 fontSize: 14,
               ),
             ),
@@ -936,6 +948,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
             title: Text(
               'Fast Delivery',
               style: TextStyle(
+
+
                 fontSize: 14,
               ),
             ),
@@ -965,6 +979,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
             title: Text(
               'Most Popular',
               style: TextStyle(
+
+
                 fontSize: 14,
               ),
             ),
@@ -1044,7 +1060,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                 maxLines: 1,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 12),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12),
                               ),
                             )
                           ],
@@ -1120,7 +1137,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               maxLines: 1,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 12),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12),
                             ),
                           )
                         ],
@@ -1239,6 +1257,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                           child: Text(
                             '${element['shop']['title']}',
                             style: TextStyle(
+            
+            
                               fontSize: 12,
                               color: Colors.grey[500],
                             ),
@@ -1251,6 +1271,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                       child: Text(
                         '${element['title']}',
                         style: TextStyle(
+        
+        
                           fontSize: 15.0,
                           fontWeight: FontWeight.w600,
                         ),
@@ -1267,6 +1289,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                   ? 'Open'
                                   : 'Close',
                               style: TextStyle(
+              
+              
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                                 color: element['shop']['open_close'] == 1
@@ -1394,6 +1418,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
             child: Text(
               'Featured',
               style: TextStyle(
+
+
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
               ),
@@ -1649,6 +1675,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
               child: Text(
                 'Promoted Shops',
                 style: TextStyle(
+
+
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
@@ -1786,6 +1814,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: TextStyle(
+              
+              
                                 fontWeight: FontWeight.w600,
                                 fontSize: 11,
                                 color: Colors.grey,
@@ -1802,7 +1832,10 @@ class _CategoryDetailState extends State<CategoryDetail> {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 16),
+          
+          
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
                       ),
                     ),
                     SingleChildScrollView(
@@ -1845,6 +1878,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                       child: Text(
                                         "${element['shop']['tags']}",
                                         style: TextStyle(
+                          
+                          
                                             fontWeight: FontWeight.w600,
                                             fontSize: 12,
                                             color: Colors.grey),
@@ -1953,6 +1988,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
               child: Text(
                 'Top Selling',
                 style: TextStyle(
+
+
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
@@ -2029,7 +2066,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 12),
+                        style: TextStyle(height: 1.5, fontSize: 12),
                       ),
                     ),
                   ],
@@ -2065,6 +2102,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
               child: Text(
                 'Top Seller',
                 style: TextStyle(
+
+
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
@@ -2156,6 +2195,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                             child: Text(
                               '${element['title']}',
                               style: TextStyle(
+              
+              
                                 fontSize: 12,
                                 color: Colors.grey[500],
                               ),
@@ -2169,6 +2210,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                       child: Text(
                         '${element['title']}',
                         style: TextStyle(
+        
+        
                           fontSize: 15.0,
                           fontWeight: FontWeight.w600,
                         ),
@@ -2184,6 +2227,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                               text:
                                   element['open_close'] == 1 ? 'Open' : 'Close',
                               style: TextStyle(
+              
+              
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                                 color: element['open_close'] == 1
@@ -2312,6 +2357,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
               child: Text(
                 'Nearby',
                 style: TextStyle(
+
+
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
@@ -2443,6 +2490,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                             child: Text(
                               "${element['user']['shop']['title']}",
                               style: TextStyle(
+              
+              
                                 fontWeight: FontWeight.w600,
                                 fontSize: 11,
                                 color: Colors.grey,
@@ -2459,7 +2508,10 @@ class _CategoryDetailState extends State<CategoryDetail> {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 16),
+          
+          
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
                       ),
                     ),
                     Padding(
@@ -2473,6 +2525,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                   ? 'Open'
                                   : 'Close',
                               style: TextStyle(
+              
+              
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                                 color:
@@ -2598,6 +2652,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
               child: Text(
                 'Free Delivery',
                 style: TextStyle(
+
+
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
@@ -2704,6 +2760,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                                 TextSpan(
                                                   text: "${element['status']}",
                                                   style: TextStyle(
+                                    
+                                    
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       fontSize: 14,
@@ -2765,7 +2823,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 16),
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16),
                               ),
                             ),
                           ],
@@ -2939,6 +2998,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                   children: [
                     Text(element['title'],
                         style: TextStyle(
+          
+          
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.black)),
@@ -2952,7 +3013,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                         element['tags'],
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(height: 1.5, color: Colors.grey),
                       ),
                     ],
                   ),
@@ -3000,6 +3061,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                   children: [
                     Text(element['title'],
                         style: TextStyle(
+          
+          
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.black)),
@@ -3020,7 +3083,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                         element['description'],
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(height: 1.5, color: Colors.grey),
                       ),
                     ],
                   ),
@@ -3098,6 +3161,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                     Text(
                       element['title'],
                       style: TextStyle(
+      
+      
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -3113,7 +3178,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                         element['tags'],
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(height: 1.5, color: Colors.grey),
                       ),
                     ],
                   ),

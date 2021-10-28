@@ -46,6 +46,7 @@ class NoInternetConnectionScreen extends StatelessWidget {
                             'Try Again',
                             textAlign: TextAlign.center,
                             style: TextStyle(
+                                height: 1.5,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),

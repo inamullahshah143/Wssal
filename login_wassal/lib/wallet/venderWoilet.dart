@@ -85,6 +85,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                       child: Text(
                         'Deposit Details',
                         style: TextStyle(
+                          height: 1.5,
                           color: text1color,
                           fontWeight: FontWeight.bold,
                           fontSize: 19,
@@ -143,6 +144,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                                         Text(
                                           'Enter amount to be deposited',
                                           style: TextStyle(
+                                            height: 1.5,
                                             color: text1color,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
@@ -221,6 +223,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                           child: Text(
                             "Deposit",
                             style: TextStyle(
+                              height: 1.5,
                               fontSize: 14.0,
                             ),
                           ),
@@ -253,6 +256,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                           child: Text(
                             "WithDraw",
                             style: TextStyle(
+                              height: 1.5,
                               fontSize: 14.0,
                             ),
                           ),
@@ -287,7 +291,10 @@ class _DriverWoiletState extends State<DriverWoilet> {
           Text(
             '\$$balance',
             style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 19),
+                height: 1.5,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 19),
           ),
           Text('NO Data Availabe')
         ];
@@ -311,6 +318,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                         child: Text(
                           'withdraw Details',
                           style: TextStyle(
+                              height: 1.5,
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 19),
@@ -338,6 +346,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
             Text(
               '\$$balance',
               style: TextStyle(
+                  height: 1.5,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 19),
@@ -356,6 +365,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
             Text(
               '\$$balance',
               style: TextStyle(
+                  height: 1.5,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 19),
@@ -369,7 +379,10 @@ class _DriverWoiletState extends State<DriverWoilet> {
         Text(
           '\$ 0.0',
           style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 19),
+              height: 1.5,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 19),
         ),
         Text('$e')
       ];
@@ -429,7 +442,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
         return Text('NO Data Availabe');
       }
     } catch (e) {
-   Navigator.of(context).pushReplacement(MaterialPageRoute(
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (_) => NoInternetConnectionScreen(
                 className: DriverWoilet(),
               )));

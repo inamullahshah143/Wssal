@@ -61,6 +61,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   Text(
                     '$storedName',
                     style: TextStyle(
+                        
+                        
                         color: Colors.black,
                         fontWeight: FontWeight.w100,
                         fontSize: 16),
@@ -68,6 +70,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   Text(
                     '$storedNumber',
                     style: TextStyle(
+                        
+                        
                         color: Colors.grey,
                         fontWeight: FontWeight.w100,
                         fontSize: 16),
@@ -98,6 +102,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Text(
                       'General',
                       style: TextStyle(
+                          
+                          
                           color: Colors.black,
                           fontWeight: FontWeight.w100,
                           fontSize: 16),
@@ -110,11 +116,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         ListTile(
                           onTap: () {
-                             showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    builder: (context) => AccountInfo(),
-                                  );
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (context) => AccountInfo(),
+                            );
                           },
                           leading: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -274,7 +280,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         //     children: [
                         //       Text(
                         //         ' @',
-                        //         style: TextStyle(
+                        //         style: TextStyle( 
                         //             fontSize: 18,
                         //             fontWeight: FontWeight.bold,
                         //             color: Colors.grey),
@@ -313,7 +319,7 @@ class _ProfilePageState extends State<ProfilePage> {
             //         padding: EdgeInsets.all(20),
             //         child: Text(
             //           'Notifications',
-            //           style: TextStyle(
+            //           style: TextStyle( 
             //               color: Colors.black,
             //               fontWeight: FontWeight.w100,
             //               fontSize: 16),
@@ -401,7 +407,7 @@ class _ProfilePageState extends State<ProfilePage> {
             //         padding: EdgeInsets.all(20),
             //         child: Text(
             //           'More',
-            //           style: TextStyle(
+            //           style: TextStyle( 
             //               color: Colors.black,
             //               fontWeight: FontWeight.w100,
             //               fontSize: 16),
@@ -467,6 +473,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Text(
                   "Logout",
                   style: TextStyle(
+                    
+                    
                     fontSize: 14.0,
                     color: Colors.grey[800],
                   ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'add_cards.dart';
 
-
 class CreditCards extends StatefulWidget {
   const CreditCards({Key key}) : super(key: key);
 
@@ -17,7 +16,7 @@ class _CreditCardsState extends State<CreditCards> {
       // height: MediaQuery.of(context).size.height / 1.1,
       color: Color(0xff757575),
       child: Container(
-        height: MediaQuery.of(context).size.height-150,
+        height: MediaQuery.of(context).size.height - 150,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -43,6 +42,7 @@ class _CreditCardsState extends State<CreditCards> {
               child: Text(
                 'Payment Methods',
                 style: TextStyle(
+                    height: 1.5,
                     color: Colors.black,
                     fontWeight: FontWeight.w100,
                     fontSize: 16),
@@ -58,7 +58,8 @@ class _CreditCardsState extends State<CreditCards> {
                 children: [
                   Text(
                     'Credit Cards',
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                    style: TextStyle(
+                        height: 1.5, color: Colors.grey, fontSize: 14),
                   ),
                   Container(
                     // margin: EdgeInsets.only(bottom: 20),
@@ -102,7 +103,8 @@ class _CreditCardsState extends State<CreditCards> {
                   ),
                   Text(
                     'Wallet Balance',
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                    style: TextStyle(
+                        height: 1.5, color: Colors.grey, fontSize: 14),
                   ),
                   Container(
                     // margin: EdgeInsets.only(top: 20),
@@ -148,7 +150,7 @@ class _CreditCardsState extends State<CreditCards> {
                       padding: EdgeInsets.all(10),
                       width: double.infinity,
                       decoration: BoxDecoration(
-                       color: Color.fromRGBO(255,199,0,100),
+                        color: Color.fromRGBO(255, 199, 0, 100),
                         borderRadius: BorderRadius.circular(17),
                       ),
                       child: Center(

@@ -56,12 +56,15 @@ class _CustomOrderDetailState extends State<CustomOrderDetail> {
                     children: [
                       Text(
                         "Hello,",
-                        style: TextStyle(color: Colors.grey, fontSize: 16),
+                        style: TextStyle(
+                            height: 1.5, color: Colors.grey, fontSize: 16),
                       ),
                       Text(
                         "$storedName",
                         style: TextStyle(
-                            color: Colors.grey.shade700, fontSize: 20),
+                            height: 1.5,
+                            color: Colors.grey.shade700,
+                            fontSize: 20),
                       ),
                     ],
                   ),
@@ -176,6 +179,7 @@ Future<Widget> customOrderDetail(BuildContext context) async {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
+                        height: 1.5,
                         fontWeight: FontWeight.normal,
                         fontSize: 12,
                       ),
@@ -185,6 +189,7 @@ Future<Widget> customOrderDetail(BuildContext context) async {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
+                        height: 1.5,
                         fontWeight: FontWeight.normal,
                         fontSize: 12,
                       ),
@@ -207,10 +212,10 @@ Future<Widget> customOrderDetail(BuildContext context) async {
       );
     }
   } on Exception catch (e) {
-     Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => NoInternetConnectionScreen(
-                className: CustomOrderDetail(),
-              )));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (_) => NoInternetConnectionScreen(
+              className: CustomOrderDetail(),
+            )));
   }
 }
 
@@ -224,15 +229,16 @@ getOrderDetails(BuildContext context, int id) async {
       builder: (_) => AlertDialog(
         title: Text('Order No: ${data['order_no']}'),
         content: Container(
-          height: MediaQuery.of(context).size.height / 2,
           width: MediaQuery.of(context).size.width,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Pickup Location:',
                 style: TextStyle(
+                  height: 1.5,
                   color: themeSecondaryColor,
                   fontWeight: FontWeight.w500,
                 ),
@@ -244,6 +250,7 @@ getOrderDetails(BuildContext context, int id) async {
               Text(
                 'Dropoff Location:',
                 style: TextStyle(
+                  height: 1.5,
                   color: themeSecondaryColor,
                   fontWeight: FontWeight.w500,
                 ),
@@ -255,6 +262,7 @@ getOrderDetails(BuildContext context, int id) async {
               Text(
                 'Distance',
                 style: TextStyle(
+                  height: 1.5,
                   color: themeSecondaryColor,
                   fontWeight: FontWeight.w500,
                 ),
@@ -266,6 +274,7 @@ getOrderDetails(BuildContext context, int id) async {
               Text(
                 'Estimated Time:',
                 style: TextStyle(
+                  height: 1.5,
                   color: themeSecondaryColor,
                   fontWeight: FontWeight.w500,
                 ),
@@ -277,6 +286,7 @@ getOrderDetails(BuildContext context, int id) async {
               Text(
                 'Estimated Price:',
                 style: TextStyle(
+                  height: 1.5,
                   color: themeSecondaryColor,
                   fontWeight: FontWeight.w500,
                 ),
@@ -292,6 +302,7 @@ getOrderDetails(BuildContext context, int id) async {
                         Text(
                           'Driver Name',
                           style: TextStyle(
+                            height: 1.5,
                             color: themeSecondaryColor,
                             fontWeight: FontWeight.w500,
                           ),
@@ -304,6 +315,7 @@ getOrderDetails(BuildContext context, int id) async {
                         Text(
                           'Vehicle ID',
                           style: TextStyle(
+                            height: 1.5,
                             color: themeSecondaryColor,
                             fontWeight: FontWeight.w500,
                           ),
@@ -341,6 +353,7 @@ getOrderDetails(BuildContext context, int id) async {
                         Text(
                           'Order Status',
                           style: TextStyle(
+                            height: 1.5,
                             color: themeSecondaryColor,
                             fontWeight: FontWeight.w500,
                           ),
@@ -388,6 +401,7 @@ Future<Widget> customActiveOrderDetail(BuildContext context) async {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
+                        height: 1.5,
                         fontWeight: FontWeight.normal,
                         fontSize: 12,
                       ),
@@ -397,6 +411,7 @@ Future<Widget> customActiveOrderDetail(BuildContext context) async {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: TextStyle(
+                        height: 1.5,
                         fontWeight: FontWeight.normal,
                         fontSize: 12,
                       ),

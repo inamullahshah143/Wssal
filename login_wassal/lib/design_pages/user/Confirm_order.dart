@@ -64,7 +64,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     padding: const EdgeInsets.only(left: 75.0),
                     child: Text(
                       "Confirm Order",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(height: 1.5, fontSize: 20),
                     ),
                   )
                 ],
@@ -180,11 +180,13 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     ),
                     Text(
                       "Ahmed Khalid ",
-                      style: TextStyle(color: Colors.black, fontSize: 12),
+                      style: TextStyle(
+                          height: 1.5, color: Colors.black, fontSize: 12),
                     ),
                     Text(
                       "Ends with 7009 ",
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
+                      style: TextStyle(
+                          height: 1.5, color: Colors.grey, fontSize: 12),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0),
@@ -224,11 +226,13 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                       ),
                       Text(
                         "Ahmed Khalid ",
-                        style: TextStyle(color: Colors.black, fontSize: 12),
+                        style: TextStyle(
+                            height: 1.5, color: Colors.black, fontSize: 12),
                       ),
                       Text(
                         "Ends with 1433 ",
-                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                        style: TextStyle(
+                            height: 1.5, color: Colors.grey, fontSize: 12),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 15.0),
@@ -264,7 +268,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   },
                   child: Text(
                     "Add New Card",
-                    style: TextStyle(fontSize: 14, color: Colors.red),
+                    style:
+                        TextStyle(height: 1.5, fontSize: 14, color: Colors.red),
                   ),
                 ),
               ),
@@ -272,7 +277,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                 padding: const EdgeInsets.only(top: 15.0),
                 child: Text(
                   "Use Wallet Balance?",
-                  style: TextStyle(fontSize: 17),
+                  style: TextStyle(height: 1.5, fontSize: 17),
                 ),
               ),
               Divider(
@@ -297,7 +302,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                         Padding(
                             padding: const EdgeInsets.only(left: 15.0),
                             child: Text("45.00 LE",
-                                style: TextStyle(fontSize: 17))),
+                                style: TextStyle(height: 1.5, fontSize: 17))),
                         Padding(
                           padding: const EdgeInsets.only(left: 120.0),
                           child: RoundCheckBox(
@@ -319,7 +324,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                 padding: const EdgeInsets.only(top: 17.0),
                 child: Text(
                   "Use Coupon?",
-                  style: TextStyle(fontSize: 17),
+                  style: TextStyle(height: 1.5, fontSize: 17),
                 ),
               ),
               Divider(
@@ -407,7 +412,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     padding: const EdgeInsets.only(left: 3.0),
                     child: Text(
                       "Domino's",
-                      style: TextStyle(fontSize: 17),
+                      style: TextStyle(height: 1.5, fontSize: 17),
                     ),
                   )
                 ],
@@ -443,7 +448,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                         "Prime Beef - Pizza Beautiful",
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: TextStyle(fontSize: 14),
+                        style: TextStyle(height: 1.5, fontSize: 14),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
@@ -479,7 +484,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                                   ),
                                   Text(
                                     "$_itemCount",
-                                    style: TextStyle(fontSize: 12),
+                                    style: TextStyle(height: 1.5, fontSize: 12),
                                   ),
                                   Container(
                                     height: 20,
@@ -506,6 +511,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                               child: Text(
                                 "\$ ${double.parse((item1).toStringAsFixed(2))}",
                                 style: TextStyle(
+                                  height: 1.5,
                                   color: Color.fromRGBO(223, 51, 19, 1),
                                 ),
                               ),
@@ -544,7 +550,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                         "Prime Beef - Pizza Beautiful",
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: TextStyle(fontSize: 14),
+                        style: TextStyle(height: 1.5, fontSize: 14),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
@@ -581,7 +587,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                                     ),
                                     Text(
                                       "$_itemCount2",
-                                      style: TextStyle(fontSize: 12),
+                                      style:
+                                          TextStyle(height: 1.5, fontSize: 12),
                                     ),
                                     Container(
                                       height: 20,
@@ -610,6 +617,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                               child: Text(
                                 "\$ ${double.parse((item2).toStringAsFixed(2))}",
                                 style: TextStyle(
+                                  height: 1.5,
                                   color: Color.fromRGBO(223, 51, 19, 1),
                                 ),
                               ),
@@ -690,6 +698,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   Text(
                     "\$ ${double.parse((total).toStringAsFixed(2))}",
                     style: TextStyle(
+                      height: 1.5,
                       color: Color.fromRGBO(223, 51, 19, 1),
                     ),
                   ),
@@ -723,7 +732,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                       padding: const EdgeInsets.only(left: 25.0, top: 20),
                       child: Text(
                         "Delivery to",
-                        style: TextStyle(fontSize: 22),
+                        style: TextStyle(height: 1.5, fontSize: 22),
                       ),
                     ),
                   ],
@@ -762,13 +771,14 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                             children: [
                               Text(
                                 "Mubeen Ul Haq",
-                                style: TextStyle(fontSize: 17),
+                                style: TextStyle(height: 1.5, fontSize: 17),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 5.0),
                                 child: Text(
                                   "(92) 323 0486821",
-                                  style: TextStyle(color: Colors.grey),
+                                  style: TextStyle(
+                                      height: 1.5, color: Colors.grey),
                                 ),
                               ),
                             ],
@@ -788,6 +798,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                                 Text(
                                   "1.5 Km",
                                   style: TextStyle(
+                                    height: 1.5,
                                     color: Colors.grey,
                                   ),
                                 )
@@ -830,7 +841,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
             //         ),
             //         Text(
             //           "Apple Pay",
-            //           style: TextStyle(color: Colors.white, fontSize: 17,fontWeight:FontWeight.bold),
+            //           style: TextStyle( height: 1.5,color: Colors.white, fontSize: 17,fontWeight:FontWeight.bold),
             //         )
             //       ],
             //     ),
@@ -882,12 +893,14 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                               children: [
                                 Text(
                                   'Order Success!',
-                                  style: TextStyle(fontSize: 17),
+                                  style: TextStyle(height: 1.5, fontSize: 17),
                                 ),
                                 Text(
                                   'Your Order is Placed',
                                   style: TextStyle(
-                                      fontSize: 13, color: Colors.grey),
+                                      height: 1.5,
+                                      fontSize: 13,
+                                      color: Colors.grey),
                                 ),
                               ],
                             ),
@@ -900,7 +913,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                             onPressed: () => Navigator.pop(context, 'OK'),
                             child: Text(
                               'OK',
-                              style: TextStyle(color: Colors.red),
+                              style: TextStyle(height: 1.5, color: Colors.red),
                             ),
                           ),
                         ),
@@ -915,6 +928,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   child: Text(
                     "Place Order",
                     style: TextStyle(
+                        height: 1.5,
                         color: Colors.black,
                         fontSize: 17,
                         fontWeight: FontWeight.bold),

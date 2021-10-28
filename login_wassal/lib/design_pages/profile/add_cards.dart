@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'card_details.dart';
 
-
 class AddCards extends StatefulWidget {
   const AddCards({Key key}) : super(key: key);
 
@@ -42,6 +41,7 @@ class _AddCardsState extends State<AddCards> {
               child: Text(
                 'Payment Methods',
                 style: TextStyle(
+                    height: 1.5,
                     color: Colors.black,
                     fontWeight: FontWeight.w100,
                     fontSize: 16),
@@ -61,11 +61,13 @@ class _AddCardsState extends State<AddCards> {
                   ),
                   Text(
                     'Add new Payment',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     'It looks like you do not have a credit or debit card yet. Please add your cards easily 😊',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 14, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                 ],

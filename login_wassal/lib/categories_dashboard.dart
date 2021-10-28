@@ -3,6 +3,7 @@ import 'package:flutter_alert/flutter_alert.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:wassal_customer/PUSHER/CustomOrderDetails.dart';
 import 'package:wassal_customer/numberlogin.dart';
+import 'package:wassal_customer/special_offers.dart';
 import 'Profile.dart';
 import 'categories_shop.dart';
 import 'categorydetail.dart';
@@ -41,9 +42,11 @@ class _CategoryDashboardState extends State<CategoryDashboard> {
                 )
               : bottomIndex == 2
                   ? CustomOrderDetail()
-                  : bottomIndex == 4
-                      ? ProfilePage()
-                      : Container(),
+                  : bottomIndex == 3
+                      ? SpecialOffers()
+                      : bottomIndex == 4
+                          ? ProfilePage()
+                          : Container(),
       bottomNavigationBar: Container(
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
@@ -113,7 +116,10 @@ class _CategoryDashboardState extends State<CategoryDashboard> {
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.tag,size: 18,),
+              icon: Icon(
+                FontAwesomeIcons.tag,
+                size: 18,
+              ),
               label: '',
             ),
             BottomNavigationBarItem(

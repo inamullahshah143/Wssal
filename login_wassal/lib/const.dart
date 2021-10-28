@@ -120,6 +120,7 @@ getDashboardAppbar(context, text) {
         Text(
           'Delivery to',
           style: TextStyle(
+            height: 1.5,
             color: themeSecondaryColor,
             fontWeight: FontWeight.w400,
             fontSize: 14,
@@ -141,6 +142,7 @@ getDashboardAppbar(context, text) {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: TextStyle(
+                      height: 1.5,
                       color: text1color,
                       fontSize: 14,
                       fontWeight: FontWeight.w400,

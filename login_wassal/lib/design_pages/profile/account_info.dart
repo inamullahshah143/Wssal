@@ -39,6 +39,7 @@ class _AccountInfoState extends State<AccountInfo> {
               child: Text(
                 'Account Information',
                 style: TextStyle(
+                    height: 1.5,
                     color: Colors.black,
                     fontWeight: FontWeight.w100,
                     fontSize: 16),
@@ -54,10 +55,11 @@ class _AccountInfoState extends State<AccountInfo> {
                 children: [
                   Text(
                     'Full Name',
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                    style: TextStyle(
+                        height: 1.5, color: Colors.grey, fontSize: 14),
                   ),
                   Container(
-                      alignment: Alignment.center,
+                    alignment: Alignment.center,
                     width: double.infinity,
                     height: 50,
                     // padding: EdgeInsets.all(10),
@@ -86,7 +88,8 @@ class _AccountInfoState extends State<AccountInfo> {
                   ),
                   Text(
                     'Email Address',
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                    style: TextStyle(
+                        height: 1.5, color: Colors.grey, fontSize: 14),
                   ),
                   Container(
                     alignment: Alignment.center,
@@ -118,7 +121,8 @@ class _AccountInfoState extends State<AccountInfo> {
                   ),
                   Text(
                     'Phone Number',
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                    style: TextStyle(
+                        height: 1.5, color: Colors.grey, fontSize: 14),
                   ),
                   Container(
                     alignment: Alignment.center,
@@ -147,11 +151,13 @@ class _AccountInfoState extends State<AccountInfo> {
                   ),
                   Text(
                     '* Phone Number Cannot be changed.',
-                    style: TextStyle(fontSize: 11, color: Colors.grey),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 11, color: Colors.grey),
                   ),
                   Text(
                     '  Contact Support for more information',
-                    style: TextStyle(fontSize: 11, color: Colors.grey),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 11, color: Colors.grey),
                   ),
                   Container(
                     height: 60,
@@ -159,7 +165,7 @@ class _AccountInfoState extends State<AccountInfo> {
                     padding: EdgeInsets.all(10),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: Color.fromRGBO(255,199,0,100),
+                      color: Color.fromRGBO(255, 199, 0, 100),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(

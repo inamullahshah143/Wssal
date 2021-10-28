@@ -88,6 +88,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                       child: Text(
                         'Account Information',
                         style: TextStyle(
+                            height: 1.5,
                             color: Colors.black,
                             fontWeight: FontWeight.w100,
                             fontSize: 16),
@@ -106,7 +107,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                   children: [
                     Text(
                       'Name',
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(height: 1.5, fontSize: 14),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -140,7 +141,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                     ),
                     Text(
                       'Company',
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(height: 1.5, fontSize: 14),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -174,7 +175,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                     ),
                     Text(
                       'Address',
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(height: 1.5, fontSize: 14),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -208,7 +209,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                     ),
                     Text(
                       'City',
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(height: 1.5, fontSize: 14),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -242,7 +243,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                     ),
                     Text(
                       'Country',
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(height: 1.5, fontSize: 14),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -276,7 +277,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                     ),
                     Text(
                       'Postal Code',
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(height: 1.5, fontSize: 14),
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -311,6 +312,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                     Text(
                       'Phone',
                       style: TextStyle(
+                        height: 1.5,
                         fontSize: 14,
                       ),
                     ),
@@ -347,6 +349,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                     Text(
                       'Location (Coordinates)',
                       style: TextStyle(
+                        height: 1.5,
                         fontSize: 14,
                       ),
                     ),
@@ -362,6 +365,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                                         child: Text(
                                           "Latitude:",
                                           style: TextStyle(
+                                              height: 1.5,
                                               fontWeight: FontWeight.w500,
                                               fontSize: 16),
                                         )),
@@ -369,7 +373,8 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                                       margin: EdgeInsets.all(10),
                                       child: Text(
                                         "$lat",
-                                        style: TextStyle(fontSize: 16),
+                                        style: TextStyle(
+                                            height: 1.5, fontSize: 16),
                                       ),
                                     )
                                   ],
@@ -381,6 +386,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                                       child: Text(
                                         "Latitude:",
                                         style: TextStyle(
+                                          height: 1.5,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 16,
                                         ),
@@ -390,7 +396,8 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                                       margin: EdgeInsets.all(10),
                                       child: Text(
                                         "$lng",
-                                        style: TextStyle(fontSize: 16),
+                                        style: TextStyle(
+                                            height: 1.5, fontSize: 16),
                                       ),
                                     )
                                   ],
@@ -475,6 +482,7 @@ class _AddUpdateBillingState extends State<AddUpdateBilling> {
                         child: Text(
                           "Submit",
                           style: TextStyle(
+                            height: 1.5,
                             fontSize: 14.0,
                             color: Colors.grey[800],
                           ),

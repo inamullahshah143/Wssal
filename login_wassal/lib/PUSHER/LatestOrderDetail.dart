@@ -55,12 +55,15 @@ class _LatestOrderDetailState extends State<LatestOrderDetail> {
                     children: [
                       Text(
                         "Hello,",
-                        style: TextStyle(color: Colors.grey, fontSize: 16),
+                        style: TextStyle(
+                            height: 1.5, color: Colors.grey, fontSize: 16),
                       ),
                       Text(
                         "$storedName",
                         style: TextStyle(
-                            color: Colors.grey.shade700, fontSize: 20),
+                            height: 1.5,
+                            color: Colors.grey.shade700,
+                            fontSize: 20),
                       ),
                     ],
                   ),
@@ -105,7 +108,7 @@ Future<Widget> latestOrderDetail(BuildContext context) async {
         headers: {'Authorization': 'Bearer $loginToken'});
     if (json.decode(response.body)['status'] == 200) {
       Map data = json.decode(response.body)['order'];
-    
+
       return Column(
         children: [
           Container(
@@ -122,7 +125,8 @@ Future<Widget> latestOrderDetail(BuildContext context) async {
                       margin: EdgeInsets.all(10),
                       child: Text(
                         "Order No",
-                        style: TextStyle(fontWeight: FontWeight.w500),
+                        style:
+                            TextStyle(height: 1.5, fontWeight: FontWeight.w500),
                       )),
                   Container(
                       margin: EdgeInsets.all(10),
@@ -132,7 +136,8 @@ Future<Widget> latestOrderDetail(BuildContext context) async {
                   Container(
                       margin: EdgeInsets.all(10),
                       child: Text("Grand Total",
-                          style: TextStyle(fontWeight: FontWeight.w500))),
+                          style: TextStyle(
+                              height: 1.5, fontWeight: FontWeight.w500))),
                   Container(
                       margin: EdgeInsets.all(10),
                       child: Text("${data['grand_total']}")),
@@ -141,7 +146,8 @@ Future<Widget> latestOrderDetail(BuildContext context) async {
                   Container(
                       margin: EdgeInsets.all(10),
                       child: Text("Payment Method",
-                          style: TextStyle(fontWeight: FontWeight.w500))),
+                          style: TextStyle(
+                              height: 1.5, fontWeight: FontWeight.w500))),
                   Container(
                       margin: EdgeInsets.all(10),
                       child: Text("${data['payment_method']}")),
@@ -150,7 +156,8 @@ Future<Widget> latestOrderDetail(BuildContext context) async {
                   Container(
                       margin: EdgeInsets.all(10),
                       child: Text("Order Status",
-                          style: TextStyle(fontWeight: FontWeight.w500))),
+                          style: TextStyle(
+                              height: 1.5, fontWeight: FontWeight.w500))),
                   Container(
                     margin: EdgeInsets.all(10),
                     child: Text("${getStatus({
@@ -186,7 +193,8 @@ Future<Widget> latestOrderDetail(BuildContext context) async {
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Assigned",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               )),
                           Container(
                             margin: EdgeInsets.all(10),
@@ -227,10 +235,10 @@ Future<Widget> latestOrderDetail(BuildContext context) async {
       return Center(child: Text("Order Not Found"));
     }
   } on Exception catch (e) {
-     Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => NoInternetConnectionScreen(
-                className: LatestOrderDetail(),
-              )));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (_) => NoInternetConnectionScreen(
+              className: LatestOrderDetail(),
+            )));
   }
 }
 

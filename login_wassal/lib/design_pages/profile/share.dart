@@ -40,6 +40,7 @@ class _InviteFriendState extends State<InviteFriend> {
               child: Text(
                 'Refer & Earn',
                 style: TextStyle(
+                    height: 1.5,
                     color: Colors.black,
                     fontWeight: FontWeight.w100,
                     fontSize: 16),
@@ -67,11 +68,13 @@ class _InviteFriendState extends State<InviteFriend> {
                   ),
                   Text(
                     'Refer a Freind',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     'Share your promo code with a friend and you both get LE15.',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 14, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
@@ -96,8 +99,10 @@ class _InviteFriendState extends State<InviteFriend> {
                       child: Center(
                         child: Text(
                           'WSSAL 15',
-                          style:
-                              TextStyle(fontSize: 24, color: Colors.redAccent),
+                          style: TextStyle(
+                              height: 1.5,
+                              fontSize: 24,
+                              color: Colors.redAccent),
                         ),
                       ),
                     ),
@@ -105,7 +110,7 @@ class _InviteFriendState extends State<InviteFriend> {
                   Container(
                     margin: EdgeInsets.only(top: 100),
                     decoration: BoxDecoration(
-                      color: Color.fromRGBO(255,199,0,100),
+                      color: Color.fromRGBO(255, 199, 0, 100),
                       borderRadius: BorderRadius.all(
                         Radius.circular(20.0),
                       ),

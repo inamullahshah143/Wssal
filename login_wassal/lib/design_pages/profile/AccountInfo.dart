@@ -62,6 +62,7 @@ class _AccountInfoState extends State<AccountInfo> {
                         child: Text(
                           'Account Information',
                           style: TextStyle(
+                              height: 1.5,
                               color: Colors.black,
                               fontWeight: FontWeight.w100,
                               fontSize: 16),
@@ -80,7 +81,7 @@ class _AccountInfoState extends State<AccountInfo> {
                     children: [
                       Text(
                         'Name',
-                        style: TextStyle(fontSize: 14),
+                        style: TextStyle(height: 1.5, fontSize: 14),
                       ),
                       Container(
                         alignment: Alignment.center,
@@ -115,7 +116,8 @@ class _AccountInfoState extends State<AccountInfo> {
                         padding: EdgeInsets.all(12.5),
                         child: Text(
                           "Phone Number",
-                          style: TextStyle(color: Colors.grey, fontSize: 14.0),
+                          style: TextStyle(
+                              height: 1.5, color: Colors.grey, fontSize: 14.0),
                         ),
                       ),
                       TextFormField(
@@ -127,6 +129,7 @@ class _AccountInfoState extends State<AccountInfo> {
                         },
                         keyboardType: TextInputType.phone,
                         style: TextStyle(
+                          height: 1.5,
                           fontSize: 14.0,
                         ),
                         onChanged: (value) {
@@ -186,10 +189,13 @@ class _AccountInfoState extends State<AccountInfo> {
                               title: "Success",
                               body: "Account Info Updated Successfully",
                               actions: [
-                                AlertAction(text: "ok", onPressed: () {
-                                   Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(builder: (_) => ProfilePage()));
-                                }),
+                                AlertAction(
+                                    text: "ok",
+                                    onPressed: () {
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (_) => ProfilePage()));
+                                    }),
                               ]);
                         }
                       });
@@ -203,6 +209,7 @@ class _AccountInfoState extends State<AccountInfo> {
                     child: Text(
                       "Submit",
                       style: TextStyle(
+                        height: 1.5,
                         fontSize: 14.0,
                         color: Colors.grey[800],
                       ),

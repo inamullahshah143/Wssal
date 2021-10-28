@@ -44,6 +44,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                               Text(
                                 "Order Details",
                                 style: TextStyle(
+                                  height: 1.5,
                                   color: Colors.grey.shade800,
                                 ),
                               )
@@ -58,7 +59,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                               Text(
                                 "#436789237 (04 August 2021)",
                                 style: TextStyle(
-                                    color: Colors.grey.shade500, fontSize: 13),
+                                    height: 1.5,
+                                    color: Colors.grey.shade500,
+                                    fontSize: 13),
                               )
                             ],
                           ),
@@ -70,7 +73,6 @@ class _OrderDetailsState extends State<OrderDetails> {
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Row(
-                            
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               RichText(
@@ -89,6 +91,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     TextSpan(
                                       text: " Home",
                                       style: TextStyle(
+                                        height: 1.5,
                                         color: Colors.grey.shade800,
                                       ),
                                     ),
@@ -111,6 +114,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     TextSpan(
                                       text: " Cash",
                                       style: TextStyle(
+                                        height: 1.5,
                                         color: Colors.grey.shade800,
                                       ),
                                     ),
@@ -133,6 +137,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     TextSpan(
                                       text: " Delivered",
                                       style: TextStyle(
+                                        height: 1.5,
                                         color: Colors.grey.shade800,
                                       ),
                                     ),
@@ -164,6 +169,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                               Text(
                                 "Domino's",
                                 style: TextStyle(
+                                  height: 1.5,
                                   color: Colors.grey.shade800,
                                 ),
                               )
@@ -209,6 +215,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                               child: Text(
                                                 "\$5.99",
                                                 style: TextStyle(
+                                                  height: 1.5,
                                                   color: Color.fromRGBO(
                                                       222, 53, 11, 1),
                                                 ),
@@ -261,6 +268,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                               child: Text(
                                                 "\$5.99",
                                                 style: TextStyle(
+                                                  height: 1.5,
                                                   color: Color.fromRGBO(
                                                       222, 53, 11, 1),
                                                 ),
@@ -282,10 +290,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                               children: [
                                 Text("Subtotal (2 items)",
                                     style: TextStyle(
+                                        height: 1.5,
                                         color: Colors.grey.shade700,
                                         fontSize: 14)),
                                 Text("\$9.98",
                                     style: TextStyle(
+                                        height: 1.5,
                                         color: Colors.grey.shade700,
                                         fontSize: 14))
                               ]),
@@ -297,10 +307,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                               children: [
                                 Text("Delivery",
                                     style: TextStyle(
+                                        height: 1.5,
                                         color: Colors.grey.shade700,
                                         fontSize: 14)),
                                 Text("\$0.00",
                                     style: TextStyle(
+                                        height: 1.5,
                                         color: Colors.grey.shade700,
                                         fontSize: 14))
                               ]),
@@ -312,10 +324,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                               children: [
                                 Text("Subtotal (2 items)",
                                     style: TextStyle(
+                                        height: 1.5,
                                         color: Colors.grey.shade700,
                                         fontSize: 14)),
                                 Text("-\$1.00",
                                     style: TextStyle(
+                                        height: 1.5,
                                         color: Colors.grey.shade700,
                                         fontSize: 14))
                               ]),
@@ -327,10 +341,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                               children: [
                                 Text("Total",
                                     style: TextStyle(
+                                        height: 1.5,
                                         color: Colors.grey.shade700,
                                         fontSize: 16)),
                                 Text("\$9.98",
                                     style: TextStyle(
+                                        height: 1.5,
                                         color: Color.fromRGBO(222, 53, 11, 1),
                                         fontSize: 16))
                               ]),

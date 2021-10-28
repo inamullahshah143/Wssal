@@ -117,6 +117,7 @@ Future<Widget> allShops(BuildContext context) async {
                                 child: Text(
                                   '${element['title']}',
                                   style: TextStyle(
+                                    height: 1.5,
                                     fontSize: 20,
                                   ),
                                 ),
@@ -141,6 +142,7 @@ Future<Widget> allShops(BuildContext context) async {
                                   child: Text(
                                     'Promoted',
                                     style: TextStyle(
+                                      height: 1.5,
                                       fontSize: 10,
                                     ),
                                   ),
@@ -159,6 +161,7 @@ Future<Widget> allShops(BuildContext context) async {
                                         ? 'Open'
                                         : 'Close',
                                     style: TextStyle(
+                                      height: 1.5,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
                                       color: element['open_close'] == 1
@@ -179,6 +182,7 @@ Future<Widget> allShops(BuildContext context) async {
                                   TextSpan(
                                     text: "${element['tags']}",
                                     style: TextStyle(
+                                        height: 1.5,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 12,
                                         color: Colors.grey),
@@ -215,6 +219,7 @@ Future<Widget> allShops(BuildContext context) async {
                                         TextSpan(
                                           text: "4.8",
                                           style: TextStyle(
+                                            height: 1.5,
                                             fontWeight: FontWeight.w600,
                                             fontSize: 12,
                                             color: Colors.white,

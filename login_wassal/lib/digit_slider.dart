@@ -763,7 +763,7 @@ class _DigitFlutterSliderState extends State<DigitFlutterSlider>
                 border: Border.all(color: Colors.black12, width: 0.5),
                 color: Color(0xffffffff)));
     _tooltipData.textStyle = widgetTooltip.textStyle ??
-        TextStyle(fontSize: 12, color: Colors.black38);
+        TextStyle(height: 1.5, fontSize: 12, color: Colors.black38);
     _tooltipData.leftPrefix = widgetTooltip.leftPrefix ?? null;
     _tooltipData.leftSuffix = widgetTooltip.leftSuffix ?? null;
     _tooltipData.rightPrefix = widgetTooltip.rightPrefix ?? null;

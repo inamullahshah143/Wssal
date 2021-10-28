@@ -31,8 +31,11 @@ class _SetupLocationState extends State<SetupLocation> {
                     padding: const EdgeInsets.only(top: 50.0),
                     child: Text(
                       "Find Resturant Near you",
-                      style:
-                          TextStyle(color: Colors.grey.shade700, fontSize: 25),
+                      style: TextStyle(
+                          
+                          
+                          color: Colors.grey.shade700,
+                          fontSize: 25),
                     ),
                   ),
                   Padding(
@@ -41,8 +44,11 @@ class _SetupLocationState extends State<SetupLocation> {
                     child: Text(
                       'Please enter your location or allow access to your location to find resturants near you',
                       textAlign: TextAlign.center,
-                      style:
-                          TextStyle(color: Colors.grey.shade500, fontSize: 15),
+                      style: TextStyle(
+                          
+                          
+                          color: Colors.grey.shade500,
+                          fontSize: 15),
                     ),
                   ),
                   Container(
@@ -60,6 +66,8 @@ class _SetupLocationState extends State<SetupLocation> {
                       child: Text(
                         "Use Current Location",
                         style: TextStyle(
+                          
+                          
                           fontSize: 14.0,
                           color: Colors.grey[800],
                         ),
@@ -83,6 +91,8 @@ class _SetupLocationState extends State<SetupLocation> {
                       },
                       keyboardType: TextInputType.streetAddress,
                       style: TextStyle(
+                        
+                        
                         fontSize: 14.0,
                       ),
                       onChanged: (value) {

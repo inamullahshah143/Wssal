@@ -39,6 +39,7 @@ class _NotificationListState extends State<NotificationList> {
               child: Text(
                 'Notification',
                 style: TextStyle(
+                    height: 1.5,
                     color: Colors.black,
                     fontWeight: FontWeight.w100,
                     fontSize: 16),
@@ -76,7 +77,8 @@ class _NotificationListState extends State<NotificationList> {
                           ),
                           Text(
                             'Time Ago',
-                            style: TextStyle(color: Colors.grey, fontSize: 10),
+                            style: TextStyle(
+                                height: 1.5, color: Colors.grey, fontSize: 10),
                           ),
                         ],
                       ),
@@ -100,7 +102,8 @@ class _NotificationListState extends State<NotificationList> {
                           ),
                           Text(
                             'Time Ago',
-                            style: TextStyle(color: Colors.grey, fontSize: 10),
+                            style: TextStyle(
+                                height: 1.5, color: Colors.grey, fontSize: 10),
                           ),
                         ],
                       ),
@@ -130,7 +133,8 @@ class _NotificationListState extends State<NotificationList> {
                           ),
                           Text(
                             'Time Ago',
-                            style: TextStyle(color: Colors.grey, fontSize: 10),
+                            style: TextStyle(
+                                height: 1.5, color: Colors.grey, fontSize: 10),
                           ),
                         ],
                       ),
@@ -154,7 +158,8 @@ class _NotificationListState extends State<NotificationList> {
                           ),
                           Text(
                             'Time Ago',
-                            style: TextStyle(color: Colors.grey, fontSize: 10),
+                            style: TextStyle(
+                                height: 1.5, color: Colors.grey, fontSize: 10),
                           ),
                         ],
                       ),
@@ -178,7 +183,8 @@ class _NotificationListState extends State<NotificationList> {
                           ),
                           Text(
                             'Time Ago',
-                            style: TextStyle(color: Colors.grey, fontSize: 10),
+                            style: TextStyle(
+                                height: 1.5, color: Colors.grey, fontSize: 10),
                           ),
                         ],
                       ),
@@ -202,7 +208,8 @@ class _NotificationListState extends State<NotificationList> {
                           ),
                           Text(
                             'Time Ago',
-                            style: TextStyle(color: Colors.grey, fontSize: 10),
+                            style: TextStyle(
+                                height: 1.5, color: Colors.grey, fontSize: 10),
                           ),
                         ],
                       ),

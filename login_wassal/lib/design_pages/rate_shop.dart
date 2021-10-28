@@ -48,6 +48,7 @@ class _RateShopState extends State<RateShop> {
                             child: Text(
                               "Rate Shop",
                               style: TextStyle(
+                                height: 1.5,
                                 fontSize: 16,
                               ),
                             ),
@@ -101,6 +102,7 @@ class _RateShopState extends State<RateShop> {
                       Text(
                         "Excellent",
                         style: TextStyle(
+                          height: 1.5,
                           fontSize: 12,
                           color: Colors.grey.shade400,
                         ),
@@ -281,12 +283,15 @@ class _RateShopState extends State<RateShop> {
                                       children: [
                                         Text(
                                           'Your payment success',
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(
+                                              height: 1.5, fontSize: 16),
                                         ),
                                         Text(
                                           'Your new balance has added to your wallet',
                                           style: TextStyle(
-                                              fontSize: 12, color: Colors.grey),
+                                              height: 1.5,
+                                              fontSize: 12,
+                                              color: Colors.grey),
                                         ),
                                       ],
                                     ),
@@ -300,7 +305,8 @@ class _RateShopState extends State<RateShop> {
                                         Navigator.pop(context, 'OK'),
                                     child: Text(
                                       'OK',
-                                      style: TextStyle(color: Colors.red),
+                                      style: TextStyle(
+                                          height: 1.5, color: Colors.red),
                                     ),
                                   ),
                                 ),

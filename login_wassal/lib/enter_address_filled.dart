@@ -32,7 +32,7 @@ class _EnterAddressFilledState extends State<EnterAddressFilled> {
               ),
               Text(
                 'Find restaurants near you',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle( fontSize: 20),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
@@ -77,6 +77,8 @@ class _EnterAddressFilledState extends State<EnterAddressFilled> {
                         contentPadding: EdgeInsets.only(left: 40, top: 15),
                         hintText: "Enter a new address",
                         hintStyle: TextStyle(
+                            
+                            
                             color: Color.fromRGBO(118, 129, 150, 1),
                             fontSize: 15),
                       ),
@@ -168,7 +170,7 @@ class _EnterAddressFilledState extends State<EnterAddressFilled> {
                   onPressed: () {},
                   child: const Text(
                     'Save',
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle( color: Colors.black),
                   ),
                 ),
               ),

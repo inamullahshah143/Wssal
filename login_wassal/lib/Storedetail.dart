@@ -78,6 +78,7 @@ class _StoreDetailState extends State<StoreDetail> {
                         child: Text(
                           storeBlock['open_close'] == 1 ? 'Open' : 'Close',
                           style: TextStyle(
+                            height: 1.5,
                             fontWeight: FontWeight.w600,
                             fontSize: 12,
                             color: storeBlock['open_close'] == 1
@@ -94,6 +95,7 @@ class _StoreDetailState extends State<StoreDetail> {
                           child: Text(
                             "${storeBlock['tags']}",
                             style: TextStyle(
+                              height: 1.5,
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
                               color: Colors.grey,
@@ -128,6 +130,7 @@ class _StoreDetailState extends State<StoreDetail> {
                               child: Text(
                                 'Promoted',
                                 style: TextStyle(
+                                  height: 1.5,
                                   fontSize: 10,
                                 ),
                               ),
@@ -243,6 +246,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                     TextSpan(
                                       text: "${element['average_rating']}",
                                       style: TextStyle(
+                                        height: 1.5,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 12,
                                         color: Colors.white,
@@ -281,6 +285,7 @@ class _StoreDetailState extends State<StoreDetail> {
                             child: Text(
                               "${storeBlock['title']}",
                               style: TextStyle(
+                                height: 1.5,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 11,
                                 color: Colors.grey,
@@ -297,7 +302,9 @@ class _StoreDetailState extends State<StoreDetail> {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 16),
+                            height: 1.5,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
                       ),
                     ),
                     Padding(
@@ -310,6 +317,7 @@ class _StoreDetailState extends State<StoreDetail> {
                               text:
                                   element['open_close'] == 1 ? 'Open' : 'Close',
                               style: TextStyle(
+                                height: 1.5,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
                                 color: element['open_close'] == 1
@@ -330,6 +338,7 @@ class _StoreDetailState extends State<StoreDetail> {
                             TextSpan(
                               text: "${element['tags']}",
                               style: TextStyle(
+                                  height: 1.5,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 12,
                                   color: Colors.grey),
@@ -362,6 +371,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                 TextSpan(
                                   text: "30-45 min",
                                   style: TextStyle(
+                                      height: 1.5,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 10,
                                       color: Colors.grey),
@@ -390,6 +400,7 @@ class _StoreDetailState extends State<StoreDetail> {
                                 TextSpan(
                                   text: "\$ 20",
                                   style: TextStyle(
+                                      height: 1.5,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 10,
                                       color: Colors.grey),

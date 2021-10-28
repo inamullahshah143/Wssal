@@ -92,10 +92,8 @@ class _CartPageState extends State<CartPage> {
                                           delivery =
                                               delivery * data['km_charges'];
                                           print(delivery);
-                                          cartCheckout(
-                                              context,
-                                              "cash_on_delivery",
-                                              delivery);
+                                          cartCheckout(context,
+                                              "cash_on_delivery", delivery);
                                         });
                                       },
                                     ),
@@ -114,7 +112,7 @@ class _CartPageState extends State<CartPage> {
                                               .toString()
                                               .replaceAll(" km", "")
                                               .replaceAll(",", ""));
-                                              delivery =
+                                          delivery =
                                               delivery * data['km_charges'];
                                           print(delivery);
                                           cartCheckout(
@@ -436,6 +434,7 @@ class _CartProductState extends State<CartProduct> {
                                 child: Text(
                                   "$cartProductBlockQty",
                                   style: TextStyle(
+                                    height: 1.5,
                                     fontSize: 16,
                                   ),
                                 )),

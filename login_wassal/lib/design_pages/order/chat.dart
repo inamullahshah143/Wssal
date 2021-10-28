@@ -46,6 +46,7 @@ class _ChatWithDriverState extends State<ChatWithDriver> {
                     Text(
                       'Driver Name',
                       style: TextStyle(
+                          height: 1.5,
                           color: Colors.black,
                           fontWeight: FontWeight.w100,
                           fontSize: 16),
@@ -152,7 +153,7 @@ class _ChatWithDriverState extends State<ChatWithDriver> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 color: Colors.grey,
-                height: MediaQuery.of(context).size.height/10,
+                height: MediaQuery.of(context).size.height / 10,
                 width: double.infinity,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -194,4 +195,3 @@ class _ChatWithDriverState extends State<ChatWithDriver> {
     );
   }
 }
- 

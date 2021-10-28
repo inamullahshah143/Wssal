@@ -4,11 +4,8 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:wassal_customer/design_pages/order/chat.dart';
 import 'package:wassal_customer/design_pages/order/orders_history.dart';
- 
 
 class Ongoing extends StatefulWidget {
- 
-
   @override
   _OngoingState createState() => _OngoingState();
 }
@@ -47,7 +44,7 @@ class _OngoingState extends State<Ongoing> {
                       ),
                       child: Text(
                         'Ongoing',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(height: 1.5, color: Colors.red),
                       ),
                     ),
                     GestureDetector(
@@ -79,7 +76,7 @@ class _OngoingState extends State<Ongoing> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height/1.9,
+              top: MediaQuery.of(context).size.height / 1.9,
               left: 0,
               right: 0,
               child: Container(
@@ -101,24 +98,28 @@ class _OngoingState extends State<Ongoing> {
                         children: [
                           Text(
                             'Driver Name',
-                            style: TextStyle(fontSize: 14, color: Colors.black),
+                            style: TextStyle(
+                                height: 1.5, fontSize: 14, color: Colors.black),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left:8.0),
+                            padding: const EdgeInsets.only(left: 8.0),
                             child: Container(
-                              alignment:Alignment.center,
+                              alignment: Alignment.center,
                               width: 60,
                               padding: EdgeInsets.all(2),
                               decoration: BoxDecoration(
-                                color: Color.fromRGBO(222,68,48,1),
+                                color: Color.fromRGBO(222, 68, 48, 1),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Row(
                                 children: [
-                                  Icon(Icons.star_rounded,color: Colors.white,size:17),
-                                  Text('4.8',style:TextStyle(
-color:Colors.white,
-                                  )),
+                                  Icon(Icons.star_rounded,
+                                      color: Colors.white, size: 17),
+                                  Text('4.8',
+                                      style: TextStyle(
+                                        height: 1.5,
+                                        color: Colors.white,
+                                      )),
                                 ],
                               ),
                             ),
@@ -132,7 +133,7 @@ color:Colors.white,
                         percent: 0.7,
                         center: Text(
                           "07:55",
-                          style: TextStyle(fontSize: 10),
+                          style: TextStyle(height: 1.5, fontSize: 10),
                         ),
                         progressColor: Colors.yellow,
                       ),
@@ -150,7 +151,7 @@ color:Colors.white,
                           Text(
                             '\$ 8.98 ',
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.red),
+                            style: TextStyle(height: 1.5, color: Colors.red),
                           ),
                           Text(
                             '(2 items) - ',
@@ -222,19 +223,19 @@ color:Colors.white,
                               children: [
                                 Text(
                                   'Ordered',
-                                  style: TextStyle(fontSize: 12),
+                                  style: TextStyle(height: 1.5, fontSize: 12),
                                 ),
                                 Text(
                                   'Prepairing',
-                                  style: TextStyle(fontSize: 12),
+                                  style: TextStyle(height: 1.5, fontSize: 12),
                                 ),
                                 Text(
                                   'On the way',
-                                  style: TextStyle(fontSize: 12),
+                                  style: TextStyle(height: 1.5, fontSize: 12),
                                 ),
                                 Text(
                                   'Delivered',
-                                  style: TextStyle(fontSize: 12),
+                                  style: TextStyle(height: 1.5, fontSize: 12),
                                 ),
                               ],
                             ),

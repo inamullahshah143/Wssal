@@ -46,7 +46,8 @@ class _GMapsState extends State<GMaps> {
                   ),
                   subtitle: Text(
                     'P783+QP Mit Ghamr City, Madinet Mit Ghamr (Include Daqados), Egypt',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 14, color: Colors.grey),
                   ),
                 ),
                 Container(

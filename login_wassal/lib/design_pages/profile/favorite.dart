@@ -40,6 +40,7 @@ class _FavoriteListState extends State<FavoriteList> {
               child: Text(
                 'Favorite List',
                 style: TextStyle(
+                    height: 1.5,
                     color: Colors.black,
                     fontWeight: FontWeight.w100,
                     fontSize: 16),
@@ -58,106 +59,95 @@ class _FavoriteListState extends State<FavoriteList> {
                       ),
                       title: Text('title'),
                       trailing: Container(
-                                        
-                                        child: RatingBar.builder(
-                                          itemSize: 22,
-                                          initialRating: 1,
-                                          minRating: 0,
-                                          direction: Axis.horizontal,
-                                          allowHalfRating: false,
-                                          itemCount: 1,
-                                          itemBuilder: (context, _) => Icon(
-                                            Icons.favorite,
-                                            color:
-                                                Color.fromRGBO(255, 199, 0, 100),
+                        child: RatingBar.builder(
+                          itemSize: 22,
+                          initialRating: 1,
+                          minRating: 0,
+                          direction: Axis.horizontal,
+                          allowHalfRating: false,
+                          itemCount: 1,
+                          itemBuilder: (context, _) => Icon(
+                            Icons.favorite,
+                            color: Color.fromRGBO(255, 199, 0, 100),
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                            showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20.0),
+                                  ),
+                                ),
+                                // contentPadding: EdgeInsets.all(0),
+                                content: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Positioned(
+                                      top: -45,
+                                      left:
+                                          MediaQuery.of(context).size.width / 4,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color:
+                                              Color.fromRGBO(255, 199, 0, 100),
+                                          border: Border.all(
+                                              color: Colors.white, width: 3),
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0),
                                           ),
-                                          onRatingUpdate: (rating) {
-                                            print(rating);
-                                              showDialog<String>(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(20.0),
-                                            ),
-                                          ),
-                                          // contentPadding: EdgeInsets.all(0),
-                                          content: Stack(
-                                            clipBehavior: Clip.none,
-                                            children: [
-                                              Positioned(
-                                                top: -45,
-                                                left: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    4,
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Color.fromRGBO(255,199,0,100),
-                                                    border: Border.all(
-                                                        color: Colors.white,
-                                                        width: 3),
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                      Radius.circular(10.0),
-                                                    ),
-                                                  ),
-                                                  width: 50,
-                                                  height: 50,
-                                                  child: Icon(
-                                                      Icons.warning,
-                                                      color: Colors.white,
-                                                      size: 40),
-                                                ),
-                                              ),
-                                              Container(
-                                                padding:
-                                                    EdgeInsets.only(top: 20),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Text(
-                                                      'Are You sure to Remove this item',
-                                                      style: TextStyle(
-                                                          fontSize: 15),
-                                                    ),
-                                                   
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          actions: <Widget>[
-                                            Container(
-                                              child: TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    context, 'Yes'),
-                                                child: Text(
-                                                  'Yes',
-                                                  style: TextStyle(
-                                                      color: Colors.red),
-                                                ),
-                                              ),
-                                            ),
-                                               Container(
-                                              child: TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    context, 'No'),
-                                                child: Text(
-                                                  'No',
-                                                  style: TextStyle(
-                                                      color: Colors.red),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
                                         ),
-                                      );
-                                          },
-                                        ),
+                                        width: 50,
+                                        height: 50,
+                                        child: Icon(Icons.warning,
+                                            color: Colors.white, size: 40),
                                       ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(top: 20),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text(
+                                            'Are You sure to Remove this item',
+                                            style: TextStyle(
+                                                height: 1.5, fontSize: 15),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                actions: <Widget>[
+                                  Container(
+                                    child: TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'Yes'),
+                                      child: Text(
+                                        'Yes',
+                                        style: TextStyle(
+                                            height: 1.5, color: Colors.red),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    child: TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'No'),
+                                      child: Text(
+                                        'No',
+                                        style: TextStyle(
+                                            height: 1.5, color: Colors.red),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                       subtitle: Row(
                         children: [
                           Text('price'),
@@ -170,7 +160,6 @@ class _FavoriteListState extends State<FavoriteList> {
                         ],
                       ),
                     ),
-                    
                   ],
                 ),
               ),

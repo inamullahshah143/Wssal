@@ -33,7 +33,10 @@ class _ProfileState extends State<Profile> {
           title: Text(
             'Profile',
             style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.w100, fontSize: 16),
+                height: 1.5,
+                color: Colors.black,
+                fontWeight: FontWeight.w100,
+                fontSize: 16),
           ),
           actions: [
             GestureDetector(
@@ -81,6 +84,7 @@ class _ProfileState extends State<Profile> {
                     Text(
                       'Profile Name',
                       style: TextStyle(
+                          height: 1.5,
                           color: Colors.black,
                           fontWeight: FontWeight.w100,
                           fontSize: 16),
@@ -88,6 +92,7 @@ class _ProfileState extends State<Profile> {
                     Text(
                       '+2 0100 345 6789',
                       style: TextStyle(
+                          height: 1.5,
                           color: Colors.grey,
                           fontWeight: FontWeight.w100,
                           fontSize: 16),
@@ -110,6 +115,7 @@ class _ProfileState extends State<Profile> {
                       child: Text(
                         'General',
                         style: TextStyle(
+                            height: 1.5,
                             color: Colors.black,
                             fontWeight: FontWeight.w100,
                             fontSize: 16),
@@ -301,6 +307,7 @@ class _ProfileState extends State<Profile> {
                                 Text(
                                   ' @',
                                   style: TextStyle(
+                                      height: 1.5,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey),
@@ -333,6 +340,7 @@ class _ProfileState extends State<Profile> {
                       child: Text(
                         'Notifications',
                         style: TextStyle(
+                            height: 1.5,
                             color: Colors.black,
                             fontWeight: FontWeight.w100,
                             fontSize: 16),
@@ -413,6 +421,7 @@ class _ProfileState extends State<Profile> {
                       child: Text(
                         'More',
                         style: TextStyle(
+                            height: 1.5,
                             color: Colors.black,
                             fontWeight: FontWeight.w100,
                             fontSize: 16),
@@ -466,7 +475,7 @@ class _ProfileState extends State<Profile> {
                 width: double.infinity,
                 margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-               color: Color.fromRGBO(255,199,0,100),
+                  color: Color.fromRGBO(255, 199, 0, 100),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Center(
@@ -476,7 +485,7 @@ class _ProfileState extends State<Profile> {
             ],
           ),
         ),
-          bottomNavigationBar: getBottomBar(context),
+        bottomNavigationBar: getBottomBar(context),
         // bottomNavigationBar: Container(
         //   decoration: BoxDecoration(
         //     borderRadius: BorderRadius.only(

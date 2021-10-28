@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:wassal_customer/design_pages/user/delivery.dart';
 import 'package:wassal_customer/design_pages/user/review.dart';
- 
 
 class DetailResturant extends StatefulWidget {
   @override
@@ -83,6 +81,7 @@ class _DetailResturantState extends State<DetailResturant> {
                                         child: Text(
                                           "Domino's ",
                                           style: TextStyle(
+                                            height: 1.5,
                                             fontSize: 20,
                                           ),
                                         ),
@@ -181,7 +180,8 @@ class _DetailResturantState extends State<DetailResturant> {
                                                           children: [
                                                             Text(
                                                               'Are You sure to Remove this item',
-                                                            style: TextStyle(
+                                                              style: TextStyle(
+                                                                  height: 1.5,
                                                                   fontSize: 15),
                                                             ),
                                                           ],
@@ -198,6 +198,7 @@ class _DetailResturantState extends State<DetailResturant> {
                                                         child: Text(
                                                           'Yes',
                                                           style: TextStyle(
+                                                              height: 1.5,
                                                               color:
                                                                   Colors.red),
                                                         ),
@@ -211,6 +212,7 @@ class _DetailResturantState extends State<DetailResturant> {
                                                         child: Text(
                                                           'No',
                                                           style: TextStyle(
+                                                              height: 1.5,
                                                               color:
                                                                   Colors.red),
                                                         ),
@@ -237,6 +239,7 @@ class _DetailResturantState extends State<DetailResturant> {
                                               Text(
                                                 "Open",
                                                 style: TextStyle(
+                                                  height: 1.5,
                                                   color: Colors.green,
                                                 ),
                                               ),
@@ -246,6 +249,7 @@ class _DetailResturantState extends State<DetailResturant> {
                                                 child: Text(
                                                   "Lahore,Pakistan",
                                                   style: TextStyle(
+                                                    height: 1.5,
                                                     color: Colors.grey.shade400,
                                                   ),
                                                 ),
@@ -267,8 +271,9 @@ class _DetailResturantState extends State<DetailResturant> {
                                                 ),
                                                 child: Text(
                                                   "Delivery",
-                                                  style:
-                                                      TextStyle(fontSize: 10),
+                                                  style: TextStyle(
+                                                      height: 1.5,
+                                                      fontSize: 10),
                                                 ),
                                               )
                                             ]),
@@ -310,6 +315,7 @@ class _DetailResturantState extends State<DetailResturant> {
                                     ),
                                     Text("4.5",
                                         style: TextStyle(
+                                            height: 1.5,
                                             color: Colors.white,
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold))
@@ -329,6 +335,7 @@ class _DetailResturantState extends State<DetailResturant> {
                                     ),
                                     Text("30 Min",
                                         style: TextStyle(
+                                            height: 1.5,
                                             color: Colors.grey.shade400,
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold))
@@ -348,6 +355,7 @@ class _DetailResturantState extends State<DetailResturant> {
                                     ),
                                     Text("15 EGP",
                                         style: TextStyle(
+                                            height: 1.5,
                                             color: Colors.grey.shade400,
                                             fontSize: 15,
                                             fontWeight: FontWeight.bold))

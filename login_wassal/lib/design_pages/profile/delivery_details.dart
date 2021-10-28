@@ -48,6 +48,7 @@ class _DeliveryFormState extends State<DeliveryForm> {
                   child: Text(
                     'Billing Information',
                     style: TextStyle(
+                        height: 1.5,
                         color: Colors.black,
                         fontWeight: FontWeight.w100,
                         fontSize: 16),
@@ -63,7 +64,8 @@ class _DeliveryFormState extends State<DeliveryForm> {
                     children: [
                       Text(
                         'Billing Name',
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                        style: TextStyle(
+                            height: 1.5, color: Colors.grey, fontSize: 14),
                       ),
                       Container(
                         width: double.infinity,
@@ -88,7 +90,8 @@ class _DeliveryFormState extends State<DeliveryForm> {
                       ),
                       Text(
                         'Billing Company',
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                        style: TextStyle(
+                            height: 1.5, color: Colors.grey, fontSize: 14),
                       ),
                       Container(
                         width: double.infinity,
@@ -113,7 +116,8 @@ class _DeliveryFormState extends State<DeliveryForm> {
                       ),
                       Text(
                         'Billing Address',
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                        style: TextStyle(
+                            height: 1.5, color: Colors.grey, fontSize: 14),
                       ),
                       Container(
                         width: double.infinity,
@@ -140,7 +144,8 @@ class _DeliveryFormState extends State<DeliveryForm> {
                       ),
                       Text(
                         'City',
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                        style: TextStyle(
+                            height: 1.5, color: Colors.grey, fontSize: 14),
                       ),
                       Container(
                         width: double.infinity,
@@ -165,7 +170,8 @@ class _DeliveryFormState extends State<DeliveryForm> {
                       ),
                       Text(
                         'Country',
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                        style: TextStyle(
+                            height: 1.5, color: Colors.grey, fontSize: 14),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -197,7 +203,8 @@ class _DeliveryFormState extends State<DeliveryForm> {
                       ),
                       Text(
                         'Postal Code',
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                        style: TextStyle(
+                            height: 1.5, color: Colors.grey, fontSize: 14),
                       ),
                       Container(
                         width: double.infinity,
@@ -223,7 +230,8 @@ class _DeliveryFormState extends State<DeliveryForm> {
                       ),
                       Text(
                         'Phone Number',
-                        style: TextStyle(color: Colors.grey, fontSize: 14),
+                        style: TextStyle(
+                            height: 1.5, color: Colors.grey, fontSize: 14),
                       ),
                       Container(
                         width: double.infinity,
@@ -262,14 +270,16 @@ class _DeliveryFormState extends State<DeliveryForm> {
                           padding: EdgeInsets.all(20),
                           margin: EdgeInsets.only(top: 35, bottom: 15),
                           decoration: BoxDecoration(
-                            color: Color.fromRGBO(255,199,0,100),
+                            color: Color.fromRGBO(255, 199, 0, 100),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Center(
                             child: Text(
                               'Submit',
                               style: TextStyle(
-                                  color: Colors.black, fontWeight: FontWeight.bold),
+                                  height: 1.5,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),

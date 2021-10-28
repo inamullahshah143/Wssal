@@ -70,6 +70,7 @@ class _AddNewItemState extends State<AddNewItem> {
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
                                 style: TextStyle(
+                                  height: 1.5,
                                   fontSize: 17,
                                 ),
                               ),
@@ -112,7 +113,8 @@ class _AddNewItemState extends State<AddNewItem> {
                                           Text(
                                             // "$_itemCount",
                                             "1",
-                                            style: TextStyle(fontSize: 12),
+                                            style: TextStyle(
+                                                height: 1.5, fontSize: 12),
                                           ),
                                           Container(
                                             height: 20,
@@ -140,6 +142,7 @@ class _AddNewItemState extends State<AddNewItem> {
                                       child: Text(
                                         "4.99\$",
                                         style: TextStyle(
+                                          height: 1.5,
                                           color: Color.fromRGBO(223, 51, 19, 1),
                                         ),
                                       ),
@@ -176,6 +179,7 @@ class _AddNewItemState extends State<AddNewItem> {
                             Text(
                               "Topping",
                               style: TextStyle(
+                                height: 1.5,
                                 fontSize: 18,
                               ),
                             ),
@@ -200,11 +204,11 @@ class _AddNewItemState extends State<AddNewItem> {
                                 children: [
                                   Text(
                                     "Add Cheese",
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(height: 1.5, fontSize: 16),
                                   ),
                                   Text(
                                     "\$0.99",
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(height: 1.5, fontSize: 16),
                                   )
                                 ]),
                           ),
@@ -227,11 +231,11 @@ class _AddNewItemState extends State<AddNewItem> {
                                 children: [
                                   Text(
                                     "Add Cheese",
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(height: 1.5, fontSize: 16),
                                   ),
                                   Text(
                                     "\$0.99",
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(height: 1.5, fontSize: 16),
                                   )
                                 ]),
                           ),
@@ -244,12 +248,11 @@ class _AddNewItemState extends State<AddNewItem> {
               Padding(
                 padding: const EdgeInsets.only(top: 20.0, bottom: 20),
                 child: InkWell(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ConfirmOrder()),
-                        );
+                      context,
+                      MaterialPageRoute(builder: (context) => ConfirmOrder()),
+                    );
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -260,7 +263,7 @@ class _AddNewItemState extends State<AddNewItem> {
                         color: Color.fromRGBO(255, 199, 0, 100)),
                     child: Text(
                       "Add to Order ( \$7.99)",
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(height: 1.5, fontSize: 18),
                     ),
                   ),
                 ),

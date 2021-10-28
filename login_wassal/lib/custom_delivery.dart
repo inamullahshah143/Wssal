@@ -79,7 +79,11 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                     visible: appState.locationServiceActive == false,
                     child: Text(
                       "Please enable location services!",
-                      style: TextStyle(color: Colors.grey, fontSize: 18),
+                      style: TextStyle(
+                          
+                          
+                          color: Colors.grey,
+                          fontSize: 18),
                     ),
                   )
                 ],
@@ -325,6 +329,7 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                 child: Text(
                                   "Find Driver",
                                   style: TextStyle(
+                                    
                                     fontSize: 14.0,
                                     color: Colors.grey[800],
                                   ),
@@ -363,6 +368,8 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                 textAlign: TextAlign.center,
                                 maxLines: 1,
                                 style: TextStyle(
+                                  
+                                  
                                   color: themeSecondaryColor,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -403,6 +410,8 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                       Text(
                                         'Pickup Location',
                                         style: TextStyle(
+                                          
+                                          
                                           color: themeSecondaryColor,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -413,12 +422,17 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                           appState.locationController.text,
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(
+                                              
+                                              
+                                              fontSize: 16),
                                         ),
                                       ),
                                       Text(
                                         'Dropoff Location',
                                         style: TextStyle(
+                                          
+                                          
                                           color: themeSecondaryColor,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -429,12 +443,17 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                           appState.destinationController.text,
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(
+                                              
+                                              
+                                              fontSize: 16),
                                         ),
                                       ),
                                       Text(
                                         'Estimated Distance',
                                         style: TextStyle(
+                                          
+                                          
                                           color: themeSecondaryColor,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -445,12 +464,17 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                           distance,
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(
+                                              
+                                              
+                                              fontSize: 16),
                                         ),
                                       ),
                                       Text(
                                         'Estimated Time',
                                         style: TextStyle(
+                                          
+                                          
                                           color: themeSecondaryColor,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -461,12 +485,17 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                           time,
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(
+                                              
+                                              
+                                              fontSize: 16),
                                         ),
                                       ),
                                       Text(
                                         'Expected Price',
                                         style: TextStyle(
+                                          
+                                          
                                           color: themeSecondaryColor,
                                           fontWeight: FontWeight.w500,
                                         ),
@@ -477,7 +506,10 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                           price,
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(
+                                              
+                                              
+                                              fontSize: 16),
                                         ),
                                       ),
                                     ],
@@ -527,6 +559,8 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                           child: Text(
                                             "Proceed",
                                             style: TextStyle(
+                                              
+                                              
                                               fontSize: 14.0,
                                               color: Colors.grey[800],
                                             ),
@@ -562,6 +596,8 @@ class _CustomDeliveryState extends State<CustomDelivery> {
                                           child: Text(
                                             "Cancel",
                                             style: TextStyle(
+                                              
+                                              
                                               fontSize: 14.0,
                                               color: Colors.grey[800],
                                             ),
@@ -586,18 +622,20 @@ class _CustomDeliveryState extends State<CustomDelivery> {
     return Dialog(
       backgroundColor: Colors.white,
       child: Container(
-        height: 175.0,
         width: double.infinity,
         padding: EdgeInsets.all(10),
         margin: EdgeInsets.all(10),
         color: Colors.white,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
               padding: EdgeInsets.all(10),
               child: Text(
                 message,
                 style: TextStyle(
+                  
+                  
                   fontSize: 14,
                   color: themeSecondaryColor,
                 ),
@@ -608,6 +646,8 @@ class _CustomDeliveryState extends State<CustomDelivery> {
               child: Text(
                 'Please Wait...',
                 style: TextStyle(
+                  
+                  
                   fontSize: 12,
                 ),
               ),

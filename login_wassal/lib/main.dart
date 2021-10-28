@@ -48,9 +48,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: TextTheme(
-          bodyText1: TextStyle(fontSize: 14.0),
-          bodyText2: TextStyle(fontSize: 12.0),
-          button: TextStyle(fontSize: 12.0),
+          bodyText1: TextStyle(height: 1.5, fontSize: 14.0),
+          bodyText2: TextStyle(height: 1.5, fontSize: 12.0),
+          button: TextStyle(height: 1.5, fontSize: 12.0),
         ),
         fontFamily: 'HelveticaNeueLT',
         primarySwatch: themePrimaryColor,

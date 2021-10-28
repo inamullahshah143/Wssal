@@ -46,7 +46,7 @@ class _EnterAddressState extends State<EnterAddress> {
                 ),
                 Text(
                   'Find restaurants near you',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle( fontSize: 20),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
@@ -70,6 +70,8 @@ class _EnterAddressState extends State<EnterAddress> {
                     child: Text(
                       "Use current location",
                       style: TextStyle(
+                        
+                        
                         fontSize: 14.0,
                         color: Colors.grey[800],
                       ),

@@ -88,6 +88,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                                 'Diverse and fresh food.',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
+                                  height: 1.5,
                                   fontSize: 16,
                                 ),
                               ),
@@ -98,6 +99,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                                 "With the best local ingrdients, we have create\nfresh,delicious food and drinks",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
+                                  height: 1.5,
                                   fontSize: 12,
                                   color: Colors.grey[400],
                                 ),
@@ -124,6 +126,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                               Text(
                                 "+15K Restaurants",
                                 style: TextStyle(
+                                  height: 1.5,
                                   fontSize: 16,
                                 ),
                               ),
@@ -134,6 +137,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                                 "Easily find your favorite food and make deliveries in\na fat time",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
+                                  height: 1.5,
                                   fontSize: 12,
                                   color: Colors.grey[400],
                                 ),
@@ -160,6 +164,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                               Text(
                                 "Free delivery on all orders",
                                 style: TextStyle(
+                                  height: 1.5,
                                   fontSize: 16,
                                 ),
                               ),
@@ -170,6 +175,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                                 "Free shipping on the first order when using CaPay\npayment method.",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
+                                  height: 1.5,
                                   fontSize: 12,
                                   color: Colors.grey[400],
                                 ),
@@ -297,6 +303,7 @@ class _SplashScreenSliderState extends State<SplashScreenSlider> {
                       child: Text(
                         "Get Started",
                         style: TextStyle(
+                          height: 1.5,
                           fontSize: 12.0,
                           color: Colors.grey[800],
                         ),

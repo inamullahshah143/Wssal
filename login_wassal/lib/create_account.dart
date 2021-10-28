@@ -58,6 +58,7 @@ class _CreateAccountState extends State<CreateAccount> {
                       child: Text(
                         'Hello! Create Account',
                         style: TextStyle(
+                            
                             color: Color.fromRGBO(128, 136, 142, 1),
                             fontSize: 25),
                       )),
@@ -69,8 +70,10 @@ class _CreateAccountState extends State<CreateAccount> {
                     children: [
                       Text(
                         'Already have an account?  ',
-                        style:
-                            TextStyle(color: Color.fromRGBO(180, 186, 198, 1)),
+                        style: TextStyle(
+                            
+                            
+                            color: Color.fromRGBO(180, 186, 198, 1)),
                       ),
                       InkWell(
                         onTap: () {
@@ -83,6 +86,8 @@ class _CreateAccountState extends State<CreateAccount> {
                         child: Text(
                           'Sign in',
                           style: TextStyle(
+                              
+                              
                               fontSize: 14,
                               color: Color.fromRGBO(222, 53, 11, 1)),
                         ),
@@ -111,6 +116,8 @@ class _CreateAccountState extends State<CreateAccount> {
                       },
                       keyboardType: TextInputType.name,
                       style: TextStyle(
+                        
+                        
                         fontSize: 14.0,
                       ),
                       onChanged: (value) {
@@ -146,8 +153,11 @@ class _CreateAccountState extends State<CreateAccount> {
                           padding: EdgeInsets.all(12.5),
                           child: Text(
                             "Phone Number",
-                            style:
-                                TextStyle(color: Colors.grey, fontSize: 14.0),
+                            style: TextStyle(
+                                
+                                
+                                color: Colors.grey,
+                                fontSize: 14.0),
                           ),
                         ),
                         TextFormField(
@@ -160,6 +170,8 @@ class _CreateAccountState extends State<CreateAccount> {
                           },
                           keyboardType: TextInputType.phone,
                           style: TextStyle(
+                            
+                            
                             fontSize: 14.0,
                           ),
                           onChanged: (value) {
@@ -209,11 +221,17 @@ class _CreateAccountState extends State<CreateAccount> {
                       text: TextSpan(children: [
                     TextSpan(
                       text: 'By creating an account, you agree to our',
-                      style: TextStyle(color: Color.fromRGBO(180, 186, 198, 1)),
+                      style: TextStyle(
+                          
+                          
+                          color: Color.fromRGBO(180, 186, 198, 1)),
                     ),
                     TextSpan(
                       text: ' Term and Conditions',
-                      style: TextStyle(color: Color.fromRGBO(222, 53, 11, 1)),
+                      style: TextStyle(
+                          
+                          
+                          color: Color.fromRGBO(222, 53, 11, 1)),
                     ),
                   ])),
                 ),
@@ -240,6 +258,8 @@ class _CreateAccountState extends State<CreateAccount> {
                       child: Text(
                         "Sign Up",
                         style: TextStyle(
+                          
+                          
                           fontSize: 14.0,
                           color: Colors.grey[800],
                         ),

@@ -121,6 +121,7 @@ class _AllCategoriesShopsState extends State<AllCategoriesShops> {
                                 child: Text(
                                   '${element['title']}',
                                   style: TextStyle(
+                                    height: 1.5,
                                     fontSize: 20,
                                   ),
                                 ),
@@ -145,6 +146,7 @@ class _AllCategoriesShopsState extends State<AllCategoriesShops> {
                                   child: Text(
                                     'Promoted',
                                     style: TextStyle(
+                                      height: 1.5,
                                       fontSize: 10,
                                     ),
                                   ),
@@ -163,6 +165,7 @@ class _AllCategoriesShopsState extends State<AllCategoriesShops> {
                                         ? 'Open'
                                         : 'Close',
                                     style: TextStyle(
+                                      height: 1.5,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12,
                                       color: element['open_close'] == 1
@@ -183,6 +186,7 @@ class _AllCategoriesShopsState extends State<AllCategoriesShops> {
                                   TextSpan(
                                     text: "${element['tags']}",
                                     style: TextStyle(
+                                        height: 1.5,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 12,
                                         color: Colors.grey),
@@ -219,6 +223,7 @@ class _AllCategoriesShopsState extends State<AllCategoriesShops> {
                                         TextSpan(
                                           text: "4.8",
                                           style: TextStyle(
+                                            height: 1.5,
                                             fontWeight: FontWeight.w600,
                                             fontSize: 12,
                                             color: Colors.white,

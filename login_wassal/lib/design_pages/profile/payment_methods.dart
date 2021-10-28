@@ -16,7 +16,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
       // height: MediaQuery.of(context).size.height / 1.1,
       color: Color(0xff757575),
       child: Container(
-        height: MediaQuery.of(context).size.height -70,
+        height: MediaQuery.of(context).size.height - 70,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -42,6 +42,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
               child: Text(
                 'Payment Methods',
                 style: TextStyle(
+                    height: 1.5,
                     color: Colors.black,
                     fontWeight: FontWeight.w100,
                     fontSize: 16),
@@ -61,11 +62,13 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                   ),
                   Text(
                     'Don’t have any card',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     'It looks like you do not have a credit or debit card yet. Please add your cards easily',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 14, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                   GestureDetector(
@@ -89,7 +92,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                       padding: EdgeInsets.all(10),
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Color.fromRGBO(255,199,0,100),
+                        color: Color.fromRGBO(255, 199, 0, 100),
                         borderRadius: BorderRadius.circular(17),
                       ),
                       child: Center(
@@ -118,7 +121,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                       padding: EdgeInsets.all(10),
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Color.fromRGBO(255,199,0,100),
+                        color: Color.fromRGBO(255, 199, 0, 100),
                         borderRadius: BorderRadius.circular(17),
                       ),
                       child: Center(

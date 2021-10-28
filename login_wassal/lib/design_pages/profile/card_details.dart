@@ -26,8 +26,7 @@ class _CardDetailsState extends State<CardDetails> {
     return Container(
       // height: MediaQuery.of(context).size.height / 1.1,
       color: Color(0xff757575),
-      child: 
-      Container(
+      child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -53,6 +52,7 @@ class _CardDetailsState extends State<CardDetails> {
               child: Text(
                 'Payment Methods',
                 style: TextStyle(
+                    height: 1.5,
                     color: Colors.black,
                     fontWeight: FontWeight.w100,
                     fontSize: 16),
@@ -72,11 +72,13 @@ class _CardDetailsState extends State<CardDetails> {
                   ),
                   Text(
                     'Add new Payment',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     'It looks like you do not have a credit or debit card yet. Please add your cards easily 😊',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 14, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                 ],

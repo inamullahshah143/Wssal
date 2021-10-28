@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:wassal_customer/design_pages/order/Ongoing%20Order.dart';
 import 'package:wassal_customer/design_pages/order/history_list.dart';
- 
 
 class History extends StatefulWidget {
- 
   @override
   _HistoryState createState() => _HistoryState();
 }
@@ -65,14 +63,14 @@ class _HistoryState extends State<History> {
                       ),
                       child: Text(
                         'History',
-                        style: TextStyle(color: Colors.red),
+                        style: TextStyle(height: 1.5, color: Colors.red),
                       ),
                     ),
                   ],
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height/1.3,
+                height: MediaQuery.of(context).size.height / 1.3,
                 child: ListView.builder(
                   itemCount: history == null ? 0 : history.length,
                   itemBuilder: (_, i) {
@@ -93,13 +91,16 @@ class _HistoryState extends State<History> {
                               SizedBox(width: 10),
                               Text(
                                 '${history[i]["status"]}',
-                                style: TextStyle(color: Colors.green),
+                                style:
+                                    TextStyle(height: 1.5, color: Colors.green),
                               ),
                               Spacer(),
                               Text(
                                 '${history[i]["date"]}',
-                                style:
-                                    TextStyle(fontSize: 10, color: Colors.grey),
+                                style: TextStyle(
+                                    height: 1.5,
+                                    fontSize: 10,
+                                    color: Colors.grey),
                               ),
                             ],
                           ),
@@ -121,10 +122,12 @@ class _HistoryState extends State<History> {
                                     children: [
                                       Text(
                                         '${history[i]["brand"]}',
-                                        style: TextStyle(fontSize: 20),
+                                        style: TextStyle(
+                                            height: 1.5, fontSize: 20),
                                       ),
                                       Padding(
-                                      padding: const EdgeInsets.only(left:12.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 12.0),
                                         child: Icon(
                                           Icons.verified_user_rounded,
                                           color: Colors.green,
@@ -133,23 +136,27 @@ class _HistoryState extends State<History> {
                                     ],
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(top:12.0),
+                                    padding: const EdgeInsets.only(top: 12.0),
                                     child: Text('${history[i]["address"]}'),
                                   ),
                                   Padding(
-                              padding: const EdgeInsets.only(top:12.0),
+                                    padding: const EdgeInsets.only(top: 12.0),
                                     child: Row(
                                       children: [
                                         Text(
                                           "\$ ${history[i]["price"]}",
                                           style: TextStyle(
-                                              fontSize: 10, color: Colors.red),
+                                              height: 1.5,
+                                              fontSize: 10,
+                                              color: Colors.red),
                                         ),
                                         SizedBox(width: 10),
                                         Text(
                                           "${history[i]["items"]} Items",
                                           style: TextStyle(
-                                              fontSize: 10, color: Colors.black),
+                                              height: 1.5,
+                                              fontSize: 10,
+                                              color: Colors.black),
                                         ),
                                       ],
                                     ),

@@ -118,6 +118,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: Text(
                       d['title'].toString(),
                       style: TextStyle(
+                        
+                        
                         fontSize: 20,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -127,6 +129,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Text(
                     "\$ $finalPrice",
                     style: TextStyle(
+                      
+                      
                       fontSize: 15,
                       color: Colors.grey.shade800,
                       fontWeight: FontWeight.bold,
@@ -140,6 +144,8 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Text(
                 d['description'],
                 style: TextStyle(
+                  
+                  
                   color: Colors.grey,
                 ),
               ),
@@ -250,6 +256,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                         // ignore: unnecessary_brace_in_string_interps
                         "Add To Cart (\$ ${finalPrice})",
                         style: TextStyle(
+                            
+                            
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
@@ -281,6 +289,8 @@ Widget _buildVariations(List vars) {
               Text(
                 "${element['title']}",
                 style: TextStyle(
+                  
+                  
                   fontSize: 19,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
@@ -318,6 +328,8 @@ Widget _buildAttributes(List attr) {
               Text(
                 "${element['title']}",
                 style: TextStyle(
+                  
+                  
                   fontSize: 19,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,

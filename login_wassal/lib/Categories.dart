@@ -65,13 +65,17 @@ class _MainCategoriesState extends State<MainCategories> {
                           children: [
                             Text(
                               "Hello,",
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12.0),
+                              style: TextStyle(
+                                  height: 1.5,
+                                  color: Colors.grey,
+                                  fontSize: 12.0),
                             ),
                             Text(
                               "$storedName",
                               style: TextStyle(
-                                  color: Colors.grey.shade700, fontSize: 16.0),
+                                  height: 1.5,
+                                  color: Colors.grey.shade700,
+                                  fontSize: 16.0),
                             ),
                           ],
                         ),
@@ -188,6 +192,7 @@ class _MainCategoriesState extends State<MainCategories> {
                                 Text(
                                   element['name'].toUpperCase(),
                                   style: TextStyle(
+                                      height: 1.5,
                                       color: Colors.white,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
@@ -301,6 +306,7 @@ class _MainCategoriesState extends State<MainCategories> {
                                 Text(
                                   'Delivery',
                                   style: TextStyle(
+                                      height: 1.5,
                                       color: Colors.white,
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
@@ -308,6 +314,7 @@ class _MainCategoriesState extends State<MainCategories> {
                                 Text(
                                   'From Point to Point',
                                   style: TextStyle(
+                                    height: 1.5,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -434,6 +441,7 @@ class _MainCategoriesState extends State<MainCategories> {
                                   Text(
                                     'Delivery',
                                     style: TextStyle(
+                                        height: 1.5,
                                         color: Colors.white,
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold),
@@ -441,6 +449,7 @@ class _MainCategoriesState extends State<MainCategories> {
                                   Text(
                                     'From Point to Point',
                                     style: TextStyle(
+                                      height: 1.5,
                                       color: Colors.white,
                                     ),
                                   ),

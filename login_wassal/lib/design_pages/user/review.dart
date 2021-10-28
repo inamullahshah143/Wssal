@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:wassal_customer/design_pages/user/popular.dart';
- 
 
 class Review extends StatefulWidget {
-  
-
   @override
   _ReviewState createState() => _ReviewState();
 }
@@ -38,11 +35,13 @@ class _ReviewState extends State<Review> {
                 ),
                 Text(
                   '4.6 (999+)',
-                  style: TextStyle(fontSize: 20, color: Colors.red),
+                  style:
+                      TextStyle(height: 1.5, fontSize: 20, color: Colors.red),
                 ),
                 Text(
                   'Overall',
-                  style: TextStyle(fontSize: 12, color: Colors.red),
+                  style:
+                      TextStyle(height: 1.5, fontSize: 12, color: Colors.red),
                 ),
                 Divider(),
                 Row(
@@ -198,13 +197,15 @@ class _ReviewState extends State<Review> {
                                 children: [
                                   Text(
                                     '${coment[i]["name"]}',
-                                    style: TextStyle(fontSize: 14),
+                                    style: TextStyle(height: 1.5, fontSize: 14),
                                   ),
                                   SizedBox(width: 40),
                                   Text(
                                     '${coment[i]["time"]}',
                                     style: TextStyle(
-                                        fontSize: 12, color: Colors.grey),
+                                        height: 1.5,
+                                        fontSize: 12,
+                                        color: Colors.grey),
                                   )
                                 ],
                               ),
@@ -223,7 +224,9 @@ class _ReviewState extends State<Review> {
                                   Text(
                                     '${coment[i]["short-coment"]}',
                                     style: TextStyle(
-                                        fontSize: 12, color: Colors.grey),
+                                        height: 1.5,
+                                        fontSize: 12,
+                                        color: Colors.grey),
                                   )
                                 ],
                               )
@@ -233,7 +236,7 @@ class _ReviewState extends State<Review> {
                       ),
                       Text(
                         '${coment[i]["coment"]}',
-                        style: TextStyle(fontSize: 12),
+                        style: TextStyle(height: 1.5, fontSize: 12),
                       ),
                       Divider()
                     ],
@@ -296,7 +299,7 @@ class _ReviewState extends State<Review> {
                   child: Center(
                     child: Text(
                       '+4',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(height: 1.5, color: Colors.white),
                     ),
                   ),
                 ),
@@ -335,13 +338,15 @@ class _ReviewState extends State<Review> {
                                 children: [
                                   Text(
                                     '${badcoment[i]["name"]}',
-                                    style: TextStyle(fontSize: 14),
+                                    style: TextStyle(height: 1.5, fontSize: 14),
                                   ),
                                   SizedBox(width: 40),
                                   Text(
                                     '${badcoment[i]["time"]}',
                                     style: TextStyle(
-                                        fontSize: 12, color: Colors.grey),
+                                        height: 1.5,
+                                        fontSize: 12,
+                                        color: Colors.grey),
                                   )
                                 ],
                               ),
@@ -360,7 +365,9 @@ class _ReviewState extends State<Review> {
                                   Text(
                                     '${badcoment[i]["short-coment"]}',
                                     style: TextStyle(
-                                        fontSize: 12, color: Colors.grey),
+                                        height: 1.5,
+                                        fontSize: 12,
+                                        color: Colors.grey),
                                   )
                                 ],
                               )
@@ -370,7 +377,7 @@ class _ReviewState extends State<Review> {
                       ),
                       Text(
                         '${badcoment[i]["coment"]}',
-                        style: TextStyle(fontSize: 12),
+                        style: TextStyle(height: 1.5, fontSize: 12),
                       ),
                       Divider()
                     ],

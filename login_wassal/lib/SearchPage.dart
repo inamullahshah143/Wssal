@@ -163,6 +163,8 @@ class _SearchPageState extends State<SearchPage> {
                   children: [
                     Text(element['title'],
                         style: TextStyle(
+                            
+                            
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.black)),
@@ -176,7 +178,7 @@ class _SearchPageState extends State<SearchPage> {
                         element['tags'],
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle( color: Colors.grey),
                       ),
                     ],
                   ),
@@ -224,6 +226,8 @@ class _SearchPageState extends State<SearchPage> {
                   children: [
                     Text(element['title'],
                         style: TextStyle(
+                            
+                            
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.black)),
@@ -244,7 +248,7 @@ class _SearchPageState extends State<SearchPage> {
                         element['description'],
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle( color: Colors.grey),
                       ),
                     ],
                   ),

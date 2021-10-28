@@ -41,6 +41,7 @@ class _DeliveryLocationsState extends State<DeliveryLocations> {
               child: Text(
                 'Enter Locations',
                 style: TextStyle(
+                    height: 1.5,
                     color: Colors.black,
                     fontWeight: FontWeight.w100,
                     fontSize: 16),
@@ -70,11 +71,13 @@ class _DeliveryLocationsState extends State<DeliveryLocations> {
                   ),
                   Text(
                     'Enter Delivery Locations',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     'Enter your location to make your delivery convenient',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 14, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                   Container(
@@ -156,7 +159,7 @@ class _DeliveryLocationsState extends State<DeliveryLocations> {
                           padding: EdgeInsets.all(10),
                           width: MediaQuery.of(context).size.width / 2.5,
                           decoration: BoxDecoration(
-                           color: Color.fromRGBO(255,199,0,100),
+                            color: Color.fromRGBO(255, 199, 0, 100),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Center(
@@ -181,7 +184,7 @@ class _DeliveryLocationsState extends State<DeliveryLocations> {
                           padding: EdgeInsets.all(10),
                           width: MediaQuery.of(context).size.width / 2.5,
                           decoration: BoxDecoration(
-                            color: Color.fromRGBO(255,199,0,100),
+                            color: Color.fromRGBO(255, 199, 0, 100),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Center(

@@ -81,6 +81,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
             child: Text(
               'Custom Delivery',
               style: TextStyle(
+                
+                
                 color: text1color,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -112,6 +114,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                   child: Text(
                     'Pickup Location',
                     style: TextStyle(
+                      
+                      
                       color: themeSecondaryColor,
                       fontWeight: FontWeight.w500,
                     ),
@@ -123,7 +127,7 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                     pickupLocation,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle( fontSize: 16),
                   ),
                 ),
                 Padding(
@@ -131,6 +135,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                   child: Text(
                     'Dropoff Location',
                     style: TextStyle(
+                      
+                      
                       color: themeSecondaryColor,
                       fontWeight: FontWeight.w500,
                     ),
@@ -142,7 +148,7 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                     dropoffLocation,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle( fontSize: 16),
                   ),
                 ),
                 Padding(
@@ -151,6 +157,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                     text: TextSpan(
                       text: 'Estimated Distance: ',
                       style: TextStyle(
+                        
+                        
                         color: themeSecondaryColor,
                         fontWeight: FontWeight.w500,
                       ),
@@ -158,6 +166,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                         TextSpan(
                           text: estimatedDistance,
                           style: TextStyle(
+                            
+                            
                             color: text1color,
                             fontWeight: FontWeight.normal,
                           ),
@@ -172,6 +182,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                     text: TextSpan(
                       text: 'Estimated Time: ',
                       style: TextStyle(
+                        
+                        
                         color: themeSecondaryColor,
                         fontWeight: FontWeight.w500,
                       ),
@@ -179,6 +191,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                         TextSpan(
                           text: estimatedTime,
                           style: TextStyle(
+                            
+                            
                             color: text1color,
                             fontWeight: FontWeight.normal,
                           ),
@@ -193,6 +207,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                     text: TextSpan(
                       text: 'Expected Price: ',
                       style: TextStyle(
+                        
+                        
                         color: themeSecondaryColor,
                         fontWeight: FontWeight.w500,
                       ),
@@ -200,6 +216,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                         TextSpan(
                           text: expectedPrice,
                           style: TextStyle(
+                            
+                            
                             color: text1color,
                             fontWeight: FontWeight.normal,
                           ),
@@ -220,18 +238,20 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                             return Dialog(
                               backgroundColor: Colors.white,
                               child: Container(
-                                height: 150,
                                 width: double.infinity,
                                 padding: EdgeInsets.all(10),
                                 margin: EdgeInsets.all(10),
                                 color: Colors.white,
                                 child: Column(
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
                                         'We are puching your Order',
                                         style: TextStyle(
+                                          
+                                          
                                           fontSize: 14,
                                           color: themeSecondaryColor,
                                         ),
@@ -242,6 +262,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                                       child: Text(
                                         'Please Wait...',
                                         style: TextStyle(
+                                          
+                                          
                                           fontSize: 12,
                                         ),
                                       ),
@@ -272,8 +294,7 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                         "est_time": "$estimatedTime",
                       }).then((response) {
                         print("Custom Delivery: ${response.body}");
-                        String trackingID =
-                            jsonDecode(response.body)['data'];
+                        String trackingID = jsonDecode(response.body)['data'];
                         Navigator.of(context).pop();
                         Navigator.of(context).pop();
                         Navigator.of(context).pop();
@@ -283,12 +304,12 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                             return Dialog(
                               backgroundColor: Colors.white,
                               child: Container(
-                                height: 150,
                                 width: double.infinity,
                                 padding: EdgeInsets.all(10),
                                 margin: EdgeInsets.all(10),
                                 color: Colors.white,
                                 child: Column(
+                                  mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Padding(
@@ -296,6 +317,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                                       child: Text(
                                         'Your Order has been placed Successfully!',
                                         style: TextStyle(
+                                          
+                                          
                                           fontSize: 14,
                                           color: themeSecondaryColor,
                                         ),
@@ -307,6 +330,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                                         'Your Order Tracing id is: ${trackingID.toString()}',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
+                                          
+                                          
                                           fontSize: 20,
                                         ),
                                       ),
@@ -328,6 +353,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                     child: Text(
                       "Cash on Delivery",
                       style: TextStyle(
+                        
+                        
                         fontSize: 14.0,
                         color: Colors.grey[800],
                       ),
@@ -346,18 +373,20 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                             return Dialog(
                               backgroundColor: Colors.white,
                               child: Container(
-                                height: 150,
                                 width: double.infinity,
                                 padding: EdgeInsets.all(10),
                                 margin: EdgeInsets.all(10),
                                 color: Colors.white,
                                 child: Column(
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
                                         'We are puching your Order',
                                         style: TextStyle(
+                                          
+                                          
                                           fontSize: 14,
                                           color: themeSecondaryColor,
                                         ),
@@ -368,6 +397,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                                       child: Text(
                                         'Please Wait...',
                                         style: TextStyle(
+                                          
+                                          
                                           fontSize: 12,
                                         ),
                                       ),
@@ -409,19 +440,21 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                             return Dialog(
                               backgroundColor: Colors.white,
                               child: Container(
-                                height: 150,
                                 width: double.infinity,
                                 padding: EdgeInsets.all(10),
                                 margin: EdgeInsets.all(10),
                                 color: Colors.white,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
                                         'Your Order has been placed Successfully!',
                                         style: TextStyle(
+                                          
+                                          
                                           fontSize: 14,
                                           color: themeSecondaryColor,
                                         ),
@@ -433,6 +466,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                                         'Your Order Tracing id is: ${trackingID.toString()}',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
+                                          
+                                          
                                           fontSize: 20,
                                         ),
                                       ),
@@ -454,6 +489,8 @@ class _ProceedCustomOrderState extends State<ProceedCustomOrder> {
                     child: Text(
                       "Pay with Wallet",
                       style: TextStyle(
+                        
+                        
                         fontSize: 14.0,
                         color: Colors.grey[800],
                       ),
