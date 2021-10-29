@@ -13,7 +13,7 @@ class LocationEnable extends StatefulWidget {
 class _LocationEnableState extends State<LocationEnable> {
   Location location = new Location();
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
       // appBar: AppBar(),
@@ -21,7 +21,7 @@ class _LocationEnableState extends State<LocationEnable> {
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
-             Container(
+            Container(
               height: 300,
               width: width,
               decoration: BoxDecoration(
@@ -38,7 +38,9 @@ class _LocationEnableState extends State<LocationEnable> {
                   child: Text(
                     'Hello',
                     style: TextStyle(
-                        color: Color.fromRGBO(128, 136, 142, 1), fontSize: 25),
+                        height: 1.5,
+                        color: Color.fromRGBO(128, 136, 142, 1),
+                        fontSize: 25),
                   )),
             ),
             Container(
@@ -48,12 +50,12 @@ class _LocationEnableState extends State<LocationEnable> {
                 child: Text('To start, please enable your location service'),
               ),
             ),
-          InkWell(
+            InkWell(
               onTap: () async {
-              //  _locationData = await location.getLocation();
-              //  print('location = $location');
-              //  print('_locationData = $_locationData');
-              //  onlocationChange();
+                //  _locationData = await location.getLocation();
+                //  print('location = $location');
+                //  print('_locationData = $_locationData');
+                //  onlocationChange();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -73,24 +75,21 @@ class _LocationEnableState extends State<LocationEnable> {
                     alignment: Alignment.center,
                     child: Text(
                       'Allow',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(height: 1.5, color: Colors.white),
                     )),
               ),
             ),
-        ],),
+          ],
+        ),
       ),
-      
     );
   }
 
-
-
-  onlocationChange(){
+  onlocationChange() {
     if (onlocationChange()) {
       print('$location');
     } else {
       print('Location not changed');
     }
-    
   }
 }

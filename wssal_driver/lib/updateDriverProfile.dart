@@ -100,7 +100,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
           elevation: 0,
           title: Text(
             "Update Profile",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(height: 1.5, color: Colors.black),
           ),
           actions: [
             Image(
@@ -129,6 +129,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                     child: Text(
                       'Driver Information',
                       style: TextStyle(
+                          height: 1.5,
                           color: Color.fromRGBO(182, 189, 200, 1),
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
@@ -168,6 +169,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                         disabledBorder: InputBorder.none,
                         hintText: 'Name',
                         hintStyle: TextStyle(
+                            height: 1.5,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Color.fromRGBO(182, 189, 200, 1)),
@@ -204,6 +206,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                         disabledBorder: InputBorder.none,
                         hintText: 'Email',
                         hintStyle: TextStyle(
+                            height: 1.5,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Color.fromRGBO(182, 189, 200, 1)),
@@ -239,6 +242,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                         disabledBorder: InputBorder.none,
                         hintText: 'Phone',
                         hintStyle: TextStyle(
+                            height: 1.5,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Color.fromRGBO(182, 189, 200, 1)),
@@ -274,6 +278,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                         disabledBorder: InputBorder.none,
                         hintText: 'paypal_email',
                         hintStyle: TextStyle(
+                            height: 1.5,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Color.fromRGBO(182, 189, 200, 1)),
@@ -312,6 +317,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                         disabledBorder: InputBorder.none,
                         hintText: 'Password',
                         hintStyle: TextStyle(
+                            height: 1.5,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Color.fromRGBO(182, 189, 200, 1)),
@@ -348,6 +354,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                         disabledBorder: InputBorder.none,
                         hintText: 'Id Number',
                         hintStyle: TextStyle(
+                            height: 1.5,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             // color: Color.fromRGBO(195, 153, 141, 1)
@@ -371,6 +378,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                     decoration: InputDecoration.collapsed(
                       hintText: 'id_expiry',
                       hintStyle: TextStyle(
+                          height: 1.5,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Color.fromRGBO(182, 189, 200, 1)),
@@ -443,6 +451,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                                 Text(
                                   'Select Avator',
                                   style: TextStyle(
+                                      height: 1.5,
                                       color: Color.fromRGBO(182, 189, 200, 1),
                                       fontSize: 16),
                                 ),
@@ -515,6 +524,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                                 Text(
                                   'Select ID_Picture',
                                   style: TextStyle(
+                                      height: 1.5,
                                       color: Color.fromRGBO(182, 189, 200, 1),
                                       fontSize: 16),
                                 ),
@@ -547,6 +557,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                     child: Text(
                       'Vehicle Information',
                       style: TextStyle(
+                          height: 1.5,
                           color: Color.fromRGBO(182, 189, 200, 1),
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
@@ -595,6 +606,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                         disabledBorder: InputBorder.none,
                         hintText: 'Vehicle Name',
                         hintStyle: TextStyle(
+                            height: 1.5,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Color.fromRGBO(182, 189, 200, 1)),
@@ -630,6 +642,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                         disabledBorder: InputBorder.none,
                         hintText: 'Plate Number',
                         hintStyle: TextStyle(
+                            height: 1.5,
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Color.fromRGBO(182, 189, 200, 1)),
@@ -652,6 +665,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                     decoration: InputDecoration.collapsed(
                       hintText: 'model',
                       hintStyle: TextStyle(
+                          height: 1.5,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Color.fromRGBO(182, 189, 200, 1)),
@@ -803,7 +817,7 @@ class _UpdateDriverProfileState extends State<UpdateDriverProfile> {
                       alignment: Alignment.center,
                       child: Text(
                         'Update Profile',
-                        style: TextStyle(color: Colors.black45),
+                        style: TextStyle(height: 1.5, color: Colors.black45),
                       ),
                     ),
                   ),

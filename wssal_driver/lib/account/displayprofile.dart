@@ -13,7 +13,7 @@ class Displayprofile extends StatefulWidget {
 
 class _DisplayprofileState extends State<Displayprofile> {
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
       backgroundColor: Color.fromRGBO(244, 245, 247, 1),
@@ -27,7 +27,7 @@ class _DisplayprofileState extends State<Displayprofile> {
           elevation: 0,
           title: Text(
             "Profile",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(height: 1.5, color: Colors.black),
           ),
           actions: [
             Image(
@@ -82,186 +82,167 @@ Future<Widget> getProfile() async {
               alignment: Alignment.center,
               child: Text(
                 data['name'],
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    height: 1.5, fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-             Container(
-                      margin:
-                          EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Driver Status',
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                          //   if (element['status'] == 0)
-                          //  Text(''),
-                          //   else if() ,
-                          if (data['status'] == 0) ...[
-                            Container(
-                              padding: EdgeInsets.all(6),
-                              decoration: BoxDecoration(
-                                color: Colors.yellow,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text('Pending'),
-                              ),
-                            )
-                          ] else if (data['status'] == 1) ...[
-                            Container(
-                              padding: EdgeInsets.all(6),
-                              decoration: BoxDecoration(
-                                color: Colors.green,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text('Approve'),
-                              ),
-                            )
-                          ] else if (data['status'] == 2) ...[
-                            Container(
-                              padding: EdgeInsets.all(6),
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text('Reject'),
-                              ),
-                            )
-                          ],
-                        ],
+            Container(
+              margin: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Driver Status',
+                    style: TextStyle(
+                        height: 1.5, fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  //   if (element['status'] == 0)
+                  //  Text(''),
+                  //   else if() ,
+                  if (data['status'] == 0) ...[
+                    Container(
+                      padding: EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: Colors.yellow,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text('Pending'),
+                      ),
+                    )
+                  ] else if (data['status'] == 1) ...[
+                    Container(
+                      padding: EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text('Approve'),
+                      ),
+                    )
+                  ] else if (data['status'] == 2) ...[
+                    Container(
+                      padding: EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text('Reject'),
+                      ),
+                    )
+                  ],
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(6),
+              child: Table(
+                border: TableBorder.all(),
+                children: [
+                  TableRow(children: [
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text(
+                        'Phone Number',
+                        style:
+                            TextStyle(height: 1.5, fontWeight: FontWeight.bold),
                       ),
                     ),
-            Container(
-               padding: EdgeInsets.all(6),
-              child: Table(
-                 border: TableBorder.all(),
-                 children: [
-                   TableRow(
-                     children: [
-                       Container(
-                  margin: EdgeInsets.all(10),
-                  child: Text(
-                    'Phone Number',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text( data['phone']))
-                     ]
-                   ),
-                      TableRow(
-                     children: [
-                       Container(
-                  margin: EdgeInsets.all(10),
-                  child: Text(
-                    'ID Card Number',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text(data['idnumber']))
-                     ]
-                   ),
-                      TableRow(
-                     children: [
-                       Container(
-                  margin: EdgeInsets.all(10),
-                  child: Text(
-                    'ID Expiry Date',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text(data['idexpiry']))
-                     ]
-                   ),
-                       TableRow(
-                     children: [
-                       Container(
-                  margin: EdgeInsets.all(10),
-                  child: Text(
-                    'Vehicle Name',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text(data['vehiclename']))
-                     ]
-                   ),
-                        TableRow(
-                     children: [
-                       Container(
-                  margin: EdgeInsets.all(10),
-                  child: Text(
-                    'Vehicle Registration Number',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text(data['platenumber']))
-                     ]
-                   ),
-                     TableRow(
-                     children: [
-                       Container(
-                  margin: EdgeInsets.all(10),
-                  child: Text(
-                    'Vehicle Model',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text(data['modal']))
-                     ]
-                   ),
-                 ],
+                    Container(
+                        margin: EdgeInsets.all(10), child: Text(data['phone']))
+                  ]),
+                  TableRow(children: [
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text(
+                        'ID Card Number',
+                        style:
+                            TextStyle(height: 1.5, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.all(10),
+                        child: Text(data['idnumber']))
+                  ]),
+                  TableRow(children: [
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text(
+                        'ID Expiry Date',
+                        style:
+                            TextStyle(height: 1.5, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.all(10),
+                        child: Text(data['idexpiry']))
+                  ]),
+                  TableRow(children: [
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text(
+                        'Vehicle Name',
+                        style:
+                            TextStyle(height: 1.5, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.all(10),
+                        child: Text(data['vehiclename']))
+                  ]),
+                  TableRow(children: [
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text(
+                        'Vehicle Registration Number',
+                        style:
+                            TextStyle(height: 1.5, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.all(10),
+                        child: Text(data['platenumber']))
+                  ]),
+                  TableRow(children: [
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text(
+                        'Vehicle Model',
+                        style:
+                            TextStyle(height: 1.5, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.all(10), child: Text(data['modal']))
+                  ]),
+                ],
               ),
             ),
             Container(
-               margin: EdgeInsets.all(10),
-              height: height/5,
+              margin: EdgeInsets.all(10),
+              height: height / 5,
               width: width,
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.black,
-                  width: 1
-                ),
-                image: DecorationImage(
-                  image: NetworkImage('$picBaseURL${data['photo']}'),
-                  fit: BoxFit.contain
-                  )
-              ),
+                  border: Border.all(color: Colors.black, width: 1),
+                  image: DecorationImage(
+                      image: NetworkImage('$picBaseURL${data['photo']}'),
+                      fit: BoxFit.contain)),
             ),
-              Container(
-               margin: EdgeInsets.all(10),
-              height: height/5,
+            Container(
+              margin: EdgeInsets.all(10),
+              height: height / 5,
               width: width,
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.black,
-                  width: 1
-                ),
-                image: DecorationImage(
-                  image: NetworkImage('$picBaseURL${data['idpicture']}'),
-                  fit: BoxFit.contain
-                  )
-              ),
+                  border: Border.all(color: Colors.black, width: 1),
+                  image: DecorationImage(
+                      image: NetworkImage('$picBaseURL${data['idpicture']}'),
+                      fit: BoxFit.contain)),
             )
-            
           ],
         ));
   } catch (e) {

@@ -32,7 +32,7 @@ class _CustomIncomingOrderDetailsState
         elevation: 0,
         title: Text(
           "Custom Incoming Order Details",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(height: 1.5, color: Colors.black),
         ),
         actions: [
           Padding(
@@ -73,7 +73,7 @@ class _CustomIncomingOrderDetailsState
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       '${orderDetail['customer_order']['orderuser']['name']}',
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(height: 1.5, fontSize: 18),
                     ),
                   ),
                   Text(
@@ -93,7 +93,8 @@ class _CustomIncomingOrderDetailsState
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Order No",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -112,7 +113,8 @@ class _CustomIncomingOrderDetailsState
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Grand Total",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -132,6 +134,7 @@ class _CustomIncomingOrderDetailsState
                               child: Text(
                                 "Payment Method",
                                 style: TextStyle(
+                                  height: 1.5,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -160,7 +163,8 @@ class _CustomIncomingOrderDetailsState
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Pick Form",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -179,7 +183,8 @@ class _CustomIncomingOrderDetailsState
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Deliver To",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -198,7 +203,8 @@ class _CustomIncomingOrderDetailsState
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Distance",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -218,6 +224,7 @@ class _CustomIncomingOrderDetailsState
                               child: Text(
                                 "Order Status",
                                 style: TextStyle(
+                                  height: 1.5,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -250,12 +257,15 @@ class _CustomIncomingOrderDetailsState
                                 if (json.decode(response.body)['message'] ==
                                     "Order Assigned Sucessfully!") {
                                   print(response.body);
-                                  showAlert(context: context, title: "Order has been assigned to you");
-                                 
+                                  showAlert(
+                                      context: context,
+                                      title: "Order has been assigned to you");
                                 } else {
                                   print(response.body);
-showAlert(context: context, title: "Deliver Your Current Order First.");
-                                 
+                                  showAlert(
+                                      context: context,
+                                      title:
+                                          "Deliver Your Current Order First.");
                                 }
                               });
                             },

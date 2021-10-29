@@ -48,7 +48,7 @@ class _ChatState extends State<Chat> {
   }
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
       appBar: PreferredSize(
@@ -57,10 +57,9 @@ class _ChatState extends State<Chat> {
           // iconTheme:
           backgroundColor: Colors.white,
           elevation: 0,
-          title: Text("Chat",
-          style: TextStyle(
-            color: Colors.black
-          ),
+          title: Text(
+            "Chat",
+            style: TextStyle(height: 1.5, color: Colors.black),
           ),
           iconTheme: new IconThemeData(color: Colors.black),
           // child: new Icon(Icons.add),

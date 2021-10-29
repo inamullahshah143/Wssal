@@ -32,7 +32,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
           elevation: 0,
           title: Text(
             "Completed Orders",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(height: 1.5, color: Colors.black),
           ),
           actions: [
             Padding(
@@ -176,7 +176,8 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     '\#${element['order_no']}',
-                    style: TextStyle(fontSize: 15, color: Colors.black),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 15, color: Colors.black),
                   ),
                 ),
                 subtitle: Row(
@@ -185,6 +186,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                     Text(
                       '${element['payment_method']}',
                       style: TextStyle(
+                        height: 1.5,
                         // fontSize: 15,
                         color: Colors.black,
                       ),
@@ -194,6 +196,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                 trailing: Text(
                   '${element['delivery_charges']}',
                   style: TextStyle(
+                    height: 1.5,
                     // fontSize: 15,
                     color: Colors.black,
                   ),
@@ -269,7 +272,8 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     '\#${element['customer_order']['order_no']}',
-                    style: TextStyle(fontSize: 15, color: Colors.black),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 15, color: Colors.black),
                   ),
                 ),
                 subtitle: Row(
@@ -278,6 +282,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                     Text(
                       '${element['customer_order']['payment_method']}',
                       style: TextStyle(
+                        height: 1.5,
                         // fontSize: 15,
                         color: Colors.black,
                       ),
@@ -291,6 +296,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                       child: Text(
                         'LE ${element['customer_order']['deliveryfeec']}',
                         style: TextStyle(
+                          height: 1.5,
                           // fontSize: 15,
                           color: Colors.black,
                         ),

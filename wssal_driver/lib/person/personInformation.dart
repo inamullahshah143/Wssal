@@ -29,7 +29,7 @@ class _PersonInformationState extends State<PersonInformation> {
           elevation: 0,
           title: Text(
             "Personal Information",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(height: 1.5, color: Colors.black),
           ),
           actions: [
             Image(
@@ -102,7 +102,8 @@ class _PersonInformationState extends State<PersonInformation> {
                   alignment: Alignment.center,
                   child: Text(
                     'Driver Profile',
-                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 19, fontWeight: FontWeight.bold),
                   )),
               Divider(
                 thickness: 0.2,
@@ -131,8 +132,10 @@ class _PersonInformationState extends State<PersonInformation> {
                     ),
                     Text(
                       '${data['data']['name']}',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          height: 1.5,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -154,8 +157,10 @@ class _PersonInformationState extends State<PersonInformation> {
                     ),
                     Text(
                       '${data['data']['phone']}',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          height: 1.5,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -177,8 +182,10 @@ class _PersonInformationState extends State<PersonInformation> {
                     ),
                     Text(
                       '${data['data']['email']}',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          height: 1.5,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -200,8 +207,10 @@ class _PersonInformationState extends State<PersonInformation> {
                     ),
                     Text(
                       '${data['data']['paypal_email']}',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          height: 1.5,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -223,8 +232,10 @@ class _PersonInformationState extends State<PersonInformation> {
                     ),
                     Text(
                       '${data['data']['cnic']}',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          height: 1.5,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -246,8 +257,10 @@ class _PersonInformationState extends State<PersonInformation> {
                     ),
                     Text(
                       '${data['data']['address']}',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          height: 1.5,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -267,7 +280,9 @@ class _PersonInformationState extends State<PersonInformation> {
                           child: Text(
                             'Vehicle Profile',
                             style: TextStyle(
-                                fontSize: 19, fontWeight: FontWeight.bold),
+                                height: 1.5,
+                                fontSize: 19,
+                                fontWeight: FontWeight.bold),
                           )),
                     ),
                     Divider(
@@ -294,7 +309,9 @@ class _PersonInformationState extends State<PersonInformation> {
                           Text(
                             '${data['data']['driver_vehicle']['vehicle_name']}',
                             style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+                                height: 1.5,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -317,7 +334,9 @@ class _PersonInformationState extends State<PersonInformation> {
                           Text(
                             '${data['data']['driver_vehicle']['plate_number']}',
                             style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+                                height: 1.5,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -340,7 +359,9 @@ class _PersonInformationState extends State<PersonInformation> {
                           Text(
                             '${data['data']['driver_vehicle']['modal']}',
                             style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+                                height: 1.5,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -363,7 +384,9 @@ class _PersonInformationState extends State<PersonInformation> {
                           Text(
                             '${data['data']['driver_vehicle']['id_number']}',
                             style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+                                height: 1.5,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -386,7 +409,9 @@ class _PersonInformationState extends State<PersonInformation> {
                           Text(
                             '${data['data']['driver_vehicle']['id_expiry']}',
                             style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+                                height: 1.5,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -409,7 +434,9 @@ class _PersonInformationState extends State<PersonInformation> {
                           Text(
                             '${data['data']['driver_vehicle']['id_expiry']}',
                             style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+                                height: 1.5,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -426,7 +453,8 @@ class _PersonInformationState extends State<PersonInformation> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Phone Number',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 14, color: Colors.grey),
                   ),
                 ),
               ),
@@ -444,7 +472,7 @@ class _PersonInformationState extends State<PersonInformation> {
                     alignment: Alignment.center,
                     child: Text(
                       '${data['data']['phone']}',
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(height: 1.5, color: Colors.grey),
                     )),
               ),
               Container(
@@ -456,7 +484,8 @@ class _PersonInformationState extends State<PersonInformation> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     '* Phone Number Cannot be changed',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 14, color: Colors.grey),
                   ),
                 ),
               ),
@@ -469,7 +498,8 @@ class _PersonInformationState extends State<PersonInformation> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     '  Contact Support for more information',
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(
+                        height: 1.5, fontSize: 14, color: Colors.grey),
                   ),
                 ),
               ),
@@ -497,7 +527,7 @@ class _PersonInformationState extends State<PersonInformation> {
                     alignment: Alignment.center,
                     child: Text(
                       'Change Information',
-                      style: TextStyle(color: Colors.black45),
+                      style: TextStyle(height: 1.5, color: Colors.black45),
                     ),
                   ),
                 ),

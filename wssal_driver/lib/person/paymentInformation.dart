@@ -30,7 +30,7 @@ class _PaymentInformationState extends State<PaymentInformation> {
                 alignment: Alignment.bottomCenter,
                 child: Text(
                   'Payment Information',
-                  style: TextStyle(fontSize: 30),
+                  style: TextStyle(height: 1.5, fontSize: 30),
                 ),
               ),
             ),
@@ -50,13 +50,15 @@ class _PaymentInformationState extends State<PaymentInformation> {
                       margin: EdgeInsets.only(bottom: 10),
                       child: Text(
                         'Current Balance',
-                        style: TextStyle(fontSize: 12),
+                        style: TextStyle(height: 1.5, fontSize: 12),
                       ),
                     ),
                     Text(
                       '8807.00 LE',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          height: 1.5,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 )),
@@ -83,13 +85,15 @@ class _PaymentInformationState extends State<PaymentInformation> {
                       margin: EdgeInsets.only(bottom: 10),
                       child: Text(
                         'Account Name | Bank Name',
-                        style: TextStyle(fontSize: 12),
+                        style: TextStyle(height: 1.5, fontSize: 12),
                       ),
                     ),
                     Text(
                       'Ends with 7009',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          height: 1.5,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -119,13 +123,13 @@ class _PaymentInformationState extends State<PaymentInformation> {
               //     Container(
               //       margin: EdgeInsets.only(bottom: 10),
               //       child: Text('Account Name | Bank Name',
-              //       style: TextStyle(
+              //       style: TextStyle( height: 1.5,
               //         fontSize: 12
               //       ),
               //       ),
               //     ),
               //     Text('Ends with 7009',
-              //     style: TextStyle(
+              //     style: TextStyle( height: 1.5,
               //       fontSize: 20,
               //       fontWeight: FontWeight.bold
               //     ),
@@ -140,7 +144,7 @@ class _PaymentInformationState extends State<PaymentInformation> {
                     text: TextSpan(children: [
                   TextSpan(
                     text: 'Add',
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(height: 1.5, color: Colors.black),
                   ),
                   WidgetSpan(
                       child: InkWell(
@@ -152,7 +156,7 @@ class _PaymentInformationState extends State<PaymentInformation> {
                     },
                     child: Text(
                       ' new bank account details',
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(height: 1.5, color: Colors.red),
                     ),
                   ))
                 ]))),
@@ -182,11 +186,10 @@ class _PaymentInformationState extends State<PaymentInformation> {
                     ),
                     Text(
                       'I Agree on Terms and Conditions',
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(height: 1.5, color: Colors.grey),
                     ),
                   ],
                 )),
-            
             InkWell(
               onTap: () {},
               child: Container(
@@ -203,7 +206,7 @@ class _PaymentInformationState extends State<PaymentInformation> {
                   alignment: Alignment.center,
                   child: Text(
                     'Request Bank Transfer ',
-                    style: TextStyle(color: Colors.black45),
+                    style: TextStyle(height: 1.5, color: Colors.black45),
                   ),
                 ),
               ),
@@ -228,7 +231,7 @@ class _PaymentInformationState extends State<PaymentInformation> {
                   alignment: Alignment.center,
                   child: Text(
                     'Request a CASH ',
-                    style: TextStyle(color: Colors.black45),
+                    style: TextStyle(height: 1.5, color: Colors.black45),
                   ),
                 ),
               ),
@@ -236,7 +239,8 @@ class _PaymentInformationState extends State<PaymentInformation> {
             Align(
               alignment: Alignment.center,
               child: Text('Cash Payment Could take up to 24 Hours to be ready',
-                  style: TextStyle(fontSize: 12, color: Colors.black)),
+                  style: TextStyle(
+                      height: 1.5, fontSize: 12, color: Colors.black)),
             ),
           ],
         ),

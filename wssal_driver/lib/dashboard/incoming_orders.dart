@@ -33,7 +33,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
           elevation: 0,
           title: Text(
             "Incoming Orders",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(height: 1.5, color: Colors.black),
           ),
           actions: [
             Padding(
@@ -185,7 +185,8 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                         margin: EdgeInsets.only(right: 5),
                         child: Text(
                           '\#${element['order_no']}',
-                          style: TextStyle(fontSize: 15, color: Colors.black),
+                          style: TextStyle(
+                              height: 1.5, fontSize: 15, color: Colors.black),
                         ),
                       ),
                       RichText(
@@ -195,6 +196,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                               child: Text(
                                 "${DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.parse(element['created_at']))}",
                                 style: TextStyle(
+                                  height: 1.5,
                                   color: Color.fromRGBO(182, 189, 200, 1),
                                 ),
                               ),
@@ -207,12 +209,14 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                   subtitle: Text(
                     '${element['payment_method']}',
                     style: TextStyle(
+                      height: 1.5,
                       color: Colors.black,
                     ),
                   ),
                   trailing: Text(
                     '${element['delivery_charges']}',
                     style: TextStyle(
+                      height: 1.5,
                       color: Color.fromRGBO(222, 61, 48, 1),
                     ),
                   ),
@@ -288,7 +292,8 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                       alignment: Alignment.topLeft,
                       child: Text(
                         '\#${element['customer_order']['order_no']}',
-                        style: TextStyle(fontSize: 15, color: Colors.black),
+                        style: TextStyle(
+                            height: 1.5, fontSize: 15, color: Colors.black),
                       ),
                     ),
                     subtitle: Row(
@@ -297,6 +302,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                         Text(
                           '${element['customer_order']['payment_method']}',
                           style: TextStyle(
+                            height: 1.5,
                             // fontSize: 15,
                             color: Colors.black,
                           ),
@@ -310,6 +316,7 @@ class _IncomingOrdersState extends State<IncomingOrders> {
                           child: Text(
                             'LE ${element['customer_order']['deliveryfeec']}',
                             style: TextStyle(
+                              height: 1.5,
                               color: Colors.black,
                             ),
                           ),

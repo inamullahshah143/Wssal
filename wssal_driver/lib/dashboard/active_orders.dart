@@ -34,7 +34,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
           elevation: 0,
           title: Text(
             "Active Orders",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(height: 1.5, color: Colors.black),
           ),
           actions: [
             Padding(
@@ -184,7 +184,8 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                       alignment: Alignment.topLeft,
                       child: Text(
                         '\#${element['order_no']}',
-                        style: TextStyle(fontSize: 15, color: Colors.black),
+                        style: TextStyle(
+                            height: 1.5, fontSize: 15, color: Colors.black),
                       ),
                     ),
                     subtitle: Row(
@@ -193,6 +194,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                         Text(
                           '${element['payment_method']}',
                           style: TextStyle(
+                            height: 1.5,
                             // fontSize: 15,
                             color: Colors.black,
                           ),
@@ -202,6 +204,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                     trailing: Text(
                       'LE ${element['delivery_charges']}',
                       style: TextStyle(
+                        height: 1.5,
                         color: Colors.black,
                       ),
                     ),
@@ -279,7 +282,8 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                       alignment: Alignment.topLeft,
                       child: Text(
                         '\#${element['customer_order']['order_no']}',
-                        style: TextStyle(fontSize: 15, color: Colors.black),
+                        style: TextStyle(
+                            height: 1.5, fontSize: 15, color: Colors.black),
                       ),
                     ),
                     subtitle: Row(
@@ -288,6 +292,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                         Text(
                           '${element['customer_order']['payment_method']}',
                           style: TextStyle(
+                            height: 1.5,
                             // fontSize: 15,
                             color: Colors.black,
                           ),
@@ -301,6 +306,7 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                           child: Text(
                             'LE ${element['customer_order']['deliveryfeec']}',
                             style: TextStyle(
+                              height: 1.5,
                               color: Colors.black,
                             ),
                           ),

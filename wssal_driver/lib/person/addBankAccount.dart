@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../function.dart';
 // import 'functions.dart';
 
-
 class AddBankAccount extends StatefulWidget {
   // const AddBankAccount({ Key? key }) : super(key: key);
 
@@ -14,11 +13,11 @@ class AddBankAccount extends StatefulWidget {
 
 class _AddBankAccountState extends State<AddBankAccount> {
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
       backgroundColor: Colors.white,
-        appBar: PreferredSize(
+      appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0),
         child: AppBar(
           // iconTheme:
@@ -26,10 +25,9 @@ class _AddBankAccountState extends State<AddBankAccount> {
           elevation: 0,
           title: Align(
             alignment: Alignment.center,
-            child: Text("Add Bank Account",
-            style: TextStyle(
-              color: Colors.black
-            ),
+            child: Text(
+              "Add Bank Account",
+              style: TextStyle(height: 1.5, color: Colors.black),
             ),
           ),
           iconTheme: new IconThemeData(color: Colors.black),
@@ -54,7 +52,7 @@ class _AddBankAccountState extends State<AddBankAccount> {
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
-             Container(
+            Container(
                 margin: EdgeInsets.only(top: 25, left: 15, right: 15),
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(244, 245, 247, 1),
@@ -92,7 +90,7 @@ class _AddBankAccountState extends State<AddBankAccount> {
                       // ),
                       labelText: '     Account Name'),
                 )),
-                Container(
+            Container(
                 margin: EdgeInsets.only(top: 25, left: 15, right: 15),
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(244, 245, 247, 1),
@@ -130,7 +128,7 @@ class _AddBankAccountState extends State<AddBankAccount> {
                       // ),
                       labelText: '     IBAN Number'),
                 )),
-                Container(
+            Container(
                 margin: EdgeInsets.only(top: 25, left: 15, right: 15),
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(244, 245, 247, 1),
@@ -168,7 +166,7 @@ class _AddBankAccountState extends State<AddBankAccount> {
                       // ),
                       labelText: '     Bank Name'),
                 )),
-                Container(
+            Container(
                 margin: EdgeInsets.only(top: 25, left: 15, right: 15),
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(244, 245, 247, 1),
@@ -206,7 +204,7 @@ class _AddBankAccountState extends State<AddBankAccount> {
                       // ),
                       labelText: '     Swift Code'),
                 )),
-                Container(
+            Container(
                 //  alignment: Alignment.centerLeft,
                 margin: EdgeInsets.only(top: 25, left: 15, right: 15),
                 child: Row(
@@ -232,13 +230,13 @@ class _AddBankAccountState extends State<AddBankAccount> {
                     ),
                     Text(
                       'I Agree on Terms and Conditions',
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(height: 1.5, color: Colors.grey),
                     ),
                   ],
                 )),
-                  Container(
+            Container(
                 //  alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only( left: 15, right: 15),
+                margin: EdgeInsets.only(left: 15, right: 15),
                 child: Row(
                   children: [
                     AnimatedIconButton(
@@ -262,20 +260,20 @@ class _AddBankAccountState extends State<AddBankAccount> {
                     ),
                     Text(
                       'I Agree on Terms and Conditions',
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(height: 1.5, color: Colors.grey),
                     ),
                   ],
                 )),
-                  Container(
+            Container(
               margin: EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 20),
               height: 50,
               width: width,
               decoration: BoxDecoration(
                   color: Colors.yellow,
                   borderRadius: BorderRadius.circular(15)),
-              child: Align(alignment: Alignment.center, child: Text('Add Bank Account')),
+              child: Align(
+                  alignment: Alignment.center, child: Text('Add Bank Account')),
             ),
-            
           ],
         ),
       ),

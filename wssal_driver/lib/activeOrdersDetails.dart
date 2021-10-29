@@ -28,7 +28,7 @@ class _ActiveOrderDetailsState extends State<ActiveOrderDetails> {
         elevation: 0,
         title: Text(
           "Orders Details",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(height: 1.5, color: Colors.black),
         ),
         actions: [
           Padding(
@@ -80,7 +80,8 @@ class _ActiveOrderDetailsState extends State<ActiveOrderDetails> {
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Order No",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -99,7 +100,8 @@ class _ActiveOrderDetailsState extends State<ActiveOrderDetails> {
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Grand Total",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -119,6 +121,7 @@ class _ActiveOrderDetailsState extends State<ActiveOrderDetails> {
                               child: Text(
                                 "Payment Method",
                                 style: TextStyle(
+                                  height: 1.5,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -145,7 +148,8 @@ class _ActiveOrderDetailsState extends State<ActiveOrderDetails> {
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Pick Form",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -164,7 +168,8 @@ class _ActiveOrderDetailsState extends State<ActiveOrderDetails> {
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Deliver To",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -183,7 +188,8 @@ class _ActiveOrderDetailsState extends State<ActiveOrderDetails> {
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Distance",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -203,6 +209,7 @@ class _ActiveOrderDetailsState extends State<ActiveOrderDetails> {
                               child: Text(
                                 "Order Status",
                                 style: TextStyle(
+                                  height: 1.5,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

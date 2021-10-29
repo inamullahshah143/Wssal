@@ -31,7 +31,7 @@ class _PersonState extends State<Person> {
                 alignment: Alignment.bottomCenter,
                 child: Text(
                   'Profile',
-                  style: TextStyle(fontSize: 30),
+                  style: TextStyle(height: 1.5, fontSize: 30),
                 ),
               ),
             ),
@@ -57,14 +57,16 @@ class _PersonState extends State<Person> {
                     margin: EdgeInsets.only(top: 10),
                     child: Text(
                       '$storedName',
-                      style: TextStyle(color: Colors.black, fontSize: 19),
+                      style: TextStyle(
+                          height: 1.5, color: Colors.black, fontSize: 19),
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 10, bottom: 10),
                     child: Text(
                       '$storedNumber',
-                      style: TextStyle(color: Colors.black, fontSize: 13),
+                      style: TextStyle(
+                          height: 1.5, color: Colors.black, fontSize: 13),
                     ),
                   ),
                 ],
@@ -86,6 +88,7 @@ class _PersonState extends State<Person> {
                       child: Text(
                         'General',
                         style: TextStyle(
+                            height: 1.5,
                             color: textColor,
                             fontSize: 17,
                             fontWeight: FontWeight.bold),
@@ -113,7 +116,7 @@ class _PersonState extends State<Person> {
                         title: Text('Person Information'),
                         subtitle: Text(
                           'Change Your Account Information',
-                          style: TextStyle(color: textColor),
+                          style: TextStyle(height: 1.5, color: textColor),
                         ),
                         trailing: Icon(
                           Icons.arrow_forward_ios,
@@ -144,7 +147,7 @@ class _PersonState extends State<Person> {
                         title: Text('Payment Method'),
                         subtitle: Text(
                           'Payroll, Bank Account Details',
-                          style: TextStyle(color: textColor),
+                          style: TextStyle(height: 1.5, color: textColor),
                         ),
                         trailing: Icon(
                           Icons.arrow_forward_ios,
@@ -175,7 +178,7 @@ class _PersonState extends State<Person> {
                         title: Text('Support'),
                         subtitle: Text(
                           'Contact Support',
-                          style: TextStyle(color: textColor),
+                          style: TextStyle(height: 1.5, color: textColor),
                         ),
                         trailing: Icon(
                           Icons.arrow_forward_ios,
@@ -204,6 +207,7 @@ class _PersonState extends State<Person> {
                         child: Text(
                           'Notifications',
                           style: TextStyle(
+                              height: 1.5,
                               color: textColor,
                               fontSize: 17,
                               fontWeight: FontWeight.bold),
@@ -227,7 +231,7 @@ class _PersonState extends State<Person> {
                           title: Text('Notification'),
                           subtitle: Text(
                             'You Will Receive daily Updates',
-                            style: TextStyle(color: textColor),
+                            style: TextStyle(height: 1.5, color: textColor),
                           ),
                           trailing: SwitcherButton(
                             size: 40,
@@ -261,6 +265,7 @@ class _PersonState extends State<Person> {
                         child: Text(
                           'More',
                           style: TextStyle(
+                              height: 1.5,
                               color: textColor,
                               fontSize: 17,
                               fontWeight: FontWeight.bold),
@@ -281,7 +286,7 @@ class _PersonState extends State<Person> {
                         title: Text('Rate Us'),
                         subtitle: Text(
                           'You Will Receive Daily Updates',
-                          style: TextStyle(color: textColor),
+                          style: TextStyle(height: 1.5, color: textColor),
                         ),
                         trailing: Icon(
                           Icons.arrow_forward_ios,
@@ -304,7 +309,7 @@ class _PersonState extends State<Person> {
                         title: Text('FAQ'),
                         subtitle: Text(
                           'Frequantly Asked Question',
-                          style: TextStyle(color: textColor),
+                          style: TextStyle(height: 1.5, color: textColor),
                         ),
                         trailing: Icon(
                           Icons.arrow_forward_ios,

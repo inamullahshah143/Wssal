@@ -102,7 +102,6 @@ class _SpecialOffersState extends State<SpecialOffers> {
                         Text(
                           'Burger from',
                           style: TextStyle(
-                            
                             shadows: [
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.75),
@@ -112,7 +111,6 @@ class _SpecialOffersState extends State<SpecialOffers> {
                                     Offset(0, 1), // changes position of shadow
                               ),
                             ],
-                            
                             color: themePrimaryColor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,

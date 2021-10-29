@@ -146,6 +146,7 @@ class _CustomOrderNavigationState extends State<CustomOrderNavigation> {
                               child: Text(
                                 "Close",
                                 style: TextStyle(
+                                    height: 1.5,
                                     color: Colors.white,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold),

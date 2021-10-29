@@ -99,6 +99,7 @@ class _DriverProfileState extends State<DriverProfile> {
                     child: Text(
                       'Driver Profile ',
                       style: TextStyle(
+                          height: 1.5,
                           color: Color.fromRGBO(128, 136, 142, 1),
                           fontSize: 22),
                     ),
@@ -111,6 +112,7 @@ class _DriverProfileState extends State<DriverProfile> {
                       child: Text(
                         'Your phone number ${phoneNo}',
                         style: TextStyle(
+                            height: 1.5,
                             color: Color.fromRGBO(149, 159, 175, 1),
                             fontSize: 16),
                       )),
@@ -143,6 +145,7 @@ class _DriverProfileState extends State<DriverProfile> {
                       disabledBorder: InputBorder.none,
                       labelText: 'Full Name',
                       labelStyle: TextStyle(
+                        height: 1.5,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Color.fromRGBO(182, 189, 200, 1),
@@ -172,6 +175,7 @@ class _DriverProfileState extends State<DriverProfile> {
                       contentPadding: EdgeInsets.only(top: 17.5),
                       labelText: 'ID Card Expiry Date',
                       labelStyle: TextStyle(
+                        height: 1.5,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Color.fromRGBO(182, 189, 200, 1),
@@ -215,6 +219,7 @@ class _DriverProfileState extends State<DriverProfile> {
                       disabledBorder: InputBorder.none,
                       labelText: 'ID Card Number',
                       labelStyle: TextStyle(
+                        height: 1.5,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Color.fromRGBO(182, 189, 200, 1),
@@ -250,6 +255,7 @@ class _DriverProfileState extends State<DriverProfile> {
                       disabledBorder: InputBorder.none,
                       labelText: 'Vehicle Plate Number',
                       labelStyle: TextStyle(
+                          height: 1.5,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Color.fromRGBO(182, 189, 200, 1)),
@@ -278,6 +284,7 @@ class _DriverProfileState extends State<DriverProfile> {
                       contentPadding: EdgeInsets.only(top: 17.5),
                       labelText: 'Vehicle Model',
                       labelStyle: TextStyle(
+                        height: 1.5,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Color.fromRGBO(182, 189, 200, 1),
@@ -319,6 +326,7 @@ class _DriverProfileState extends State<DriverProfile> {
                         disabledBorder: InputBorder.none,
                         labelText: 'Vehicle Name',
                         labelStyle: TextStyle(
+                          height: 1.5,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Color.fromRGBO(182, 189, 200, 1),
@@ -377,6 +385,7 @@ class _DriverProfileState extends State<DriverProfile> {
                                 Text(
                                   'Select Files',
                                   style: TextStyle(
+                                      height: 1.5,
                                       color: Color.fromRGBO(182, 189, 200, 1),
                                       fontSize: 16),
                                 ),
@@ -440,6 +449,7 @@ class _DriverProfileState extends State<DriverProfile> {
                                 Text(
                                   'Select Driver Picture',
                                   style: TextStyle(
+                                      height: 1.5,
                                       color: Color.fromRGBO(182, 189, 200, 1),
                                       fontSize: 16),
                                 ),
@@ -456,7 +466,8 @@ class _DriverProfileState extends State<DriverProfile> {
                 ),
                 Text(
                   'Address (Coordinates)',
-                  style: TextStyle(color: Colors.grey, fontSize: 14),
+                  style:
+                      TextStyle(height: 1.5, color: Colors.grey, fontSize: 14),
                 ),
                 lat != null && lng != null
                     ? Container(
@@ -470,6 +481,7 @@ class _DriverProfileState extends State<DriverProfile> {
                                     child: Text(
                                       "Latitude:",
                                       style: TextStyle(
+                                          height: 1.5,
                                           fontWeight: FontWeight.w500,
                                           fontSize: 16),
                                     )),
@@ -477,7 +489,7 @@ class _DriverProfileState extends State<DriverProfile> {
                                   margin: EdgeInsets.all(10),
                                   child: Text(
                                     "$lat",
-                                    style: TextStyle(fontSize: 16),
+                                    style: TextStyle(height: 1.5, fontSize: 16),
                                   ),
                                 ),
                               ],
@@ -489,6 +501,7 @@ class _DriverProfileState extends State<DriverProfile> {
                                   child: Text(
                                     "Latitude:",
                                     style: TextStyle(
+                                      height: 1.5,
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16,
                                     ),
@@ -499,6 +512,7 @@ class _DriverProfileState extends State<DriverProfile> {
                                   child: Text(
                                     "$lng",
                                     style: TextStyle(
+                                      height: 1.5,
                                       fontSize: 16,
                                     ),
                                   ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pusher_websocket_flutter/pusher.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:pusher/pusher.dart' as push;
+
 // ignore: must_be_immutable
 class ChatPage extends StatefulWidget {
   final Map orderDetails;
@@ -38,8 +39,9 @@ class _ChatPageState extends State<ChatPage> {
                       '75277f8cc7ab6202152a', '5722578c3b137a34832c', options);
                   pusher.trigger(
                       ["${orderDetails['order_no']}Chat"],
+                  
                       "${orderDetails['order_no']}Chat",
-                      "$value,$DateTime.now(),Driver");
+                      "$value,${DateTime.now()},Driver");
                 },
               ),
             ),
@@ -130,7 +132,3 @@ class _MessageTileState extends State<MessageTile> {
     );
   }
 }
-
-
-
-

@@ -26,7 +26,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
           elevation: 0,
           title: Text(
             "Update Profile",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(height: 1.5, color: Colors.black),
           ),
           actions: [
             Image(
@@ -58,7 +58,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                         alignment: Alignment.center,
                         // child: Text(
                         //   '\$$b',
-                        //   style: TextStyle(
+                        //   style: TextStyle( height: 1.5,
                         //       color: Colors.black,
                         //       fontWeight: FontWeight.bold,
                         //       fontSize: 19),
@@ -90,6 +90,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                             child: Text(
                               'Deposit Details',
                               style: TextStyle(
+                                  height: 1.5,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 19),
@@ -267,7 +268,10 @@ class _DriverWoiletState extends State<DriverWoilet> {
           Text(
             '\$$balance',
             style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 19),
+                height: 1.5,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 19),
           ),
           Text('NO Data Availabe')
         ];
@@ -288,6 +292,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
                         child: Text(
                           'withdraw Details',
                           style: TextStyle(
+                              height: 1.5,
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 19),
@@ -315,6 +320,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
             Text(
               '\$$balance',
               style: TextStyle(
+                  height: 1.5,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 19),
@@ -333,6 +339,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
             Text(
               '\$$balance',
               style: TextStyle(
+                  height: 1.5,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 19),
@@ -346,7 +353,10 @@ class _DriverWoiletState extends State<DriverWoilet> {
         Text(
           '\$ 0.0',
           style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 19),
+              height: 1.5,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 19),
         ),
         Text('$e')
       ];

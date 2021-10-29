@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'function.dart';
 
-
 class OrderHistory extends StatefulWidget {
-   final Map orderDetail;
+  final Map orderDetail;
   OrderHistory(this.orderDetail);
 
   @override
@@ -11,34 +10,34 @@ class OrderHistory extends StatefulWidget {
 }
 
 class _OrderHistoryState extends State<OrderHistory> {
-    final Map orderDetail;
+  final Map orderDetail;
   _OrderHistoryState(this.orderDetail);
   @override
-   Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
-          appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70.0),
-          child: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70.0),
+        child: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
 
-            title: Align(
-              alignment: Alignment.center,
-              child: Text(
-                "Order History",
-                style: TextStyle(color: Colors.black),
-              ),
+          title: Align(
+            alignment: Alignment.center,
+            child: Text(
+              "Order History",
+              style: TextStyle(height: 1.5, color: Colors.black),
             ),
-            actions: [
-              Image(
-                image: AssetImage('assets/app_logo.png'),
-              )
-            ],
-            automaticallyImplyLeading: false,
-            // centerTitle: true,
           ),
+          actions: [
+            Image(
+              image: AssetImage('assets/app_logo.png'),
+            )
+          ],
+          automaticallyImplyLeading: false,
+          // centerTitle: true,
         ),
+      ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
@@ -55,7 +54,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                   children: [
                     Text(
                       '${orderDetail['orderid']}',
-                      style: TextStyle(fontSize: 19),
+                      style: TextStyle(height: 1.5, fontSize: 19),
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 10, right: 10),
@@ -65,7 +64,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                           borderRadius: BorderRadius.circular(19)),
                       child: Text(
                         'Completed',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(height: 1.5, color: Colors.black),
                       ),
                     )
                   ],
@@ -78,11 +77,11 @@ class _OrderHistoryState extends State<OrderHistory> {
                   children: [
                     Text(
                       '29/10/2021',
-                      style: TextStyle(fontSize: 15),
+                      style: TextStyle(height: 1.5, fontSize: 15),
                     ),
                     Text(
                       '10:23AM',
-                      style: TextStyle(fontSize: 15),
+                      style: TextStyle(height: 1.5, fontSize: 15),
                     ),
                   ],
                 ),
@@ -98,6 +97,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                   child: Text(
                     'Payment Information',
                     style: TextStyle(
+                        height: 1.5,
                         color: Colors.black,
                         // fontWeight: FontWeight.bold,
                         fontSize: 19),
@@ -119,12 +119,14 @@ class _OrderHistoryState extends State<OrderHistory> {
                           Text(
                             'Payment Method',
                             style: TextStyle(
+                              height: 1.5,
                               fontSize: 14,
                             ),
                           ),
                           Text(
                             'You will Earn',
                             style: TextStyle(
+                              height: 1.5,
                               fontSize: 14,
                             ),
                           ),
@@ -147,6 +149,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                               Text(
                                 'Cash',
                                 style: TextStyle(
+                                    height: 1.5,
                                     fontSize: 25,
                                     fontWeight: FontWeight.normal),
                               )
@@ -163,6 +166,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                               Text(
                                 '10.00 EGP',
                                 style: TextStyle(
+                                    height: 1.5,
                                     fontSize: 25,
                                     fontWeight: FontWeight.normal),
                               )
@@ -186,6 +190,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                   child: Text(
                     'Order Details',
                     style: TextStyle(
+                      height: 1.5,
                       fontSize: 19,
                     ),
                   ),
@@ -211,7 +216,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                   children: [
                     Text(
                       'Total',
-                      style: TextStyle(fontSize: 15),
+                      style: TextStyle(height: 1.5, fontSize: 15),
                     ),
                     Text(
                         "\$ ${buildProductsTotalPrice(orderDetail['products'])}"),
@@ -230,7 +235,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                   children: [
                     Text(
                       'Delivery Time',
-                      style: TextStyle(color: Colors.black, fontSize: 19),
+                      style: TextStyle(
+                          height: 1.5, color: Colors.black, fontSize: 19),
                     ),
                     RichText(
                       text: TextSpan(
@@ -240,15 +246,14 @@ class _OrderHistoryState extends State<OrderHistory> {
                           ),
                           TextSpan(
                               text: "  18 Min",
-                              style: TextStyle(color: Colors.black)),
+                              style:
+                                  TextStyle(height: 1.5, color: Colors.black)),
                         ],
                       ),
                     )
                   ],
                 ),
               ),
-           
-          
             ],
           ),
         ),
@@ -256,7 +261,7 @@ class _OrderHistoryState extends State<OrderHistory> {
     );
   }
 
-   List<Widget> buildProducts(List product) {
+  List<Widget> buildProducts(List product) {
     List<Widget> x = [];
 
     for (final e in product) {

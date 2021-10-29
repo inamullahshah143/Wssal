@@ -56,8 +56,8 @@ class SplashScreenState extends State<SplashScreen> {
     logs = false;
     SharedPreferences mypref = await SharedPreferences.getInstance();
     var y = mypref.getString('abs');
-     var x = mypref.getString('name');
-        var z = mypref.getString('number');
+    var x = mypref.getString('name');
+    var z = mypref.getString('number');
     // print("$logs");
     print(" Abs = $y");
     if (y != null) {
@@ -155,9 +155,16 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp().then((value) => {
         runApp(MaterialApp(
+          builder: (context, child) {
+            return MediaQuery(
+              child: child,
+              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            );
+          },
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: themePrimaryColor,
+            fontFamily: 'HelveticaNeueLT',
           ),
           home: SplashScreen(),
         )),

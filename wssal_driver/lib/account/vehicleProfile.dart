@@ -31,7 +31,9 @@ class _VehicleProfileState extends State<VehicleProfile> {
                   child: Text(
                     'Vehicle Profile',
                     style: TextStyle(
-                        color: Color.fromRGBO(128, 136, 142, 1), fontSize: 22),
+                        height: 1.5,
+                        color: Color.fromRGBO(128, 136, 142, 1),
+                        fontSize: 22),
                   )),
             ),
             Container(
@@ -41,7 +43,9 @@ class _VehicleProfileState extends State<VehicleProfile> {
                   child: Text(
                     'Your phone number +201003456789',
                     style: TextStyle(
-                        color: Color.fromRGBO(149, 159, 175, 1), fontSize: 16),
+                        height: 1.5,
+                        color: Color.fromRGBO(149, 159, 175, 1),
+                        fontSize: 16),
                   )),
             ),
             Container(
@@ -55,7 +59,7 @@ class _VehicleProfileState extends State<VehicleProfile> {
               padding: const EdgeInsets.all(05.0),
               child: DropdownButton<String>(
                 value: _chosenValue,
-                style: TextStyle(color: Colors.grey),
+                style: TextStyle(height: 1.5, color: Colors.grey),
                 items: <Map>[
                   {'title': 'ODDI', 'icon': Icon(Icons.car_repair)},
                   {
@@ -74,8 +78,10 @@ class _VehicleProfileState extends State<VehicleProfile> {
                         WidgetSpan(child: value['icon']),
                         TextSpan(
                             text: value['title'],
-                            style:
-                                TextStyle(fontSize: 17, color: Colors.black)),
+                            style: TextStyle(
+                                height: 1.5,
+                                fontSize: 17,
+                                color: Colors.black)),
                       ]),
                     ),
                   );
@@ -250,7 +256,9 @@ class _VehicleProfileState extends State<VehicleProfile> {
                                   Text(
                                     'Vehicle Picture',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 16),
+                                        height: 1.5,
+                                        color: Colors.black,
+                                        fontSize: 16),
                                   ),
                                   Icon(
                                     Icons.center_focus_weak_rounded,
@@ -309,7 +317,9 @@ class _VehicleProfileState extends State<VehicleProfile> {
                                   Text(
                                     'Licence Picture',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 16),
+                                        height: 1.5,
+                                        color: Colors.black,
+                                        fontSize: 16),
                                   ),
                                   Icon(
                                     Icons.dashboard_outlined,
@@ -352,7 +362,7 @@ class _VehicleProfileState extends State<VehicleProfile> {
                         alignment: Alignment.center,
                         child: Text(
                           'Previous',
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(height: 1.5, color: Colors.black),
                         ),
                       ),
                     ),
@@ -386,6 +396,7 @@ class _VehicleProfileState extends State<VehicleProfile> {
                                             child: Text(
                                               'You request submitted successfully',
                                               style: TextStyle(
+                                                  height: 1.5,
                                                   color: Colors.black,
                                                   fontSize: 15),
                                             ),
@@ -395,6 +406,7 @@ class _VehicleProfileState extends State<VehicleProfile> {
                                             child: Text(
                                               'Upon approval, you will receive a SMS and notification, it may take unto 24 hours to complete your profile.',
                                               style: TextStyle(
+                                                  height: 1.5,
                                                   color: Colors.grey,
                                                   fontSize: 12),
                                             ),
@@ -405,6 +417,7 @@ class _VehicleProfileState extends State<VehicleProfile> {
                                               child: Text(
                                                 "ok",
                                                 style: TextStyle(
+                                                    height: 1.5,
                                                     color: Colors.red),
                                               ),
                                               onPressed: () {
@@ -444,7 +457,7 @@ class _VehicleProfileState extends State<VehicleProfile> {
                           alignment: Alignment.center,
                           child: Text(
                             'Submit',
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(height: 1.5, color: Colors.black),
                           ),
                         ),
                       ),

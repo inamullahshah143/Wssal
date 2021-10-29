@@ -10,7 +10,7 @@ class MapBuilder extends StatelessWidget {
   final LatLng position;
   MapBuilder({this.position});
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     latestContext = context;
     return MaterialApp(
       home: MapApp(position: position),
@@ -31,21 +31,22 @@ class _MapAppState extends State<MapApp> {
   Set<Marker> markers = {};
   @override
   void initState() {
-    
     setState(() {
       markers.add(Marker(markerId: MarkerId("driver"), position: position));
-      markers.add(Marker(markerId: MarkerId("pickup"), position: LatLng(31.4504, 73.1350)));
-      markers.add(Marker(markerId: MarkerId("delivery"), position: LatLng(33.6844, 73.0479)));
+      markers.add(Marker(
+          markerId: MarkerId("pickup"), position: LatLng(31.4504, 73.1350)));
+      markers.add(Marker(
+          markerId: MarkerId("delivery"), position: LatLng(33.6844, 73.0479)));
     });
     getUserLocations();
     super.initState();
   }
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     latestContext = context;
     return Scaffold(
-        appBar: PreferredSize(
+      appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0),
         child: AppBar(
           iconTheme: IconThemeData(
@@ -55,7 +56,7 @@ class _MapAppState extends State<MapApp> {
           elevation: 0,
           title: Text(
             "Order Details",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(height: 1.5, color: Colors.black),
           ),
           actions: [
             Image(

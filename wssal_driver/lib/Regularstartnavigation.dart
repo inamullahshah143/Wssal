@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -27,7 +26,8 @@ class RegularOrderNavigation extends StatefulWidget {
   final Map orderDetails;
   RegularOrderNavigation({@required this.orderDetails});
   @override
-  _RegularOrderNavigationState createState() => _RegularOrderNavigationState(orderDetails: orderDetails);
+  _RegularOrderNavigationState createState() =>
+      _RegularOrderNavigationState(orderDetails: orderDetails);
 }
 
 class _RegularOrderNavigationState extends State<RegularOrderNavigation> {
@@ -144,6 +144,7 @@ class _RegularOrderNavigationState extends State<RegularOrderNavigation> {
                               child: Text(
                                 "Close",
                                 style: TextStyle(
+                                    height: 1.5,
                                     color: Colors.white,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold),

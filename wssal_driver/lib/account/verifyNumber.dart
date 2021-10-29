@@ -55,6 +55,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                   child: Text(
                     'Verify phone number',
                     style: TextStyle(
+                      height: 1.5,
                       color: Color.fromRGBO(128, 136, 142, 1),
                       fontSize: 18,
                     ),
@@ -67,6 +68,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                   child: Text(
                     'We have just sent a code to $phonenumber',
                     style: TextStyle(
+                      height: 1.5,
                       color: Color.fromRGBO(149, 159, 175, 1),
                       fontSize: 14,
                     ),
@@ -79,6 +81,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                 alignment: Alignment.center,
                 child: VerificationCode(
                   textStyle: TextStyle(
+                    height: 1.5,
                     fontSize: 20.0,
                     color: Colors.red[900],
                   ),
@@ -128,12 +131,12 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                           data['request_status'] == 1) {
                         stringValue = data['token'];
                         storedName = data['data']['name'];
-                      storedNumber = data['data']['phone'];
+                        storedNumber = data['data']['phone'];
                         SharedPreferences mypref =
                             await SharedPreferences.getInstance();
                         mypref.setString('abs', '$stringValue');
-                         mypref.setString('name', '$storedName');
-                      mypref.setString('number', '$storedNumber');
+                        mypref.setString('name', '$storedName');
+                        mypref.setString('number', '$storedNumber');
 
                         showAlert(
                           context: context,
@@ -208,6 +211,7 @@ class _VarifyphonenumberState extends State<Varifyphonenumber> {
                   child: Text(
                     "Send Again",
                     style: TextStyle(
+                      height: 1.5,
                       fontSize: 12.0,
                       color: Colors.grey[700],
                     ),

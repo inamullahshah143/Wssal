@@ -54,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text(
                     'Welcome Back',
                     style: TextStyle(
+                      height: 1.5,
                       color: Color.fromRGBO(128, 136, 142, 1),
                       fontSize: 18,
                     ),
@@ -67,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text(
                     'Hello there, sign in to continue!   ',
                     style: TextStyle(
+                      height: 1.5,
                       color: Color.fromRGBO(149, 159, 175, 1),
                       fontSize: 14,
                     ),
@@ -81,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     Text(
                       'Or',
                       style: TextStyle(
+                        height: 1.5,
                         color: Colors.grey,
                         fontSize: 14,
                       ),
@@ -99,6 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           'Create new account.',
                           style: TextStyle(
+                            height: 1.5,
                             color: Colors.red,
                             fontSize: 16,
                           ),
@@ -123,7 +127,8 @@ class _LoginPageState extends State<LoginPage> {
                         padding: EdgeInsets.all(12.5),
                         child: Text(
                           "Phone Number",
-                          style: TextStyle(color: Colors.grey, fontSize: 14.0),
+                          style: TextStyle(
+                              height: 1.5, color: Colors.grey, fontSize: 14.0),
                         ),
                       ),
                       TextFormField(
@@ -135,6 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         keyboardType: TextInputType.phone,
                         style: TextStyle(
+                          height: 1.5,
                           fontSize: 14.0,
                         ),
                         onChanged: (value) {
@@ -191,6 +197,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text(
                     "Next",
                     style: TextStyle(
+                      height: 1.5,
                       fontSize: 14.0,
                       color: Colors.grey[800],
                     ),

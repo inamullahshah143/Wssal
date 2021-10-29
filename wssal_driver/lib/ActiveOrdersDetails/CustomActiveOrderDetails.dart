@@ -32,7 +32,7 @@ class _CustomActiveOrderDetailsState extends State<CustomActiveOrderDetails> {
         elevation: 0,
         title: Text(
           "Custom Active Order Details",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(height: 1.5, color: Colors.black),
         ),
         actions: [
           Padding(
@@ -73,7 +73,7 @@ class _CustomActiveOrderDetailsState extends State<CustomActiveOrderDetails> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       '${orderDetail['customer_order']['orderuser']['name']}',
-                      style: TextStyle(fontSize: 18),
+                      style: TextStyle(height: 1.5, fontSize: 18),
                     ),
                   ),
                   Text(
@@ -93,7 +93,8 @@ class _CustomActiveOrderDetailsState extends State<CustomActiveOrderDetails> {
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Order No",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -112,7 +113,8 @@ class _CustomActiveOrderDetailsState extends State<CustomActiveOrderDetails> {
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Grand Total",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -132,6 +134,7 @@ class _CustomActiveOrderDetailsState extends State<CustomActiveOrderDetails> {
                               child: Text(
                                 "Payment Method",
                                 style: TextStyle(
+                                  height: 1.5,
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -160,7 +163,8 @@ class _CustomActiveOrderDetailsState extends State<CustomActiveOrderDetails> {
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Pick Form",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -179,7 +183,8 @@ class _CustomActiveOrderDetailsState extends State<CustomActiveOrderDetails> {
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Deliver To",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -198,7 +203,8 @@ class _CustomActiveOrderDetailsState extends State<CustomActiveOrderDetails> {
                               margin: EdgeInsets.all(10),
                               child: Text(
                                 "Distance",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    height: 1.5, fontWeight: FontWeight.w500),
                               ),
                             ),
                             Container(
@@ -227,10 +233,11 @@ class _CustomActiveOrderDetailsState extends State<CustomActiveOrderDetails> {
                         }).then((response) {
                           print(response.body);
                           if (json.decode(response.body)['message'] ==
-                              "payment added to your wallet !" || json.decode(response.body)['message'] ==
-                              "Order already completed && payment transfer to you !") {
-                                showAlert(context: context, title: "Order Delivered");
-                           
+                                  "payment added to your wallet !" ||
+                              json.decode(response.body)['message'] ==
+                                  "Order already completed && payment transfer to you !") {
+                            showAlert(
+                                context: context, title: "Order Delivered");
                           }
                         });
                       },

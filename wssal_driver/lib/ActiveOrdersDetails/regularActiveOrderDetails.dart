@@ -35,7 +35,7 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
         elevation: 0,
         title: Text(
           "Regular Active Order Details",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(height: 1.5, color: Colors.black),
         ),
         actions: [
           Padding(
@@ -111,7 +111,7 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             '${data['user']['name']}',
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(height: 1.5, fontSize: 16),
           ),
         ),
         Text('${data['user']['phone']}'),
@@ -130,7 +130,8 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
                     margin: EdgeInsets.all(10),
                     child: Text(
                       "Order No",
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(height: 1.5, fontWeight: FontWeight.w500),
                     ),
                   ),
                   Container(
@@ -149,7 +150,8 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
                     margin: EdgeInsets.all(10),
                     child: Text(
                       "Grand Total",
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(height: 1.5, fontWeight: FontWeight.w500),
                     ),
                   ),
                   Container(
@@ -168,7 +170,8 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
                     margin: EdgeInsets.all(10),
                     child: Text(
                       "Delivery Fee",
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(height: 1.5, fontWeight: FontWeight.w500),
                     ),
                   ),
                   Container(
@@ -188,6 +191,7 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
                     child: Text(
                       "Payment Method",
                       style: TextStyle(
+                        height: 1.5,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -212,7 +216,8 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
                     margin: EdgeInsets.all(10),
                     child: Text(
                       "Pick Form",
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(height: 1.5, fontWeight: FontWeight.w500),
                     ),
                   ),
                   Container(
@@ -232,7 +237,8 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
                     margin: EdgeInsets.all(10),
                     child: Text(
                       "Deliver To",
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(height: 1.5, fontWeight: FontWeight.w500),
                     ),
                   ),
                   InkWell(
@@ -258,7 +264,8 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
                     margin: EdgeInsets.all(10),
                     child: Text(
                       "Distance",
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                      style:
+                          TextStyle(height: 1.5, fontWeight: FontWeight.w500),
                     ),
                   ),
                   Container(
@@ -278,6 +285,7 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
                     child: Text(
                       "Order Status",
                       style: TextStyle(
+                        height: 1.5,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -285,13 +293,13 @@ class _RegularActiveOrderDetailsState extends State<RegularActiveOrderDetails> {
                   Container(
                     margin: EdgeInsets.all(10),
                     child: Text("${getStatus({
-                      "pending": data['pending'],
-                      "process": data['process'],
-                      "packing": data['packing'],
-                      "shipping": data['shipping'],
-                      "delivered": data['delivered'],
-                      "cancelled": data['cancelled'],
-                    })}"),
+                          "pending": data['pending'],
+                          "process": data['process'],
+                          "packing": data['packing'],
+                          "shipping": data['shipping'],
+                          "delivered": data['delivered'],
+                          "cancelled": data['cancelled'],
+                        })}"),
                   ),
                 ],
               ),

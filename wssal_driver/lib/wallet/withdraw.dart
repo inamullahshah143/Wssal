@@ -25,7 +25,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
           elevation: 0,
           title: Text(
             "WithDraw Request",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(height: 1.5, color: Colors.black),
           ),
           actions: [
             Image(
@@ -74,6 +74,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                       // ),
                       hintText: 'Enter Ammount',
                       hintStyle: TextStyle(
+                          height: 1.5,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           // color: Color.fromRGBO(195, 153, 141, 1)
@@ -133,7 +134,8 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
           ],
           cancelable: true,
         );
-      } else if (data['message'] == 'Withdraw Amount is grater than Balance amount !') {
+      } else if (data['message'] ==
+          'Withdraw Amount is grater than Balance amount !') {
         showAlert(
           context: context,
           title: "Not enough funds in your wallet",
