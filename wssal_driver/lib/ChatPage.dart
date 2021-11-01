@@ -39,7 +39,6 @@ class _ChatPageState extends State<ChatPage> {
                       '75277f8cc7ab6202152a', '5722578c3b137a34832c', options);
                   pusher.trigger(
                       ["${orderDetails['order_no']}Chat"],
-                  
                       "${orderDetails['order_no']}Chat",
                       "$value,${DateTime.now()},Driver");
                 },

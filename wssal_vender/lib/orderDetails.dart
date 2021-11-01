@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_alert/flutter_alert.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:wssal_vender/functions.dart';
 import 'package:http/http.dart' as http;
 
@@ -396,6 +394,7 @@ class _OrderDetailsState extends State<OrderDetails> {
               buildOrderStatus('cancelled');
             }
           })
+        // ignore: unnecessary_statements
         : null;
   }
 
@@ -406,6 +405,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         setState(() {
             buildOrderStatus('cancelled');
           })
+        // ignore: unnecessary_statements
         : null;
   }
 

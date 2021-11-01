@@ -89,7 +89,7 @@ class _AllCategoriesShopsState extends State<AllCategoriesShops> {
                       isScrollControlled: true,
                       backgroundColor: Colors.transparent,
                       builder: (context) {
-                        return StoreDetail(storeBlock: element);
+                        return StoreDetail(storeBlock: element['shop']);
                       },
                     );
                   },

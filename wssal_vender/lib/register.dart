@@ -1,16 +1,11 @@
 import 'dart:convert';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:http/http.dart' as http;
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'login_page.dart';
 import 'verifynumber.dart';
 import 'functions.dart';
-
-String countryCode = "+20";
-String name;
-String number;
-bool isChecked = false;
 
 class CreateAccount extends StatefulWidget {
   @override
@@ -18,6 +13,12 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
+  bool tick = false;
+  final TextEditingController controller = TextEditingController();
+  PhoneNumber country = PhoneNumber(isoCode: 'EG');
+  bool isChecked = false;
+  String name = '';
+  String number;
   @override
   void initState() {
     super.initState();
@@ -142,47 +143,36 @@ class _CreateAccountState extends State<CreateAccount> {
                           style: TextStyle(color: Colors.grey, fontSize: 14.0),
                         ),
                       ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'please enter your valid phone no.';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.phone,
-                        maxLength: 10,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                        ),
-                        onChanged: (value) {
+                      InternationalPhoneNumberInput(
+                        onInputChanged: (PhoneNumber abc) {
                           setState(() {
-                            number = value;
+                            number = abc.phoneNumber;
                           });
                         },
-                        decoration: InputDecoration(
+                        onInputValidated: (bool value) {
+                          setState(() {
+                            tick = value;
+                          });
+                        },
+                        selectorConfig: SelectorConfig(
+                          selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                        ),
+                        ignoreBlank: false,
+                        autoValidateMode: AutovalidateMode.disabled,
+                        selectorTextStyle: TextStyle(color: Colors.black),
+                        initialValue: country,
+                        textFieldController: controller,
+                        formatInput: false,
+                        inputDecoration: InputDecoration(
                           border: InputBorder.none,
-                          counterText: "",
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.only(top: 17.5),
                           hintText: 'Phone No',
-                          prefixIcon: CountryCodePicker(
-                            onChanged: (CountryCode code) {
-                              setState(() {
-                                countryCode = code.dialCode;
-                              });
-                            },
-                            initialSelection: 'EG',
-                            favorite: ['+20', 'EG'],
-                            hideMainText: false,
-                            showCountryOnly: false,
-                            showOnlyCountryWhenClosed: false,
-                            flagDecoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                          ),
+                          suffixIcon: tick
+                              ? Icon(Icons.check_circle, color: Colors.green)
+                              : null,
                         ),
                       ),
                     ],
@@ -241,35 +231,35 @@ class _CreateAccountState extends State<CreateAccount> {
       ),
     );
   }
-}
 
-signUp(context) async {
-  var url = 'https://einnovention.co.uk/wassl/public/api/register';
-  var response = await http.post(Uri.parse(url), body: {
-    'name': '$name',
-    'fcm_token': '$ffccmmTTookkeenn',
-    'phone': '$countryCode$number',
-  });
-  print('Response body: ${response.body}');
-  var data = json.decode(response.body);
-  print('$data');
-  if (data['status'] == 200) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-          builder: (BuildContext context) => Varifyphonenumber(data)),
-    );
-  } else {
-    showAlert(
-      context: context,
-      title: "Account Already Exist",
-      actions: [
-        AlertAction(text: "Ok ", isDestructiveAction: true, onPressed: () {}
-            //  Navigator.push(
-            //     context, MaterialPageRoute(builder: (context) => LoginPage())),
-            ),
-      ],
-      cancelable: true,
-    );
+  signUp(context) async {
+    var url = 'https://einnovention.co.uk/wassl/public/api/register';
+    var response = await http.post(Uri.parse(url), body: {
+      'name': '$name',
+      'fcm_token': '$ffccmmTTookkeenn',
+      'phone': '$number',
+    });
+    print('Response body: ${response.body}');
+    var data = json.decode(response.body);
+    print('$data');
+    if (data['status'] == 200) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => Varifyphonenumber(data)),
+      );
+    } else {
+      showAlert(
+        context: context,
+        title: "Account Already Exist",
+        actions: [
+          AlertAction(text: "Ok ", isDestructiveAction: true, onPressed: () {}
+              //  Navigator.push(
+              //     context, MaterialPageRoute(builder: (context) => LoginPage())),
+              ),
+        ],
+        cancelable: true,
+      );
+    }
   }
 }

@@ -3,15 +3,27 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:http/http.dart' as http;
+import 'package:wassal_customer/productDetails.dart';
+
+import 'Storedetail.dart';
 
 class SpecialOffers extends StatefulWidget {
-  const SpecialOffers({Key key}) : super(key: key);
+  final Map categoryBlock;
+  const SpecialOffers({
+    Key key,
+    @required this.categoryBlock,
+  }) : super(key: key);
 
   @override
-  _SpecialOffersState createState() => _SpecialOffersState();
+  _SpecialOffersState createState() =>
+      _SpecialOffersState(categoryBlock: categoryBlock);
 }
 
 class _SpecialOffersState extends State<SpecialOffers> {
+  final Map categoryBlock;
+  _SpecialOffersState({
+    @required this.categoryBlock,
+  });
   @override
   Widget build(BuildContext context) {
     latestContext = context;
@@ -42,7 +54,9 @@ class _SpecialOffersState extends State<SpecialOffers> {
             } else if (snap.hasError) {
               return Text('${snap.error}');
             } else {
-              return Container();
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
           }),
         ),
@@ -51,14 +65,43 @@ class _SpecialOffersState extends State<SpecialOffers> {
   }
 
   Future<Widget> specialOffers() async {
-    var response = await http.get(Uri.parse("$apiURL/FeatureProduct/"));
+    var response =
+        await http.get(Uri.parse("$apiURL/offer/${categoryBlock['id']}"));
     List<Widget> x = [];
     if (response.statusCode == 200) {
       List data = json.decode(response.body)['data'];
       data.forEach((element) {
         x.add(
           InkWell(
-            onTap: () {},
+            onTap: () async {
+              if (element['offer_on'] == 'shop') {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) {
+                    return StoreDetail(storeBlock: element['shop']);
+                  },
+                );
+              } else {
+                await http
+                    .get((Uri.parse(
+                        "$apiURL/productDetail/${element['product_id']}")))
+                    .then((value) {
+                  if (value.statusCode == 200) {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) {
+                        return ProductDetails(
+                            d: json.decode(value.body)['data']);
+                      },
+                    );
+                  }
+                });
+              }
+            },
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
@@ -70,8 +113,7 @@ class _SpecialOffersState extends State<SpecialOffers> {
                   borderRadius: BorderRadius.circular(15.0),
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage(
-                        'https://assets.epicurious.com/photos/5c745a108918ee7ab68daf79/9:4/w_3752,h_1667,c_limit/Smashburger-recipe-120219.jpg'),
+                    image: NetworkImage(imageURL + '/${element['bgimage']}'),
                   ),
                 ),
                 alignment: Alignment.centerRight,
@@ -85,9 +127,6 @@ class _SpecialOffersState extends State<SpecialOffers> {
                       end: Alignment.centerRight,
                       colors: [
                         Color.fromRGBO(25, 25, 25, 0),
-                        Color.fromRGBO(25, 25, 25, 0.25),
-                        Color.fromRGBO(25, 25, 25, 0.5),
-                        Color.fromRGBO(25, 25, 25, 0.75),
                         Color.fromRGBO(25, 25, 25, 1),
                       ],
                     ),
@@ -100,15 +139,16 @@ class _SpecialOffersState extends State<SpecialOffers> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Burger from',
+                          '${element['title']}',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                             shadows: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.75),
+                                color: Colors.black.withOpacity(0.5),
                                 spreadRadius: 0,
-                                blurRadius: 5,
+                                blurRadius: 1,
                                 offset:
-                                    Offset(0, 1), // changes position of shadow
+                                    Offset(0, 0), // changes position of shadow
                               ),
                             ],
                             color: themePrimaryColor,
@@ -117,17 +157,16 @@ class _SpecialOffersState extends State<SpecialOffers> {
                           ),
                         ),
                         Text(
-                          '45EGP',
+                          '${element['subtitle']}',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            
-                            
                             shadows: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.75),
+                                color: Colors.black.withOpacity(0.5),
                                 spreadRadius: 0,
-                                blurRadius: 5,
+                                blurRadius: 1,
                                 offset:
-                                    Offset(0, 1), // changes position of shadow
+                                    Offset(0, 0), // changes position of shadow
                               ),
                             ],
                             color: Colors.white,

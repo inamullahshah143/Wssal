@@ -13,10 +13,9 @@ class DisplayAttributes extends StatefulWidget {
   _DisplayAttributesState createState() => _DisplayAttributesState();
 }
 
-var AttriId;
-
 class _DisplayAttributesState extends State<DisplayAttributes> {
   Map dataa;
+  var attriId;
   //     var dataaa;
   @override
   Widget build(BuildContext context) {
@@ -154,8 +153,8 @@ class _DisplayAttributesState extends State<DisplayAttributes> {
                                   child: ElevatedButton(
                                 child: Text('Delete'),
                                 onPressed: () {
-                                  AttriId = element['id'];
-                                  print('AttriId = $AttriId');
+                                  attriId = element['id'];
+                                  print('AttriId = $attriId');
                                   showAlert(
                                     context: context,
                                     title:
@@ -230,7 +229,7 @@ class _DisplayAttributesState extends State<DisplayAttributes> {
   deleteAttribute() async {
     try {
       var url =
-          'https://einnovention.co.uk/wassl/public/api/vendor/attributes/$AttriId';
+          'https://einnovention.co.uk/wassl/public/api/vendor/attributes/$attriId';
       var response = await http.delete(Uri.parse(url),
           headers: {'Authorization': 'Bearer $stringValue'});
       print('Response body: ${response.body}');

@@ -53,6 +53,7 @@ dependencies:
   http_auth: ^1.0.1
   webview_flutter: ^2.0.12
   google_maps_place_picker:
+  intl_phone_number_input: ^0.5.2+2
 
 dev_dependencies:
   flutter_test:

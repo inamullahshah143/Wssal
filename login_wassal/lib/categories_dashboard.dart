@@ -43,7 +43,7 @@ class _CategoryDashboardState extends State<CategoryDashboard> {
               : bottomIndex == 2
                   ? CustomOrderDetail()
                   : bottomIndex == 3
-                      ? SpecialOffers()
+                      ? SpecialOffers(categoryBlock: categoryBlock)
                       : bottomIndex == 4
                           ? ProfilePage()
                           : Container(),

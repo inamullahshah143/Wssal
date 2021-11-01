@@ -1,8 +1,7 @@
 import 'dart:convert';
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_alert/flutter_alert.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:wssal_vender/register.dart';
 import 'package:wssal_vender/verifynumber.dart';
 import 'functions.dart';
@@ -13,7 +12,9 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-String countryCode = '+20';
+bool tick = false;
+final TextEditingController controller = TextEditingController();
+PhoneNumber country = PhoneNumber(isoCode: 'EG');
 String number;
 
 class _LoginPageState extends State<LoginPage> {
@@ -125,45 +126,36 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(color: Colors.grey, fontSize: 14.0),
                         ),
                       ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'please enter your valid phone no.';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.phone,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                        ),
-                        onChanged: (value) {
+                      InternationalPhoneNumberInput(
+                        onInputChanged: (PhoneNumber abc) {
                           setState(() {
-                            number = value;
+                            number = abc.phoneNumber;
                           });
                         },
-                        decoration: InputDecoration(
+                        onInputValidated: (bool value) {
+                          setState(() {
+                            tick = value;
+                          });
+                        },
+                        selectorConfig: SelectorConfig(
+                          selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                        ),
+                        ignoreBlank: false,
+                        autoValidateMode: AutovalidateMode.disabled,
+                        selectorTextStyle: TextStyle(color: Colors.black),
+                        initialValue: country,
+                        textFieldController: controller,
+                        formatInput: false,
+                        inputDecoration: InputDecoration(
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none,
                           errorBorder: InputBorder.none,
                           disabledBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.only(top: 17.5),
                           hintText: 'Phone No',
-                          prefixIcon: CountryCodePicker(
-                            onChanged: (CountryCode code) {
-                              setState(() {
-                                countryCode = code.dialCode;
-                              });
-                            },
-                            initialSelection: 'EG',
-                            favorite: ['+20', 'EG'],
-                            hideMainText: false,
-                            showCountryOnly: false,
-                            showOnlyCountryWhenClosed: false,
-                            flagDecoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                          ),
+                          suffixIcon: tick
+                              ? Icon(Icons.check_circle, color: Colors.green)
+                              : null,
                         ),
                       ),
                     ],
@@ -176,9 +168,6 @@ class _LoginPageState extends State<LoginPage> {
                 width: width,
                 child: ElevatedButton(
                   onPressed: () {
-                    print('$countryCode$number');
-                    phonenumber = "$countryCode$number";
-                    print("Phonenumber :$phonenumber");
                     login(context);
                   },
                   style: ElevatedButton.styleFrom(
@@ -207,12 +196,9 @@ class _LoginPageState extends State<LoginPage> {
 login(context) async {
   try {
     var url = 'https://einnovention.co.uk/wassl/public/api/login';
-    var response = await http.post(Uri.parse(url), body: {
-      'phone': '$countryCode$number',
-      'fcm_token': '$ffccmmTTookkeenn'
-    }, headers: {
-      'Accept': 'application/json'
-    });
+    var response = await http.post(Uri.parse(url),
+        body: {'phone': '$number', 'fcm_token': '$ffccmmTTookkeenn'},
+        headers: {'Accept': 'application/json'});
 
     print('Response body: ${response.body}');
     var data = json.decode(response.body);

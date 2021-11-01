@@ -3,6 +3,7 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_alert/flutter_alert.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:wassal_customer/create_account.dart';
 import 'package:wassal_customer/verifynumber.dart';
@@ -14,7 +15,9 @@ class LoginPage extends StatefulWidget {
 }
 
 bool tick = false;
-String countryCode = '+20';
+
+final TextEditingController controller = TextEditingController();
+PhoneNumber country = PhoneNumber(isoCode: 'EG');
 String number;
 
 class _LoginPageState extends State<LoginPage> {
@@ -58,8 +61,6 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       'Welcome Back',
                       style: TextStyle(
-                        
-                        
                         color: Color.fromRGBO(128, 136, 142, 1),
                         fontSize: 18,
                       ),
@@ -73,8 +74,6 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       'Hello there, sign in to continue!   ',
                       style: TextStyle(
-                        
-                        
                         color: Color.fromRGBO(149, 159, 175, 1),
                         fontSize: 14,
                       ),
@@ -89,8 +88,6 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         'Or',
                         style: TextStyle(
-                          
-                          
                           color: Colors.grey,
                           fontSize: 14,
                         ),
@@ -109,8 +106,6 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             'Create new account.',
                             style: TextStyle(
-                              
-                              
                               color: Colors.red,
                               fontSize: 16,
                             ),
@@ -136,54 +131,40 @@ class _LoginPageState extends State<LoginPage> {
                           padding: EdgeInsets.all(12.5),
                           child: Text(
                             "Phone Number",
-                            style: TextStyle(
-                                
-                                
-                                color: Colors.grey,
-                                fontSize: 14.0),
+                            style:
+                                TextStyle(color: Colors.grey, fontSize: 14.0),
                           ),
                         ),
-                        TextFormField(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'please enter your valid phone no.';
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.phone,
-                          style: TextStyle(
-                            
-                            
-                            fontSize: 14.0,
-                          ),
-                          onChanged: (value) {
+                        InternationalPhoneNumberInput(
+                          onInputChanged: (PhoneNumber abc) {
                             setState(() {
-                              number = value;
+                              number = abc.phoneNumber;
                             });
                           },
-                          decoration: InputDecoration(
+                          onInputValidated: (bool value) {
+                            setState(() {
+                              tick = value;
+                            });
+                          },
+                          selectorConfig: SelectorConfig(
+                            selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                          ),
+                          ignoreBlank: false,
+                          autoValidateMode: AutovalidateMode.disabled,
+                          selectorTextStyle: TextStyle(color: Colors.black),
+                          initialValue: country,
+                          textFieldController: controller,
+                          formatInput: false,
+                          inputDecoration: InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
                             enabledBorder: InputBorder.none,
                             errorBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
                             hintText: 'Phone No',
-                            suffixIcon: tick ? Icon(Icons.done) : null,
-                            prefixIcon: CountryCodePicker(
-                              onChanged: (CountryCode code) {
-                                setState(() {
-                                  countryCode = code.dialCode;
-                                });
-                              },
-                              initialSelection: 'EG',
-                              favorite: ['+20', 'EG'],
-                              hideMainText: false,
-                              showCountryOnly: false,
-                              showOnlyCountryWhenClosed: false,
-                              flagDecoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.0),
-                              ),
-                            ),
+                            suffixIcon: tick
+                                ? Icon(Icons.check_circle, color: Colors.green)
+                                : null,
                           ),
                         ),
                       ],
@@ -197,9 +178,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
-                        print('$countryCode$number');
-                        phonenumber = "$countryCode$number";
-                        print("Phonenumber :$phonenumber");
+                        print(number);
                         customerlogin(context);
                       } else {
                         print("ERROR");
@@ -214,8 +193,6 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       "Next",
                       style: TextStyle(
-                        
-                        
                         fontSize: 14.0,
                         color: Colors.grey[800],
                       ),
@@ -235,7 +212,7 @@ customerlogin(context) async {
   try {
     var url = "https://einnovention.co.uk/wassl/public/api/login";
     var response = await http.post(Uri.parse(url), body: {
-      "phone": "$countryCode$number",
+      "phone": "${number}",
       "fcm_token": "$fcmToken",
     }, headers: {
       "Accept": "application/json"

@@ -259,7 +259,7 @@ class _DriverWoiletState extends State<DriverWoilet> {
           headers: {'Authorization': 'Bearer $stringValue'});
 
       String balance = json.decode(response.body)['blance'];
-      print('buildWoiletRequest: ${balance}');
+      print('buildWoiletRequest: ${balance.toString()}');
       List data = json.decode(response.body)['data'];
       print('$data');
       // setState(() {
