@@ -66,6 +66,8 @@ dependencies:
   flutter_sms: ^2.3.1
   webview_flutter:
   intl_phone_number_input: ^0.5.2+2
+  video_player: ^2.1.6
+  permission_handler: ^8.0.0
    
 
 dev_dependencies:

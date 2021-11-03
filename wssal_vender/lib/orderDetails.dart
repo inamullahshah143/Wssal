@@ -95,7 +95,7 @@ class _OrderDetailsState extends State<OrderDetails> {
           // centerTitle: true,
         ),
       ),
-      // bottomNavigationBar: getbottomBar(2, context),
+      bottomNavigationBar: getbottomBar(2, context),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(

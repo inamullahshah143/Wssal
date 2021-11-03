@@ -39,7 +39,7 @@ class _AllProductState extends State<AllProduct> {
           // centerTitle: true,
         ),
       ),
-      // bottomNavigationBar: getbottomBar(1, context),
+      bottomNavigationBar: getbottomBar(1, context),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.red,
         onPressed: () {

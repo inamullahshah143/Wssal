@@ -84,7 +84,7 @@ class _AddProductState extends State<AddProduct> {
             // centerTitle: true,
           ),
         ),
-        // bottomNavigationBar: getbottomBar(1, context),
+        bottomNavigationBar: getbottomBar(1, context),
         body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Container(

@@ -8,8 +8,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wassal_customer/const.dart';
 import 'package:wassal_customer/dashboard.dart';
 import 'package:wassal_customer/splashScreenSlider.dart';
-
+import 'package:video_player/video_player.dart';
 import 'google_map/app_states.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -67,10 +68,10 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  VideoPlayerController _controller;
+  Timer timer;
   @override
   void initState() {
-    getLogs();
-    getToken();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
         showAlert(
@@ -80,15 +81,43 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     });
     super.initState();
+    _controller = VideoPlayerController.asset('assets/splash.mp4')
+      ..initialize().then((_) {
+        _controller.setPlaybackSpeed(0.5);
+        _controller.play();
+        // Ensure the first frame is shown after the video is initialized
+        setState(() {});
+        timer = Timer.periodic(Duration(seconds: 1), (timer) {
+          _controller.position.then((value) {
+            print("${value.inSeconds}");
+            if ("${value.inSeconds}" == "4") {
+              getPermission();
+            }
+          });
+        });
+      });
+  }
+
+  getPermission() {
+    Permission.location.status.then((value) {
+      if (value.isGranted) {
+        getToken();
+        getLogs();
+      } else {
+        Permission.location.request().then((value) {
+         
+            getPermission();
+          
+        });
+      }
+    });
   }
 
   getLogs() {
     SharedPreferences.getInstance().then((prefs) {
       if (prefs.getBool("showSlider") != true) {
-        Timer(Duration(seconds: 8), () {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (_) => SplashScreenSlider()));
-        });
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => SplashScreenSlider()));
       } else {
         var y = prefs.getString('abs');
         var x = prefs.getString('name');
@@ -100,17 +129,14 @@ class _SplashScreenState extends State<SplashScreen> {
           storedName = x;
           storedNumber = z;
           logs = true;
-          Timer(Duration(seconds: 8), () {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (_) => MainDashboard()),
-                (Route<dynamic> route) => false);
-          });
+
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (_) => MainDashboard()),
+              (Route<dynamic> route) => false);
         } else {
-          Timer(Duration(seconds: 10), () {
-            Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (_) => MainDashboard()),
-                (Route<dynamic> route) => false);
-          });
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (_) => MainDashboard()),
+              (Route<dynamic> route) => false);
         }
       }
     });
@@ -127,20 +153,26 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    latestContext = context;
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: Container(
-        height: height,
-        width: width,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/splash.gif'),
+    return MaterialApp(
+      home: Scaffold(
+        body: SizedBox.expand(
+          child: FittedBox(
             fit: BoxFit.cover,
+            child: SizedBox(
+              width: _controller.value.size?.width ?? 0,
+              height: _controller.value.size?.height ?? 0,
+              child: VideoPlayer(_controller),
+            ),
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer.cancel();
+    _controller.dispose();
   }
 }

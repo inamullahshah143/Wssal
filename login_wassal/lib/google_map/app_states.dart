@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import '../const.dart';
 import 'google_maps_requests.dart';
 
@@ -32,11 +33,12 @@ class AppState with ChangeNotifier {
 
 // ! TO GET THE USERS LOCATION
   void _getUserLocation() async {
-    Position position = await Geolocator()
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    // Position position = await Geolocator()
+    //     .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    LocationData lock = await Location().getLocation();
     List<Placemark> placemark = await Geolocator()
-        .placemarkFromCoordinates(position.latitude, position.longitude);
-    _initialPosition = LatLng(position.latitude, position.longitude);
+        .placemarkFromCoordinates(lock.latitude, lock.longitude);
+    _initialPosition = LatLng(lock.latitude, lock.longitude);
     String subThoroughfare = placemark[0].subThoroughfare != ''
         ? '${placemark[0].subThoroughfare}, '
         : '';

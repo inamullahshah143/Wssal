@@ -119,7 +119,7 @@ class _ShopDisplayState extends State<ShopDisplay> {
           child: Text('Add New Shop'),
         ),
       ),
-      // bottomNavigationBar: getbottomBar(0, context),
+      bottomNavigationBar: getbottomBar(0, context),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(

@@ -22,10 +22,14 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Always and when in use!</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Location Required</string>
+	<string>Can I have location always?</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Older devices need location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Location Required</string>
+	<string>Need location when in use</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

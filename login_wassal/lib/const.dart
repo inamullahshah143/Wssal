@@ -138,7 +138,7 @@ getDashboardAppbar(context, text) {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width / 2.25,
                   child: Text(
-                    appState.myLocation,
+                    "${appState.myLocation}",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: TextStyle(

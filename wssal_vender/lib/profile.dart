@@ -40,7 +40,7 @@ class _ProfileState extends State<Profile> {
           // centerTitle: true,
         ),
       ),
-      // bottomNavigationBar: getbottomBar(4, context),
+      bottomNavigationBar: getbottomBar(4, context),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(

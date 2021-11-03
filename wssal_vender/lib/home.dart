@@ -107,7 +107,7 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      // bottomNavigationBar: getbottomBar(0, context),
+      bottomNavigationBar: getbottomBar(0, context),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
